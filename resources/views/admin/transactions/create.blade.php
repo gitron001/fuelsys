@@ -30,7 +30,7 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::submit('Create new user', ['class'=>'btn btn-block btn-success']); !!}
+			{!! Form::submit('Create new transaction', ['class'=>'btn btn-block btn-success']); !!}
 		</div>
 
 
