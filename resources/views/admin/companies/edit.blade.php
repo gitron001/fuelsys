@@ -2,38 +2,84 @@
 
 @section('content')
 	<h1>Edit Company</h1>
-	<div class="col-md-10">
-		<div class="row">
-			{!! Form::model($company,['method'=>'PATCH', 'action'=>['CompaniesController@update',$company->id]]) !!}
-			
-			<div class="form-group">
-				{!! Form::label('title', 'Title'); !!}
-				{!! Form::text('title',null,['class'=>'form-control']); !!} 
-			</div>
-
-			<div class="form-group">
-				{!! Form::label('website', 'Website'); !!}
-				{!! Form::text('website',null,['class'=>'form-control']); !!} 
-			</div>
-
-			<div class="form-group">
-				{!! Form::label('phone', 'Phone'); !!}
-				{!! Form::text('phone',null,['class'=>'form-control']); !!} 
-			</div>
-
-			<div class="form-group">
-				{!! Form::label('address', 'Address'); !!}
-				{!! Form::text('address',null,['class'=>'form-control']); !!} 
-			</div>
-
-			<div class="form-group">
-				{!! Form::submit('Edit Company', ['class'=>'btn btn-block btn-primary']); !!}
-			</div>
-
-			{!! Form::close() !!}
-
+		{!! Form::model($company,['method'=>'PATCH', 'action'=>['CompaniesController@update',$company->id]]) !!}
+		
+		<div class="form-group">
+			{!! Form::label('name', 'Name'); !!}
+			{!! Form::text('name',null,['class'=>'form-control']); !!} 
 		</div>
-	</div>
+
+		<div class="form-group">
+			{!! Form::label('fis_number', 'Fis.Number'); !!}
+			{!! Form::text('fis_number',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('bis_number', 'Bis.Number'); !!}
+			{!! Form::text('bis_number',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('fis_number', 'Fis.Number'); !!}
+			{!! Form::text('fis_number',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('tax_number', 'tax.Number'); !!}
+			{!! Form::text('tax_number',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('res_number', 'Res.Number'); !!}
+			{!! Form::text('res_number',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('tel_number', 'Phone'); !!}
+			{!! Form::text('tel_number',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('email', 'Email'); !!}
+			{!! Form::text('email',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('address', 'Address'); !!}
+			{!! Form::text('address',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('city', 'City'); !!}
+			{!! Form::text('city',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('country', 'Country'); !!}
+			{!! Form::text('country',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('type', 'Type'); !!}
+			{!! Form::text('type',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('status', 'Status'); !!}
+			{!! Form::text('status',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('limit', 'Limit'); !!}
+			{!! Form::text('limit',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::submit('Edit Company', ['class'=>'btn btn-block btn-primary']); !!}
+		</div>
+
+		{!! Form::close() !!}
+
 @endsection
 
 @section('css')

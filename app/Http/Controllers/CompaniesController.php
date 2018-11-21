@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyCreateRequest;
-use App\Companies;
+use App\Company;
 
 class CompaniesController extends Controller
 {
@@ -15,7 +15,7 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companies = Companies::all();
+        $companies = Company::all();
         return view('admin/companies/home',compact('companies'));
     }
 
@@ -37,7 +37,7 @@ class CompaniesController extends Controller
      */
     public function store(CompanyCreateRequest $request)
     {
-        Companies::create($request->all());
+        Company::create($request->all());
 
         session()->flash('info','Success');
 
@@ -63,7 +63,7 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        $company = Companies::findOrFail($id);
+        $company = Company::findOrFail($id);
         return view('admin/companies/edit',compact('company'));
     }
 
@@ -76,7 +76,7 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $company = Companies::findOrFail($id);
+        $company = Company::findOrFail($id);
 
         $company->update($request->all());
 
@@ -93,7 +93,7 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        $company = Companies::findOrFail($id);
+        $company = Company::findOrFail($id);
         $company->delete();
 
         session()->flash('info','Success');
