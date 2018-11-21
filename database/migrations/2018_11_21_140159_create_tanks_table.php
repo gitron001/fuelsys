@@ -16,7 +16,9 @@ class CreateTanksTable extends Migration
         Schema::create('tanks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('')
+            $table->integer('product_id');
+            $table->integer('capacity');
+            $table->integer('status');
             $table->timestamps();
         });
     }

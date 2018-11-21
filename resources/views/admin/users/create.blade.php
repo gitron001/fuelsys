@@ -3,7 +3,7 @@
 @section('content')
 	<h1>Create new user</h1>
 	
-		{!! Form::open(['method'=>'POT', 'action'=>['UserController@store']]) !!}
+		{!! Form::open(['method'=>'POST', 'action'=>['UserController@store']]) !!}
 		
 		<div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
 			{!! Form::label('name', 'Name:'); !!}

@@ -3,7 +3,7 @@
 @section('content')
 	<h1>Create new company</h1>
 	
-		{!! Form::open(['method'=>'POT', 'action'=>['CompaniesController@store']]) !!}
+		{!! Form::open(['method'=>'POST', 'action'=>['CompaniesController@store']]) !!}
 		
 		<div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
 			{!! Form::label('name', 'Name:'); !!}

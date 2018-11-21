@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 Route::resource('/admin/companies', 'CompaniesController');
 Route::resource('/admin/users', 'UserController');
+Route::resource('/admin/tanks', 'TankController');
