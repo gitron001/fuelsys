@@ -21,3 +21,4 @@ Route::resource('/admin/companies', 'CompaniesController');
 Route::resource('/admin/users', 'UserController');
 Route::resource('/admin/tanks', 'TankController');
 Route::resource('/admin/transactions', 'TransactionController');
+Route::resource('/admin/products', 'ProductController');

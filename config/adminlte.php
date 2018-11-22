@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'adminPANEL',
+    'title' => 'Fuel System',
 
     'title_prefix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>GAS </b>STATION',
+    'logo' => '<b>FUEL </b>SYSTEM',
 
-    'logo_mini' => '<b>G</b>S',
+    'logo_mini' => '<b>F</b>S',
 
     /*
     |--------------------------------------------------------------------------
@@ -114,13 +114,13 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        [
+        /*[
             'text'        => 'Pages',
             'url'         => 'admin/pages',
             'icon'        => 'file',
             'label'       => 4,
             'label_color' => 'success',
-        ],
+        ],*/
         [
             'text'        => 'Company',
             'url'         => 'admin/companies',
@@ -142,6 +142,12 @@ return [
         [
             'text'        => 'Transaction',
             'url'         => 'admin/transactions',
+            'icon'        => 'file',
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Products',
+            'url'         => 'admin/products',
             'icon'        => 'file',
             'label_color' => 'success',
         ],
