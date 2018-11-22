@@ -11,7 +11,7 @@
 
 		<div class="form-group">
 			{!! Form::label('company_id', 'Company_Id'); !!}
-			{!! Form::text('company_id',null,['class'=>'form-control']); !!} 
+			{!! Form::select('company_id',$companies,null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
@@ -20,8 +20,8 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('b_id', 'B_Id'); !!}
-			{!! Form::text('b_id',null,['class'=>'form-control']); !!} 
+			{!! Form::label('branch_id', 'B_Id'); !!}
+			{!! Form::text('branch_id',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">

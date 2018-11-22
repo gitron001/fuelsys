@@ -23,10 +23,10 @@
 			{!! $errors->first('email','<span class="help-block">:message</span>') !!} 
 		</div>
 
-		<div class="form-group {{ $errors->has('b_id') ? 'has-error' :'' }}">
-			{!! Form::label('b_id', 'B.Id:'); !!}
-			{!! Form::number('b_id',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('b_id','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('branch_id') ? 'has-error' :'' }}">
+			{!! Form::label('branch_id', 'Branch_Id:'); !!}
+			{!! Form::select('branch_id',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!} 
+			{!! $errors->first('branch_id','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('role') ? 'has-error' :'' }}">

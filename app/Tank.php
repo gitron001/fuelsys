@@ -12,4 +12,8 @@ class Tank extends Model
         'capacity',
         'status',
     ];
+
+    public function product(){
+        return $this->belongsTo('App\Product');
+    }
 }

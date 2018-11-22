@@ -24,7 +24,7 @@
         					<th>Name</th>
         					<th>Company_id</th>
         					<th>Email</th>
-        					<th>B_id</th>
+        					<th>Branch_id</th>
         					<th>Role</th>
         					<th>One_time_limit</th>
         					<th>Plates</th>
@@ -41,14 +41,14 @@
                 <tr>
                   	<td>{{ $user->id }}</td>
           					<td>{{ $user->name }}</td>
-          					<td>{{ $user->company_id }}</td>
+          					<td>{{ $user->company->name }}</td>
           					<td>{{ $user->email }}</td>
-          					<td>{{ $user->b_id }}</td>
+          					<td>{{ $user->branch->name }}</td>
           					<td>{{ $user->role }}</td>
           					<td>{{ $user->one_time_limit }}</td>
           					<td>{{ $user->plates }}</td>
           					<td>{{ $user->car_id }}</td>
-          					<td>{{ $user->status }}</td>
+          					<td>{{ $user->status == 1 ? 'Active' : 'No Active' }}</td>
           					<td>{{ $user->created_at->diffForHumans() }}</td>
           					<td>{{ $user->updated_at->diffForHumans() }}</td>
                   	

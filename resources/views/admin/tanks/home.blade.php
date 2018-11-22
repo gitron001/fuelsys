@@ -36,9 +36,9 @@
                 <tr>
                   	<td>{{ $tank->id }}</td>
           					<td>{{ $tank->name }}</td>
-          					<td>{{ $tank->product_id }}</td>
+          					<td>{{ $tank->product->name }}</td>
           					<td>{{ $tank->capacity }}</td>
-          					<td>{{ $tank->status }}</td>
+          					<td>{{ $tank->status == 1 ? 'Active' : 'No active' }}</td>
           					<td>{{ $tank->created_at->diffForHumans() }}</td>
           					<td>{{ $tank->updated_at->diffForHumans() }}</td>
                   	

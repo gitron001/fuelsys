@@ -13,19 +13,19 @@
 
 	<div class="form-group {{ $errors->has('product_id') ? 'has-error' : '' }}">
 		{!! Form::label('product_id','Product_id:'); !!}
-		{!! Form::text('product_id',null,['class'=>'form-control']); !!}
+		{!! Form::select('product_id',['Choose Product'] + $products,null,['class'=>'form-control']); !!}
 		{!! $errors->first('product_id','<span class="help-block">:message</span>') !!}
 	</div>
 
 	<div class="form-group {{ $errors->has('capacity') ? 'has-error' : '' }}">
 		{!! Form::label('capacity','Capacity:'); !!}
-		{!! Form::text('capacity',null,['class'=>'form-control']); !!}
+		{!! Form::number('capacity',null,['class'=>'form-control']); !!}
 		{!! $errors->first('capacity','<span class="help-block">:message</span>') !!}
 	</div>
 
 	<div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
 		{!! Form::label('status','Status:'); !!}
-		{!! Form::text('status',null,['class'=>'form-control']); !!}
+		{!! Form::number('status',null,['class'=>'form-control']); !!}
 		{!! $errors->first('status','<span class="help-block">:message</span>') !!}
 	</div>
 	

@@ -8,9 +8,17 @@ class Transaction extends Model
 {
     //
     protected $fillable = [
-        'dispanser_id', 
+        'dispaneser_id', 
         'total', 
         'amount',
         'user_id',
     ];
+
+    public function dispaneser(){
+        return $this->belongsTo('App\Dispaneser');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

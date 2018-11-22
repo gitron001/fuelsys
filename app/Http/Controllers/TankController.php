@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tank;
+use App\Product;
 
 class TankController extends Controller
 {
@@ -25,7 +26,8 @@ class TankController extends Controller
      */
     public function create()
     {
-        return view('/admin/tanks/create');
+        $products = Product::pluck('name','id')->all();
+        return view('/admin/tanks/create',compact('products'));
     }
 
     /**
@@ -63,7 +65,9 @@ class TankController extends Controller
     public function edit($id)
     {
         $tank = Tank::findOrFail($id);
-        return view('/admin/tanks/edit',compact('tank'));
+        $products = Product::pluck('name','id')->all();
+        
+        return view('/admin/tanks/edit',compact('tank','products'));
     }
 
     /**

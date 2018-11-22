@@ -25,19 +25,19 @@
 
 		<div class="form-group {{ $errors->has('tax_number') ? 'has-error' :'' }}">
 			{!! Form::label('tax_number', 'Tax.Number:'); !!}
-			{!! Form::text('tax_number',null,['class'=>'form-control']); !!} 
+			{!! Form::number('tax_number',null,['class'=>'form-control']); !!} 
 			{!! $errors->first('tax_number','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('res_number') ? 'has-error' :'' }}">
 			{!! Form::label('res_number', 'Res.Number:'); !!}
-			{!! Form::text('res_number',null,['class'=>'form-control']); !!}
+			{!! Form::number('res_number',null,['class'=>'form-control']); !!}
 			{!! $errors->first('res_number','<span class="help-block">:message</span>') !!} 
 		</div>
 
 		<div class="form-group {{ $errors->has('tel_number') ? 'has-error' :'' }}">
 			{!! Form::label('tel_number', 'Tel.Number:'); !!}
-			{!! Form::text('tel_number',null,['class'=>'form-control']); !!}
+			{!! Form::number('tel_number',null,['class'=>'form-control']); !!}
 			{!! $errors->first('tel_number','<span class="help-block">:message</span>') !!} 
 		</div>
 
@@ -73,13 +73,13 @@
 
 		<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
 			{!! Form::label('status', 'Status:'); !!}
-			{!! Form::text('status',null,['class'=>'form-control']); !!}
+			{!! Form::number('status',null,['class'=>'form-control']); !!}
 			{!! $errors->first('status','<span class="help-block">:message</span>') !!} 
 		</div>
 
 		<div class="form-group {{ $errors->has('limit') ? 'has-error' :'' }}">
 			{!! Form::label('limit', 'Limit:'); !!}
-			{!! Form::text('limit',null,['class'=>'form-control']); !!}
+			{!! Form::number('limit',null,['class'=>'form-control']); !!}
 			{!! $errors->first('limit','<span class="help-block">:message</span>') !!} 
 		</div>
 

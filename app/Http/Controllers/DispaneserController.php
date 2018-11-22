@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Branch;
-use App\Company;
+use App\Dispaneser;
 
-class UserController extends Controller
+class DispaneserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('admin/users/home',compact('users'));
+        $dispanesers = Dispaneser::all();
+        return view('/admin/dispanesers/home',compact('dispanesers'));
     }
 
     /**
@@ -27,8 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $branches = Branch::pluck('name','id')->all();
-        return view('admin/users/create',compact('branches'));
+        return view('/admin/dispanesers/create');
     }
 
     /**
@@ -39,11 +36,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
-
+        Dispaneser::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('admin/users');
+        return redirect('/admin/dispanesers');
     }
 
     /**
@@ -65,10 +61,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $companies = Company::pluck('name','id')->all();
-
-        return view('admin/users/edit',compact('user','companies'));
+        $dispaneser = Dispaneser::findOrFail($id);
+        return view('/admin/dispanesers/edit',compact('dispaneser'));
     }
 
     /**
@@ -80,12 +74,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-
+        $dispaneser = Dispaneser::findOrFail($id);
+        $dispaneser->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/users');
+        return redirect('/admin/dispanesers');
     }
 
     /**
@@ -96,10 +89,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-
+        $dispaneser = Dispaneser::findOrFail($id);
+        $dispaneser->delete();
         session()->flash('info','Success');
-        return redirect('/admin/users');
+
+        return redirect('/admin/dispanesers');
     }
 }

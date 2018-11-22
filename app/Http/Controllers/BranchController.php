@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
 use App\Branch;
-use App\Company;
 
-class UserController extends Controller
+class BranchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('admin/users/home',compact('users'));
+        $branches = Branch::all();
+        return view('/admin/branches/home',compact('branches'));
     }
 
     /**
@@ -27,8 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $branches = Branch::pluck('name','id')->all();
-        return view('admin/users/create',compact('branches'));
+        return view('/admin/branches/create');
     }
 
     /**
@@ -39,11 +36,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
-
+        Branch::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('admin/users');
+        return redirect('/admin/branches');
     }
 
     /**
@@ -65,10 +61,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $companies = Company::pluck('name','id')->all();
-
-        return view('admin/users/edit',compact('user','companies'));
+        $branch = Branch::findOrFail($id);
+        return view('/admin/branches/edit',compact('branch'));
     }
 
     /**
@@ -80,12 +74,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-
+        $branch = Branch::findOrFail($id);
+        $branch->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/users');
+        return redirect('/admin/branches');
     }
 
     /**
@@ -96,10 +89,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-
+        $branch = Branch::findOrFail($id);
+        $branch->delete();
         session()->flash('info','Success');
-        return redirect('/admin/users');
+
+        return redirect('/admin/branches');
     }
 }

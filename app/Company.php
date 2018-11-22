@@ -22,4 +22,8 @@ class Company extends Model
         'status',
         'limit',
     ];
+
+    public function users(){
+        return $this->hasMany('App\User');
+    }
 }

@@ -11,7 +11,7 @@
 
 	<div class="form-group">
 		{!! Form::label('product_id', 'Product_Id'); !!}
-		{!! Form::text('product_id',null,['class'=>'form-control']); !!} 
+		{!! Form::select('product_id',$products,null,['class'=>'form-control']); !!} 
 	</div>	
 
 	<div class="form-group">

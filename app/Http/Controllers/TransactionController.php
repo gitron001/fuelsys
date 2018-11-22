@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
+use App\User;
+use App\Dispaneser;
 
 class TransactionController extends Controller
 {
@@ -25,7 +27,10 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return view('/admin/transactions/create');
+        $users       = User::pluck('name','id')->all();
+        $dispanesers = Dispaneser::pluck('name','id')->all();
+        
+        return view('/admin/transactions/create',compact('users','dispanesers'));
     }
 
     /**
@@ -63,7 +68,10 @@ class TransactionController extends Controller
     public function edit($id)
     {
         $transaction = Transaction::findOrFail($id);
-        return view('/admin/transactions/edit',compact('transaction'));
+        $dispanesers = Dispaneser::pluck('name','id')->all();
+        $users       = User::pluck('name','id')->all();
+
+        return view('/admin/transactions/edit',compact('transaction','dispanesers','users'));
     }
 
     /**

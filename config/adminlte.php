@@ -151,6 +151,18 @@ return [
             'icon'        => 'file',
             'label_color' => 'success',
         ],
+        [
+            'text'        => 'Dispanesers',
+            'url'         => 'admin/dispanesers',
+            'icon'        => 'file',
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Branches',
+            'url'         => 'admin/branches',
+            'icon'        => 'file',
+            'label_color' => 'success',
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Test',

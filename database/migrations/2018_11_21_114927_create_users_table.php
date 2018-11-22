@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->integer('company_id');
             $table->string('email');
-            $table->integer('b_id');
+            $table->integer('branch_id');
             $table->integer('role');
             $table->integer('one_time_limit');
             $table->string('plates');

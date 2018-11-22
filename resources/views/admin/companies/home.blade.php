@@ -55,7 +55,7 @@
                     <td>{{ $company->city }}</td>
                     <td>{{ $company->country }}</td>
                     <td>{{ $company->type }}</td>
-                    <td>{{ $company->status }}</td>
+                    <td>{{ $company->status == 1 ? 'Active' : 'No active'  }}</td>
                     <td>{{ $company->limit }}</td>
                   	<td>{{ $company->created_at->diffForHumans() }}</td>
                   	<td>{{ $company->updated_at->diffForHumans() }}</td>

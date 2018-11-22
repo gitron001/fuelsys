@@ -6,7 +6,12 @@
 		
 		<div class="form-group">
 			{!! Form::label('dispanser_id', 'Dispanser_Id'); !!}
-			{!! Form::text('dispanser_id',null,['class'=>'form-control']); !!} 
+			{!! Form::select('dispanser_id',$dispanesers,null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('user_id', 'User_Id'); !!}
+			{!! Form::select('user_id',$users,null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
@@ -17,11 +22,6 @@
 		<div class="form-group">
 			{!! Form::label('amount', 'Amount'); !!}
 			{!! Form::text('amount',null,['class'=>'form-control']); !!} 
-		</div>
-
-		<div class="form-group">
-			{!! Form::label('user_id', 'User_Id'); !!}
-			{!! Form::text('user_id',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">

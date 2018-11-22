@@ -5,10 +5,16 @@
 	
 		{!! Form::open(['method'=>'POST', 'action'=>['TransactionController@store']]) !!}
 		
-		<div class="form-group {{ $errors->has('dispanser_id') ? 'has-error' :'' }}">
-			{!! Form::label('dispanser_id', 'Dispanser_Id:'); !!}
-			{!! Form::text('dispanser_id',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('dispanser_id','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('dispaneser_id') ? 'has-error' :'' }}">
+			{!! Form::label('dispaneser_id', 'Dispanser_Id:'); !!}
+			{!! Form::select('dispaneser_id',['Choose Dispaneser'] + $dispanesers,null,['class'=>'form-control']); !!} 
+			{!! $errors->first('dispaneser_id','<span class="help-block">:message</span>') !!}
+		</div>
+
+		<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
+			{!! Form::label('user_id', 'User_Id:'); !!}
+			{!! Form::select('user_id',['Choose User'] + $users,null,['class'=>'form-control']); !!} 
+			{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('total') ? 'has-error' :'' }}">
@@ -19,14 +25,8 @@
 
 		<div class="form-group {{ $errors->has('amount') ? 'has-error' :'' }}">
 			{!! Form::label('amount', 'Amount:'); !!}
-			{!! Form::text('amount',null,['class'=>'form-control']); !!}
+			{!! Form::number('amount',null,['class'=>'form-control']); !!}
 			{!! $errors->first('amount','<span class="help-block">:message</span>') !!} 
-		</div>
-
-		<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
-			{!! Form::label('user_id', 'User_Id:'); !!}
-			{!! Form::number('user_id',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group">

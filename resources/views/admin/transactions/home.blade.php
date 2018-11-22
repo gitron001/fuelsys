@@ -22,9 +22,9 @@
                 <tr>
         					<th>Id</th>
         					<th>Dispanser_Id</th>
+                  <th>User_Id</th>
         					<th>Total</th>
         					<th>Amount</th>
-        					<th>User_Id</th>
         					<th>Created At</th>
         					<th>Updated At</th>
         					<th>Edit</th>
@@ -35,10 +35,10 @@
                 @foreach($transactions as $transaction)
                 <tr>
                   	<td>{{ $transaction->id }}</td>
-          					<td>{{ $transaction->dispanser_id }}</td>
+          					<td>{{ $transaction->dispaneser->name }}</td>
+                    <td>{{ $transaction->user->name }}</td>
           					<td>{{ $transaction->total }}</td>
           					<td>{{ $transaction->amount }}</td>
-          					<td>{{ $transaction->user_id }}</td>
           					<td>{{ $transaction->created_at->diffForHumans() }}</td>
           					<td>{{ $transaction->updated_at->diffForHumans() }}</td>
                   	

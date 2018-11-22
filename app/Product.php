@@ -11,4 +11,8 @@ class Product extends Model
         'price', 
         'vat',
     ];
+
+    public function tank(){
+        return $this->hasMany('App\Tank');
+    }
 }
