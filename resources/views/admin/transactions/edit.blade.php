@@ -5,8 +5,8 @@
 		{!! Form::model($transaction,['method'=>'PATCH', 'action'=>['TransactionController@update',$transaction->id]]) !!}
 		
 		<div class="form-group">
-			{!! Form::label('dispanser_id', 'Dispanser_Id'); !!}
-			{!! Form::select('dispanser_id',$dispanesers,null,['class'=>'form-control']); !!} 
+			{!! Form::label('dispaneser_id', 'Dispanser_Id'); !!}
+			{!! Form::select('dispaneser_id',$dispanesers,null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">

@@ -163,6 +163,12 @@ return [
             'icon'        => 'file',
             'label_color' => 'success',
         ],
+        [
+            'text'        => 'RFID',
+            'url'         => 'admin/rfids',
+            'icon'        => 'file',
+            'label_color' => 'success',
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Test',

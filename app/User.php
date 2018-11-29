@@ -30,4 +30,8 @@ class User extends Model
     public function transaction(){
         return $this->hasMany('App\Transaction');
     }
+
+    public function rfid(){
+        return $this->hasMany('App\Rfid');
+    }
 }
