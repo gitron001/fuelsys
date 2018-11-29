@@ -8,10 +8,21 @@ class Transaction extends Model
 {
     //
     protected $fillable = [
-        'dispaneser_id', 
-        'total', 
-        'amount',
-        'user_id',
+        'status', 
+        'locker', 
+        'sl_no',
+        'tn_no',
+        'sts',
+        'price',
+        'lit',
+        'money',
+        'ctot',
+        'mtot',
+        '~status',
+        'card',
+        'ctype',
+        'method',
+        'bill_no',
     ];
 
     public function dispaneser(){

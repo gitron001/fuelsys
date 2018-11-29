@@ -15,10 +15,22 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('dispaneser_id');
-            $table->integer('total');
-            $table->integer('amount');
-            $table->integer('user_id');
+            $table->char('status');
+            $table->char('locker');
+            //$table->increments('tr_no');
+            $table->char('sl_no');
+            $table->char('tn_no');
+            $table->char('sts');
+            $table->integer('price');
+            $table->longText('lit');
+            $table->longText('money');
+            $table->longText('ctot');
+            $table->longText('mtot');
+            $table->char('~status');
+            $table->longText('card');
+            $table->char('ctype');
+            $table->char('method');
+            $table->integer('bill_no');
             $table->timestamps();
         });
     }

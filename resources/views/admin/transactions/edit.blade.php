@@ -5,24 +5,82 @@
 		{!! Form::model($transaction,['method'=>'PATCH', 'action'=>['TransactionController@update',$transaction->id]]) !!}
 		
 		<div class="form-group">
-			{!! Form::label('dispaneser_id', 'Dispanser_Id'); !!}
-			{!! Form::select('dispaneser_id',$dispanesers,null,['class'=>'form-control']); !!} 
+			{!! Form::label('status', 'Status'); !!}
+			{!! Form::text('status',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('user_id', 'User_Id'); !!}
-			{!! Form::select('user_id',$users,null,['class'=>'form-control']); !!} 
+			{!! Form::label('locker', 'Locker'); !!}
+			{!! Form::text('locker',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('total', 'Total'); !!}
-			{!! Form::text('total',null,['class'=>'form-control']); !!} 
+			{!! Form::label('sl_no', 'Sl_No'); !!}
+			{!! Form::text('sl_no',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('amount', 'Amount'); !!}
-			{!! Form::text('amount',null,['class'=>'form-control']); !!} 
+			{!! Form::label('tn_no', 'Tn_No'); !!}
+			{!! Form::text('tn_no',null,['class'=>'form-control']); !!} 
 		</div>
+
+		<div class="form-group">
+			{!! Form::label('sts', 'Sts'); !!}
+			{!! Form::text('sts',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('price', 'Price'); !!}
+			{!! Form::text('price',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('lit', 'Lit'); !!}
+			{!! Form::text('lit',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('money', 'Money'); !!}
+			{!! Form::text('money',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('ctot', 'Ctot'); !!}
+			{!! Form::text('ctot',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('mtot', 'Mtot'); !!}
+			{!! Form::text('mtot',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('~status', '~Status'); !!}
+			{!! Form::text('~status',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('card', 'Card'); !!}
+			{!! Form::text('card',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('ctype', 'Ctype'); !!}
+			{!! Form::text('ctype',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('method', 'Method'); !!}
+			{!! Form::text('method',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('bill_no', 'Bill_No'); !!}
+			{!! Form::text('bill_no',null,['class'=>'form-control']); !!} 
+		</div>
+
+		
+
 
 		<div class="form-group">
 			{!! Form::submit('Edit Transaction', ['class'=>'btn btn-block btn-primary']); !!}

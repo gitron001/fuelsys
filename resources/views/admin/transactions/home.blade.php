@@ -21,13 +21,22 @@
                 <thead>
                 <tr>
         					<th>Id</th>
-        					<th>Dispanser_Id</th>
-                  <th>User_Id</th>
-        					<th>Total</th>
-        					<th>Amount</th>
-        					<th>Created At</th>
-        					<th>Updated At</th>
-        					<th>Edit</th>
+        					<th>Status</th>
+                  <th>Locker</th>
+        					<th>Sl_No</th>
+        					<th>Tn_No</th>
+        					<th>Sts</th>
+        					<th>Price</th>
+        					<th>Lit</th>
+                  <th>Money</th>
+                  <th>Ctot</th>
+                  <th>Mtot</th>
+                  <th>~Status</th>
+                  <th>Card</th>
+                  <th>CType</th>
+                  <th>Method</th>
+                  <th>Bill_No</th>
+                  <th>Edit</th>
                   <th>Delete</th>
                 </tr>
                 </thead>
@@ -35,12 +44,22 @@
                 @foreach($transactions as $transaction)
                 <tr>
                   	<td>{{ $transaction->id }}</td>
-          					<td>{{ $transaction->dispaneser->name }}</td>
-                    <td>{{ $transaction->user->name }}</td>
-          					<td>{{ $transaction->total }}</td>
-          					<td>{{ $transaction->amount }}</td>
-          					<td>{{ $transaction->created_at->diffForHumans() }}</td>
-          					<td>{{ $transaction->updated_at->diffForHumans() }}</td>
+          					<td>{{ $transaction->status }}</td>
+                    <td>{{ $transaction->locker }}</td>
+          					<td>{{ $transaction->sl_no }}</td>
+          					<td>{{ $transaction->tn_no }}</td>
+                    <td>{{ $transaction->sts }}</td>
+                    <td>{{ $transaction->price }}</td>
+                    <td>{{ $transaction->lit }}</td>
+                    <td>{{ $transaction->money }}</td>
+                    <td>{{ $transaction->ctot }}</td>
+                    <td>{{ $transaction->mtot }}</td>
+                    <td>{{ 'Null' }}</td>
+                    <td>{{ $transaction->card }}</td>
+                    <td>{{ $transaction->ctype }}</td>
+                    <td>{{ $transaction->method }}</td>
+                    <td>{{ $transaction->bill_no }}</td>
+          					
                   	
                   	<td><a href="{{ url('admin/transactions/'.$transaction->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
                     <td>
