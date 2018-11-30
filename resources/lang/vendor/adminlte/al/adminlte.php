@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'full_name'                   => 'Emri',
     'email'                       => 'Email/Adresa elektronike',
     'password'                    => 'Fjalëkalimi',
@@ -19,4 +18,12 @@ return [
     'password_reset_message'      => 'Rikthe fjalëkalimin',
     'reset_password'              => 'Rikthe fjalëkalimin',
     'send_password_reset_link'    => 'Dërgo linkun për rikthim të fjalëkalimit',
+    'company'                     => 'Kompania',
+    'user'                        => 'Përdoruesit',
+    'tank'                        => 'Rezervuari',
+    'transaction'                 => 'Transaksionet',
+    'products'                    => 'Produktet',
+    'dispanesers'                 => 'Pompat',
+    'branches'                    => 'Degët',
+    'rfid'                        => 'RFID',
 ];

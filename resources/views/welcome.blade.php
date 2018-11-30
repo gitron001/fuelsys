@@ -8,6 +8,12 @@
 
 @section('content')
     <p>Welcome to this beautiful admin panel.</p>
+    
+    Change Language:
+    <ul class="list-group">
+	  <li class="list-group-item"><a href="locale/en">English</a></li>
+	  <li class="list-group-item"><a href="locale/al">Albanian</a></li>
+	</ul>
 @stop
 
 @section('css')
