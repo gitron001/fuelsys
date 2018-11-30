@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Transaction;
 use App\User;
 use App\Dispaneser;
+use App\Services\TransactionService;
 
 class TransactionController extends Controller
 {
@@ -103,5 +104,10 @@ class TransactionController extends Controller
         session()->flash('info','Success');
 
         return redirect('/admin/transactions');
+    }
+	
+	public function read()
+    {
+        TransactionService::read();
     }
 }
