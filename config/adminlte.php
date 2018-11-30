@@ -114,13 +114,6 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        /*[
-            'text'        => 'Pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],*/
         [
             'text'        => 'Company',
             'url'         => 'admin/companies',

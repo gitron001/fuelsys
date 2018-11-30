@@ -19,4 +19,12 @@ return [
     'password_reset_message'      => 'Reset Password',
     'reset_password'              => 'Reset Password',
     'send_password_reset_link'    => 'Send Password Reset Link',
+    'company'                     => 'Company',
+    'user'                        => 'User',
+    'tank'                        => 'Tank',
+    'transaction'                 => 'Transaction',
+    'products'                    => 'Products',
+    'dispanesers'                 => 'Dispanesers',
+    'branches'                    => 'Branches',
+    'rfid'                        => 'RFID',
 ];
