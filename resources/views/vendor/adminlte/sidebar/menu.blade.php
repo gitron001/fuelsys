@@ -1,61 +1,61 @@
 <li class="header">MAIN NAVIGATION</li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/companies">
+        <a href="{{ URL('admin/companies') }}">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.company') }}</span>
         </a>
 </li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/users">
+        <a href="{{ URL('admin/users') }}"">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.user') }}</span>
         </a>
 </li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/tanks">
+        <a href="{{ URL('admin/tanks') }}"">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.tank') }}</span>
         </a>
 </li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/transactions">
+        <a href="{{ URL('admin/transactions') }}"">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.transaction') }}</span>
         </a>
 </li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/products">
+        <a href="{{ URL('admin/products') }}">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.products') }}</span>
         </a>
 </li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/dispanesers">
+        <a href="{{ URL('admin/dispanesers') }}"">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.dispanesers') }}</span>
         </a>
 </li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/branches">
+        <a href="{{ URL('admin/branches') }}"">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.branches') }}</span>
         </a>
 </li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/rfids">
+        <a href="{{ URL('admin/rfids') }}"">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.rfid') }}</span>
         </a>
 </li>
 <li class="header">ACCOUNT SETTINGS</li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/test">
+        <a href="{{ URL('admin/test">
             <i class="fa fa-fw fa-user "></i>
             <span>Test</span>
         </a>
 </li>
 <li class="">
-        <a href="http://fuelsystem.test/admin/settings">
+        <a href="{{ URL('admin/settings">
             <i class="fa fa-fw fa-lock "></i>
             <span>Change Password</span>
         </a>
