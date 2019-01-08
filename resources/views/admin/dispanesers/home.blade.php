@@ -20,7 +20,6 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Id</th>
                   <th>Name</th>
                   <th>Created At</th>
                   <th>Updated At</th>
@@ -31,7 +30,6 @@
                 <tbody>
                 @foreach($dispanesers as $dispaneser)
                 <tr>
-                  	<td>{{ $dispaneser->id }}</td>
                   	<td>{{ $dispaneser->name }}</td>
                   	<td>{{ $dispaneser->created_at->diffForHumans() }}</td>
                   	<td>{{ $dispaneser->updated_at->diffForHumans() }}</td>

@@ -20,7 +20,6 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Id</th>
                   <th>FFID</th>
                   <th>User_id</th>
                   <th>Created At</th>
@@ -32,7 +31,6 @@
                 <tbody>
                 @foreach($rfids as $rfid)
                 <tr>
-                  	<td>{{ $rfid->id }}</td>
                   	<td>{{ $rfid->ffid }}</td>
                   	<td>{{ $rfid->user->name }}</td>
                     <td>{{ $rfid->created_at->diffForHumans() }}</td>

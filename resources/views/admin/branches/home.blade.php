@@ -20,7 +20,6 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Id</th>
                   <th>Name</th>
                   <th>Address</th>
                   <th>City</th>
@@ -34,7 +33,6 @@
                 <tbody>
                 @foreach($branches as $branch)
                 <tr>
-                  	<td>{{ $branch->id }}</td>
                   	<td>{{ $branch->name }}</td>
                   	<td>{{ $branch->address }}</td>
                     <td>{{ $branch->city }}</td>

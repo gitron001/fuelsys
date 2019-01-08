@@ -20,8 +20,7 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>Name</th>
+                  <th>{{ trans('adminlte::adminlte.companyName') }}</th>
                   <th>Fis.Number</th>
                   <th>Bis.Number</th>
                   <th>Tax.Number</th>
@@ -43,7 +42,6 @@
                 <tbody>
                 @foreach($companies as $company)
                 <tr>
-                  	<td>{{ $company->id }}</td>
                   	<td>{{ $company->name }}</td>
                   	<td>{{ $company->fis_number }}</td>
                     <td>{{ $company->bis_number }}</td>

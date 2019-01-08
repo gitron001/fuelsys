@@ -26,4 +26,5 @@ return [
     'dispanesers'                 => 'Pompat',
     'branches'                    => 'Degët',
     'rfid'                        => 'RFID',
+    'companyName'                 => 'Emri i kompanisë',
 ];

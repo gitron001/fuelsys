@@ -18,6 +18,8 @@ class BranchController extends Controller
         return view('/admin/branches/home',compact('branches'));
     }
 
+    
+
     /**
      * Show the form for creating a new resource.
      *

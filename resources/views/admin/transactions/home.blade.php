@@ -20,7 +20,6 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-        					<th>Id</th>
         					<th>Status</th>
                   <th>Locker</th>
         					<th>Sl_No</th>
@@ -43,7 +42,6 @@
                 <tbody>
                 @foreach($transactions as $transaction)
                 <tr>
-                  	<td>{{ $transaction->id }}</td>
           					<td>{{ $transaction->status }}</td>
                     <td>{{ $transaction->locker }}</td>
           					<td>{{ $transaction->sl_no }}</td>

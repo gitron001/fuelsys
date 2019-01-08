@@ -20,7 +20,6 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Id</th>
                   <th>Name</th>
                   <th>Price</th>
                   <th>Vat</th>
@@ -33,7 +32,6 @@
                 <tbody>
                 @foreach($products as $product)
                 <tr>
-                  	<td>{{ $product->id }}</td>
                   	<td>{{ $product->name }}</td>
                   	<td>{{ $product->price }}</td>
                     <td>{{ $product->vat }}</td>
