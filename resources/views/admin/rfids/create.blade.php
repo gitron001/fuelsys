@@ -31,10 +31,10 @@
 					<button type="button" class="btn btn-default btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
 				</div>
 				<div class="col-md-6">
-					{!! Form::text('product',null,['class'=>'form-control','placeholder'=>'Product']); !!}
+					{!! Form::select('product[]',['Choose Product'] + $products,null,['class'=>'form-control']); !!} 
 				</div>
 				<div class="col-md-5">
-					{!! Form::text('discount',null,['class'=>'form-control','placeholder'=>'0.01']); !!}
+					{!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01']); !!}
 				</div>
 			</div>
 
@@ -48,10 +48,10 @@
 					<button type="button" class="btn btn-default btn-circle" id="addBranch"><i class="glyphicon glyphicon-plus"></i></button>
 				</div>
 				<div class="col-md-6">
-					{!! Form::text('branch',null,['class'=>'form-control','placeholder'=>'Branch']); !!}
+					{!! Form::select('branch[]',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
 				</div>
 				<div class="col-md-5">
-					{!! Form::text('limit',null,['class'=>'form-control','placeholder'=>'0.01']); !!}
+					{!! Form::number('limit[]',null,['class'=>'form-control','placeholder'=>'0.01']); !!}
 				</div>
 			</div>
 
@@ -59,7 +59,7 @@
 
 
 		<div class="form-group">
-			{!! Form::submit('Create new product', ['class'=>'btn btn-block btn-success']); !!}
+			{!! Form::submit('Create RFID', ['class'=>'btn btn-block btn-success']); !!}
 		</div>
 
 
@@ -94,13 +94,23 @@
 
 	//Append another div if button(discounts) + is clicked
 	$(document).on('click','#addProduct',function(){
-		$("#discounts").append('<br><div class="row"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button></div><div class="col-md-6"><input class="form-control" placeholder="Product" name="product" type="text"></div><div class="col-md-5"><input class="form-control" placeholder="0.01" name="discount" type="text"></div></div>');
+		$("#discounts").append('<div class="row" id="products"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="product[]"><option value="0">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" placeholder="0.01" name="discount[]" type="number"></div></div>');
 	});
 
 	//Append another div if button(limits) + is clicked
 	$(document).on('click','#addBranch',function(){
-		$("#limits").append('<br><div class="row"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="addBranch"><i class="glyphicon glyphicon-plus"></i></button></div><div class="col-md-6"><input class="form-control" placeholder="Branch" name="branch" type="text"></div><div class="col-md-5"><input class="form-control" placeholder="0.01" name="limit" type="text"></div></div>');
+		$("#limits").append('<div class="row" id="branches"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="branch[]"><option value="0">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" placeholder="0.01" name="limit[]" type="number"></div></div>');
 	});
+
+	$(document).on('click','#removeProduct',function(){
+		$(this).closest("#products").remove();
+	});
+
+	$(document).on('click','#removeBranch',function(){
+		$(this).closest("#branches").remove();
+	});
+	
+
 
 </script>
 
