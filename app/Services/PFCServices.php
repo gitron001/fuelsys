@@ -69,9 +69,10 @@ class PFCServices extends ServiceProvider
     public static function validate_message($message){
 		if(!isset($message[1]) || !isset($message[2])){
 			return false;
-		
 		}
+
 		$message_length = count($message);
+
 		if($message[1] != '1' && $message[$message_length] != 2){
 			return false;
 		}

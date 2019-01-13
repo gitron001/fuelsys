@@ -16,11 +16,44 @@ class TransactionService extends ServiceProvider
      */
     public static function read()
     {
+        while(true) {
+
+            $socket = PFC::create_socket();
+
+            //Get all transaction by channel
+            $message = "\x1\x5\x2\x1";
+            $the_crc = PFC::crc16( $message);
+
+            $binarydata = pack("c*", 0x01).pack("c*",0x05).pack("c*",0x02).pack("c*",0x1).strrev(pack("s",$the_crc)).pack("c*",02);
+
+            //Send Message to the socket
+            socket_write($socket, $binarydata);
+            //Read the reply
+            $input = socket_read($socket, 2048);
+            //Convert reply to array
+            $response = unpack("c*", $input );
+
+
+            $validation = PFC::validate_message( $response);
+
+            print_r($response);
+            if(!$validation){
+                socket_close($socket);
+                echo 'Invalid <bd>';
+                sleep(2);
+                continue;
+            }
+            break;
+        }
+    }
+
+    public static function read_data($socket)
+    {
         while(true){
-			
-			$socket = PFC::create_socket();
-			
-			if(!$socket){ sleep(1); continue; }
+
+            //$socket = PFC::create_socket();
+
+			if(!$socket){ socket_close($socket); sleep(1); continue; }
 			
 			$controller = Config::get('app.controller_id');
 			$pos_id =  PFC::conver_to_bin($controller);
@@ -31,13 +64,22 @@ class TransactionService extends ServiceProvider
 			
 			//Read Transactions Message
 			$binarydata = pack("c*", 0x01).pack("c*",0x06).pack("c*",0x03).pack("c*",0x01).pack("C*", $controller ).strrev(pack("s",$the_crc)).pack("c*",02);
-			
+
 			//Send Message to the socket
 			socket_write($socket, $binarydata);
 			//Read the reply
 			$input = socket_read($socket, 2048);
 			//Convert reply to array
 			$response = unpack("c*", $input );
+
+            $validation = PFC::validate_message( $response);
+
+            if(!$validation){
+                socket_close($socket);
+                echo 'Invalid <bd>';
+                sleep(2);
+                continue;
+            }
 			$transaction = new Transaction();
 			$status = $response[4];
 			echo '<br> STATUS: '. $status;	
@@ -117,9 +159,11 @@ class TransactionService extends ServiceProvider
 			
 			$transaction->save();
 			echo '<br>';
-			
-			echo "Closing socket...";
-			socket_close($socket);
+
+            //socket_close($socket);
+			self::clear($controller, $socket);
+            echo "Closing socket...";
+            socket_close($socket);
 			break;
 		}
     }
@@ -129,8 +173,38 @@ class TransactionService extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public static function clear($controller, $socket)
     {
-        //
+        while(true) {
+
+            $pos_id = PFC::conver_to_bin($controller);
+
+            //Generate CRC for the Transaction Message
+            $message = "\x1\x7\x82" . $pos_id."\x2";
+            $the_crc = PFC::crc16($message);
+
+
+            //Clear Transactions Message
+            $binarydata = pack("c*", 0x01) . pack("c*", 0x06) . pack("c*", 0x03) . pack("c*", 0x02) . pack("C*", $controller) . strrev(pack("s", $the_crc)) . pack("c*", 02);
+
+            //Send Message to the socket
+            socket_write($socket, $binarydata);
+            //Read the reply
+            $input = socket_read($socket, 2048);
+            //Convert reply to array
+            $response = unpack("c*", $input );
+
+            $validation = PFC::validate_message( $response);
+
+            if(!$validation){
+                echo 'Invalid <br>';
+                sleep(2);
+                continue;
+            }
+            echo 'cleared <br>';
+
+            break;
+        }
+        return true;
     }
 }
