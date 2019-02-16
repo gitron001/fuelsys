@@ -11,8 +11,7 @@ class PFCServices extends ServiceProvider
      *
      * @return void
      */
-    public static function create_socket()
-    {
+    public static function create_socket() {
 		$address = "192.168.1.197";
 		$port = 40097;
 

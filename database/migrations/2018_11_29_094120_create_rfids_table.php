@@ -17,6 +17,7 @@ class CreateRfidsTable extends Migration
             $table->increments('id');
             $table->integer('ffid');
             $table->integer('user_id');
+            $table->integer('status');
             $table->timestamps();
         });
     }

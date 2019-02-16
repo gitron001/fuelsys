@@ -16,9 +16,9 @@ class TransactionService extends ServiceProvider
      */
     public static function read()
     {
-        while(true) {
+        $socket = PFC::create_socket();
 
-            $socket = PFC::create_socket();
+        while(true) {
 
             //Get all transaction by channel
             $message = "\x1\x5\x2\x1";
@@ -33,27 +33,38 @@ class TransactionService extends ServiceProvider
             //Convert reply to array
             $response = unpack("c*", $input );
 
+            $validation = PFC::validate_message($response);
 
-            $validation = PFC::validate_message( $response);
-
-            print_r($response);
             if(!$validation){
-                socket_close($socket);
-                echo 'Invalid <bd>';
-                sleep(2);
+                echo 'Invalid Transactions<br>';
+                sleep(1);
                 continue;
             }
+
+            $total_msg_legth = count($response);
+              for($i = 4; $i <= $total_msg_legth; $i+= 4) {
+                if ($response[$i] == 1) {
+                     $channel = (($i/4));
+                    //Lock status transaction
+                    $status = 1;
+                    $changed_status = self::transaction_status($channel, $status, $socket);
+                    if($changed_status)
+                        echo 'UPDATED';
+                }
+            }
+            //LOCKED
+            print_r($response);
             break;
         }
     }
 
-    public static function read_data($socket)
+    public static function read_data($socket, $channel)
     {
         while(true){
 
             //$socket = PFC::create_socket();
 
-			if(!$socket){ socket_close($socket); sleep(1); continue; }
+			if(!$socket){ sleep(1); continue; }
 			
 			$controller = Config::get('app.controller_id');
 			$pos_id =  PFC::conver_to_bin($controller);
@@ -63,7 +74,19 @@ class TransactionService extends ServiceProvider
 			$the_crc = PFC::crc16( $message);
 			
 			//Read Transactions Message
-			$binarydata = pack("c*", 0x01).pack("c*",0x06).pack("c*",0x03).pack("c*",0x01).pack("C*", $controller ).strrev(pack("s",$the_crc)).pack("c*",02);
+			$binarydata = pack("c*", 0x01)
+
+             .pack("c*",0x06)
+
+             .pack("c*",0x03)
+
+             .pack("c*",0x01)
+
+             .pack("C*", $controller )
+
+             .strrev(pack("s",$the_crc))
+
+             .pack("c*",02);
 
 			//Send Message to the socket
 			socket_write($socket, $binarydata);
@@ -173,19 +196,29 @@ class TransactionService extends ServiceProvider
      *
      * @return void
      */
-    public static function clear($controller, $socket)
+    public static function transaction_status($channel, $status,  $socket)
     {
         while(true) {
 
-            $pos_id = PFC::conver_to_bin($controller);
+            $controller = Config::get('app.controller_id');
+            $pos_id =  PFC::conver_to_bin($controller);
+            $bin_channel = PFC::conver_to_bin($channel);
+            $status_bin = PFC::conver_to_bin($status);
 
             //Generate CRC for the Transaction Message
-            $message = "\x1\x7\x82" . $pos_id."\x2";
+            $message = "\x1\x7\x82" .$bin_channel. $pos_id.$status_bin;
             $the_crc = PFC::crc16($message);
 
 
             //Clear Transactions Message
-            $binarydata = pack("c*", 0x01) . pack("c*", 0x06) . pack("c*", 0x03) . pack("c*", 0x02) . pack("C*", $controller) . strrev(pack("s", $the_crc)) . pack("c*", 02);
+            $binarydata = pack("c*", 0x01)
+                .pack("c*", 0x07)
+                .pack("c*", 0x82)
+                .pack("C*", $channel)
+                .pack("C*", $controller)
+                .pack("C*", $status)
+                .strrev(pack("s", $the_crc))
+                .pack("c*", 02);
 
             //Send Message to the socket
             socket_write($socket, $binarydata);
@@ -194,15 +227,14 @@ class TransactionService extends ServiceProvider
             //Convert reply to array
             $response = unpack("c*", $input );
 
-            $validation = PFC::validate_message( $response);
+            $validation = PFC::validate_message($response);
 
             if(!$validation){
-                echo 'Invalid <br>';
-                sleep(2);
+                echo 'Invalid Transaction Status<br>';
+                sleep(1);
                 continue;
             }
-            echo 'cleared <br>';
-
+            print_r($response);
             break;
         }
         return true;
