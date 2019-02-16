@@ -17,38 +17,27 @@ class CardService extends ServiceProvider
     public static function check_readers()
     {
         $socket = PFC::create_socket();
-        while(true) {
-            //Get all transaction by channel
-            $message = "\x1\x4\x9";
-            $the_crc = PFC::crc16( $message);
+        $message = "\x1\x4\x9";
+        $the_crc = PFC::crc16($message);
+        $binarydata = pack("c*", 0x01)
+            .pack("c*",0x04)
+            .pack("c*",0x09)
+            .strrev(pack("s",$the_crc))
+            .pack("c*",02);
+        $response = PFC::send_message($socket, $binarydata, $message);
 
-            $binarydata = pack("c*", 0x01).pack("c*",0x04).pack("c*",0x09).strrev(pack("s",$the_crc)).pack("c*",02);
-
-            //Send Message to the socket
-            socket_write($socket, $binarydata);
-            //Read the reply
-            $input = socket_read($socket, 2048);
-            //Convert reply to array
-            $response = unpack("c*", $input );
-            $validation = PFC::validate_message($response);
-            if(!$validation){
-                echo 'Invalid Transactions<bd>';
-                sleep(1);
-                continue;
+        //Get all transaction by channel
+        /*
+        $length = count($response) - 3;
+        for($i = 3; $i <= $length; $i++){
+            if($response[$i] == 2){
+                $channel = ($i - 3);
+                self::check_card($socket, $channel);
             }
-
-            $length = count($response) - 3;
-            for($i = 3; $i <= $length; $i++){
-                if($response[$i] == 2){
-                    $channel = ($i - 3);
-                    self::check_card($socket, $channel);
-                }
-            }
-            //print_r($response);
-            socket_close($socket);
-            break;
-        }
-    }
+        }*/
+        print_r($response);
+        socket_close($socket);
+     }
 
 
     public static function check_card($socket, $channel = 1)
@@ -75,12 +64,18 @@ class CardService extends ServiceProvider
             $validation = PFC::validate_message($response);
             if (!$validation) {
                 echo 'Invalid Transactions<bd>';
-                sleep(2);
+                sleep(1);
                 continue;
             }
             $cardNumber = pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]).pack('c', $response[5]);
             $cardNumber = unpack('i', $cardNumber)[1];
             echo '<br> Card Number: '. $cardNumber;
+            echo ' -- Nozle 1 : '. $response[10];
+            echo ' -- Nozle 2 : '. $response[11];
+            echo ' -- Nozle 3 : '. $response[12];
+            echo ' -- Nozle 4 : '. $response[13];
+            echo ' -- Nozle 5 : '. $response[14];
+
             /*$length = count($response) - 3;
             for ($i = 3; $i <= $length; $i++) {
                 if ($response[$i] == 2) {

@@ -20,7 +20,7 @@ class ReadTransactionsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Read Transactions from PFC Controller';
+    protected $description = '2r';
 
     /**
      * Create a new command instance.

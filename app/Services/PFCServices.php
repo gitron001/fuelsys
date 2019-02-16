@@ -82,4 +82,27 @@ class PFCServices extends ServiceProvider
 		
 		return true;
 	}
+
+    //Validate the returned message from PFC
+    public static function send_message($socket, $binarydata, $message){
+        while(true) {
+            //Send Message to the socket
+            socket_write($socket, $binarydata);
+            //Wait for message to be created
+            usleep(150000);
+            //Read the reply
+            $input = socket_read($socket, 2048);
+            //Convert reply to array
+            $response = unpack("c*", $input);
+            $validation = self::validate_message($response);
+            if (!$validation) {
+                echo 'Invalid Transactions<bd>';
+                sleep(1);
+                continue;
+            }
+
+            return $response;
+            //break;
+        }
+    }
 }
