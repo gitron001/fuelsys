@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,6 @@ class Dispaneser extends Model
     ];
 
     public function transaction(){
-        return $this->hasMany('App\Transaction');
+        return $this->hasMany('App\Models\Transaction');
     }
 }

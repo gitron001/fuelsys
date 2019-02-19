@@ -26,10 +26,10 @@ class Transaction extends Model
     ];
 
     public function dispaneser(){
-        return $this->belongsTo('App\Dispaneser');
+        return $this->belongsTo('App\Models\Dispaneser');
     }
 
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 }

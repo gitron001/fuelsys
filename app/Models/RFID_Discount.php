@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RFID_Product extends Model
+class RFID_Discounts extends Model
 {
-	protected $table = 'r_f_i_d__products';
+	protected $table = 'rfid_discounts';
 
     protected $fillable = [
         'rfid_id', 

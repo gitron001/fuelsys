@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +13,6 @@ class Product extends Model
     ];
 
     public function tank(){
-        return $this->hasMany('App\Tank');
+        return $this->hasMany('App\Models\Tank');
     }
 }
