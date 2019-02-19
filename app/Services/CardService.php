@@ -27,15 +27,14 @@ class CardService extends ServiceProvider
         $response = PFC::send_message($socket, $binarydata, $message);
 
         //Get all transaction by channel
-        /*
         $length = count($response) - 3;
         for($i = 3; $i <= $length; $i++){
             if($response[$i] == 2){
                 $channel = ($i - 3);
                 self::check_card($socket, $channel);
             }
-        }*/
-        print_r($response);
+        }
+        //print_r($response);
         socket_close($socket);
      }
 
@@ -55,18 +54,8 @@ class CardService extends ServiceProvider
                 . strrev(pack("s", $the_crc))
                 . pack("c*", 02);
 
-            //Send Message to the socket
-            socket_write($socket, $binarydata);
-            //Read the reply
-            $input = socket_read($socket, 2048);
-            //Convert reply to array
-            $response = unpack("c*", $input);
-            $validation = PFC::validate_message($response);
-            if (!$validation) {
-                echo 'Invalid Transactions<bd>';
-                sleep(1);
-                continue;
-            }
+            $response = PFC::send_message($socket, $binarydata, $message);
+
             $cardNumber = pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]).pack('c', $response[5]);
             $cardNumber = unpack('i', $cardNumber)[1];
             echo '<br> Card Number: '. $cardNumber;
