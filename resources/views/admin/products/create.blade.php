@@ -13,13 +13,13 @@
 
 		<div class="form-group {{ $errors->has('price') ? 'has-error' :'' }}">
 			{!! Form::label('price', 'Price:'); !!}
-			{!! Form::number('price',null,['class'=>'form-control']); !!} 
+			{!! Form::number('price',null,['class'=>'form-control','step'=>'any']); !!} 
 			{!! $errors->first('price','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('vat') ? 'has-error' :'' }}">
 			{!! Form::label('vat', 'Vat:'); !!}
-			{!! Form::number('vat',null,['class'=>'form-control']); !!}
+			{!! Form::number('vat',null,['class'=>'form-control','step'=>'any']); !!}
 			{!! $errors->first('vat','<span class="help-block">:message</span>') !!} 
 		</div>
 

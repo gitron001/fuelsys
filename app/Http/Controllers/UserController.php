@@ -28,7 +28,8 @@ class UserController extends Controller
     public function create()
     {
         $branches = Branch::pluck('name','id')->all();
-        return view('admin/users/create',compact('branches'));
+        $companies = Company::pluck('name','id')->all();
+        return view('admin/users/create',compact('branches','companies'));
     }
 
     /**

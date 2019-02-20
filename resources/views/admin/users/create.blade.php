@@ -12,8 +12,8 @@
 		</div>
 
 		<div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}">
-			{!! Form::label('company_id', 'Company Id:'); !!}
-			{!! Form::number('company_id',null,['class'=>'form-control']); !!} 
+			{!! Form::label('company_id', 'Company:'); !!}
+			{!! Form::select('company_id',['Choose Company'] + $companies,null,['class'=>'form-control']); !!} 
 			{!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
 		</div>
 
@@ -24,7 +24,7 @@
 		</div>
 
 		<div class="form-group {{ $errors->has('branch_id') ? 'has-error' :'' }}">
-			{!! Form::label('branch_id', 'Branch_Id:'); !!}
+			{!! Form::label('branch_id', 'Branch:'); !!}
 			{!! Form::select('branch_id',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!} 
 			{!! $errors->first('branch_id','<span class="help-block">:message</span>') !!}
 		</div>
