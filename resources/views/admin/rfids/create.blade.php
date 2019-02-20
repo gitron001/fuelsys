@@ -11,10 +11,10 @@
 			{!! $errors->first('rfid','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}">
-			{!! Form::label('company_id', 'Company:'); !!}
-			{!! Form::select('company_id',['Choose Company'] + $companies,null,['class'=>'form-control']); !!} 
-			{!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}">
+			{!! Form::label('rfid_name', 'RFID Name:'); !!}
+			{!! Form::number('rfid_name',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('rfid_name','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
@@ -25,11 +25,11 @@
 
 		<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
 			{!! Form::label('type', 'Type:'); !!}
-			{!! Form::select('type',[0 => 'Staff',1=>'Company'],null,['class'=>'form-control', 'id' => 'discountSelected']); !!} 
+			{!! Form::select('type',[0 => 'Staff',1=>'Company'],null,['class'=>'form-control', 'id' => 'showHide']); !!} 
 			{!! $errors->first('type','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts" style="display:none;">
+		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
 		{!! Form::label('discounts', 'Discounts:'); !!}
 
 			<div class="row">
@@ -46,7 +46,7 @@
 
 		</div>
 
-		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="limits" style="display:none;">
+		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="limits">
 		{!! Form::label('limits', 'Limits:'); !!}
 
 			<div class="row">
@@ -63,19 +63,25 @@
 
 		</div>
 
-		<div class="form-group {{ $errors->has('one_time_limit') ? 'has-error' :'' }}">
+		<div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company" style="display: none">
+			{!! Form::label('company_id', 'Company:'); !!}
+			{!! Form::select('company_id',['Choose Company'] + $companies,null,['class'=>'form-control']); !!} 
+			{!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
+		</div>
+
+		<div class="form-group {{ $errors->has('one_time_limit') ? 'has-error' :'' }}" id="one_time_limit" style="display: none">
 			{!! Form::label('one_time_limit', 'One_Time_Limit:'); !!}
 			{!! Form::number('one_time_limit',null,['class'=>'form-control']); !!}
 			{!! $errors->first('one_time_limit','<span class="help-block">:message</span>') !!} 
 		</div>
 
-		<div class="form-group {{ $errors->has('plates') ? 'has-error' :'' }}">
+		<div class="form-group {{ $errors->has('plates') ? 'has-error' :'' }}" id="plates" style="display: none">
 			{!! Form::label('plates', 'Plates:'); !!}
 			{!! Form::text('plates',null,['class'=>'form-control']); !!}
 			{!! $errors->first('plates','<span class="help-block">:message</span>') !!} 
 		</div>
 
-		<div class="form-group {{ $errors->has('car_id') ? 'has-error' :'' }}">
+		<div class="form-group {{ $errors->has('car_id') ? 'has-error' :'' }}" id="car_id" style="display: none">
 			{!! Form::label('car_id', 'Car_Id:'); !!}
 			{!! Form::number('car_id',null,['class'=>'form-control']); !!}
 			{!! $errors->first('car_id','<span class="help-block">:message</span>') !!} 
@@ -103,16 +109,20 @@
 <script>
 	
 	// Check if company is selected and show discount fields
-	$(document).on('click','#discountSelected',function(){
-	    var e = document.getElementById("discountSelected");
+	$(document).on('click','#showHide',function(){
+	    var e = document.getElementById("showHide");
 		var value = e.options[e.selectedIndex].value;
 
 		if(value == 1){
-			$("#discounts").show();
-			$("#limits").show();
+			$("#company").show();
+			$("#one_time_limit").show();
+			$("#plates").show();
+			$("#car_id").show();
 		}else {
-			$("#discounts").hide();
-			$("#limits").hide();
+			$("#company").hide();
+			$("#one_time_limit").hide();
+			$("#plates").hide();
+			$("#car_id").hide();
 		}
 	});
 
