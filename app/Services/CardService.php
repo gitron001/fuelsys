@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
 use Config;
 use App\Models\Transaction;
+use App\Models\Rfid;
 
 class CardService extends ServiceProvider
 {
@@ -58,7 +59,13 @@ class CardService extends ServiceProvider
 
             $cardNumber = pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]).pack('c', $response[5]);
             $cardNumber = unpack('i', $cardNumber)[1];
+
+
             echo '<br> Card Number: '. $cardNumber;
+
+            $the_card = Rfid::where("rfid", $cardNumber)->first();
+
+            dd($the_card);
             echo ' -- Nozle 1 : '. $response[10];
             echo ' -- Nozle 2 : '. $response[11];
             echo ' -- Nozle 3 : '. $response[12];

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Tank;
-use App\Product;
+use App\Models\Tank;
+use App\Models\Product;
 
 class TankController extends Controller
 {

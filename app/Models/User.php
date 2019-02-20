@@ -20,18 +20,22 @@ class User extends Model
     ];
 
     public function company(){
-        return $this->belongsTo('App\Company');
+        return $this->belongsTo('App\Models\Company')->withDefault([
+            'name' => '',
+        ]);
     }
 
     public function branch(){
-        return $this->belongsTo('App\Branch');
+        return $this->belongsTo('App\Models\Branch')->withDefault([
+            'name' => '',
+        ]);;
     }
 
     public function transaction(){
-        return $this->hasMany('App\Transaction');
+        return $this->hasMany('App\Models\Transaction');
     }
 
     public function rfid(){
-        return $this->hasMany('App\Rfid');
+        return $this->hasMany('App\Models\Rfid');
     }
 }

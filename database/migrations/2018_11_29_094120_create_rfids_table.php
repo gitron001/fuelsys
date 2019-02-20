@@ -15,9 +15,9 @@ class CreateRfidsTable extends Migration
     {
         Schema::create('rfids', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('ffid');
+            $table->integer('rfid');
             $table->integer('user_id');
-            $table->integer('status');
+            $table->integer('status')->default('1');;
             $table->timestamps();
         });
     }

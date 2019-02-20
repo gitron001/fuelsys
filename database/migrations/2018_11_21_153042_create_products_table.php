@@ -18,7 +18,6 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->integer('price');
             $table->integer('vat');
-            $table->integer('pfc_id');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyCreateRequest;
-use App\Company;
+use App\Models\Company;
 
 class CompaniesController extends Controller
 {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Dispaneser;
+use App\Models\Dispaneser;
 
 class DispaneserController extends Controller
 {

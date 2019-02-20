@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Transaction;
-use App\User;
-use App\Dispaneser;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Models\Dispaneser;
 use App\Services\TransactionService;
 
 class TransactionController extends Controller
