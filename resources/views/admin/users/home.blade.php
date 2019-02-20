@@ -37,7 +37,7 @@
           					<td>{{ $user->name }}</td>
           					<td>{{ $user->email }}</td>
           					<td>{{ $user->branch->name }}</td>
-          					<td>{{ $user->role }}</td>
+          					<td>{{ $user->role->name }}</td>
           					<td>{{ $user->status == 1 ? 'Active' : 'No Active' }}</td>
           					<td>{{ $user->created_at->diffForHumans() }}</td>
           					<td>{{ $user->updated_at->diffForHumans() }}</td>

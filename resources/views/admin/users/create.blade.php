@@ -24,9 +24,9 @@
 		</div>
 
 		<div class="form-group {{ $errors->has('role') ? 'has-error' :'' }}">
-			{!! Form::label('role', 'Role:'); !!}
-			{!! Form::number('role',null,['class'=>'form-control']); !!}
-			{!! $errors->first('role','<span class="help-block">:message</span>') !!} 
+			{!! Form::label('role_id', 'Role:'); !!}
+			{!! Form::select('role_id',['Choose Role'] + $roles,null,['class'=>'form-control']); !!}
+			{!! $errors->first('role_id','<span class="help-block">:message</span>') !!} 
 		</div>
 
 		<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">

@@ -12,7 +12,7 @@ class User extends Model
         'company_id',
         'email',
         'branch_id',
-        'role',
+        'role_id',
         'one_time_limit',
         'plates',
         'car_id',
@@ -22,7 +22,13 @@ class User extends Model
     public function branch(){
         return $this->belongsTo('App\Models\Branch')->withDefault([
             'name' => '',
-        ]);;
+        ]);
+    }
+
+    public function role(){
+        return $this->belongsTo('App\Models\Role')->withDefault([
+            'name' => '',
+        ]);
     }
 
     public function transaction(){
@@ -32,4 +38,5 @@ class User extends Model
     public function rfid(){
         return $this->hasMany('App\Models\Rfid');
     }
+
 }

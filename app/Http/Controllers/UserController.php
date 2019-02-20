@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Branch;
 use App\Models\Company;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -28,7 +29,9 @@ class UserController extends Controller
     public function create()
     {
         $branches = Branch::pluck('name','id')->all();
-        return view('admin/users/create',compact('branches'));
+        $roles    = Role::pluck('name','id')->all();
+
+        return view('admin/users/create',compact('branches','roles'));
     }
 
     /**
@@ -67,8 +70,9 @@ class UserController extends Controller
     {
         $user   = User::findOrFail($id);
         $branch = Branch::pluck('name','id')->all();
+        $role   = Role::pluck('name','id')->all();
 
-        return view('admin/users/edit',compact('user','branch'));
+        return view('admin/users/edit',compact('user','branch','role'));
     }
 
     /**

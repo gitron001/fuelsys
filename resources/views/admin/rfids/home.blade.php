@@ -37,7 +37,7 @@
                 <tr>
                   	<td>{{ $rfid->rfid }}</td>
                   	<td>{{ $rfid->user->name }}</td>
-                    <td>{{ $rfid->company->name }}</td>
+                    <td>{{ $rfid->company->name ? $rfid->company->name : 'No Company' }}</td>
                     <td>{{ $rfid->one_time_limit }}</td>
                     <td>{{ $rfid->plates }}</td>
                     <td>{{ $rfid->car_id }}</td>
