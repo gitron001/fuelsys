@@ -13,7 +13,7 @@
 
 		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}">
 			{!! Form::label('rfid_name', 'RFID Name:'); !!}
-			{!! Form::number('rfid_name',null,['class'=>'form-control']); !!} 
+			{!! Form::text('rfid_name',null,['class'=>'form-control']); !!} 
 			{!! $errors->first('rfid_name','<span class="help-block">:message</span>') !!}
 		</div>
 

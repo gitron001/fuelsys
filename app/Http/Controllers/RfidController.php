@@ -56,11 +56,13 @@ class RfidController extends Controller
 
         $id = Rfid::insertGetId([
             'rfid'          => $request->input('rfid'),
+            'rfid_name'     => $request->input('rfid_name'),
             'user_id'       => $request->input('user_id'),
-            'company_id'    => $request->input('company_id'),
-            'one_time_limit'=> $request->input('one_time_limit'),
-            'plates'        => $request->input('plates'),
-            'car_id'        => $request->input('car_id'),
+            'company_id'    => $request->input('company_id') ? : 0,
+            'one_time_limit'=> $request->input('one_time_limit') ? : 0,
+            'plates'        => $request->input('plates') ? : 0,
+            'car_id'        => $request->input('car_id') ? : 0,
+            'status'        => 1,
             'created_at'    => date('Y-m-d H:i:s'),
             'updated_at'    => date('Y-m-d H:i:s')
         ]);
