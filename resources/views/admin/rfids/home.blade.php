@@ -20,8 +20,12 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>FFID</th>
-                  <th>User_id</th>
+                  <th>RFID</th>
+                  <th>User</th>
+                  <th>Company</th>
+                  <th>One time limit</th>
+                  <th>Plates</th>
+                  <th>Car_id</th>
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Edit</th>
@@ -31,8 +35,12 @@
                 <tbody>
                 @foreach($rfids as $rfid)
                 <tr>
-                  	<td>{{ $rfid->ffid }}</td>
+                  	<td>{{ $rfid->rfid }}</td>
                   	<td>{{ $rfid->user->name }}</td>
+                    <td>{{ $rfid->company->name }}</td>
+                    <td>{{ $rfid->one_time_limit }}</td>
+                    <td>{{ $rfid->plates }}</td>
+                    <td>{{ $rfid->car_id }}</td>
                     <td>{{ $rfid->created_at->diffForHumans() }}</td>
                   	<td>{{ $rfid->updated_at->diffForHumans() }}</td>
                   	<td><a href="{{ url('admin/rfids/'.$rfid->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>

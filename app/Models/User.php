@@ -19,12 +19,6 @@ class User extends Model
         'status',
     ];
 
-    public function company(){
-        return $this->belongsTo('App\Models\Company')->withDefault([
-            'name' => '',
-        ]);
-    }
-
     public function branch(){
         return $this->belongsTo('App\Models\Branch')->withDefault([
             'name' => '',

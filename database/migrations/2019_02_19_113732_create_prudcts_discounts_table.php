@@ -17,7 +17,7 @@ class CreatePrudctsDiscountsTable extends Migration
             $table->increments('id');
             $table->integer('rfid_id');
             $table->integer('product_id');
-            $table->integer('discount');
+            $table->double('discount');
             $table->timestamps();
         });
     }

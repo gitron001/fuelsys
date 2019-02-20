@@ -5,13 +5,33 @@
 		{!! Form::model($rfid,['method'=>'PATCH', 'action'=>['RfidController@update',$rfid->id]]) !!}
 		
 		<div class="form-group">
-			{!! Form::label('ffid', 'FFID'); !!}
-			{!! Form::text('ffid',null,['class'=>'form-control']); !!} 
+			{!! Form::label('rfid', 'RFID'); !!}
+			{!! Form::text('rfid',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('user_id', 'User_id'); !!}
+			{!! Form::label('user_id', 'User'); !!}
 			{!! Form::select('user_id',$users,null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('company_id', 'Company'); !!}
+			{!! Form::select('company_id',$companies,null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('one_time_limit', 'One_Time_Limit'); !!}
+			{!! Form::text('one_time_limit',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('plates', 'Plates'); !!}
+			{!! Form::text('plates',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('car_id', 'Car_Id'); !!}
+			{!! Form::text('car_id',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">

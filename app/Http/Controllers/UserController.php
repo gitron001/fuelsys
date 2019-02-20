@@ -28,8 +28,7 @@ class UserController extends Controller
     public function create()
     {
         $branches = Branch::pluck('name','id')->all();
-        $companies = Company::pluck('name','id')->all();
-        return view('admin/users/create',compact('branches','companies'));
+        return view('admin/users/create',compact('branches'));
     }
 
     /**
@@ -66,10 +65,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $companies = Company::pluck('name','id')->all();
+        $user   = User::findOrFail($id);
+        $branch = Branch::pluck('name','id')->all();
 
-        return view('admin/users/edit',compact('user','companies'));
+        return view('admin/users/edit',compact('user','branch'));
     }
 
     /**

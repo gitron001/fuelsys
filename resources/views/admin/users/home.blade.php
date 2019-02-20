@@ -21,31 +21,23 @@
                 <thead>
                 <tr>
         					<th>Name</th>
-        					<th>Company_id</th>
         					<th>Email</th>
         					<th>Branch_id</th>
         					<th>Role</th>
-        					<th>One_time_limit</th>
-        					<th>Plates</th>
-        					<th>Car_id</th>
         					<th>Status</th>
         					<th>Created At</th>
         					<th>Updated At</th>
         					<th>Edit</th>
-                  	<th>Delete</th>
+                  <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($users as $user)
                 <tr>
           					<td>{{ $user->name }}</td>
-          					<td>{{ $user->company->name }}</td>
           					<td>{{ $user->email }}</td>
           					<td>{{ $user->branch->name }}</td>
           					<td>{{ $user->role }}</td>
-          					<td>{{ $user->one_time_limit }}</td>
-          					<td>{{ $user->plates }}</td>
-          					<td>{{ $user->car_id }}</td>
           					<td>{{ $user->status == 1 ? 'Active' : 'No Active' }}</td>
           					<td>{{ $user->created_at->diffForHumans() }}</td>
           					<td>{{ $user->updated_at->diffForHumans() }}</td>

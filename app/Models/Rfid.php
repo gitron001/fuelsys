@@ -11,6 +11,12 @@ class Rfid extends Model
         'user_id', 
     ];
 
+    public function company(){
+        return $this->belongsTo('App\Models\Company')->withDefault([
+            'name' => '',
+        ]);
+    }
+
     public function user(){
         return $this->belongsTo('App\Models\User');
     }

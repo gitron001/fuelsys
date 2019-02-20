@@ -6,9 +6,15 @@
 		{!! Form::open(['method'=>'POST', 'action'=>['RfidController@store']]) !!}
 		
 		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}">
-			{!! Form::label('ffid', 'FFID:'); !!}
-			{!! Form::number('ffid',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('ffid','<span class="help-block">:message</span>') !!}
+			{!! Form::label('rfid', 'RFID:'); !!}
+			{!! Form::number('rfid',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('rfid','<span class="help-block">:message</span>') !!}
+		</div>
+
+		<div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}">
+			{!! Form::label('company_id', 'Company:'); !!}
+			{!! Form::select('company_id',['Choose Company'] + $companies,null,['class'=>'form-control']); !!} 
+			{!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
@@ -34,7 +40,7 @@
 					{!! Form::select('product[]',['Choose Product'] + $products,null,['class'=>'form-control']); !!} 
 				</div>
 				<div class="col-md-5">
-					{!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01']); !!}
+					{!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
 				</div>
 			</div>
 
@@ -51,10 +57,28 @@
 					{!! Form::select('branch[]',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
 				</div>
 				<div class="col-md-5">
-					{!! Form::number('limit[]',null,['class'=>'form-control','placeholder'=>'0.01']); !!}
+					{!! Form::number('limit[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
 				</div>
 			</div>
 
+		</div>
+
+		<div class="form-group {{ $errors->has('one_time_limit') ? 'has-error' :'' }}">
+			{!! Form::label('one_time_limit', 'One_Time_Limit:'); !!}
+			{!! Form::number('one_time_limit',null,['class'=>'form-control']); !!}
+			{!! $errors->first('one_time_limit','<span class="help-block">:message</span>') !!} 
+		</div>
+
+		<div class="form-group {{ $errors->has('plates') ? 'has-error' :'' }}">
+			{!! Form::label('plates', 'Plates:'); !!}
+			{!! Form::text('plates',null,['class'=>'form-control']); !!}
+			{!! $errors->first('plates','<span class="help-block">:message</span>') !!} 
+		</div>
+
+		<div class="form-group {{ $errors->has('car_id') ? 'has-error' :'' }}">
+			{!! Form::label('car_id', 'Car_Id:'); !!}
+			{!! Form::number('car_id',null,['class'=>'form-control']); !!}
+			{!! $errors->first('car_id','<span class="help-block">:message</span>') !!} 
 		</div>
 
 
@@ -94,12 +118,12 @@
 
 	//Append another div if button(discounts) + is clicked
 	$(document).on('click','#addProduct',function(){
-		$("#discounts").append('<div class="row" id="products"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="product[]"><option value="0">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" placeholder="0.01" name="discount[]" type="number"></div></div>');
+		$("#discounts").append('<div class="row" id="products"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="product[]"><option value="0">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" step="any" placeholder="0.01" name="discount[]" type="number"></div></div>');
 	});
 
 	//Append another div if button(limits) + is clicked
 	$(document).on('click','#addBranch',function(){
-		$("#limits").append('<div class="row" id="branches"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="branch[]"><option value="0">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" placeholder="0.01" name="limit[]" type="number"></div></div>');
+		$("#limits").append('<div class="row" id="branches"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="branch[]"><option value="0">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" step="any" placeholder="0.01" name="limit[]" type="number"></div></div>');
 	});
 
 	$(document).on('click','#removeProduct',function(){

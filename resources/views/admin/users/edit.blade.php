@@ -10,38 +10,18 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('company_id', 'Company_Id'); !!}
-			{!! Form::select('company_id',$companies,null,['class'=>'form-control']); !!} 
-		</div>
-
-		<div class="form-group">
 			{!! Form::label('email', 'Email'); !!}
 			{!! Form::text('email',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('branch_id', 'B_Id'); !!}
-			{!! Form::text('branch_id',null,['class'=>'form-control']); !!} 
+			{!! Form::label('branch_id', 'Branch'); !!}
+			{!! Form::select('branch_id',$branch,null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
 			{!! Form::label('role', 'Role'); !!}
 			{!! Form::text('role',null,['class'=>'form-control']); !!} 
-		</div>
-
-		<div class="form-group">
-			{!! Form::label('one_time_limit', 'One_Time_Limit'); !!}
-			{!! Form::text('one_time_limit',null,['class'=>'form-control']); !!} 
-		</div>
-
-		<div class="form-group">
-			{!! Form::label('plates', 'Plates'); !!}
-			{!! Form::text('plates',null,['class'=>'form-control']); !!} 
-		</div>
-
-		<div class="form-group">
-			{!! Form::label('car_id', 'Car_Id'); !!}
-			{!! Form::text('car_id',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">

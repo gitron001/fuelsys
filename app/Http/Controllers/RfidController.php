@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Branch;
 use App\Models\RFID_Discounts;
 use App\Models\RFID_Limits;
+use App\Models\Company;
 use DB;
 
 class RfidController extends Controller
@@ -34,8 +35,9 @@ class RfidController extends Controller
         $users      = User::pluck('name','id')->all();
         $products   = Product::pluck('name','id')->all();
         $branches   = Branch::pluck('name','id')->all();
+        $companies  = Company::pluck('name','id')->all();
 
-        return view('/admin/rfids/create',compact('users','products','branches'));
+        return view('/admin/rfids/create',compact('users','products','branches','companies'));
     }
 
     /**
@@ -53,8 +55,12 @@ class RfidController extends Controller
         $firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
 
         $id = Rfid::insertGetId([
-            'ffid'          => $request->input('ffid'),
+            'rfid'          => $request->input('rfid'),
             'user_id'       => $request->input('user_id'),
+            'company_id'    => $request->input('company_id'),
+            'one_time_limit'=> $request->input('one_time_limit'),
+            'plates'        => $request->input('plates'),
+            'car_id'        => $request->input('car_id'),
             'created_at'    => date('Y-m-d H:i:s'),
             'updated_at'    => date('Y-m-d H:i:s')
         ]);
@@ -111,8 +117,9 @@ class RfidController extends Controller
     {
         $rfid       = Rfid::findOrFail($id);
         $users      = User::pluck('name','id')->all();
+        $companies  = Company::pluck('name','id')->all();
 
-        return view('/admin/rfids/edit',compact('rfid','users'));
+        return view('/admin/rfids/edit',compact('rfid','users','companies'));
     }
 
     /**

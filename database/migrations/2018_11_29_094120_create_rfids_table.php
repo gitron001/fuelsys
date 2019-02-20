@@ -17,7 +17,11 @@ class CreateRfidsTable extends Migration
             $table->increments('id');
             $table->integer('rfid');
             $table->integer('user_id');
-            $table->integer('status')->default('1');;
+            $table->integer('company_id');
+            $table->integer('one_time_limit');
+            $table->string('plates');
+            $table->integer('car_id');
+            $table->integer('status')->default('1');
             $table->timestamps();
         });
     }
