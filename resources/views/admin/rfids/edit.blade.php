@@ -10,13 +10,18 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('user_id', 'User'); !!}
-			{!! Form::select('user_id',$users,null,['class'=>'form-control']); !!} 
+			{!! Form::label('rfid_name', 'RFID Name'); !!}
+			{!! Form::text('rfid_name',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
+			{!! Form::label('user_id', 'User'); !!}
+			{!! Form::select('user_id',$users,null,['class'=>'form-control']); !!} 
+		</div>
+		
+		<div class="form-group">
 			{!! Form::label('company_id', 'Company'); !!}
-			{!! Form::select('company_id',$companies,null,['class'=>'form-control']); !!} 
+			{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
