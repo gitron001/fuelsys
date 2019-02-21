@@ -42,7 +42,7 @@ class CardService extends ServiceProvider
 
     public static function check_card($socket, $channel = 1)
     {
-        while (true) {
+
             //Get all transaction by channel
             $channel_id = PFC::conver_to_bin($channel);
             $message = "\x1\x5\x0A" . $channel_id;
@@ -61,28 +61,44 @@ class CardService extends ServiceProvider
             $cardNumber = unpack('i', $cardNumber)[1];
 
 
-            echo '<br> Card Number: '. $cardNumber;
+            //echo '<br> Card Number: '. $cardNumber;
 
-            $the_card = Rfid::where("rfid", $cardNumber)->first();
+            $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
 
-            dd($the_card);
+            if($the_card->limits){
+
+            }
+
+            if(count($the_card->discounts) == 0){
+                //self::activate_card($socket, $channel);
+                echo 'no discounts';
+            }else{
+                $all_discounts = array();
+                for($i = 10; $i < 15; $i++){
+                    foreach($the_card->discounts as $discount){
+                        if($discount->id == $response[$i]){
+                            $all_discounts[$i] = array($discount->product->price - $discount->discount);
+                        }
+                    }
+                }
+                for($i = 10; $i < 15; $i++){
+                    if(!isset($all_discounts[$i] )){
+                        foreach($the_card->discounts as $discount) {
+                            if($discount->id == $response[$i]){
+                                $all_discounts[$i] = array($discount->product->price);
+                            }
+                        }
+                    }
+                }
+                dd($all_discounts);
+               self::activate_card_discount($socket, $channel, $all_discounts);
+            }
+
             echo ' -- Nozle 1 : '. $response[10];
             echo ' -- Nozle 2 : '. $response[11];
             echo ' -- Nozle 3 : '. $response[12];
             echo ' -- Nozle 4 : '. $response[13];
             echo ' -- Nozle 5 : '. $response[14];
-
-            /*$length = count($response) - 3;
-            for ($i = 3; $i <= $length; $i++) {
-                if ($response[$i] == 2) {
-                    $channel = ($i - 3);
-                    self::activate_card($socket, $channel);
-                }
-            }*/
-            //print_r($response);
-            break;
-
-        }
     }
 
     /**
@@ -92,8 +108,6 @@ class CardService extends ServiceProvider
      */
     public static function activate_card($socket, $channel = 1)
     {
-        //exit($channel);
-        while(true) {
             //Get all transaction by channel
             $channel_id = PFC::conver_to_bin($channel);
             $command    = PFC::conver_to_bin('3');
@@ -117,24 +131,41 @@ class CardService extends ServiceProvider
             //End of Message
             $binarydata .= pack("c*",02);
 
-            print_r(unpack("c*", $binarydata ));
+            $response = PFC::send_message($socket, $binarydata, $message);
 
-            //Send Message to the socket
-            socket_write($socket, $binarydata);
-            //Read the reply
-            $input = socket_read($socket, 2048);
-            //Convert reply to array
-           $response = unpack("c*", $input );
+            return true;
+    }
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public static function activate_card_discount($socket, $channel, $all_discounts) {
+            //Get all transaction by channel
+            $channel_id = PFC::conver_to_bin($channel);
+            $command    = PFC::conver_to_bin('3');
+            $message = "\x1\x11\x8A".$channel_id.$command.$command;
+            $the_crc = PFC::crc16($message);
 
-            $validation = PFC::validate_message($response);
-            if(!$validation){
-                echo 'Invalid Transactions<bd>';
-                sleep(2);
-                continue;
-            }
-            print_r($response);
-            //socket_close($socket);
-            break;
-        }
+            //Start of mesasge
+            $binarydata = pack("c*", 0x01);
+            //Length
+            $binarydata .= pack("c*",0x11);
+            //Command
+            $binarydata .= pack("c*",0x8A);
+            //Message
+            $binarydata .= pack("C*", $channel);
+            //Command
+            $binarydata .= pack("c*",0x03);
+            //Command 2
+            $binarydata .= pack("c*",0x03);
+            //CRC
+            $binarydata .= strrev(pack("s",$the_crc));
+            //End of Message
+            $binarydata .= pack("c*",02);
+
+            $response = PFC::send_message($socket, $binarydata, $message);
+
+            return true;
     }
 }
