@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Rfid;
 use App\Models\User;
-use App\Models\Product;
+use App\Models\Products;
 use App\Models\Branch;
 use App\Models\RFID_Discounts;
 use App\Models\RFID_Limits;
@@ -33,7 +33,7 @@ class RfidController extends Controller
     public function create()
     {
         $users      = User::pluck('name','id')->all();
-        $products   = Product::pluck('name','id')->all();
+        $products   = Products::pluck('name','id')->all();
         $branches   = Branch::pluck('name','id')->all();
         $companies  = Company::pluck('name','id')->all();
 
@@ -63,8 +63,8 @@ class RfidController extends Controller
             'plates'        => $request->input('plates') ? : 0,
             'car_id'        => $request->input('car_id') ? : 0,
             'status'        => 1,
-            'created_at'    => date('Y-m-d H:i:s'),
-            'updated_at'    => date('Y-m-d H:i:s')
+            'created_at'    => \Carbon\Carbon::now(),
+            'updated_at'    => \Carbon\Carbon::now()
         ]);
 
         if($firstValueOfArrayProduct !== 0 && !empty($firstValueOfArrayDiscount)){

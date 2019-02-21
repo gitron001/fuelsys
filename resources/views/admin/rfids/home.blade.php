@@ -21,6 +21,7 @@
                 <thead>
                 <tr>
                   <th>RFID</th>
+                  <th>RFID Name</th>
                   <th>User</th>
                   <th>Company</th>
                   <th>One time limit</th>
@@ -36,6 +37,7 @@
                 @foreach($rfids as $rfid)
                 <tr>
                   	<td>{{ $rfid->rfid }}</td>
+                    <td>{{ $rfid->rfid_name }}</td>
                   	<td>{{ $rfid->user->name }}</td>
                     <td>{{ $rfid->company->name ? $rfid->company->name : 'No Company' }}</td>
                     <td>{{ $rfid->one_time_limit }}</td>

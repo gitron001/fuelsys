@@ -8,7 +8,14 @@ class Rfid extends Model
 {
     protected $fillable = [
         'rfid',
-        'user_id', 
+        'rfid_name',
+        'user_id',
+        'company_id',
+        'one_time_limit',
+        'plates',
+        'car_id',
+        'created_at',
+        'updated_at', 
     ];
 
     public function company(){
