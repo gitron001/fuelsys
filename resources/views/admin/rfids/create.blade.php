@@ -81,10 +81,10 @@
 			{!! $errors->first('plates','<span class="help-block">:message</span>') !!} 
 		</div>
 
-		<div class="form-group {{ $errors->has('car_id') ? 'has-error' :'' }}" id="car_id" style="display: none">
-			{!! Form::label('car_id', 'Car_Id:'); !!}
-			{!! Form::number('car_id',null,['class'=>'form-control']); !!}
-			{!! $errors->first('car_id','<span class="help-block">:message</span>') !!} 
+		<div class="form-group {{ $errors->has('vehicle') ? 'has-error' :'' }}" id="vehicle" style="display: none">
+			{!! Form::label('vehicle', 'Vehicle:'); !!}
+			{!! Form::text('vehicle',null,['class'=>'form-control']); !!}
+			{!! $errors->first('vehicle','<span class="help-block">:message</span>') !!} 
 		</div>
 
 
@@ -117,12 +117,12 @@
 			$("#company").show();
 			$("#one_time_limit").show();
 			$("#plates").show();
-			$("#car_id").show();
+			$("#vehicle").show();
 		}else {
 			$("#company").hide();
 			$("#one_time_limit").hide();
 			$("#plates").hide();
-			$("#car_id").hide();
+			$("#vehicle").hide();
 		}
 	});
 

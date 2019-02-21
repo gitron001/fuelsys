@@ -21,7 +21,7 @@ class CreateRfidsTable extends Migration
             $table->integer('company_id')->default('0');
             $table->integer('one_time_limit')->default('0');
             $table->string('plates')->default('0');
-            $table->integer('car_id')->default('0');
+            $table->string('vehicle')->default('0');
             $table->integer('status')->default('1');
             $table->timestamps();
         });
