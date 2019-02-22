@@ -7,6 +7,8 @@ use App\Services\PFCServices as PFC;
 use Config;
 use App\Models\Transaction;
 use App\Models\Rfid;
+use App\Models\Products;
+
 
 class CardService extends ServiceProvider
 {
@@ -65,9 +67,9 @@ class CardService extends ServiceProvider
 
             $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
 
-            if($the_card->limits){
+           /*if($the_card->limits){
 
-            }
+            }*/
 
             if(count($the_card->discounts) == 0){
                 //self::activate_card($socket, $channel);
@@ -77,28 +79,26 @@ class CardService extends ServiceProvider
                 for($i = 10; $i < 15; $i++){
                     foreach($the_card->discounts as $discount){
                         if($discount->id == $response[$i]){
-                            $all_discounts[$i] = array($discount->product->price - $discount->discount);
+                            $all_discounts[$i] = number_format(($discount->product->price - $discount->discount), 2);
+                            break;
                         }
                     }
                 }
+                $products = Products::all();
                 for($i = 10; $i < 15; $i++){
                     if(!isset($all_discounts[$i] )){
-                        foreach($the_card->discounts as $discount) {
-                            if($discount->id == $response[$i]){
-                                $all_discounts[$i] = array($discount->product->price);
+                        foreach($products as $pr) {
+                            if($pr->id == $response[$i]){
+                                $all_discounts[$i] = number_format($pr->price, 2);
+                                break;
                             }
                         }
                     }
                 }
-                dd($all_discounts);
+
                self::activate_card_discount($socket, $channel, $all_discounts);
             }
 
-            echo ' -- Nozle 1 : '. $response[10];
-            echo ' -- Nozle 2 : '. $response[11];
-            echo ' -- Nozle 3 : '. $response[12];
-            echo ' -- Nozle 4 : '. $response[13];
-            echo ' -- Nozle 5 : '. $response[14];
     }
 
     /**
@@ -143,8 +143,28 @@ class CardService extends ServiceProvider
     public static function activate_card_discount($socket, $channel, $all_discounts) {
             //Get all transaction by channel
             $channel_id = PFC::conver_to_bin($channel);
-            $command    = PFC::conver_to_bin('3');
-            $message = "\x1\x11\x8A".$channel_id.$command.$command;
+            $command    = PFC::conver_to_bin(3);
+            $prices     = "";
+
+            foreach($all_discounts as $ds){
+
+                //dd(str_replace('.', '', $ds));
+                //$prices .= $bin;
+                $lenth = strlen($ds);
+                //s$ds = number_format($ds, 2);
+                //dd($ds);
+                if($lenth % 2 == 0){
+                    $hex        = (string) strtoupper(dechex(str_replace('.', '',$ds)));
+                }
+                else{
+                    $hex        = (string) '0'.strtoupper(dechex(str_replace('.', '',$ds)));
+                }
+
+                $prices    .= hex2bin($hex);
+
+            }
+            $message = "\x1\x11\x8A".$channel_id.$command.$command.$prices;
+            //dd(unpack('c*',$message));
             $the_crc = PFC::crc16($message);
 
             //Start of mesasge
@@ -159,13 +179,18 @@ class CardService extends ServiceProvider
             $binarydata .= pack("c*",0x03);
             //Command 2
             $binarydata .= pack("c*",0x03);
+            foreach($all_discounts as $ds){
+               $binarydata .= strrev(pack('s', str_replace('.', '', $ds)));
+            }
             //CRC
             $binarydata .= strrev(pack("s",$the_crc));
             //End of Message
             $binarydata .= pack("c*",02);
 
-            $response = PFC::send_message($socket, $binarydata, $message);
 
+            $response = PFC::send_message($socket, $binarydata, $message);
+            print_r(unpack('c*', $binarydata));
+            dd($response);
             return true;
     }
 }
