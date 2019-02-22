@@ -15,4 +15,8 @@ class Products extends Model
     public function tank(){
         return $this->hasMany('App\Models\Tank');
     }
+
+    public function rfid_discount(){
+        return $this->hasMany('App\Models\RFID_Discounts');
+    }
 }

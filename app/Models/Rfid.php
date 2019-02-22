@@ -13,7 +13,7 @@ class Rfid extends Model
         'company_id',
         'one_time_limit',
         'plates',
-        'car_id',
+        'vehicle',
         'created_at',
         'updated_at', 
     ];

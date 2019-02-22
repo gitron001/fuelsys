@@ -26,7 +26,7 @@
                   <th>Company</th>
                   <th>One time limit</th>
                   <th>Plates</th>
-                  <th>Car_id</th>
+                  <th>Vehicle</th>
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Edit</th>
@@ -42,7 +42,7 @@
                     <td>{{ $rfid->company->name ? $rfid->company->name : 'No Company' }}</td>
                     <td>{{ $rfid->one_time_limit }}</td>
                     <td>{{ $rfid->plates }}</td>
-                    <td>{{ $rfid->car_id }}</td>
+                    <td>{{ $rfid->vehicle }}</td>
                     <td>{{ $rfid->created_at->diffForHumans() }}</td>
                   	<td>{{ $rfid->updated_at->diffForHumans() }}</td>
                   	<td><a href="{{ url('admin/rfids/'.$rfid->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
