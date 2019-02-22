@@ -22,19 +22,20 @@
                 <tr>
         					<th>Status</th>
                   <th>Locker</th>
-        					<th>Sl_No</th>
-        					<th>Tn_No</th>
-        					<th>Sts</th>
+        					<th>Tr_no</th>
+        					<th>Sl_no</th>
+        					<th>Product</th>
+        					<th>Dis_status</th>
         					<th>Price</th>
-        					<th>Lit</th>
+                  <th>Lit</th>
                   <th>Money</th>
-                  <th>Ctot</th>
-                  <th>Mtot</th>
-                  <th>~Status</th>
-                  <th>Card</th>
-                  <th>CType</th>
+                  <th>Dis_tot</th>
+                  <th>Pfc_tot</th>
+                  <th>Tr_status</th>
+                  <th>Rfid</th>
+                  <th>Ctype</th>
                   <th>Method</th>
-                  <th>Bill_No</th>
+                  <th>Bill_no</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -44,20 +45,20 @@
                 <tr>
           					<td>{{ $transaction->status }}</td>
                     <td>{{ $transaction->locker }}</td>
+          					<td>{{ $transaction->tr_no }}</td>
           					<td>{{ $transaction->sl_no }}</td>
-          					<td>{{ $transaction->tn_no }}</td>
-                    <td>{{ $transaction->sts }}</td>
+                    <td>{{ $transaction->product }}</td>
+                    <td>{{ $transaction->dis_status }}</td>
                     <td>{{ $transaction->price }}</td>
                     <td>{{ $transaction->lit }}</td>
                     <td>{{ $transaction->money }}</td>
-                    <td>{{ $transaction->ctot }}</td>
-                    <td>{{ $transaction->mtot }}</td>
-                    <td>{{ 'Null' }}</td>
-                    <td>{{ $transaction->card }}</td>
+                    <td>{{ $transaction->dis_tot }}</td>
+                    <td>{{ $transaction->pfc_tot }}</td>
+                    <td>{{ $transaction->tr_status }}</td>
+                    <td>{{ $transaction->rfid }}</td>
                     <td>{{ $transaction->ctype }}</td>
                     <td>{{ $transaction->method }}</td>
-                    <td>{{ $transaction->bill_no }}</td>
-          					
+          					<td>{{ $transaction->bill_no }}</td>
                   	
                   	<td><a href="{{ url('admin/transactions/'.$transaction->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
                     <td>

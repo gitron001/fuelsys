@@ -17,27 +17,33 @@
 			{!! $errors->first('locker','<span class="help-block">:message</span>') !!}
 		</div>
 
+		<div class="form-group {{ $errors->has('tr_no') ? 'has-error' :'' }}">
+			{!! Form::label('tr_no', 'Tr_No:'); !!}
+			{!! Form::number('tr_no',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('tr_no','<span class="help-block">:message</span>') !!}
+		</div>
+
 		<div class="form-group {{ $errors->has('sl_no') ? 'has-error' :'' }}">
 			{!! Form::label('sl_no', 'Sl_No:'); !!}
 			{!! Form::text('sl_no',null,['class'=>'form-control']); !!} 
 			{!! $errors->first('sl_no','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('tn_no') ? 'has-error' :'' }}">
-			{!! Form::label('tn_no', 'Tn_No:'); !!}
-			{!! Form::text('tn_no',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('tn_no','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('product') ? 'has-error' :'' }}">
+			{!! Form::label('product', 'Product:'); !!}
+			{!! Form::number('product',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('product','<span class="help-block">:message</span>') !!}
 		</div>
-
-		<div class="form-group {{ $errors->has('sts') ? 'has-error' :'' }}">
-			{!! Form::label('sts', 'Sts:'); !!}
-			{!! Form::text('sts',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('sts','<span class="help-block">:message</span>') !!}
+		
+		<div class="form-group {{ $errors->has('dis_status') ? 'has-error' :'' }}">
+			{!! Form::label('dis_status', 'Dis_Status:'); !!}
+			{!! Form::text('dis_status',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('dis_status','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('price') ? 'has-error' :'' }}">
 			{!! Form::label('price', 'Price:'); !!}
-			{!! Form::text('price',null,['class'=>'form-control']); !!} 
+			{!! Form::number('price',null,['class'=>'form-control']); !!} 
 			{!! $errors->first('price','<span class="help-block">:message</span>') !!}
 		</div>
 
@@ -53,28 +59,28 @@
 			{!! $errors->first('money','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('ctot') ? 'has-error' :'' }}">
-			{!! Form::label('ctot', 'Ctot:'); !!}
-			{!! Form::text('ctot',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('ctot','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('dis_tot') ? 'has-error' :'' }}">
+			{!! Form::label('dis_tot', 'Dis_Tot:'); !!}
+			{!! Form::text('dis_tot',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('dis_tot','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('mtot') ? 'has-error' :'' }}">
-			{!! Form::label('mtot', 'Mtot:'); !!}
-			{!! Form::text('mtot',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('mtot','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('pfc_tot') ? 'has-error' :'' }}">
+			{!! Form::label('pfc_tot', 'Pfc_Tot:'); !!}
+			{!! Form::text('pfc_tot',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('pfc_tot','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('~status') ? 'has-error' :'' }}">
-			{!! Form::label('~status', '~Status:'); !!}
-			{!! Form::text('~status',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('~status','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('tr_status') ? 'has-error' :'' }}">
+			{!! Form::label('tr_status', 'Tr_Status:'); !!}
+			{!! Form::text('tr_status',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('tr_status','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('card') ? 'has-error' :'' }}">
-			{!! Form::label('card', 'Card:'); !!}
-			{!! Form::text('card',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('card','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('rfid') ? 'has-error' :'' }}">
+			{!! Form::label('rfid', 'RFID:'); !!}
+			{!! Form::number('rfid',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('rfid','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('ctype') ? 'has-error' :'' }}">
@@ -91,7 +97,7 @@
 
 		<div class="form-group {{ $errors->has('bill_no') ? 'has-error' :'' }}">
 			{!! Form::label('bill_no', 'Bill_No:'); !!}
-			{!! Form::text('bill_no',null,['class'=>'form-control']); !!} 
+			{!! Form::number('bill_no',null,['class'=>'form-control']); !!} 
 			{!! $errors->first('bill_no','<span class="help-block">:message</span>') !!}
 		</div>
 

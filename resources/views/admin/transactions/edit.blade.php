@@ -15,18 +15,23 @@
 		</div>
 
 		<div class="form-group">
+			{!! Form::label('tr_no', 'Tr_No'); !!}
+			{!! Form::text('tr_no',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
 			{!! Form::label('sl_no', 'Sl_No'); !!}
 			{!! Form::text('sl_no',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('tn_no', 'Tn_No'); !!}
-			{!! Form::text('tn_no',null,['class'=>'form-control']); !!} 
+			{!! Form::label('product', 'Product'); !!}
+			{!! Form::text('product',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('sts', 'Sts'); !!}
-			{!! Form::text('sts',null,['class'=>'form-control']); !!} 
+			{!! Form::label('dis_status', 'Dis_Status'); !!}
+			{!! Form::text('dis_status',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
@@ -45,27 +50,27 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('ctot', 'Ctot'); !!}
-			{!! Form::text('ctot',null,['class'=>'form-control']); !!} 
+			{!! Form::label('dis_tot', 'Dis_Tot'); !!}
+			{!! Form::text('dis_tot',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('mtot', 'Mtot'); !!}
-			{!! Form::text('mtot',null,['class'=>'form-control']); !!} 
+			{!! Form::label('pfc_tot', 'Pfc_Tot'); !!}
+			{!! Form::text('pfc_tot',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('~status', '~Status'); !!}
-			{!! Form::text('~status',null,['class'=>'form-control']); !!} 
+			{!! Form::label('tr_status', 'Tr_Status'); !!}
+			{!! Form::text('tr_status',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('card', 'Card'); !!}
-			{!! Form::text('card',null,['class'=>'form-control']); !!} 
+			{!! Form::label('rfid', 'RFID'); !!}
+			{!! Form::text('rfid',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('ctype', 'Ctype'); !!}
+			{!! Form::label('ctype', 'CType'); !!}
 			{!! Form::text('ctype',null,['class'=>'form-control']); !!} 
 		</div>
 
@@ -78,9 +83,6 @@
 			{!! Form::label('bill_no', 'Bill_No'); !!}
 			{!! Form::text('bill_no',null,['class'=>'form-control']); !!} 
 		</div>
-
-		
-
 
 		<div class="form-group">
 			{!! Form::submit('Edit Transaction', ['class'=>'btn btn-block btn-primary']); !!}

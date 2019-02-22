@@ -13,4 +13,10 @@ class RFID_Limits extends Model
         'branch_id',
         'limit', 
     ];
+
+    public function branch(){
+        return $this->belongsTo('App\Models\Branch')->withDefault([
+            'name' => '',
+        ]);
+    }
 }

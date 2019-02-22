@@ -16,4 +16,8 @@ class Branch extends Model
     public function users(){
         return $this->hasMany('App\Models\User');
     }
+
+    public function rfid_limit(){
+        return $this->hasMany('App\Models\RFID_Limits');
+    }
 }

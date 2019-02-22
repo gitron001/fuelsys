@@ -117,11 +117,15 @@ class RfidController extends Controller
      */
     public function edit($id)
     {
-        $rfid       = Rfid::findOrFail($id);
-        $users      = User::pluck('name','id')->all();
-        $companies  = Company::pluck('name','id')->all();
+        $rfid           = Rfid::findOrFail($id);
+        $users          = User::pluck('name','id')->all();
+        $branches       = Branch::all();
+        $products       = Products::all();
+        $companies      = Company::pluck('name','id')->all();
+        $rfid_limits    = RFID_Limits::where('rfid_id',$id)->get();
+        $rfid_discounts = RFID_Discounts::where('rfid_id',$id)->get();
 
-        return view('/admin/rfids/edit',compact('rfid','users','companies'));
+        return view('/admin/rfids/edit',compact('rfid','users','companies','rfid_limits','rfid_discounts','branches','products'));
     }
 
     /**
@@ -133,8 +137,26 @@ class RfidController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $rfid = Rfid::findOrFail($id);
         $rfid->update($request->all());
+
+        // Update Product Discount 
+        for($i=0; $i < count($request->input('product')); $i++) { 
+
+            RFID_Discounts::where('rfid_id', $id)
+                ->where('id',$request->input('hidden_input_product')[$i])
+                ->update(['discount' => $request->input('discount')[$i],'product_id' => $request->input('product')[$i]]);
+        }
+
+        // Update Branch Limit
+        for($i=0; $i < count($request->input('branch')); $i++) { 
+
+            RFID_Limits::where('rfid_id', $id)
+                ->where('id',$request->input('hidden_input_branch')[$i])
+                ->update(['limit' => $request->input('limit')[$i],'branch_id' => $request->input('branch')[$i]]);
+        }
+        
         session()->flash('info','Success');
 
         return redirect('/admin/rfids');
