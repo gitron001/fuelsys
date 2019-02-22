@@ -137,25 +137,30 @@ class RfidController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $rfid = Rfid::findOrFail($id);
         $rfid->update($request->all());
 
-        // Update Product Discount 
-        for($i=0; $i < count($request->input('product')); $i++) { 
+        if(!empty($request->input('product'))){
+            // Update Product Discount 
+            for($i=0; $i < count($request->input('product')); $i++) { 
 
-            RFID_Discounts::where('rfid_id', $id)
-                ->where('id',$request->input('hidden_input_product')[$i])
-                ->update(['discount' => $request->input('discount')[$i],'product_id' => $request->input('product')[$i]]);
+                RFID_Discounts::where('rfid_id', $id)
+                    ->where('id',$request->input('hidden_input_product')[$i])
+                    ->update(['discount' => $request->input('discount')[$i],'product_id' => $request->input('product')[$i]]);
+            }
         }
 
-        // Update Branch Limit
-        for($i=0; $i < count($request->input('branch')); $i++) { 
+        if(!empty($request->input('branch'))){
+            // Update Branch Limit
+            for($i=0; $i < count($request->input('branch')); $i++) { 
 
-            RFID_Limits::where('rfid_id', $id)
-                ->where('id',$request->input('hidden_input_branch')[$i])
-                ->update(['limit' => $request->input('limit')[$i],'branch_id' => $request->input('branch')[$i]]);
+                RFID_Limits::where('rfid_id', $id)
+                    ->where('id',$request->input('hidden_input_branch')[$i])
+                    ->update(['limit' => $request->input('limit')[$i],'branch_id' => $request->input('branch')[$i]]);
+            }
         }
+        
         
         session()->flash('info','Success');
 
