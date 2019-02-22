@@ -91,8 +91,6 @@ class RfidController extends Controller
             }
         }
 
-        return redirect('/admin/rfids');
-
         session()->flash('info','Success');
 
         return redirect('/admin/rfids');
@@ -119,8 +117,8 @@ class RfidController extends Controller
     {
         $rfid           = Rfid::findOrFail($id);
         $users          = User::pluck('name','id')->all();
-        $branches       = Branch::all();
-        $products       = Products::all();
+        $branches       = Branch::pluck('name','id')->all();
+        $products       = Products::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
         $rfid_limits    = RFID_Limits::where('rfid_id',$id)->get();
         $rfid_discounts = RFID_Discounts::where('rfid_id',$id)->get();
@@ -160,7 +158,32 @@ class RfidController extends Controller
                     ->update(['limit' => $request->input('limit')[$i],'branch_id' => $request->input('branch')[$i]]);
             }
         }
-        
+
+        // Add new Discount
+        if(($request->input('new_product')[0] != 0) && (!empty($request->input('new_discount')[0]))){
+            foreach(array_combine($request->input('new_product'), $request->input('new_discount')) as $product => $discount){
+
+                $rfid_product = new RFID_Discounts();
+
+                $rfid_product->rfid_id      = $id;
+                $rfid_product->product_id   = $product;
+                $rfid_product->discount     = $discount;
+                $rfid_product->save();
+            }
+        }
+
+        // Add new Limit
+        if(($request->input('new_branch')[0] != 0) && (!empty($request->input('new_limit')[0]))){
+            foreach(array_combine($request->input('new_branch'), $request->input('new_limit')) as $branch => $limit){
+
+                $rfid_branch = new RFID_Limits();
+
+                $rfid_branch->rfid_id      = $id;
+                $rfid_branch->branch_id    = $branch;
+                $rfid_branch->limit        = $limit;
+                $rfid_branch->save();
+            }
+        }
         
         session()->flash('info','Success');
 
