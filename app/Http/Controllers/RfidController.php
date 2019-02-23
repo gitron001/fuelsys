@@ -139,6 +139,21 @@ class RfidController extends Controller
         $rfid = Rfid::findOrFail($id);
         $rfid->update($request->all());
 
+        // DELETE Discount
+        if(empty($request->input('deleteDiscount'))){
+            RFID_Discounts::where('rfid_id',$id)->delete();
+        }else{
+            RFID_Discounts::where('rfid_id',$id)->whereNotIn('id',$request->input('deleteDiscount'))->delete();
+        }
+
+        // DELETE Limit
+        if(empty($request->input('deleteLimit'))){
+            RFID_Limits::where('rfid_id',$id)->delete();
+        }else{
+            RFID_Limits::where('rfid_id',$id)->whereNotIn('id',$request->input('deleteLimit'))->delete();
+        }
+
+        // UPDATE Discount(Product - Discount)
         if(!empty($request->input('product'))){
             // Update Product Discount 
             for($i=0; $i < count($request->input('product')); $i++) { 
@@ -149,6 +164,7 @@ class RfidController extends Controller
             }
         }
 
+        // UPDATE Limit(Branch - Limit)
         if(!empty($request->input('branch'))){
             // Update Branch Limit
             for($i=0; $i < count($request->input('branch')); $i++) { 
@@ -159,7 +175,7 @@ class RfidController extends Controller
             }
         }
 
-        // Add new Discount
+        // ADD new Discount
         if(($request->input('new_product')[0] != 0) && (!empty($request->input('new_discount')[0]))){
             foreach(array_combine($request->input('new_product'), $request->input('new_discount')) as $product => $discount){
 
@@ -172,7 +188,7 @@ class RfidController extends Controller
             }
         }
 
-        // Add new Limit
+        // ADD new Limit
         if(($request->input('new_branch')[0] != 0) && (!empty($request->input('new_limit')[0]))){
             foreach(array_combine($request->input('new_branch'), $request->input('new_limit')) as $branch => $limit){
 

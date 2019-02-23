@@ -47,9 +47,12 @@
 		@foreach($rfid_discounts as $rfid_discount)
 		<div class="form-group">
 			
-			<div class="row">
+			<div class="row" id="discount">
 				<input type="hidden" name="hidden_input_product[]" value="{{$rfid_discount->id}}">
-				<div class="col-md-6">
+				<div class="col-md-1">
+					<button type="button" class="btn btn-danger btn-circle" id="deleteDiscount"><i class="glyphicon glyphicon-minus"></i><input type="hidden" name ="deleteDiscount[]" value="{{$rfid_discount->id}}"></button>
+				</div>
+				<div class="col-md-5">
 					<select name="product[]" class="form-control">
 						@foreach($products as $product_id => $product_name)
 					     <option value="{{ $product_id }}" {{$rfid_discount->product_id == $product_id  ? 'selected' : ''}}>{{ $product_name }}</option>
@@ -76,7 +79,7 @@
 			@endif
 			<div class="row">
 				<div class="col-md-1">
-					<button type="button" class="btn btn-default btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
+					<button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
 				</div>
 				<div class="col-md-5">
 					{!! Form::select('new_product[]',['Choose a Product'] + $products,null,['class'=>'form-control']); !!} 
@@ -98,9 +101,12 @@
 		@foreach($rfid_limits as $rfid_limit)
 		<div class="form-group">
 
-			<div class="row">
+			<div class="row" id="limit">
 				<input type="hidden" name="hidden_input_branch[]" value="{{$rfid_limit->id}}">
-				<div class="col-md-6">
+				<div class="col-md-1">
+					<button type="button" class="btn btn-danger btn-circle" id="deleteLimit"><i class="glyphicon glyphicon-minus"></i><input type="hidden" name ="deleteLimit[]" value="{{$rfid_limit->id}}"></button>
+				</div>
+				<div class="col-md-5">
 					<select name="branch[]" class="form-control">
 						@foreach($branches as $branch_id => $branch_name)
 					     <option value="{{ $branch_id }}" {{$rfid_limit->branch_id == $branch_id  ? 'selected' : ''}}>{{ $branch_name }}</option>
@@ -128,7 +134,7 @@
 		
 			<div class="row">
 				<div class="col-md-1">
-					<button type="button" class="btn btn-default btn-circle" id="addBranch"><i class="glyphicon glyphicon-plus"></i></button>
+					<button type="button" class="btn btn-success btn-circle" id="addBranch"><i class="glyphicon glyphicon-plus"></i></button>
 				</div>
 				<div class="col-md-5">
 					{!! Form::select('new_branch[]',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
@@ -163,13 +169,21 @@
 
 	//Append another div if button(discounts) + is clicked
 	$(document).on('click','#addProduct',function(){
-		$("#discounts").append('<div class="row" id="products"><div class="col-md-1"><button type="button" class="btn btn-default btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_product[]" required><option value="">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_discount[]" type="number" required></div></div><br>');
+		$("#discounts").append('<div class="row" id="products"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_product[]" required><option value="">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_discount[]" type="number" required></div></div><br>');
 	});
 
 	//Append another div if button(limits) + is clicked
 	$(document).on('click','#addBranch',function(){
-		$("#limits").append('<div class="row" id="branches"><div class="col-md-1"><button type="button" class="btn btn-default btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_limit[]" type="number" required></div></div><br>');
+		$("#limits").append('<div class="row" id="branches"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_limit[]" type="number" required></div></div><br>');
 	});
+
+	$(document).on('click','#deleteDiscount',function(){
+		$(this).closest("#discount").remove();
+	});
+
+	$(document).on('click','#deleteLimit',function(){
+		$(this).closest("#limit").remove();
+	});	
 
 	$(document).on('click','#removeProduct',function(){
 		$(this).closest("#products").remove();
@@ -178,6 +192,9 @@
 	$(document).on('click','#removeBranch',function(){
 		$(this).closest("#branches").remove();
 	});	
+
+
+	$("#myDiv").hide()
 
 </script>
 
