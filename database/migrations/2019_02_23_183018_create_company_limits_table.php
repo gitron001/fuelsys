@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompanyDiscountsTable extends Migration
+class CreateCompanyLimitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateCompanyDiscountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_discounts', function (Blueprint $table) {
+        Schema::create('company_limits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('company_id');
-            $table->integer('product_id');
-            $table->integer('discount');
-            $table->integer('type');
+            $table->integer('branch_id');
+            $table->double('limit');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateCompanyDiscountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_discounts');
+        Schema::dropIfExists('company_limits');
     }
 }
