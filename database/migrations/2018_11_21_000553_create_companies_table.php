@@ -27,7 +27,7 @@ class CreateCompaniesTable extends Migration
             $table->string('country');
             $table->integer('type');
             $table->integer('status');
-            $table->integer('limit');
+            $table->integer('limits');
             $table->timestamps();
         });
     }
