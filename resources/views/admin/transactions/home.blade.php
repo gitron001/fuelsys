@@ -11,7 +11,7 @@
               <div class="col-md-6"><h3 class="box-title">Transaction</h3></div>
               <div class="col-md-6">
                 <span class="pull-right">
-                  <a href="{{ url('admin/transactions/create') }}"><button type="button" class="btn btn-block btn-success">+ Create new transaction</button></a>
+                  <a href="{{ url('admin/transaction/excel_export') }}"><button type="button" class="btn btn-block btn-success">Export Excel</button></a>
                 </span>
               </div>
             </div>
