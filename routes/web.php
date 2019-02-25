@@ -25,6 +25,8 @@ Route::resource('/admin/dispanesers', 'DispaneserController');
 Route::resource('/admin/branches', 'BranchController');
 Route::resource('/admin/rfids', 'RfidController');
 
+Route::get('/admin/transaction/excel_export', 'TransactionController@excel_export');
+
 Route::get('locale/{locale}',function($locale){
 	Session::put('locale',$locale);
 	return redirect()->back();

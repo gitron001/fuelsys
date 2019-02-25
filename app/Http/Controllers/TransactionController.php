@@ -7,6 +7,9 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Dispaneser;
 use App\Services\TransactionService;
+use App\Exports\TransactionExport;
+use Excel;
+use DB;
 
 class TransactionController extends Controller
 {
@@ -109,5 +112,11 @@ class TransactionController extends Controller
 	public function read()
     {
         TransactionService::read();
+    }
+
+    public function excel_export(){
+        
+        return Excel::download(new TransactionExport, 'users.xlsx');
+        
     }
 }
