@@ -20,7 +20,7 @@ class Company extends Model
         'country',
         'type',
         'status',
-        'limit',
+        'limits',
     ];
 
     public function users(){

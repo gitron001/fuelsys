@@ -194,8 +194,6 @@
 	});	
 
 
-	$("#myDiv").hide()
-
 </script>
 
 @endsection
