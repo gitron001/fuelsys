@@ -17,9 +17,12 @@ class CardService extends ServiceProvider
      *
      * @return void
      */
-    public static function check_readers()
+    public static function check_readers($socket = null)
     {
-        $socket = PFC::create_socket();
+        //Create socket if it does not exist
+        if($socket === null) {
+                $socket = PFC::create_socket();
+        }
         $message = "\x1\x4\x9";
         $the_crc = PFC::crc16($message);
         $binarydata = pack("c*", 0x01)
@@ -38,7 +41,8 @@ class CardService extends ServiceProvider
             }
         }
         //print_r($response);
-        socket_close($socket);
+        //socket_close($socket);
+        return true;
      }
 
 
@@ -67,13 +71,13 @@ class CardService extends ServiceProvider
 
             $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
 
+            if(count($the_card) == 0 ){ return false; }
            /*if($the_card->limits){
 
             }*/
 
             if(count($the_card->discounts) == 0){
-                //self::activate_card($socket, $channel);
-                echo 'no discounts';
+                self::activate_card($socket, $channel);
             }else{
                 $all_discounts = array();
                 for($i = 10; $i < 15; $i++){
@@ -189,8 +193,6 @@ class CardService extends ServiceProvider
 
 
             $response = PFC::send_message($socket, $binarydata, $message);
-            print_r(unpack('c*', $binarydata));
-            dd($response);
             return true;
     }
 }
