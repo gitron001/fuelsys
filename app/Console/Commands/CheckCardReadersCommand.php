@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Services\CardService;
 use App\Services\TransactionService;
+use App\Services\PFCServices as PFC;
 
 class CheckCardReadersCommand extends Command
 {
@@ -40,9 +41,11 @@ class CheckCardReadersCommand extends Command
     public function handle()
     {
         $socket = PFC::create_socket();
-        CardService::check_readers($socket);
-        TransactionService::read($socket);
+        while(true){
+            CardService::check_readers($socket);
+            TransactionService::read($socket);
+            usleep(150000);
+        }
         socket_close($socket);
-        usleep(150000);
     }
 }

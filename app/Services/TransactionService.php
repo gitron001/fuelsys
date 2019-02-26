@@ -10,9 +10,9 @@ use App\Models\Transaction;
 class TransactionService extends ServiceProvider
 {
     /**
-     * Bootstrap services.
+     * Check transactions
      *
-     * @return void
+     * Lock Transaction and call store function if there is one
      */
     public static function read($socket = null)
     {
@@ -33,6 +33,7 @@ class TransactionService extends ServiceProvider
 
 
             $response = PFC::send_message($socket, $binarydata);
+            //print_r($response);
 
             $total_msg_legth = count($response);
             for($i = 4; $i <= $total_msg_legth; $i+= 4) {
@@ -41,35 +42,47 @@ class TransactionService extends ServiceProvider
                     //Lock status transaction
                     $status = 1;
                     $changed_status = self::transaction_status($channel, $status, $socket);
+                    usleep(150000);
+                    self::read_data($socket, $channel);
                     if($changed_status)
                         echo 'UPDATED';
+                }else if($response[$i] == 2){
+                    $channel = (($i/4));
+                    self::read_data($socket, $channel);
                 }
             }
             //LOCKED
             return true;
 
     }
-
+    /**
+     * Read Transaction data and call Clear Transaction function
+     *
+     *
+     */
     public static function read_data($socket, $channel)
     {
         $controller = Config::get('app.controller_id');
-        $pos_id =  PFC::conver_to_bin($controller);
+        $controller_id =  PFC::conver_to_bin($controller);
+        $channel_id =  PFC::conver_to_bin($channel);
 
         //Generate CRC for the Transaction Message
-        $message = "\x1\x6\x3\x1".$pos_id;
+        $message = "\x1\x6\x3".$channel_id.$controller_id;
         $the_crc = PFC::crc16( $message);
 
         //Read Transactions Message
         $binarydata = pack("c*", 0x01)
          .pack("c*",0x06)
          .pack("c*",0x03)
-         .pack("c*",0x01)
+         .pack("C*", $channel )
          .pack("C*", $controller )
          .strrev(pack("s",$the_crc))
          .pack("c*",02);
-
+        //print_r(unpack('c*', $binarydata));
+       // return true;
         $response = PFC::send_message($socket, $binarydata);
-
+        //print_r($response);
+        //return true;
         $transaction = new Transaction();
         $status = $response[4];
         echo '<br> STATUS: '. $status;
@@ -128,7 +141,7 @@ class TransactionService extends ServiceProvider
 
         $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
         $rfid = unpack('i', $rfid)[1];
-        $rfid	 	= $response[15];
+        //$rfid	 	= $response[15];
 
         //Query the rfid ID from the RFID table
         $transaction->rfid = $rfid;
@@ -150,15 +163,18 @@ class TransactionService extends ServiceProvider
         $transaction->save();
         echo '<br>';
 
-        //socket_close($socket);
-        self::clear($controller, $socket);
+        //Clear status transaction
+        $status = 2;
+        $changed_status = self::transaction_status($channel, $status, $socket);
+        echo 'stored';
         return true;
     }
 
-    /**
-     * Register services.
+    /**\]\
      *
-     * @return void
+     *
+     *
+     *
      */
     public static function transaction_status($channel, $status,  $socket)
     {

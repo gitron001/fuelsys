@@ -13,9 +13,9 @@ use App\Models\Products;
 class CardService extends ServiceProvider
 {
     /**
-     * Bootstrap services.
+     * Read Card Status
      *
-     * @return void
+     *
      */
     public static function check_readers($socket = null)
     {
@@ -31,7 +31,8 @@ class CardService extends ServiceProvider
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
-
+        //print_r($response);
+        //return true;
         //Get all transaction by channel
         $length = count($response) - 3;
         for($i = 3; $i <= $length; $i++){
@@ -45,7 +46,11 @@ class CardService extends ServiceProvider
         return true;
      }
 
-
+    /**
+     * Validate Card and call authorization function
+     *
+     *
+     */
     public static function check_card($socket, $channel = 1)
     {
 
@@ -70,12 +75,12 @@ class CardService extends ServiceProvider
             //echo '<br> Card Number: '. $cardNumber;
 
             $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
-
-            if(count($the_card) == 0 ){ return false; }
+            $card_count = Rfid::where("rfid", $cardNumber)->where('status', 1)->count();
+            if($card_count == 0 ){ return false; }
            /*if($the_card->limits){
 
             }*/
-
+            //print_r($cardNumber);
             if(count($the_card->discounts) == 0){
                 self::activate_card($socket, $channel);
             }else{
@@ -106,7 +111,7 @@ class CardService extends ServiceProvider
     }
 
     /**
-     * Register services.
+     * Authorize Card without set prices
      *
      * @return void
      */
@@ -134,15 +139,15 @@ class CardService extends ServiceProvider
             $binarydata .= strrev(pack("s",$the_crc));
             //End of Message
             $binarydata .= pack("c*",02);
-
+            //print_r(unpack('c*', $binarydata));
             $response = PFC::send_message($socket, $binarydata, $message);
-
+            //print_r($response);
             return true;
     }
     /**
-     * Register services.
+     * Authorize card with  set prices
      *
-     * @return void
+     *
      */
     public static function activate_card_discount($socket, $channel, $all_discounts) {
             //Get all transaction by channel
