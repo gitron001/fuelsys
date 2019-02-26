@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Rfid;
 use App\Models\Dispaneser;
 use App\Services\TransactionService;
 use App\Exports\TransactionExport;
@@ -20,8 +21,10 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::all();
-        return view('/admin/transactions/home',compact('transactions'));
+        $transactions   = Transaction::all();
+        $users          = User::pluck('name','id')->all();
+
+        return view('/admin/transactions/home',compact('transactions','users'));
     }
 
     /**
@@ -114,9 +117,54 @@ class TransactionController extends Controller
         TransactionService::read();
     }
 
-    public function excel_export(){
+    public function excel_export(Request $request){
+
+        $from_date  = $request->input('from_date');
+        $to_date    = $request->input('to_date');
+        $user       = $request->input('user');
+
+        $getRfid    = Rfid::where('user_id',$user)->get();
+
+        foreach ($getRfid as $rfid) {
+            $getID[] =  $rfid->rfid;
+        }
+
+        if(!empty($getID)) {
+
+            $getData    = Transaction::whereBetween('created_at',[$from_date, $to_date])->whereIn('rfid',$getID)->get();
+            
+            // Convert object to an array 
+            foreach($getData as $object){
+                $exportData[] = $object->toArray();
+            }
+
+            $filename = "Transaction - ".date('d-m-Y') . ".xls";
+
+            $show_coloumn = false;
+
+            $title = "PETROTEK Export File\nTable: Transactions \nGenerated: ".date('Y-m-d');
+            
+            if(!empty($exportData)) {
+                foreach($exportData as $record) {
+                    if(!$show_coloumn) {
+                        // display field/column names in first row
+                        echo implode("\t", array_keys($record)) . "\n";
+                        $show_coloumn = true;
+                    }
+                        echo implode("\t", array_values($record)) . "\n";
+                    }   
+            }
+
+            print "\n$title\n";
+            header("Content-type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=".$filename.".xls");
+            
+        } else{
+            $message = "Nothing to show!";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        };
+
         
-        return Excel::download(new TransactionExport, 'users.xlsx');
         
     }
 }
