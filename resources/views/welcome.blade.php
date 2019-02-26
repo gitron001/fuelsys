@@ -43,17 +43,6 @@
   </table>
 </div>
 
-<!-- **************** LANGUAGE **************** -->
-
-<!--<div>
-    Change Language:
-    <ul class="list-group">
-	  <li class="list-group-item"><a href="locale/en">English</a></li>
-	  <li class="list-group-item"><a href="locale/al">Albanian</a></li>
-	</ul>
-</div> -->
-
-<!-- **************** END LANGUAGE **************** -->
 @stop
 
 @section('css')

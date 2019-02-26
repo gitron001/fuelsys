@@ -22,11 +22,15 @@ class Transaction extends Model
         'dis_tot',
         'pfc_tot',
         'tr_status',
-        'rfid',
+        'rfid_id',
         'ctype',
         'method',
         'bill_no',
     ];
+
+    public function getDateFormat(){
+        return 'U';
+    }
 
     public function dispaneser(){
         return $this->belongsTo('App\Models\Dispaneser');

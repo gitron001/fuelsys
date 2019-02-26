@@ -13,6 +13,10 @@ class Role extends Model
         'name',
     ];
 
+    public function getDateFormat(){
+        return 'U';
+    }
+
     public function user(){
     	return $this->hasMany('App\Models\User');
     }

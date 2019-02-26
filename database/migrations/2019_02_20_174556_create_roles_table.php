@@ -16,23 +16,24 @@ class CreateRolesTable extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
 
         DB::table('roles')->insert([
             'name' => 'Shites',
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
+            'created_at' => now()->timestamp,
+            'updated_at' => now()->timestamp,
         ]);
         DB::table('roles')->insert([
             'name' => 'Menaxher',
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
+            'created_at' => now()->timestamp,
+            'updated_at' => now()->timestamp,
         ]);
         DB::table('roles')->insert([
             'name' => 'Admin',
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
+            'created_at' => now()->timestamp,
+            'updated_at' => now()->timestamp,
         ]);
     }
 

@@ -119,20 +119,19 @@ class TransactionController extends Controller
 
     public function excel_export(Request $request){
 
-        $from_date  = $request->input('from_date');
-        $to_date    = $request->input('to_date');
+        $from_date  = strtotime($request->input('from_date'));
+        $to_date    = strtotime($request->input('to_date'));
         $user       = $request->input('user');
 
         $getRfid    = Rfid::where('user_id',$user)->get();
 
         foreach ($getRfid as $rfid) {
-            $getID[] =  $rfid->rfid;
+            $getID[] =  $rfid->id;
         }
 
         if(!empty($getID)) {
-
-            $getData    = Transaction::whereBetween('created_at',[$from_date, $to_date])->whereIn('rfid',$getID)->get();
-            
+            $getData    = Transaction::whereBetween('created_at',[$from_date, $to_date])->whereIn('rfid_id',$getID)->get();
+  
             // Convert object to an array 
             foreach($getData as $object){
                 $exportData[] = $object->toArray();

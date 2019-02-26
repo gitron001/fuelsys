@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->integer('branch_id');
             $table->integer('role_id');
             $table->integer('status');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 

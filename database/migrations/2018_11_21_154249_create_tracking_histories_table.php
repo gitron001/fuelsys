@@ -17,7 +17,8 @@ class CreateTrackingHistoriesTable extends Migration
             $table->increments('id');
             $table->integer('tracking_id');
             $table->integer('created_by');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 

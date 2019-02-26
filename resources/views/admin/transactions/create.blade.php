@@ -77,10 +77,10 @@
 			{!! $errors->first('tr_status','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('rfid') ? 'has-error' :'' }}">
-			{!! Form::label('rfid', 'RFID:'); !!}
-			{!! Form::number('rfid',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('rfid','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('rfid_id') ? 'has-error' :'' }}">
+			{!! Form::label('rfid_id', 'RFID:'); !!}
+			{!! Form::number('rfid_id',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('rfid_id','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('ctype') ? 'has-error' :'' }}">

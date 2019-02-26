@@ -65,8 +65,8 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('rfid', 'RFID'); !!}
-			{!! Form::text('rfid',null,['class'=>'form-control']); !!} 
+			{!! Form::label('rfid_id', 'RFID'); !!}
+			{!! Form::text('rfid_id',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">

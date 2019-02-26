@@ -16,12 +16,12 @@
               
               <div class="form-group">
                 {!! Form::label('Start Date:'); !!}
-                {!! Form::date('from_date',\Carbon\Carbon::now() ,['class'=>'form-control']); !!}
+                {!! Form::text('from_date','',['class'=>'form-control datepicker','autocomplete'=>'off']); !!}
               </div>
               
               <div class="form-group">
                 {!! Form::label('End Date:'); !!}
-                {!! Form::date('to_date', \Carbon\Carbon::now() ,['class'=>'form-control']); !!}
+                {!! Form::text('to_date','',['class'=>'form-control datepicker','autocomplete'=>'off']); !!}
               </div>
 
               <div class="form-group">
@@ -79,7 +79,7 @@
                     <td>{{ $transaction->dis_tot }}</td>
                     <td>{{ $transaction->pfc_tot }}</td>
                     <td>{{ $transaction->tr_status }}</td>
-                    <td>{{ $transaction->rfid }}</td>
+                    <td>{{ $transaction->rfid_id }}</td>
                     <td>{{ $transaction->ctype }}</td>
                     <td>{{ $transaction->method }}</td>
           					<td>{{ $transaction->bill_no }}</td>
@@ -105,4 +105,14 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+@endsection
+
+@section('js')
+
+<script>
+  $(function() {
+    $(".datepicker" ).datepicker();
+  });
+</script>
+
 @endsection

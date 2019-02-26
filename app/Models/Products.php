@@ -12,6 +12,10 @@ class Products extends Model
         'vat',
     ];
 
+    public function getDateFormat(){
+        return 'U';
+    }
+
     public function tank(){
         return $this->hasMany('App\Models\Tank');
     }
