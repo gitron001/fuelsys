@@ -8,16 +8,40 @@
 	<div class="row">
 		<div class="box">
             <div class="box-header">
-              <div class="col-md-6"><h3 class="box-title">Transaction</h3></div>
-              <div class="col-md-6">
-                <span class="pull-right">
-                  <a href="{{ url('admin/transaction/excel_export') }}"><button type="button" class="btn btn-block btn-success">Export Excel</button></a>
-                </span>
+              <div class="col-md-4 float-left"><h3 class="box-title">Transaction</h3></div>
+              <div class="col-md-8 float-right">
+
+              <div class="col-md-12">
+              {!! Form::open(['method'=>'POST','class'=>'form-inline text-right','action'=>['TransactionController@excel_export']]) !!}
+              
+              <div class="form-group">
+                {!! Form::label('Start Date:'); !!}
+                {!! Form::date('from_date',\Carbon\Carbon::now() ,['class'=>'form-control']); !!}
+              </div>
+              
+              <div class="form-group">
+                {!! Form::label('End Date:'); !!}
+                {!! Form::date('to_date', \Carbon\Carbon::now() ,['class'=>'form-control']); !!}
+              </div>
+
+              <div class="form-group">
+                {!! Form::label('User:'); !!}
+                {!! Form::select('user',['Choose a User'] + $users,null,['class'=>'form-control']); !!} 
+              </div>
+
+              <div class="form-group">
+                {!! Form::submit('Export Excel', ['class'=>'btn btn-block btn-success','']); !!}
+              </div>
+
+              {!! Form::close() !!}
+
+              </div>
+
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="table table-hover table-bordered" >
                 <thead>
                 <tr>
         					<th>Status</th>
