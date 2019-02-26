@@ -13,6 +13,10 @@ class Branch extends Model
         'status',
     ];
 
+    public function getDateFormat(){
+        return 'U';
+    }
+
     public function users(){
         return $this->hasMany('App\Models\User');
     }

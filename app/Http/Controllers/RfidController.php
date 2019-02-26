@@ -61,10 +61,10 @@ class RfidController extends Controller
             'company_id'    => $request->input('company_id') ? : 0,
             'one_time_limit'=> $request->input('one_time_limit') ? : 0,
             'plates'        => $request->input('plates') ? : 0,
-            'vehicle'        => $request->input('vehicle') ? : 0,
+            'vehicle'       => $request->input('vehicle') ? : 0,
             'status'        => 1,
-            'created_at'    => \Carbon\Carbon::now(),
-            'updated_at'    => \Carbon\Carbon::now()
+            'created_at'    => now()->timestamp,
+            'updated_at'    => now()->timestamp
         ]);
 
         if($firstValueOfArrayProduct !== 0 && !empty($firstValueOfArrayDiscount)){

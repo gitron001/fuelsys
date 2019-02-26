@@ -10,7 +10,13 @@ class Dispaneser extends Model
         'name', 
     ];
 
+    public function getDateFormat(){
+        return 'U';
+    }
+
     public function transaction(){
         return $this->hasMany('App\Models\Transaction');
     }
+
+
 }

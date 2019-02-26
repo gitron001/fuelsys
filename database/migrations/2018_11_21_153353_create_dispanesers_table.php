@@ -16,7 +16,8 @@ class CreateDispanesersTable extends Migration
         Schema::create('dispanesers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 

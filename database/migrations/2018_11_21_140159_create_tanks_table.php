@@ -19,7 +19,8 @@ class CreateTanksTable extends Migration
             $table->integer('product_id');
             $table->integer('capacity');
             $table->integer('status');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 

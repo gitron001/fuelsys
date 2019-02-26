@@ -18,6 +18,10 @@ class Rfid extends Model
         'updated_at', 
     ];
 
+    public function getDateFormat(){
+        return 'U';
+    }
+
     public function company(){
         return $this->belongsTo('App\Models\Company')->withDefault([
             'name' => '',

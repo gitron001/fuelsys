@@ -18,7 +18,8 @@ class CreateRfidLimitsTable extends Migration
             $table->integer('rfid_id');
             $table->integer('branch_id');
             $table->double('limit');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 

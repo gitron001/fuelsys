@@ -14,4 +14,8 @@ class CompanyDiscount extends Model
         'product_id',
         'discount', 
     ];
+
+    public function getDateFormat(){
+        return 'U';
+    }
 }

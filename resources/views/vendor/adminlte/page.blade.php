@@ -57,6 +57,46 @@
                 <div class="navbar-custom-menu">
 
                     <ul class="nav navbar-nav">
+                        <li class="dropdown messages-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-language" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li class="header">Change language</li>
+                                <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                  <li><!-- start message -->
+                                    <a href="locale/en">
+                                      <div class="pull-left">
+                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                      </div>
+                                      <h4>
+                                        English
+                                      </h4>
+                                    </a>
+                                  </li>
+                                  <!-- end message -->
+                                </ul>
+                              </li>
+                              <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                  <li><!-- start message -->
+                                    <a href="locale/al">
+                                    <div class="pull-left">
+                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                    </div>
+                                      <h4>
+                                        Albanian
+                                      </h4>
+                                    </a>
+                                  </li>
+                                  <!-- end message -->
+                                </ul>
+                              </li>
+                            </ul>
+                        </li>
                         <li>
                             @if(config('adminlte.logout_method') == 'GET' || !config('adminlte.logout_method') && version_compare(\Illuminate\Foundation\Application::VERSION, '5.3.0', '<'))
                                 <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}">

@@ -19,6 +19,10 @@ class User extends Model
         'status',
     ];
 
+    public function getDateFormat(){
+        return 'U';
+    }
+
     public function branch(){
         return $this->belongsTo('App\Models\Branch')->withDefault([
             'name' => '',

@@ -14,4 +14,8 @@ class CompanyLimit extends Model
         'branch_id',
         'limit', 
     ];
+
+    public function getDateFormat(){
+        return 'U';
+    }
 }

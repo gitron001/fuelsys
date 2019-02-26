@@ -28,7 +28,8 @@ class CreateCompaniesTable extends Migration
             $table->integer('type');
             $table->integer('status');
             $table->integer('limits');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 

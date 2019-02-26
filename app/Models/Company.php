@@ -23,6 +23,10 @@ class Company extends Model
         'limits',
     ];
 
+    public function getDateFormat(){
+        return 'U';
+    }
+
     public function users(){
         return $this->hasMany('App\Models\Rfid');
     }

@@ -14,6 +14,10 @@ class RFID_Discounts extends Model
         'discount', 
     ];
 
+    public function getDateFormat(){
+        return 'U';
+    }
+
     public function product(){
         return $this->belongsTo('App\Models\Products');
     }

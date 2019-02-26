@@ -18,7 +18,8 @@ class CreateCompanyDiscountsTable extends Migration
             $table->integer('company_id');
             $table->integer('product_id');
             $table->double('discount');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 

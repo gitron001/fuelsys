@@ -19,7 +19,8 @@ class CreateBranchesTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->integer('status');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 
