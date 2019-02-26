@@ -84,7 +84,7 @@ class PFCServices extends ServiceProvider
 	}
 
     //Validate the returned message from PFC
-    public static function send_message($socket, $binarydata, $message){
+    public static function send_message($socket, $binarydata, $message = null){
         while(true) {
             //Send Message to the socket
             socket_write($socket, $binarydata);

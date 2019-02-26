@@ -7,17 +7,22 @@ use App\Services\PFCServices as PFC;
 use Config;
 use App\Models\Transaction;
 use App\Models\Rfid;
+use App\Models\Products;
+
 
 class CardService extends ServiceProvider
 {
     /**
-     * Bootstrap services.
+     * Read Card Status
      *
-     * @return void
+     *
      */
-    public static function check_readers()
+    public static function check_readers($socket = null)
     {
-        $socket = PFC::create_socket();
+        //Create socket if it does not exist
+        if($socket === null) {
+                $socket = PFC::create_socket();
+        }
         $message = "\x1\x4\x9";
         $the_crc = PFC::crc16($message);
         $binarydata = pack("c*", 0x01)
@@ -26,7 +31,8 @@ class CardService extends ServiceProvider
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
-
+        //print_r($response);
+        //return true;
         //Get all transaction by channel
         $length = count($response) - 3;
         for($i = 3; $i <= $length; $i++){
@@ -36,10 +42,15 @@ class CardService extends ServiceProvider
             }
         }
         //print_r($response);
-        socket_close($socket);
+        //socket_close($socket);
+        return true;
      }
 
-
+    /**
+     * Validate Card and call authorization function
+     *
+     *
+     */
     public static function check_card($socket, $channel = 1)
     {
 
@@ -64,45 +75,43 @@ class CardService extends ServiceProvider
             //echo '<br> Card Number: '. $cardNumber;
 
             $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
+            $card_count = Rfid::where("rfid", $cardNumber)->where('status', 1)->count();
+            if($card_count == 0 ){ return false; }
+           /*if($the_card->limits){
 
-            if($the_card->limits){
-
-            }
-
+            }*/
+            //print_r($cardNumber);
             if(count($the_card->discounts) == 0){
-                //self::activate_card($socket, $channel);
-                echo 'no discounts';
+                self::activate_card($socket, $channel);
             }else{
                 $all_discounts = array();
                 for($i = 10; $i < 15; $i++){
                     foreach($the_card->discounts as $discount){
                         if($discount->id == $response[$i]){
-                            $all_discounts[$i] = array($discount->product->price - $discount->discount);
+                            $all_discounts[$i] = number_format(($discount->product->price - $discount->discount), 2);
+                            break;
                         }
                     }
                 }
+                $products = Products::all();
                 for($i = 10; $i < 15; $i++){
                     if(!isset($all_discounts[$i] )){
-                        foreach($the_card->discounts as $discount) {
-                            if($discount->id == $response[$i]){
-                                $all_discounts[$i] = array($discount->product->price);
+                        foreach($products as $pr) {
+                            if($pr->id == $response[$i]){
+                                $all_discounts[$i] = number_format($pr->price, 2);
+                                break;
                             }
                         }
                     }
                 }
-                dd($all_discounts);
+
                self::activate_card_discount($socket, $channel, $all_discounts);
             }
 
-            echo ' -- Nozle 1 : '. $response[10];
-            echo ' -- Nozle 2 : '. $response[11];
-            echo ' -- Nozle 3 : '. $response[12];
-            echo ' -- Nozle 4 : '. $response[13];
-            echo ' -- Nozle 5 : '. $response[14];
     }
 
     /**
-     * Register services.
+     * Authorize Card without set prices
      *
      * @return void
      */
@@ -130,21 +139,41 @@ class CardService extends ServiceProvider
             $binarydata .= strrev(pack("s",$the_crc));
             //End of Message
             $binarydata .= pack("c*",02);
-
+            //print_r(unpack('c*', $binarydata));
             $response = PFC::send_message($socket, $binarydata, $message);
-
+            //print_r($response);
             return true;
     }
     /**
-     * Register services.
+     * Authorize card with  set prices
      *
-     * @return void
+     *
      */
     public static function activate_card_discount($socket, $channel, $all_discounts) {
             //Get all transaction by channel
             $channel_id = PFC::conver_to_bin($channel);
-            $command    = PFC::conver_to_bin('3');
-            $message = "\x1\x11\x8A".$channel_id.$command.$command;
+            $command    = PFC::conver_to_bin(3);
+            $prices     = "";
+
+            foreach($all_discounts as $ds){
+
+                //dd(str_replace('.', '', $ds));
+                //$prices .= $bin;
+                $lenth = strlen($ds);
+                //s$ds = number_format($ds, 2);
+                //dd($ds);
+                if($lenth % 2 == 0){
+                    $hex        = (string) strtoupper(dechex(str_replace('.', '',$ds)));
+                }
+                else{
+                    $hex        = (string) '0'.strtoupper(dechex(str_replace('.', '',$ds)));
+                }
+
+                $prices    .= hex2bin($hex);
+
+            }
+            $message = "\x1\x11\x8A".$channel_id.$command.$command.$prices;
+            //dd(unpack('c*',$message));
             $the_crc = PFC::crc16($message);
 
             //Start of mesasge
@@ -159,13 +188,16 @@ class CardService extends ServiceProvider
             $binarydata .= pack("c*",0x03);
             //Command 2
             $binarydata .= pack("c*",0x03);
+            foreach($all_discounts as $ds){
+               $binarydata .= strrev(pack('s', str_replace('.', '', $ds)));
+            }
             //CRC
             $binarydata .= strrev(pack("s",$the_crc));
             //End of Message
             $binarydata .= pack("c*",02);
 
-            $response = PFC::send_message($socket, $binarydata, $message);
 
+            $response = PFC::send_message($socket, $binarydata, $message);
             return true;
     }
 }
