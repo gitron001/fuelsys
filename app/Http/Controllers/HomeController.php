@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Dispaneser;
 use App\Models\Transaction;
+use App\Models\RFID;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -15,10 +17,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::orderBy('created_at', 'DESC')->get();
-        $dispanesers = Dispaneser::all();
+        $transactions   = Transaction::orderBy('created_at', 'DESC')->get();
+        $dispanesers    = Dispaneser::all();
 
         return view('welcome',compact('dispanesers','transactions'));
+        //return response()->json(['transactions'=>$transactions],200);
     }
 
     /**

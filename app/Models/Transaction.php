@@ -14,7 +14,7 @@ class Transaction extends Model
         'locker', 
         'tr_no',
         'sl_no',
-        'product',
+        'product_id',
         'dis_status',
         'price',
         'lit',
@@ -38,5 +38,13 @@ class Transaction extends Model
 
     public function user(){
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function rfid(){
+        return $this->belongsTo('App\Models\Rfid');
+    }
+
+    public function product(){
+        return $this->belongsTo('App\Models\Products');
     }
 }
