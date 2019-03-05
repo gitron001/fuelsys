@@ -16,7 +16,7 @@
 
 		<div class="form-group">
 			{!! Form::label('tr_no', 'Tr_No'); !!}
-			{!! Form::text('tr_no',null,['class'=>'form-control']); !!} 
+			{!! Form::number('tr_no',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
@@ -25,8 +25,8 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('product', 'Product'); !!}
-			{!! Form::text('product',null,['class'=>'form-control']); !!} 
+			{!! Form::label('product_id', 'Product'); !!}
+			{!! Form::select('product_id',$products,null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
@@ -36,17 +36,17 @@
 
 		<div class="form-group">
 			{!! Form::label('price', 'Price'); !!}
-			{!! Form::text('price',null,['class'=>'form-control']); !!} 
+			{!! Form::number('price',null,['class'=>'form-control','step'=>'any']); !!} 
 		</div>
 
 		<div class="form-group">
 			{!! Form::label('lit', 'Lit'); !!}
-			{!! Form::text('lit',null,['class'=>'form-control']); !!} 
+			{!! Form::number('lit',null,['class'=>'form-control','step'=>'any']); !!} 
 		</div>
 
 		<div class="form-group">
 			{!! Form::label('money', 'Money'); !!}
-			{!! Form::text('money',null,['class'=>'form-control']); !!} 
+			{!! Form::number('money',null,['class'=>'form-control','step'=>'any']); !!} 
 		</div>
 
 		<div class="form-group">
@@ -66,7 +66,7 @@
 
 		<div class="form-group">
 			{!! Form::label('rfid_id', 'RFID'); !!}
-			{!! Form::text('rfid_id',null,['class'=>'form-control']); !!} 
+			{!! Form::number('rfid_id',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
@@ -81,11 +81,11 @@
 
 		<div class="form-group">
 			{!! Form::label('bill_no', 'Bill_No'); !!}
-			{!! Form::text('bill_no',null,['class'=>'form-control']); !!} 
+			{!! Form::number('bill_no',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">
-			{!! Form::submit('Edit Transaction', ['class'=>'btn btn-block btn-primary']); !!}
+			{!! Form::submit('Update Transaction', ['class'=>'btn btn-block btn-primary']); !!}
 		</div>
 
 		{!! Form::close() !!}

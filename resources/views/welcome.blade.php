@@ -25,18 +25,25 @@
 </div>
 
 
+
 <div class="col-md-4">
   <h2 class="text-center">LIVE Feed</h2>           
   <table class="table table-bordered text-center">
     <thead>
       <tr>
-        <th>Transaction</th>
+        <th>RFID</th>
+        <th>Username</th>
+        <th>Amount</th>
+        <th>Date</th>
       </tr>
     </thead>
     <tbody>
 	@foreach($transactions as $transaction)
       <tr>
-        <td>{{ $transaction->tr_no }}</td>
+        <td>{{ $transaction->rfid_id }}</td>
+        <td>{{ $transaction->rfid ? $transaction->rfid->user->name : ''}}</td>
+        <td>{{ $transaction->money }}</td>
+        <td>{{ $transaction->created_at }}</td>
       </tr>
 	@endforeach
     </tbody>
@@ -47,8 +54,4 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
-
-@section('js')
-    <script> console.log('Hi!'); </script>
 @stop

@@ -23,4 +23,8 @@ class Products extends Model
     public function rfid_discount(){
         return $this->hasMany('App\Models\RFID_Discounts');
     }
+
+    public function transaction_product(){
+        return $this->hasMany('App\Models\Transaction');
+    }    
 }

@@ -7,8 +7,8 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Rfid;
 use App\Models\Dispaneser;
+use App\Models\products;
 use App\Services\TransactionService;
-use App\Exports\TransactionExport;
 use Excel;
 use DB;
 
@@ -77,8 +77,9 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         $dispanesers = Dispaneser::pluck('name','id')->all();
         $users       = User::pluck('name','id')->all();
+        $products    = Products::pluck('name','id')->all();
 
-        return view('/admin/transactions/edit',compact('transaction','dispanesers','users'));
+        return view('/admin/transactions/edit',compact('transaction','dispanesers','users','products'));
     }
 
     /**

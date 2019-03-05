@@ -29,10 +29,10 @@
 			{!! $errors->first('sl_no','<span class="help-block">:message</span>') !!}
 		</div>
 
-		<div class="form-group {{ $errors->has('product') ? 'has-error' :'' }}">
-			{!! Form::label('product', 'Product:'); !!}
-			{!! Form::number('product',null,['class'=>'form-control']); !!} 
-			{!! $errors->first('product','<span class="help-block">:message</span>') !!}
+		<div class="form-group {{ $errors->has('product_id') ? 'has-error' :'' }}">
+			{!! Form::label('product_id', 'Product:'); !!}
+			{!! Form::number('product_id',null,['class'=>'form-control']); !!} 
+			{!! $errors->first('product_id','<span class="help-block">:message</span>') !!}
 		</div>
 		
 		<div class="form-group {{ $errors->has('dis_status') ? 'has-error' :'' }}">
@@ -43,19 +43,19 @@
 
 		<div class="form-group {{ $errors->has('price') ? 'has-error' :'' }}">
 			{!! Form::label('price', 'Price:'); !!}
-			{!! Form::number('price',null,['class'=>'form-control']); !!} 
+			{!! Form::number('price',null,['class'=>'form-control','step'=>'any']); !!} 
 			{!! $errors->first('price','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('lit') ? 'has-error' :'' }}">
 			{!! Form::label('lit', 'Lit:'); !!}
-			{!! Form::text('lit',null,['class'=>'form-control']); !!} 
+			{!! Form::number('lit',null,['class'=>'form-control','step'=>'any']); !!} 
 			{!! $errors->first('lit','<span class="help-block">:message</span>') !!}
 		</div>
 
 		<div class="form-group {{ $errors->has('money') ? 'has-error' :'' }}">
 			{!! Form::label('money', 'Money:'); !!}
-			{!! Form::text('money',null,['class'=>'form-control']); !!} 
+			{!! Form::number('money',null,['class'=>'form-control','step'=>'any']); !!} 
 			{!! $errors->first('money','<span class="help-block">:message</span>') !!}
 		</div>
 

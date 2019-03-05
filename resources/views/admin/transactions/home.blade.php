@@ -71,7 +71,7 @@
                     <td>{{ $transaction->locker }}</td>
           					<td>{{ $transaction->tr_no }}</td>
           					<td>{{ $transaction->sl_no }}</td>
-                    <td>{{ $transaction->product }}</td>
+                    <td>{{ $transaction->product ? $transaction->product->name : ''}}</td>
                     <td>{{ $transaction->dis_status }}</td>
                     <td>{{ $transaction->price }}</td>
                     <td>{{ $transaction->lit }}</td>
