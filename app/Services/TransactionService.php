@@ -143,8 +143,9 @@ class TransactionService extends ServiceProvider
         $rfid = unpack('i', $rfid)[1];
         //$rfid	 	= $response[15];
 
+        $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
         //Query the rfid ID from the RFID table
-        $transaction->rfid_id = $rfid;
+        $transaction->rfid_id = $the_card->id;
 
         echo '<br> rfid: '. $rfid;
         $cType	 	= $response[34];
