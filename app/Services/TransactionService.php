@@ -103,7 +103,7 @@ class TransactionService extends ServiceProvider
 
         $product 	= $response[9];
         echo '<br> product: '. $product;
-        $transaction->product = $product;
+        $transaction->product_id = $product;
 
         $dis_status 	= $response[10];
         echo '<br> dis_status: '. $dis_status;
@@ -144,7 +144,7 @@ class TransactionService extends ServiceProvider
         //$rfid	 	= $response[15];
 
         //Query the rfid ID from the RFID table
-        $transaction->rfid = $rfid;
+        $transaction->rfid_id = $rfid;
 
         echo '<br> rfid: '. $rfid;
         $cType	 	= $response[34];
