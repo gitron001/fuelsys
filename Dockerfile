@@ -19,7 +19,9 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
-    curl
+    curl \
+    cron \
+    supervisor
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -36,6 +38,21 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
+# Add crontab file in the cron directory
+ADD crontab /etc/cron.d/hello-cron
+
+# Give execution rights on the cron job
+RUN chmod 0755 /etc/cron.d/hello-cron
+
+# Apply cron job
+RUN crontab  /etc/cron.d/hello-cron
+
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
+# Symlink the cron to stdout
+RUN ln -sf /dev/stdout /var/log/cron.log
+
 # Copy existing application directory contents
 COPY . /var/www
 
@@ -43,8 +60,9 @@ COPY . /var/www
 COPY --chown=www:www . /var/www
 
 # Change current user to www
-USER www
+#USER www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"]
+
+CMD ["/usr/bin/supervisord"]
