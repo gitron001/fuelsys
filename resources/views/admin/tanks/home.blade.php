@@ -21,7 +21,7 @@
                 <thead>
                 <tr>
         					<th>Name</th>
-        					<th>Product_Id</th>
+        					<th>Product</th>
         					<th>Capacity</th>
         					<th>Status</th>
         					<th>Created At</th>
@@ -52,6 +52,9 @@
                 @endforeach
                 </tfoot>
               </table>
+              <div class="text-center">
+                {{ $tanks->links() }}
+              </div>
             </div>
         </div>
 	</div>

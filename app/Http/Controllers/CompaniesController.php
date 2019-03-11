@@ -19,7 +19,7 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
+        $companies = Company::paginate(15);
         
         return view('admin/companies/home',compact('companies'));
     }
@@ -60,13 +60,14 @@ class CompaniesController extends Controller
             'tel_number'    => $request->input('tel_number'),
             'email'         => $request->input('email'),
             'address'       => $request->input('address'),
+            'contact_person'=> $request->input('contact_person'),
             'city'          => $request->input('city'),
             'country'       => $request->input('country'),
             'type'          => $request->input('type'),
             'status'        => $request->input('status'),
-            'limits'         => $request->input('limits'),
-            'created_at'    => \Carbon\Carbon::now(),
-            'updated_at'    => \Carbon\Carbon::now()
+            'limits'        => $request->input('limits'),
+            'created_at'    => now()->timestamp,
+            'updated_at'    => now()->timestamp
         ]);
 
         if($firstValueOfArrayProduct !== 0 && !empty($firstValueOfArrayDiscount)){

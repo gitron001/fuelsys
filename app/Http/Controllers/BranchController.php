@@ -14,7 +14,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $branches = Branch::all();
+        $branches = Branch::paginate(15);
         return view('/admin/branches/home',compact('branches'));
     }
 

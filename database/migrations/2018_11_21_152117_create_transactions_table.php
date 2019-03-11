@@ -26,11 +26,11 @@ class CreateTransactionsTable extends Migration
             $table->double('money');
             $table->longText('dis_tot');
             $table->longText('pfc_tot');
-            $table->char('tr_status')->nullable();;
-            $table->integer('rfid_id')->nullable();;
-            $table->char('ctype')->nullable();;
-            $table->char('method')->nullable();;
-            $table->integer('bill_no')->nullable();;
+            $table->char('tr_status')->nullable();
+            $table->integer('rfid_id')->nullable();
+            $table->char('ctype')->nullable();
+            $table->char('method')->nullable();
+            $table->integer('bill_no')->nullable();
             $table->integer('created_at');
             $table->integer('updated_at');
         });

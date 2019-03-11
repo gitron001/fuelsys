@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $transactions   = Transaction::orderBy('created_at', 'DESC')->get();
+        $transactions   = Transaction::orderBy('created_at', 'DESC')->limit(15)->get();
         $dispanesers    = Dispaneser::all();
 
         return view('welcome',compact('dispanesers','transactions'));

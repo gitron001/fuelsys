@@ -22,7 +22,7 @@
                 <tr>
         					<th>Name</th>
         					<th>Email</th>
-        					<th>Branch_id</th>
+        					<th>Branch</th>
         					<th>Role</th>
         					<th>Status</th>
         					<th>Created At</th>
@@ -54,6 +54,9 @@
                 @endforeach
                 </tfoot>
               </table>
+              <div class="text-center">
+                {{ $users->links() }}
+              </div>
             </div>
         </div>
 	</div>

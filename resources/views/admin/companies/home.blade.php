@@ -22,17 +22,10 @@
                 <tr>
                   <th>{{ trans('adminlte::adminlte.companyName') }}</th>
                   <th>Fis.Number</th>
-                  <th>Bis.Number</th>
-                  <th>Tax.Number</th>
-                  <th>Res.Number</th>
                   <th>Tel.Number</th>
+                  <th>Contact Person</th>
                   <th>Email</th>
-                  <th>Address</th>
-                  <th>City</th>
-                  <th>Country</th>
-                  <th>Type</th>
                   <th>Status</th>
-                  <th>Limit</th>
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Edit</th>
@@ -44,17 +37,10 @@
                 <tr>
                   	<td>{{ $company->name }}</td>
                   	<td>{{ $company->fis_number }}</td>
-                    <td>{{ $company->bis_number }}</td>
-                    <td>{{ $company->tax_number }}</td>
-                    <td>{{ $company->res_number }}</td>
                     <td>{{ $company->tel_number }}</td>
+                    <td>{{ $company->contact_person }}</td>
                     <td>{{ $company->email }}</td>
-                    <td>{{ $company->address }}</td>
-                    <td>{{ $company->city }}</td>
-                    <td>{{ $company->country }}</td>
-                    <td>{{ $company->type }}</td>
                     <td>{{ $company->status == 1 ? 'Active' : 'No active'  }}</td>
-                    <td>{{ $company->limit }}</td>
                   	<td>{{ $company->created_at->diffForHumans() }}</td>
                   	<td>{{ $company->updated_at->diffForHumans() }}</td>
                   	<td><a href="{{ url('admin/companies/'.$company->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
@@ -69,6 +55,9 @@
                 @endforeach
                 </tfoot>
               </table>
+              <div class="text-center">
+                {{ $companies->links() }}
+              </div>
             </div>
             <!-- /.box-body -->
           </div>

@@ -4,101 +4,90 @@
 
 @include('includes/alert_info')
 
+<h3 class="box-title">Transaction</h3>
 <div class="content">
-	<div class="row">
-		<div class="box">
-            <div class="box-header">
-              <div class="col-md-4 float-left"><h3 class="box-title">Transaction</h3></div>
-              <div class="col-md-8 float-right">
+  <div class="row">
+    <div class="box">
+      <div class="box-header">
+          <div class="col-md-2">
+             <button type="button" class="btn btn-success" id="export">Export Excel</button>
+          </div>
+          <div class="col-xs-offset-1 col-md-9">
+            <form class="form-inline">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="Start Date:">Start Date:</label>
+                    <input class="form-control datepicker" autocomplete="off" id="from_date" type="text">
+                  </div>
 
-              <div class="col-md-12">
-              {!! Form::open(['method'=>'POST','class'=>'form-inline text-right','action'=>['TransactionController@excel_export']]) !!}
-              
-              <div class="form-group">
-                {!! Form::label('Start Date:'); !!}
-                {!! Form::text('from_date','',['class'=>'form-control datepicker','autocomplete'=>'off']); !!}
-              </div>
-              
-              <div class="form-group">
-                {!! Form::label('End Date:'); !!}
-                {!! Form::text('to_date','',['class'=>'form-control datepicker','autocomplete'=>'off']); !!}
-              </div>
+                  <div class="form-group">
+                    <label for="End Date:">End Date:</label>
+                    <input class="form-control datepicker" autocomplete="off" id="to_date" type="text">
+                  </div>
 
-              <div class="form-group">
-                {!! Form::label('User:'); !!}
-                {!! Form::select('user',['Choose a User'] + $users,null,['class'=>'form-control']); !!} 
-              </div>
+                  <div class="form-group">
+                    <label for="User:">User:</label>
+                    <select class="form-control" id="user">
+                      <option value="">Choose a User</option>
+                        @foreach($users as $id => $name)
+                          <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select> 
+                  </div>
 
-              <div class="form-group">
-                {!! Form::submit('Export Excel', ['class'=>'btn btn-block btn-success','']); !!}
-              </div>
+                  <div class="form-group">
+                    <label for="User:">RFID:</label>
+                    <select class="form-control" id="rfid">
+                      <option value="">Choose a RFID</option>
+                        @foreach($rfids as $id => $name)
+                          <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select> 
+                  </div>
 
-              {!! Form::close() !!}
+                  <div class="form-group">
+                    <button type="button" class="btn btn-success" id="search">Search</button>
+                  </div>
+                </div>
+              </form>
+          </div>
+      </div>
 
-              </div>
 
-              </div>
-            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example2" class="table table-hover table-bordered" >
                 <thead>
                 <tr>
-        					<th>Status</th>
-                  <th>Locker</th>
-        					<th>Tr_no</th>
-        					<th>Sl_no</th>
-        					<th>Product</th>
-        					<th>Dis_status</th>
-        					<th>Price</th>
+                  <th>User</th>
+                  <th>RFID Name</th>
+                  <th>Product</th>
+                  <th>Price</th>
                   <th>Lit</th>
-                  <th>Money</th>
-                  <th>Dis_tot</th>
-                  <th>Pfc_tot</th>
-                  <th>Tr_status</th>
-                  <th>Rfid</th>
-                  <th>Ctype</th>
-                  <th>Method</th>
-                  <th>Bill_no</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>Total</th>
+                  <th>Created At</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($transactions as $transaction)
                 <tr>
-          					<td>{{ $transaction->status }}</td>
-                    <td>{{ $transaction->locker }}</td>
-          					<td>{{ $transaction->tr_no }}</td>
-          					<td>{{ $transaction->sl_no }}</td>
-                    <td>{{ $transaction->product ? $transaction->product->name : ''}}</td>
-                    <td>{{ $transaction->dis_status }}</td>
+                    <td>{{ $transaction->rfid->user->name }}</td>
+                    <td>{{ $transaction->rfid->rfid_name }}</td>
+                    <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
                     <td>{{ $transaction->price }}</td>
                     <td>{{ $transaction->lit }}</td>
                     <td>{{ $transaction->money }}</td>
-                    <td>{{ $transaction->dis_tot }}</td>
-                    <td>{{ $transaction->pfc_tot }}</td>
-                    <td>{{ $transaction->tr_status }}</td>
-                    <td>{{ $transaction->rfid_id }}</td>
-                    <td>{{ $transaction->ctype }}</td>
-                    <td>{{ $transaction->method }}</td>
-          					<td>{{ $transaction->bill_no }}</td>
-                  	
-                  	<td><a href="{{ url('admin/transactions/'.$transaction->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
-                    <td>
-                      {!! Form::open(['method'=>'DELETE', 'action'=>['TransactionController@destroy',$transaction->id]]) !!}
-                        <div class="form-group">
-                          {!! Form::submit('Delete', ['class'=>'btn btn-block btn-danger']); !!}
-                        </div>
-                     {!! Form::close() !!}
-                    </td>
+                    <td>{{ $transaction->created_at }}</td>
                 </tr>
                 @endforeach
                 </tfoot>
               </table>
+              <div class="text-center">
+                {{ $transactions->links() }}
+              </div>
             </div>
         </div>
-	</div>
+  </div>
 </div>
 
 @endsection
@@ -112,6 +101,52 @@
 <script>
   $(function() {
     $(".datepicker" ).datepicker();
+  });
+
+
+  $(document).ready(function(){
+    $('#search').click(function(){
+      var fromDate = $("#from_date").val();
+      var toDate = $("#to_date").val();
+      var user = $("#user").val();
+      var rfid = $("#rfid").val();
+
+      $.ajax({
+        type: "GET",
+        data: {fromDate: fromDate, toDate: toDate, user: user,rfid: rfid},
+        url: "{{ URL('/search')}}",
+        dataType: 'JSON',
+        success: function(data){
+          $('tbody').html(data.table_data);
+        }
+      });
+
+    });
+  });
+
+  $(document).ready(function(){
+    $('#export').click(function(){
+      var fromDate = $("#from_date").val();
+      var toDate = $("#to_date").val();
+      var user = $("#user").val();
+      var rfid = $("#rfid").val();
+
+      $.ajax({
+        type: "GET",
+        data: {fromDate: fromDate, toDate: toDate, user: user,rfid: rfid},
+        url: "{{ URL('/export')}}",
+        dataType: "JSON",
+        success: function(response, textStatus, request){
+          var a = document.createElement("a");
+          a.href = response.file; 
+          a.download = response.name;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          }
+      });
+
+    });
   });
 </script>
 

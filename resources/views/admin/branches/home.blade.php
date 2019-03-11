@@ -51,6 +51,9 @@
                 @endforeach
                 </tfoot>
               </table>
+              <div class="text-center">
+                {{ $branches->links() }}
+              </div>
             </div>
             <!-- /.box-body -->
           </div>

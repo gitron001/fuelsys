@@ -57,6 +57,9 @@
                 @endforeach
                 </tfoot>
               </table>
+              <div class="text-center">
+                {{ $rfids->links() }}
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
