@@ -50,9 +50,6 @@ RUN crontab  /etc/cron.d/hello-cron
 # Create the log file to be able to run tail
 RUN touch /var/log/cron.log
 
-# Symlink the cron to stdout
-RUN ln -sf /dev/stdout /var/log/cron.log
-
 # Copy existing application directory contents
 COPY . /var/www
 
