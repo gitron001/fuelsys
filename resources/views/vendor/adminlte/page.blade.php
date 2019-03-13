@@ -67,7 +67,7 @@
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                   <li><!-- start message -->
-                                    <a href="locale/en">
+                                    <a href="{{ URL('locale/en') }}">
                                       <div class="pull-left">
                                         <i class="fa fa-globe" aria-hidden="true"></i>
                                       </div>
@@ -83,7 +83,7 @@
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                   <li><!-- start message -->
-                                    <a href="locale/al">
+                                    <a href="{{ URL('locale/al') }}">
                                     <div class="pull-left">
                                         <i class="fa fa-globe" aria-hidden="true"></i>
                                     </div>

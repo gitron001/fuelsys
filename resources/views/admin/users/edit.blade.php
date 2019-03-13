@@ -16,7 +16,7 @@
 
 		<div class="form-group">
 			{!! Form::label('branch_id', 'Branch'); !!}
-			{!! Form::select('branch_id',$branch,null,['class'=>'form-control']); !!} 
+			{!! Form::select('branch_id',['Choose a branch'] + $branch,null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">

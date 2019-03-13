@@ -18,6 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->integer('fis_number');
             $table->integer('bis_number');
+            $table->string('contact_person');
             $table->integer('tax_number');
             $table->integer('res_number');
             $table->integer('tel_number');

@@ -23,6 +23,12 @@
 			{!! $errors->first('bis_number','<span class="help-block">:message</span>') !!} 
 		</div>
 
+		<div class="form-group {{ $errors->has('contact_person') ? 'has-error' :'' }}">
+			{!! Form::label('contact_person', 'Contact Person:'); !!}
+			{!! Form::text('contact_person',null,['class'=>'form-control']); !!}
+			{!! $errors->first('contact_person','<span class="help-block">:message</span>') !!} 
+		</div>
+
 		<div class="form-group {{ $errors->has('tax_number') ? 'has-error' :'' }}">
 			{!! Form::label('tax_number', 'Tax.Number:'); !!}
 			{!! Form::number('tax_number',null,['class'=>'form-control']); !!} 

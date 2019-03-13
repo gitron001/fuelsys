@@ -31,7 +31,7 @@
 
 		<div class="form-group {{ $errors->has('product_id') ? 'has-error' :'' }}">
 			{!! Form::label('product_id', 'Product:'); !!}
-			{!! Form::number('product_id',null,['class'=>'form-control']); !!} 
+			{!! Form::select('product_id',['Choose a Product'] + $products,null,['class'=>'form-control']); !!} 
 			{!! $errors->first('product_id','<span class="help-block">:message</span>') !!}
 		</div>
 		

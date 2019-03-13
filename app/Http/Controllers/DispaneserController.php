@@ -14,7 +14,7 @@ class DispaneserController extends Controller
      */
     public function index()
     {
-        $dispanesers = Dispaneser::all();
+        $dispanesers = Dispaneser::paginate(15);
         return view('/admin/dispanesers/home',compact('dispanesers'));
     }
 

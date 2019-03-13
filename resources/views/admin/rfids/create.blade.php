@@ -18,7 +18,7 @@
 		</div>
 
 		<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
-			{!! Form::label('user_id', 'User_id:'); !!}
+			{!! Form::label('user_id', 'User:'); !!}
 			{!! Form::select('user_id',['Choose User'] + $users,null,['class'=>'form-control']); !!} 
 			{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 		</div>

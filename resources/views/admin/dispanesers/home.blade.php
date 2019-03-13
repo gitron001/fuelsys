@@ -45,6 +45,9 @@
                 @endforeach
                 </tfoot>
               </table>
+              <div class="text-center">
+                {{ $dispanesers->links() }}
+              </div>
             </div>
             <!-- /.box-body -->
           </div>

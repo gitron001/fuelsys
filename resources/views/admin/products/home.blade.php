@@ -49,6 +49,9 @@
                 @endforeach
                 </tfoot>
               </table>
+              <div class="text-center">
+                {{ $products->links() }}
+              </div>
             </div>
             <!-- /.box-body -->
           </div>

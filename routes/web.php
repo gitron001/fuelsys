@@ -25,9 +25,16 @@ Route::resource('/admin/dispanesers', 'DispaneserController');
 Route::resource('/admin/branches', 'BranchController');
 Route::resource('/admin/rfids', 'RfidController');
 
-Route::post('/admin/transaction/excel_export', 'TransactionController@excel_export');
+Route::post('/transaction/excel_export', 'TransactionController@excel_export');
 
 Route::get('locale/{locale}',function($locale){
 	Session::put('locale',$locale);
 	return redirect()->back();
 });
+
+Route::view('transactions-info','admin.transactions.transactions-info',[
+	'transactions' => App\Models\Transaction::orderBy('created_at', 'DESC')->limit(15)->get()
+]);
+
+Route::get('/search','TransactionController@search');
+Route::get('/export','TransactionController@excel_export');

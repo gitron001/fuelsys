@@ -15,7 +15,7 @@ class TankController extends Controller
      */
     public function index()
     {
-        $tanks = Tank::all();
+        $tanks = Tank::paginate(15);
         return view('/admin/tanks/home',compact('tanks'));
     }
 

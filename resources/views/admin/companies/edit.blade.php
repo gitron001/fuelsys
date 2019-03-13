@@ -20,6 +20,11 @@
 		</div>
 
 		<div class="form-group">
+			{!! Form::label('contact_person', 'Contact Person:'); !!}
+			{!! Form::text('contact_person',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
 			{!! Form::label('fis_number', 'Fis.Number'); !!}
 			{!! Form::text('fis_number',null,['class'=>'form-control']); !!} 
 		</div>

@@ -16,7 +16,7 @@
 
 		<div class="form-group">
 			{!! Form::label('user_id', 'User'); !!}
-			{!! Form::select('user_id',$users,null,['class'=>'form-control']); !!} 
+			{!! Form::select('user_id',['Select a User'] + $users,null,['class'=>'form-control']); !!} 
 		</div>
 		
 		<div class="form-group">

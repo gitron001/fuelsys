@@ -21,7 +21,7 @@ class RfidController extends Controller
      */
     public function index()
     {
-        $rfids = Rfid::all();
+        $rfids = Rfid::paginate(15);
         return view('/admin/rfids/home',compact('rfids'));
     }
 

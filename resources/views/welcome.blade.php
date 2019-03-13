@@ -17,7 +17,6 @@
       <i class="fas fa-gas-pump" style="font-size:80px;"></i>
       <div class="card-body">
         <h2 class="card-title">{{ $dispaneser->name }}</h2>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
       </div>
     </div>
   </div>
@@ -26,7 +25,7 @@
 
 
 
-<div class="col-md-4">
+<div class="col-md-4" id="loadTransaction">
   <h2 class="text-center">LIVE Feed</h2>           
   <table class="table table-bordered text-center">
     <thead>
@@ -40,7 +39,7 @@
     <tbody>
 	@foreach($transactions as $transaction)
       <tr>
-        <td>{{ $transaction->rfid_id }}</td>
+        <td>{{ $transaction->rfid->rfid_name }}</td>
         <td>{{ $transaction->rfid ? $transaction->rfid->user->name : ''}}</td>
         <td>{{ $transaction->money }}</td>
         <td>{{ $transaction->created_at }}</td>
@@ -55,3 +54,17 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
+
+@section('js')
+
+<script>
+
+  $(document).ready(function(){
+    setInterval(function(){
+      $('#loadTransaction').load('{{ url('/transactions-info')}}').fadeIn('slow');
+    },60000)
+  });
+
+</script>
+
+@endsection
