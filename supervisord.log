@@ -580,3 +580,31 @@
 2019-03-11 13:21:45,990 INFO waiting for cron, php to die
 2019-03-11 13:21:46,004 INFO stopped: php (exit status 0)
 2019-03-11 13:21:46,009 INFO stopped: cron (terminated by SIGTERM)
+2019-03-13 10:52:20,353 CRIT Supervisor running as root (no user in config file)
+2019-03-13 10:52:20,400 INFO supervisord started with pid 1
+2019-03-13 10:52:21,403 INFO spawned: 'cron' with pid 8
+2019-03-13 10:52:21,405 INFO spawned: 'php' with pid 9
+2019-03-13 10:52:22,552 INFO success: cron entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-03-13 10:52:22,553 INFO success: php entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-03-13 10:53:02,080 INFO reaped unknown pid 20
+2019-03-13 10:53:05,161 INFO reaped unknown pid 22
+2019-03-13 10:54:02,432 INFO reaped unknown pid 32
+2019-03-13 10:54:06,414 INFO reaped unknown pid 33
+2019-03-13 10:55:01,693 INFO reaped unknown pid 44
+2019-03-13 10:55:04,674 INFO reaped unknown pid 45
+2019-03-13 10:56:02,200 INFO reaped unknown pid 56
+2019-03-13 10:56:05,259 INFO reaped unknown pid 57
+2019-03-13 10:56:36,624 INFO exited: cron (terminated by SIGTERM; not expected)
+2019-03-13 10:56:36,626 WARN received SIGTERM indicating exit request
+2019-03-13 10:58:39,071 CRIT Supervisor running as root (no user in config file)
+2019-03-13 10:58:39,085 INFO supervisord started with pid 1
+2019-03-13 10:58:40,089 INFO spawned: 'cron' with pid 8
+2019-03-13 10:58:40,092 INFO spawned: 'php' with pid 9
+2019-03-13 10:58:41,095 INFO success: cron entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-03-13 10:58:41,095 INFO success: php entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-03-13 10:59:02,759 INFO reaped unknown pid 21
+2019-03-13 10:59:05,783 INFO reaped unknown pid 20
+2019-03-13 10:59:18,760 WARN received SIGTERM indicating exit request
+2019-03-13 10:59:18,761 INFO waiting for cron, php to die
+2019-03-13 10:59:18,894 INFO stopped: php (exit status 0)
+2019-03-13 10:59:18,895 INFO stopped: cron (terminated by SIGTERM)
