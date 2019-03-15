@@ -40,6 +40,7 @@ class CheckCardReadersCommand extends Command
      */
     public function handle()
     {
+        dd('ok');
         $socket = PFC::create_socket();
         while(true){
             CardService::check_readers($socket);

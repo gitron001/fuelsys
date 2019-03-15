@@ -41,7 +41,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => 'localhost',
+            'host' => 'db',
             'port' => '3306',
             'database' => 'fuel_system',
             'username' => 'root',
