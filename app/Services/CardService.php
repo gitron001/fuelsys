@@ -31,8 +31,7 @@ class CardService extends ServiceProvider
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
-        //print_r($response);
-        //return true;
+
         //Get all transaction by channel
         $length = count($response) - 3;
         for($i = 3; $i <= $length; $i++){

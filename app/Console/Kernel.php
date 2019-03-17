@@ -24,9 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $file = 'monitoring_cronjob.php';
+        /*$file = 'monitoring_cronjob.php';
         $schedule->command('card:reader')->appendOutputTo($file)
-                 ->everyMinute()->withoutOverlapping();
+                 ->everyMinute()->withoutOverlapping();*/
     }
 
     /**

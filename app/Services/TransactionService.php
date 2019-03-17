@@ -78,91 +78,65 @@ class TransactionService extends ServiceProvider
          .pack("C*", $controller )
          .strrev(pack("s",$the_crc))
          .pack("c*",02);
-        //print_r(unpack('c*', $binarydata));
-       // return true;
-        $response = PFC::send_message($socket, $binarydata);
-        //print_r($response);
-        //return true;
-        $transaction = new Transaction();
-        $status = $response[4];
-        echo '<br> STATUS: '. $status;
-        $transaction->status = $status;
 
-        $locker = $response[5];
-        echo '<br> locker: '. $locker;
-        $transaction->locker = $locker;
+        $response = PFC::send_message($socket, $binarydata);
+
+        $transaction = new Transaction();
+
+        $transaction->status = $response[4];
+
+        $transaction->locker = $response[5];
 
         $tr_no = pack('c', $response[7]).pack('c', $response[6]);
         $tr_no = unpack('s', $tr_no)[1];
-        echo '<br> tr_no: '. $tr_no;
+
         $transaction->tr_no = $tr_no;
 
-        $sl_no 	= $response[8];
-        echo '<br> sl_no: '. $sl_no;
-        $transaction->sl_no = $sl_no;
+        $transaction->sl_no = $response[8];
 
-        $product 	= $response[9];
-        echo '<br> product: '. $product;
-        $transaction->product_id = $product;
+        $transaction->product_id = $response[9];
 
-        $dis_status 	= $response[10];
-        echo '<br> dis_status: '. $dis_status;
-        $transaction->dis_tot = $dis_status;
+        $transaction->dis_tot = $response[10];
 
         $price = pack('c', $response[12]).pack('c', $response[11]);
         $price = unpack('s', $price)[1];
-        echo '<br> price: '. $price;
         $transaction->price = number_format(($price/100),2);
 
         $lit = pack('c', $response[16]).pack('c', $response[15]).pack('c', $response[14]).pack('c', $response[13]);
         $lit = unpack('i', $lit)[1];
-        echo '<br> lit: '. $lit;
         $transaction->lit = number_format(($lit/100),2);
 
         $money = pack('c', $response[20]).pack('c', $response[19]).pack('c', $response[18]).pack('c', $response[17]);
         $money = unpack('i', $money)[1];
-        echo '<br> money: '. $money;
         $transaction->money = number_format(($money/100),2);
 
         $dis_tot = pack('c', $response[24]).pack('c', $response[23]).pack('c', $response[22]).pack('c', $response[21]);
         $dis_tot = unpack('i', $dis_tot)[1];
-        echo '<br> dis_tot: '. $dis_tot;
         $transaction->dis_tot = $dis_tot;
 
 
         $pfc_tot = pack('c', $response[28]).pack('c', $response[27]).pack('c', $response[26]).pack('c', $response[25]);
         $pfc_tot = unpack('i', $pfc_tot)[1];
-        echo '<br> pfc_tot: '. $pfc_tot;
         $transaction->pfc_tot = $pfc_tot;
 
-        $tr_status	 	= $response[29];
-        echo '<br> tr_status: '. $tr_status;
-        $transaction->tr_status = $tr_status;
+        $transaction->tr_status = $response[29];
 
         $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
         $rfid = unpack('i', $rfid)[1];
-        //$rfid	 	= $response[15];
 
         $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
         //Query the rfid ID from the RFID table
         $transaction->rfid_id = $the_card->id;
 
-        echo '<br> rfid: '. $rfid;
-        $cType	 	= $response[34];
-        echo '<br> cType: '. $cType;
-        $transaction->ctype = $cType;
+        $transaction->ctype = $response[34];
 
-        $method	 	= $response[35];
-        echo '<br> method: '. $method;
-        $transaction->method = $method;
+        $transaction->method = $response[35];
 
         $bill_no = pack('c', $response[37]).pack('c', $response[36]);
         $bill_no = unpack('s', $bill_no)[1];
-        echo '<br> bill_no: '. $bill_no;
         $transaction->bill_no = $bill_no;
 
         $transaction->save();
-        echo '<br>';
 
         //Clear status transaction
         $status = 2;
@@ -171,11 +145,15 @@ class TransactionService extends ServiceProvider
         return true;
     }
 
-    /**\]\
-     *
-     *
-     *
-     *
+    /**\
+     *Change Transaction status
+     * Status 0 - unlock transaction
+     * Status 1 - lock transaction
+     * Status 2 - clear transaction
+     * Status 3 - block dispanser
+     * Status 4 - unblock dispanser
+     * Status 5 - suspend fueling
+     * Status 6 - resume fueling
      */
     public static function transaction_status($channel, $status,  $socket)
     {

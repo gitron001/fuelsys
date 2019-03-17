@@ -18,6 +18,7 @@ class RunningProcesses extends Migration
             $table->integer('start_time');
             $table->integer('refresh_time');
             $table->double('faild_attempt');
+            $table->double('class_name');
             $table->double('type_id');
             $table->integer('created_at');
             $table->integer('updated_at');

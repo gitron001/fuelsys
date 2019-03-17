@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Services\CardService;
 use App\Services\TransactionService;
 use App\Services\PFCServices as PFC;
+use App\Services\DispanserService as Dispanser;
 
 class CheckCardReadersCommand extends Command
 {
@@ -40,13 +41,19 @@ class CheckCardReadersCommand extends Command
      */
     public function handle()
     {
-        dd('ok');
-        $socket = PFC::create_socket();
+       $socket = PFC::create_socket();
+        Dispanser::fuelPrices($socket);
+        Dispanser::dispanserChannels($socket);
+
+        socket_close($socket);
+
+         /*$socket = PFC::create_socket();
         while(true){
             CardService::check_readers($socket);
+            usleep(150000);
             TransactionService::read($socket);
             usleep(150000);
         }
-        socket_close($socket);
+        socket_close($socket); */
     }
 }
