@@ -31,4 +31,8 @@ class Company extends Model
     public function users(){
         return $this->hasMany('App\Models\Rfid');
     }
+
+    public function discounts(){
+        return $this->hasMany('App\Models\CompanyDiscount', 'company_id', 'id');
+    }
 }
