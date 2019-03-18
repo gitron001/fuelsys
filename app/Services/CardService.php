@@ -90,13 +90,11 @@ class CardService extends ServiceProvider
                 $all_discounts = array();
                 for($i = 10; $i < 15; $i++){
                     foreach($the_card->discounts as $discount){
-
-                        $the_product    = Products::where('id', $discount->product_id)->first();
-                        $product_count  = Products::where('id', $discount->product_id)->count();
-                        if($product_count > 0 && $the_product->pfc_pr_id == $response[$i]){
-                            $all_discounts[$i] = (int)($the_product->price - $discount->discount*1000);
+                        if(is_null($discount->product_details->price){ continue; }
+                        if($discount->product_details->pfc_pr_id == $response[$i]){
+                            $all_discounts[$i] = (int)($discount->product_details->price - $discount->discount*1000);
                             break;
-                        }
+                        }git
                     }
                 }
 
