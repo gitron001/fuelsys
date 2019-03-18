@@ -5917,3 +5917,65 @@
 2019-03-18 07:13:34,951 INFO reaped unknown pid 7039
 2019-03-18 07:14:04,249 INFO reaped unknown pid 7051
 >>>>>>> 617bf5e6bebce1f550c6ce1087ef7922d3d4dff0
+2019-03-18 09:40:11,097 CRIT Supervisor running as root (no user in config file)
+2019-03-18 09:40:11,136 INFO supervisord started with pid 1
+2019-03-18 09:40:12,139 INFO spawned: 'cron' with pid 9
+2019-03-18 09:40:12,143 INFO spawned: 'php' with pid 10
+2019-03-18 09:40:13,146 INFO success: cron entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-03-18 09:40:13,147 INFO success: php entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-03-18 09:41:05,574 INFO reaped unknown pid 22
+2019-03-18 09:41:09,089 INFO reaped unknown pid 21
+2019-03-18 09:42:01,925 INFO reaped unknown pid 33
+2019-03-18 09:42:04,984 INFO reaped unknown pid 34
+2019-03-18 09:43:02,361 INFO reaped unknown pid 45
+2019-03-18 09:43:05,420 INFO reaped unknown pid 47
+2019-03-18 09:44:01,985 INFO reaped unknown pid 57
+2019-03-18 09:44:05,040 INFO reaped unknown pid 59
+2019-03-18 09:45:02,459 INFO reaped unknown pid 69
+2019-03-18 09:45:05,817 INFO reaped unknown pid 71
+2019-03-18 09:46:01,844 INFO reaped unknown pid 81
+2019-03-18 09:46:04,843 INFO reaped unknown pid 82
+2019-03-18 09:47:02,225 INFO reaped unknown pid 93
+2019-03-18 09:47:05,273 INFO reaped unknown pid 95
+2019-03-18 09:48:01,859 INFO reaped unknown pid 105
+2019-03-18 09:48:04,918 INFO reaped unknown pid 107
+2019-03-18 09:49:02,625 INFO reaped unknown pid 117
+2019-03-18 09:49:05,661 INFO reaped unknown pid 119
+2019-03-18 09:50:02,084 INFO reaped unknown pid 129
+2019-03-18 09:50:05,155 INFO reaped unknown pid 131
+2019-03-18 09:51:02,865 INFO reaped unknown pid 141
+2019-03-18 09:51:05,701 INFO reaped unknown pid 142
+2019-03-18 09:52:02,533 INFO reaped unknown pid 153
+2019-03-18 09:52:05,644 INFO reaped unknown pid 155
+2019-03-18 09:53:02,167 INFO reaped unknown pid 165
+2019-03-18 09:53:05,218 INFO reaped unknown pid 167
+2019-03-18 09:54:02,551 INFO reaped unknown pid 177
+2019-03-18 09:54:06,157 INFO reaped unknown pid 178
+2019-03-18 09:55:01,872 INFO reaped unknown pid 190
+2019-03-18 09:55:05,051 INFO reaped unknown pid 189
+2019-03-18 09:56:02,318 INFO reaped unknown pid 201
+2019-03-18 09:56:05,367 INFO reaped unknown pid 203
+2019-03-18 09:57:01,824 INFO reaped unknown pid 213
+2019-03-18 09:57:04,889 INFO reaped unknown pid 215
+2019-03-18 09:58:02,709 INFO reaped unknown pid 225
+2019-03-18 09:58:05,851 INFO reaped unknown pid 227
+2019-03-18 09:59:02,472 INFO reaped unknown pid 237
+2019-03-18 09:59:05,482 INFO reaped unknown pid 238
+2019-03-18 10:00:02,053 INFO reaped unknown pid 250
+2019-03-18 10:00:05,051 INFO reaped unknown pid 249
+2019-03-18 10:01:02,193 INFO reaped unknown pid 261
+2019-03-18 10:01:02,304 INFO reaped unknown pid 263
+2019-03-18 10:02:01,532 INFO reaped unknown pid 273
+2019-03-18 10:02:04,856 INFO reaped unknown pid 275
+2019-03-18 10:03:02,080 INFO reaped unknown pid 285
+2019-03-18 10:03:05,114 INFO reaped unknown pid 287
+2019-03-18 10:04:02,525 INFO reaped unknown pid 297
+2019-03-18 10:04:05,584 INFO reaped unknown pid 299
+2019-03-18 10:05:02,431 INFO reaped unknown pid 309
+2019-03-18 10:05:02,563 INFO reaped unknown pid 311
+2019-03-18 10:06:01,976 INFO reaped unknown pid 321
+2019-03-18 10:06:05,047 INFO reaped unknown pid 323
+2019-03-18 10:06:08,330 WARN received SIGTERM indicating exit request
+2019-03-18 10:06:08,343 INFO waiting for cron, php to die
+2019-03-18 10:06:08,485 INFO stopped: php (exit status 0)
+2019-03-18 10:06:08,487 INFO stopped: cron (terminated by SIGTERM)
