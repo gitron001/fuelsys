@@ -25,12 +25,14 @@ class Rfid extends Model
     public function company(){
         return $this->belongsTo('App\Models\Company')->withDefault([
             'name' => '',
+            'status' => 1,
         ]);
     }
 
     public function user(){
         return $this->belongsTo('App\Models\User')->withDefault([
             'name' => '',
+            'status' => 1,
         ]);
     }
 

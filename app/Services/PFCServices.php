@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\PFCServices as PFC;
 
 class PFCServices extends ServiceProvider
 {
@@ -92,11 +93,15 @@ class PFCServices extends ServiceProvider
             usleep(150000);
             //Read the reply
             $input = socket_read($socket, 2048);
-
             //Convert reply to array
             $response = unpack("c*", $input);
             $validation = self::validate_message($response);
             if (!$validation) {
+                if(count($response) == 0){
+                    socket_close($socket);
+                    usleep(150000);
+                    $socket = PFC::create_socket();
+                }
                 echo 'Invalid Transactions<bd>';
                 sleep(1);
                 continue;

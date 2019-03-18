@@ -31,8 +31,7 @@ class CardService extends ServiceProvider
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
-        //print_r($response);
-        //return true;
+
         //Get all transaction by channel
         $length = count($response) - 3;
         for($i = 3; $i <= $length; $i++){
@@ -77,6 +76,10 @@ class CardService extends ServiceProvider
             $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
             $card_count = Rfid::where("rfid", $cardNumber)->where('status', 1)->count();
             if($card_count == 0 ){ return false; }
+
+            if($the_card->user->status != 1 ){ return false; }
+            if($the_card->company->status != 1 ){ return false; }
+
            /*if($the_card->limits){
 
             }*/
@@ -87,18 +90,22 @@ class CardService extends ServiceProvider
                 $all_discounts = array();
                 for($i = 10; $i < 15; $i++){
                     foreach($the_card->discounts as $discount){
-                        if($discount->id == $response[$i]){
-                            $all_discounts[$i] = number_format(($discount->product->price - $discount->discount), 2);
+
+                        $the_product    = Products::where('id', $discount->product_id)->first();
+                        $product_count  = Products::where('id', $discount->product_id)->count();
+                        if($product_count > 0 && $the_product->pfc_pr_id == $response[$i]){
+                            $all_discounts[$i] = (int)($the_product->price - $discount->discount*1000);
                             break;
                         }
                     }
                 }
+
                 $products = Products::all();
                 for($i = 10; $i < 15; $i++){
                     if(!isset($all_discounts[$i] )){
                         foreach($products as $pr) {
-                            if($pr->id == $response[$i]){
-                                $all_discounts[$i] = number_format($pr->price, 2);
+                            if($pr->pfc_pr_id == $response[$i]){
+                                $all_discounts[$i] = (int)$pr->price;
                                 break;
                             }
                         }
@@ -139,9 +146,9 @@ class CardService extends ServiceProvider
             $binarydata .= strrev(pack("s",$the_crc));
             //End of Message
             $binarydata .= pack("c*",02);
-            //print_r(unpack('c*', $binarydata));
+            print_r(unpack('c*', $binarydata));
             $response = PFC::send_message($socket, $binarydata, $message);
-            //print_r($response);
+            print_r($response);
             return true;
     }
     /**
@@ -155,8 +162,8 @@ class CardService extends ServiceProvider
             $command    = PFC::conver_to_bin(3);
             $prices     = "";
 
-            foreach($all_discounts as $ds){
-
+            for($i = 10; $i < 15; $i++){
+                $ds = $all_discounts[$i];
                 //dd(str_replace('.', '', $ds));
                 //$prices .= $bin;
                 $lenth = strlen($ds);
@@ -166,9 +173,12 @@ class CardService extends ServiceProvider
                     $hex        = (string) strtoupper(dechex(str_replace('.', '',$ds)));
                 }
                 else{
-                    $hex        = (string) '0'.strtoupper(dechex(str_replace('.', '',$ds)));
+                    $hex        = (string) strtoupper(dechex(str_replace('.', '',$ds)));
                 }
 
+                if(strlen($hex) % 2 != 0){
+                    $hex = '0'.$hex;
+                }
                 $prices    .= hex2bin($hex);
 
             }
@@ -188,16 +198,17 @@ class CardService extends ServiceProvider
             $binarydata .= pack("c*",0x03);
             //Command 2
             $binarydata .= pack("c*",0x03);
-            foreach($all_discounts as $ds){
-               $binarydata .= strrev(pack('s', str_replace('.', '', $ds)));
+            for($i = 10; $i < 15; $i++){
+                $ds = $all_discounts[$i];
+                $binarydata .= strrev(pack('s', str_replace('.', '', $ds)));
             }
             //CRC
             $binarydata .= strrev(pack("s",$the_crc));
             //End of Message
             $binarydata .= pack("c*",02);
 
-
             $response = PFC::send_message($socket, $binarydata, $message);
+
             return true;
     }
 }

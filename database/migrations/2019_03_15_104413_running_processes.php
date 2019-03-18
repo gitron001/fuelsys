@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsTable extends Migration
+class RunningProcesses extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('running_processes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
-            $table->double('price');
-            $table->double('vat')->nullable();
-            $table->double('pfc_pr_id')->nullable();
-            $table->tinyInteger('status')->default(1);
+            $table->integer('start_time')->nullable();
+            $table->integer('refresh_time')->nullable();
+            $table->double('faild_attempt')->nullable();
+            $table->char('class_name')->nullable();
+            $table->double('type_id');
             $table->integer('created_at');
             $table->integer('updated_at');
         });
@@ -32,6 +32,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('running_processes');
     }
 }

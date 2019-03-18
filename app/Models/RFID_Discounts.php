@@ -18,7 +18,7 @@ class RFID_Discounts extends Model
         return 'U';
     }
 
-    public function product(){
-        return $this->belongsTo('App\Models\Products');
+    public function product_details(){
+        return $this->belongsTo('App\Models\Products', 'product_id', 'id');
     }
 }
