@@ -44,11 +44,6 @@ class CheckCardReadersCommand extends Command
      */
     public function handle()
     {
-
-        $cardNumber = 291018165;
-        $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
-        $dicount    = RFID_Discounts::find(1);
-
         $socket = PFC::create_socket();
         Process::insert(array('start_time'=> time(),
                                 'refresh_time' => time(),

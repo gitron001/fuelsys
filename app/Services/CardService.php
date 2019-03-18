@@ -91,12 +91,10 @@ class CardService extends ServiceProvider
                 for($i = 10; $i < 15; $i++){
                     foreach($the_card->discounts as $discount){
 
-                        echo $the_card->discounts->id;
-                        dd();
-
-                        if(count($the_product) > 0 && $the_product->pfc_pr_id == $response[$i]){
-                            $all_discounts[$i] = (int)($discount->product->price - $discount->discount/1000);
-                            dd($all_discounts[$i]);
+                        $the_product    = Products::where('id', $discount->product_id)->first();
+                        $product_count  = Products::where('id', $discount->product_id)->count();
+                        if($product_count > 0 && $the_product->pfc_pr_id == $response[$i]){
+                            $all_discounts[$i] = (int)($the_product->price - $discount->discount*1000);
                             break;
                         }
                     }
@@ -163,7 +161,6 @@ class CardService extends ServiceProvider
             $channel_id = PFC::conver_to_bin($channel);
             $command    = PFC::conver_to_bin(3);
             $prices     = "";
-            dd($all_discounts);
 
             for($i = 10; $i < 15; $i++){
                 $ds = $all_discounts[$i];
@@ -176,9 +173,12 @@ class CardService extends ServiceProvider
                     $hex        = (string) strtoupper(dechex(str_replace('.', '',$ds)));
                 }
                 else{
-                    $hex        = (string) '0'.strtoupper(dechex(str_replace('.', '',$ds)));
+                    $hex        = (string) strtoupper(dechex(str_replace('.', '',$ds)));
                 }
 
+                if(strlen($hex) % 2 != 0){
+                    $hex = '0'.$hex;
+                }
                 $prices    .= hex2bin($hex);
 
             }
@@ -207,9 +207,7 @@ class CardService extends ServiceProvider
             //End of Message
             $binarydata .= pack("c*",02);
 
-            print_r(unpack('c*', $binarydata));
             $response = PFC::send_message($socket, $binarydata, $message);
-            dd($response);
 
             return true;
     }
