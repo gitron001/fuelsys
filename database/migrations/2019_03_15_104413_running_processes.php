@@ -15,10 +15,10 @@ class RunningProcesses extends Migration
     {
         Schema::create('running_processes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('start_time');
-            $table->integer('refresh_time');
-            $table->double('faild_attempt');
-            $table->double('class_name');
+            $table->integer('start_time')->nullable();
+            $table->integer('refresh_time')->nullable();
+            $table->double('faild_attempt')->nullable();
+            $table->char('class_name')->nullable();
             $table->double('type_id');
             $table->integer('created_at');
             $table->integer('updated_at');

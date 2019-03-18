@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
 use Config;
 use App\Models\Transaction;
+use App\Models\Rfid;
 
 class TransactionService extends ServiceProvider
 {
@@ -124,7 +125,7 @@ class TransactionService extends ServiceProvider
         $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
         $rfid = unpack('i', $rfid)[1];
 
-        $the_card = Rfid::where("rfid", $cardNumber)->where('status', 1)->first();
+        $the_card = Rfid::where("rfid", $rfid)->where('status', 1)->first();
         //Query the rfid ID from the RFID table
         $transaction->rfid_id = $the_card->id;
 

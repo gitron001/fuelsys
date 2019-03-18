@@ -31,15 +31,17 @@ class DispanserService extends ServiceProvider
 
         $length = count($response) - 4;
         $j = 1;
+
         for($i = 4; $i <= $length; $i=$i+2){
             $price = pack('c', $response[$i+1]).pack('c', $response[$i]);
             $price = unpack('s', $price)[1];
-            if($price == 0 ){ continue; }
+            if($price == 0 ){  $j++; continue; }
             $data['price'] = $price;
-            $data['pfc_pr_id'] = $price;
+            $data['pfc_pr_id'] = $j;
             $data['created_at'] = time();
             $data['updated_at'] = time();
             Products::insert($data);
+            $j++;
         }
 
         return true;
