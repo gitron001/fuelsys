@@ -29,7 +29,6 @@
                   <th>Vehicle</th>
                   <th>Created At</th>
                   <th>Updated At</th>
-                  <th>Price</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -46,20 +45,11 @@
                     <td>{{ $rfid->vehicle }}</td>
                     <td>{{ $rfid->created_at->diffForHumans() }}</td>
                   	<td>{{ $rfid->updated_at->diffForHumans() }}</td>
-                    <td>
-                    <!-- $rfid->discounts->product_details->price -->
-                    @if(count($rfid->discounts) > 0)
-                      @foreach($rfid->discounts as $pr)
-                      Price: {{ $pr->product_details->price}}
-                      @endforeach
-                    @endif
-
-                    </td>
                   	<td><a href="{{ url('admin/rfids/'.$rfid->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
                     <td>
                       {!! Form::open(['method'=>'DELETE', 'action'=>['RfidController@destroy',$rfid->id]]) !!}
                         <div class="form-group">
-                          {!! Form::submit('Delete', ['class'=>'btn btn-block btn-danger']); !!}
+                          {!! Form::button('Delete', ['class'=>'btn btn-block btn-danger delete-item']); !!}
                         </div>
                      {!! Form::close() !!}
                     </td>
@@ -80,3 +70,5 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
+
+@include('includes/delete_confirm')

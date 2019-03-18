@@ -46,7 +46,7 @@
                     <td>
                       {!! Form::open(['method'=>'DELETE', 'action'=>['UserController@destroy',$user->id]]) !!}
                         <div class="form-group">
-                          {!! Form::submit('Delete', ['class'=>'btn btn-block btn-danger']); !!}
+                          {!! Form::button('Delete', ['class'=>'btn btn-block btn-danger delete-item']); !!}
                         </div>
                      {!! Form::close() !!}
                     </td>
@@ -67,3 +67,5 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
+
+@include('includes/delete_confirm')
