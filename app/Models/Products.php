@@ -26,5 +26,5 @@ class Products extends Model
 
     public function transaction_product(){
         return $this->hasMany('App\Models\Transaction');
-    }    
+    }   
 }
