@@ -13,6 +13,7 @@ class Company extends Model
         'bis_number',
         'tax_number',
         'res_number',
+        'starting_balance',
         'tel_number',
         'contact_person',
         'email',
@@ -30,5 +31,9 @@ class Company extends Model
 
     public function users(){
         return $this->hasMany('App\Models\Rfid');
+    }
+
+    public function payments(){
+        return $this->hasMany('App\Models\Payments');
     }
 }

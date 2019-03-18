@@ -23,6 +23,12 @@
 			{!! $errors->first('bis_number','<span class="help-block">:message</span>') !!} 
 		</div>
 
+		<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}">
+			{!! Form::label('starting_balance', 'Starting Balance:'); !!}
+			{!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
+			{!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!} 
+		</div>
+
 		<div class="form-group {{ $errors->has('contact_person') ? 'has-error' :'' }}">
 			{!! Form::label('contact_person', 'Contact Person:'); !!}
 			{!! Form::text('contact_person',null,['class'=>'form-control']); !!}

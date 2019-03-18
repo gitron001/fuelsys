@@ -27,4 +27,5 @@ return [
     'branches'                    => 'Degët',
     'rfid'                        => 'RFID',
     'companyName'                 => 'Emri i kompanisë',
+    'payments'                    => 'Pagesat',
 ];
