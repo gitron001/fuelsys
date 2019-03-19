@@ -44,6 +44,13 @@ class CheckCardReadersCommand extends Command
      */
     public function handle()
     {
+
+       /*$the_cart = RFID::where('rfid', 291018165)->first();
+        dd($the_cart->company->discounts);
+        foreach($the_cart->company->discounts as $c_discount){
+            echo $c_discount->product_details->price;
+        }
+        dd();*/
         $socket = PFC::create_socket();
         Process::insert(array('start_time'=> time(),
                                 'refresh_time' => time(),

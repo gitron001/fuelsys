@@ -33,7 +33,12 @@ class Company extends Model
         return $this->hasMany('App\Models\Rfid');
     }
 
+<<<<<<< HEAD
+    public function discounts(){
+        return $this->hasMany('App\Models\CompanyDiscount', 'company_id', 'id');
+=======
     public function payments(){
         return $this->hasMany('App\Models\Payments');
+>>>>>>> 20ffde9691015b59fe2e15bd026588ea53becda1
     }
 }
