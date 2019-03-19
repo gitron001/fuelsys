@@ -10,8 +10,14 @@
         "jeroennoten/laravel-adminlte": "^1.24",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+<<<<<<< HEAD
         "laravelcollective/html": "^5.2",
         "maatwebsite/excel": "^2.1.0"
+=======
+        "laravelcollective/html": "^5.4.0",
+        "maatwebsite/excel": "^2.1.0",
+        "mike42/escpos-php": "^2.1"
+>>>>>>> 7efcfd8434d17070b25650085c88e4cfde061e35
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

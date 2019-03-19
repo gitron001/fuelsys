@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Payments;
 use App\Models\Company;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 class PaymentsController extends Controller
 {
@@ -112,5 +114,24 @@ class PaymentsController extends Controller
         session()->flash('info','Success');
 
         return redirect('/admin/payments');
+    }
+
+    public function test()
+    {
+        try {
+            // Enter the share name for your USB printer here
+            //$connector = null;
+            $connector = new WindowsPrintConnector("TyssoPrinter");
+
+            /* Print a "Hello world" receipt" */
+            $printer = new Printer($connector);
+            $printer -> text("Hello World!\n");
+            $printer -> cut();
+            
+            /* Close printer */
+            $printer -> close();
+        } catch (Exception $e) {
+            echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+        }
     }
 }

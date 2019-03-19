@@ -39,3 +39,6 @@ Route::view('transactions-info','admin.transactions.transactions-info',[
 
 Route::get('/search','TransactionController@search');
 Route::get('/export','TransactionController@excel_export');
+
+// Test Printer Here
+Route::get('/admin/test', 'PaymentsController@test');
