@@ -52,22 +52,23 @@ class CompaniesController extends Controller
         $firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
         
         $id = Company::insertGetId([
-            'name'          => $request->input('name'),
-            'fis_number'    => $request->input('fis_number'),
-            'bis_number'    => $request->input('bis_number'),
-            'tax_number'    => $request->input('tax_number'),
-            'res_number'    => $request->input('res_number'),
-            'tel_number'    => $request->input('tel_number'),
-            'email'         => $request->input('email'),
-            'address'       => $request->input('address'),
-            'contact_person'=> $request->input('contact_person'),
-            'city'          => $request->input('city'),
-            'country'       => $request->input('country'),
-            'type'          => $request->input('type'),
-            'status'        => $request->input('status'),
-            'limits'        => $request->input('limits'),
-            'created_at'    => now()->timestamp,
-            'updated_at'    => now()->timestamp
+            'name'              => $request->input('name'),
+            'fis_number'        => $request->input('fis_number'),
+            'bis_number'        => $request->input('bis_number'),
+            'tax_number'        => $request->input('tax_number'),
+            'res_number'        => $request->input('res_number'),
+            'tel_number'        => $request->input('tel_number'),
+            'email'             => $request->input('email'),
+            'address'           => $request->input('address'),
+            'starting_balance'  => $request->input('starting_balance'),
+            'contact_person'    => $request->input('contact_person'),
+            'city'              => $request->input('city'),
+            'country'           => $request->input('country'),
+            'type'              => $request->input('type'),
+            'status'            => $request->input('status'),
+            'limits'            => $request->input('limits'),
+            'created_at'        => now()->timestamp,
+            'updated_at'        => now()->timestamp
         ]);
 
         if($firstValueOfArrayProduct !== 0 && !empty($firstValueOfArrayDiscount)){

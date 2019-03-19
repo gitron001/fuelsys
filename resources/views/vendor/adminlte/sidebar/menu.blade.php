@@ -47,3 +47,10 @@
             <span>{{ trans('adminlte::adminlte.rfid') }}</span>
         </a>
 </li>
+
+<li class="">
+        <a href="{{ URL('admin/payments') }}"">
+            <i class="fa fa-fw fa-file "></i>
+            <span>{{ trans('adminlte::adminlte.payments') }}</span>
+        </a>
+</li>

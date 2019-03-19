@@ -27,5 +27,6 @@ return [
     'dispanesers'                 => 'Dispanesers',
     'branches'                    => 'Branches',
     'rfid'                        => 'RFID',
-    'companyName'                 => 'Company name'
+    'companyName'                 => 'Company name',
+    'payments'                    => 'Payments',
 ];

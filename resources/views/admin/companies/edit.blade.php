@@ -20,6 +20,11 @@
 		</div>
 
 		<div class="form-group">
+			{!! Form::label('starting_balance', 'Starting Balance'); !!}
+			{!! Form::text('starting_balance',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
 			{!! Form::label('contact_person', 'Contact Person:'); !!}
 			{!! Form::text('contact_person',null,['class'=>'form-control']); !!} 
 		</div>

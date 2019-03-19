@@ -94,10 +94,18 @@ class CardService extends ServiceProvider
                         if($discount->product_details->pfc_pr_id == $response[$i]){
                             $all_discounts[$i] = (int)($discount->product_details->price - $discount->discount*1000);
                             break;
-                        }git
+                        }
+                    }
+                    //If there is not Discount on RFID check for Company Discount
+                    if(!isset($all_discounts[$i])){
+                        foreach($the_cart->company->discounts as $c_discount){
+                            if($c_discount->product_details->pfc_pr_id == $response[$i]) {
+                                $all_discounts[$i] = (int)($discount->product_details->price - $discount->discount*1000);
+                                break;
+                            }
+                        }
                     }
                 }
-
                 $products = Products::all();
                 for($i = 10; $i < 15; $i++){
                     if(!isset($all_discounts[$i] )){
