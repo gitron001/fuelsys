@@ -8,10 +8,10 @@
 		<div class="row">
 			   <div class="box">
             <div class="box-header">
-              <div class="col-md-6"><h3 class="box-title">RFIDS</h3></div>
+              <div class="col-md-6"><h3 class="box-title">PFC</h3></div>
               <div class="col-md-6">
                 <span class="pull-right">
-                  <a href="{{ url('admin/rfids/create') }}"><button type="button" class="btn btn-block btn-success">+ Create new RFID</button></a>
+                  <a href="{{ url('admin/pfc/create') }}"><button type="button" class="btn btn-block btn-success">+ Create new PFC</button></a>
                 </span>
               </div>
             </div>
@@ -20,13 +20,9 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>RFID</th>
-                  <th>RFID Name</th>
-                  <th>User</th>
-                  <th>Company</th>
-                  <th>One time limit</th>
-                  <th>Plates</th>
-                  <th>Vehicle</th>
+                  <th>Name</th>
+                  <th>IP</th>
+                  <th>Port</th>
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Edit</th>
@@ -34,20 +30,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($rfids as $rfid)
+                @foreach($pfc as $p)
                 <tr>
-                  	<td>{{ $rfid->rfid }}</td>
-                    <td>{{ $rfid->rfid_name }}</td>
-                  	<td>{{ $rfid->user->name }}</td>
-                    <td>{{ $rfid->company->name ? $rfid->company->name : 'No Company' }}</td>
-                    <td>{{ $rfid->one_time_limit }}</td>
-                    <td>{{ $rfid->plates }}</td>
-                    <td>{{ $rfid->vehicle }}</td>
-                    <td>{{ $rfid->created_at->diffForHumans() }}</td>
-                  	<td>{{ $rfid->updated_at->diffForHumans() }}</td>
-                  	<td><a href="{{ url('admin/rfids/'.$rfid->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
+                    <td>{{ $p->name }}</td>
+                    <td>{{ $p->ip }}</td>
+                    <td>{{ $p->port }}</td>
+                    <td>{{ $p->created_at->diffForHumans() }}</td>
+                    <td>{{ $p->updated_at->diffForHumans() }}</td>
+                    <td><a href="{{ url('admin/pfc/'.$p->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
                     <td>
-                      {!! Form::open(['method'=>'DELETE', 'action'=>['RfidController@destroy',$rfid->id]]) !!}
+                      {!! Form::open(['method'=>'DELETE', 'action'=>['PFCController@destroy',$p->id]]) !!}
                         <div class="form-group">
                           {!! Form::button('Delete', ['class'=>'btn btn-block btn-danger delete-item']); !!}
                         </div>
@@ -58,7 +50,7 @@
                 </tfoot>
               </table>
               <div class="text-center">
-                {{ $rfids->links() }}
+                {{ $pfc->links() }}
               </div>
             </div>
             <!-- /.box-body -->

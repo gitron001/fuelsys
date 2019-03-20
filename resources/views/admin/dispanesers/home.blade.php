@@ -21,6 +21,7 @@
                 <thead>
                 <tr>
                   <th>Name</th>
+                  <th>PFC</th>
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Edit</th>
@@ -31,6 +32,7 @@
                 @foreach($dispanesers as $dispaneser)
                 <tr>
                   	<td>{{ $dispaneser->name }}</td>
+                    <td>{{ $dispaneser->pfc->name }}</td>
                   	<td>{{ $dispaneser->created_at->diffForHumans() }}</td>
                   	<td>{{ $dispaneser->updated_at->diffForHumans() }}</td>
                   	<td><a href="{{ url('admin/dispanesers/'.$dispaneser->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
@@ -59,4 +61,4 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@include('includes/delete_confirm')
+@include('includes/footer')

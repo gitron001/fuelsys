@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Rfid;
+use App\Models\PFC;
 use App\Models\Dispaneser;
+use App\Models\Company;
 use App\Models\products;
 use App\Services\TransactionService;
 use Excel;
@@ -24,8 +26,9 @@ class TransactionController extends Controller
         $transactions   = Transaction::orderBy('created_at', 'desc')->paginate(15);
         $users          = User::pluck('name','id')->all();
         $rfids          = RFID::pluck('rfid_name','id')->all();
+        $companies      = Company::pluck('name','id')->all();
 
-        return view('/admin/transactions/home',compact('transactions','users','rfids'));
+        return view('/admin/transactions/home',compact('transactions','users','rfids','companies'));
     }
 
     /**
@@ -38,8 +41,9 @@ class TransactionController extends Controller
         $users       = User::pluck('name','id')->all();
         $products    = Products::pluck('name','id')->all();
         $dispanesers = Dispaneser::pluck('name','id')->all();
+        $pfc  = PFC::pluck('name','id')->all();
         
-        return view('/admin/transactions/create',compact('users','dispanesers','products'));
+        return view('/admin/transactions/create',compact('users','dispanesers','products','pfc'));
     }
 
     /**
@@ -80,8 +84,9 @@ class TransactionController extends Controller
         $dispanesers = Dispaneser::pluck('name','id')->all();
         $users       = User::pluck('name','id')->all();
         $products    = Products::pluck('name','id')->all();
+        $pfc  = PFC::pluck('name','id')->all();
 
-        return view('/admin/transactions/edit',compact('transaction','dispanesers','users','products'));
+        return view('/admin/transactions/edit',compact('transaction','dispanesers','users','products','pfc'));
     }
 
     /**
@@ -125,6 +130,7 @@ class TransactionController extends Controller
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
         $rfidID     = $request->input('rfid');
+        $company    = $request->input('company');
 
         $query = new Transaction();
 
@@ -146,6 +152,16 @@ class TransactionController extends Controller
             $query = $query->whereIn('rfid_id',$getID);
         }
 
+        if ($request->input('company')) {
+            $getRfid    = Rfid::where('company_id',$company)->get();
+
+            foreach ($getRfid as $rfid) {
+                $getID[] =  $rfid->id;
+            }
+
+            $query = $query->whereIn('rfid_id',$getID);
+        }
+
         $transaction = $query->get();
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
@@ -155,7 +171,6 @@ class TransactionController extends Controller
             $excel->sheet('Transaction', function($sheet) use( $transaction ) 
             {
                 $sheet->fromArray(  $transaction  );
-                                
             });
 
         });
@@ -166,77 +181,7 @@ class TransactionController extends Controller
            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
         );
 
-        return response()->json($response);
-
-
-        /*
-
-        $from_date  = strtotime($request->input('fromDate'));
-        $to_date    = strtotime($request->input('toDate'));
-        $user       = $request->input('user');
-
-        $getRfid    = Rfid::where('user_id',$user)->get();
-
-        foreach ($getRfid as $rfid) {
-            $getID[] =  $rfid->id;
-        }
-
-        if(!empty($getID)) {
-            $getData    = Transaction::whereBetween('created_at',[$from_date, $to_date])->whereIn('rfid_id',$getID)->get();
-  
-            // Convert object to an array 
-            foreach($getData as $object){
-                $exportData[] = $object->toArray();
-            }
-
-            $filename = "Transaction - ".date('d-m-Y') . ".xls";
-            header("Content-type: application/vnd.ms-excel");
-            header("Content-Disposition: attachment; filename=".$filename.".xls");
-
-            $show_coloumn = false;
-
-            $title = "PETROTEK Export File\nTable: Transactions \nGenerated: ".date('Y-m-d');
-            
-            if(!empty($exportData)) {
-                foreach($exportData as $record) {
-                    if(!$show_coloumn) {
-                        // display field/column names in first row
-                        echo implode("\t", array_keys($record)) . "\n";
-                        $show_coloumn = true;
-                    }
-                        echo implode("\t", array_values($record)) . "\n";
-                    }   
-            }
-
-            print "\n$title\n";
-            
-        } else{
-            $message = "Nothing to show!";
-            echo "<script type='text/javascript'>alert('$message');</script>";
-        };
-        */
-
-        $products = Transaction::all();
-        
-        $file_name  = 'Turbado-Sales-'.date('Y-m-d', time());
-           
-        Excel::create($file_name, function($excel) use( $products ) 
-        {
-            $excel->sheet('Products', function($sheet) use( $products ) 
-            {
-                $sheet->fromArray(  $products  );
-                                
-            });
-
-        });
-
-        $myFile = $myFile->string('xlsx'); //change xlsx for the format you want, default is xls
-        $response =  array(
-           'name' => "filename", //no extention needed
-           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile) //mime type of used format
-        );
-return response()->json($response);
-        
+        return response()->json($response);        
     }
 
     public function search(Request $request) {
@@ -244,6 +189,7 @@ return response()->json($response);
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
         $rfidID     = $request->input('rfid');
+        $company    = $request->input('company');
 
         $query = new Transaction;
 
@@ -257,6 +203,16 @@ return response()->json($response);
 
         if ($request->input('user')) {
             $getRfid    = Rfid::where('user_id',$user)->get();
+
+            foreach ($getRfid as $rfid) {
+                $getID[] =  $rfid->id;
+            }
+
+            $query = $query->whereIn('rfid_id',$getID);
+        }
+
+        if ($request->input('company')) {
+            $getRfid    = Rfid::where('company_id',$company)->get();
 
             foreach ($getRfid as $rfid) {
                 $getID[] =  $rfid->id;

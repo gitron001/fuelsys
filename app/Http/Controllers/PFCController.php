@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Products;
 use App\Models\PFC;
 
-class ProductController extends Controller
+class PFCController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Products::paginate(15);
-        return view('/admin/products/home',compact('products'));
+        $pfc   = PFC::orderBy('created_at', 'desc')->paginate(15);
+
+        return view('/admin/pfc/home',compact('pfc'));
     }
 
     /**
@@ -26,8 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $pfc  = PFC::pluck('name','id')->all();
-        return view('/admin/products/create',compact('pfc'));
+        return view('/admin/pfc/create');
     }
 
     /**
@@ -38,11 +37,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Products::create($request->all());
-
+        PFC::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/products');
+        return redirect('/admin/pfc');
     }
 
     /**
@@ -64,9 +62,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $pfc  = PFC::pluck('name','id')->all();
-        $product = Products::findOrFail($id);
-        return view('/admin/products/edit',compact('product','pfc'));
+        $pfc = PFC::findOrFail($id);
+        return view('/admin/pfc/edit',compact('pfc'));
     }
 
     /**
@@ -78,11 +75,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Products::findOrFail($id);
-        $product->update($request->all());
+        $pfc = PFC::findOrFail($id);
+        $pfc->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/products');
+        return redirect('/admin/pfc');
     }
 
     /**
@@ -93,10 +90,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Products::findOrFail($id);
-        $product->delete();
+        $pfc = PFC::findOrFail($id);
+        $pfc->delete();
         session()->flash('info','Success');
 
-        return redirect('/admin/products');
+        return redirect('/admin/pfc');
     }
 }

@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->char('locker');
             $table->integer('tr_no');
             $table->char('sl_no');
+            $table->integer('pfc_id');
             $table->integer('product_id');
             $table->char('dis_status')->nullable();
             $table->double('price');

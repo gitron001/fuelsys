@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Dispaneser;
+use App\Models\PFC;
 
 class DispaneserController extends Controller
 {
@@ -25,7 +26,8 @@ class DispaneserController extends Controller
      */
     public function create()
     {
-        return view('/admin/dispanesers/create');
+        $pfc  = PFC::pluck('name','id')->all();
+        return view('/admin/dispanesers/create',compact('pfc'));
     }
 
     /**
@@ -61,8 +63,9 @@ class DispaneserController extends Controller
      */
     public function edit($id)
     {
+        $pfc  = PFC::pluck('name','id')->all();
         $dispaneser = Dispaneser::findOrFail($id);
-        return view('/admin/dispanesers/edit',compact('dispaneser'));
+        return view('/admin/dispanesers/edit',compact('dispaneser','pfc'));
     }
 
     /**

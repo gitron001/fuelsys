@@ -10,6 +10,7 @@ class Products extends Model
         'name', 
         'price', 
         'vat',
+        'pfc_id',
     ];
 
     public function getDateFormat(){
@@ -27,4 +28,8 @@ class Products extends Model
     public function transaction_product(){
         return $this->hasMany('App\Models\Transaction');
     }   
+
+    public function pfc(){
+        return $this->belongsTo('App\Models\PFC');
+    }
 }

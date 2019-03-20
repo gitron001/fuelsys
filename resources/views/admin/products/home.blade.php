@@ -23,6 +23,7 @@
                   <th>Name</th>
                   <th>Price</th>
                   <th>Vat</th>
+                  <th>PFC</th>
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Edit</th>
@@ -35,6 +36,7 @@
                   	<td>{{ $product->name }}</td>
                   	<td>{{ $product->price }}</td>
                     <td>{{ $product->vat }}</td>
+                    <td>{{ $product->pfc->name }}</td>
                     <td>{{ $product->created_at->diffForHumans() }}</td>
                   	<td>{{ $product->updated_at->diffForHumans() }}</td>
                   	<td><a href="{{ url('admin/products/'.$product->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
@@ -63,4 +65,4 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@include('includes/delete_confirm')
+@include('includes/footer')

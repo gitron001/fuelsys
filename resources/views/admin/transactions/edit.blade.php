@@ -30,6 +30,11 @@
 		</div>
 
 		<div class="form-group">
+			{!! Form::label('pfc_id', 'Product'); !!}
+			{!! Form::select('pfc_id',['Choose PFC'] + $pfc,null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
 			{!! Form::label('dis_status', 'Dis_Status'); !!}
 			{!! Form::text('dis_status',null,['class'=>'form-control']); !!} 
 		</div>

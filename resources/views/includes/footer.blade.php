@@ -1,6 +1,8 @@
 @section('js')
 
 <script>
+
+  // Sweet Alert confirmation before delete
   $(document).on('click', '.delete-item', function(){
      swal({
         title: "Are you sure?",
@@ -18,6 +20,13 @@
         }
       });
   });
+
+
+  // Hide alert message after few seconds
+  $(".alert").delay(2000).slideUp(200, function() {
+      $(this).alert('close');
+  });
+
 </script>
 
 @endsection

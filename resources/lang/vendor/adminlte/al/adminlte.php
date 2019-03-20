@@ -25,7 +25,9 @@ return [
     'products'                    => 'Produktet',
     'dispanesers'                 => 'Pompat',
     'branches'                    => 'Degët',
-    'rfid'                        => 'RFID',
+    'rfid'                        => 'Kartelat',
     'companyName'                 => 'Emri i kompanisë',
     'payments'                    => 'Pagesat',
+    'pfc'                         => 'PFC',
+    'home'                        => 'Ballina',
 ];

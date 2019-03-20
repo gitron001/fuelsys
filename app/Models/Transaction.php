@@ -13,6 +13,7 @@ class Transaction extends Model
         'status', 
         'locker', 
         'tr_no',
+        'pfc_id',
         'sl_no',
         'product_id',
         'dis_status',
@@ -46,5 +47,9 @@ class Transaction extends Model
 
     public function product(){
         return $this->belongsTo('App\Models\Products');
+    }
+
+    public function pfc(){
+        return $this->belongsTo('App\Models\PFC');
     }
 }

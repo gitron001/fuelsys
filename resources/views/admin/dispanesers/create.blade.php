@@ -11,6 +11,12 @@
 			{!! $errors->first('name','<span class="help-block">:message</span>') !!}
 		</div>
 
+		<div class="form-group {{ $errors->has('pfc_id') ? 'has-error' :'' }}">
+			{!! Form::label('pfc_id', 'PFC:'); !!}
+			{!! Form::select('pfc_id',['Choose PFC'] + $pfc,null,['class'=>'form-control']); !!} 
+			{!! $errors->first('pfc_id','<span class="help-block">:message</span>') !!}
+		</div>
+
 		<div class="form-group">
 			{!! Form::submit('Create new dispaneser', ['class'=>'btn btn-block btn-success']); !!}
 		</div>
