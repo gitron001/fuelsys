@@ -90,7 +90,7 @@ class CardService extends ServiceProvider
                 $all_discounts = array();
                 for($i = 10; $i < 15; $i++){
                     foreach($the_card->discounts as $discount){
-                        if(is_null($discount->product_details->price){ continue; }
+                        if(is_null($discount->product_details->price)){ continue; }
                         if($discount->product_details->pfc_pr_id == $response[$i]){
                             $all_discounts[$i] = (int)($discount->product_details->price - $discount->discount*1000);
                             break;
@@ -98,7 +98,7 @@ class CardService extends ServiceProvider
                     }
                     //If there is not Discount on RFID check for Company Discount
                     if(!isset($all_discounts[$i])){
-                        foreach($the_cart->company->discounts as $c_discount){
+                        foreach($the_card->company->discounts as $c_discount){
                             if($c_discount->product_details->pfc_pr_id == $response[$i]) {
                                 $all_discounts[$i] = (int)($discount->product_details->price - $discount->discount*1000);
                                 break;
