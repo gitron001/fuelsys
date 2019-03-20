@@ -10,10 +10,6 @@
         "jeroennoten/laravel-adminlte": "^1.24",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-<<<<<<< HEAD
-=======
-        "maatwebsite/excel": "^2.1.0",
->>>>>>> 7ae665b5040d42ba7923d83e7f34027aef310929
         "laravelcollective/html": "^5.4.0",
         "maatwebsite/excel": "^2.1.0",
         "mike42/escpos-php": "^2.1"
