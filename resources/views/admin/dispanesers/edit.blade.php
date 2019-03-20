@@ -10,6 +10,11 @@
 		</div>
 
 		<div class="form-group">
+			{!! Form::label('pfc_id', 'PFC'); !!}
+			{!! Form::select('pfc_id',['Select PFC'] + $pfc,null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
 			{!! Form::submit('Edit Dispaneser', ['class'=>'btn btn-block btn-primary']); !!}
 		</div>
 

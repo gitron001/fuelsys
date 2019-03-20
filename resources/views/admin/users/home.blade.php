@@ -68,4 +68,4 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@include('includes/delete_confirm')
+@include('includes/footer')

@@ -7,6 +7,7 @@ use App\Models\Payments;
 use App\Models\Company;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 
 class PaymentsController extends Controller
 {
@@ -116,22 +117,24 @@ class PaymentsController extends Controller
         return redirect('/admin/payments');
     }
 
+    /*
     public function test()
     {
         try {
             // Enter the share name for your USB printer here
             //$connector = null;
-            $connector = new WindowsPrintConnector("TyssoPrinter");
+            //$connector = new WindowsPrintConnector("T1");
+            $connector = new NetworkPrintConnector("192.168.1.100", 9100);
 
-            /* Print a "Hello world" receipt" */
+
             $printer = new Printer($connector);
             $printer -> text("Hello World!\n");
             $printer -> cut();
             
-            /* Close printer */
+
             $printer -> close();
         } catch (Exception $e) {
             echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
         }
-    }
+    }*/
 }

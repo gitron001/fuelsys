@@ -25,6 +25,7 @@ Route::resource('/admin/dispanesers', 'DispaneserController');
 Route::resource('/admin/branches', 'BranchController');
 Route::resource('/admin/rfids', 'RfidController');
 Route::resource('/admin/payments', 'PaymentsController');
+Route::resource('/admin/pfc', 'PFCController');
 
 Route::post('/transaction/excel_export', 'TransactionController@excel_export');
 

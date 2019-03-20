@@ -19,25 +19,27 @@
 			{!! Form::select('user_id',['Select a User'] + $users,null,['class'=>'form-control']); !!} 
 		</div>
 		
-		<div class="form-group">
-			{!! Form::label('company_id', 'Company'); !!}
-			{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!} 
-		</div>
+		@if($rfid->company_id != 0)
+			<div class="form-group">
+				{!! Form::label('company_id', 'Company'); !!}
+				{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!} 
+			</div>
 
-		<div class="form-group">
-			{!! Form::label('one_time_limit', 'One_Time_Limit'); !!}
-			{!! Form::text('one_time_limit',null,['class'=>'form-control']); !!} 
-		</div>
+			<div class="form-group">
+				{!! Form::label('one_time_limit', 'One_Time_Limit'); !!}
+				{!! Form::text('one_time_limit',null,['class'=>'form-control']); !!} 
+			</div>
 
-		<div class="form-group">
-			{!! Form::label('plates', 'Plates'); !!}
-			{!! Form::text('plates',null,['class'=>'form-control']); !!} 
-		</div>
+			<div class="form-group">
+				{!! Form::label('plates', 'Plates'); !!}
+				{!! Form::text('plates',null,['class'=>'form-control']); !!} 
+			</div>
 
-		<div class="form-group">
-			{!! Form::label('vehicle', 'Vehicle'); !!}
-			{!! Form::text('vehicle',null,['class'=>'form-control']); !!} 
-		</div>
+			<div class="form-group">
+				{!! Form::label('vehicle', 'Vehicle'); !!}
+				{!! Form::text('vehicle',null,['class'=>'form-control']); !!} 
+			</div>
+		@endif
 	
 		<!-- *** DISCOUNT *** -->
 

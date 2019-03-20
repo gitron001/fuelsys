@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDispanesersTable extends Migration
+class CreatePFCsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateDispanesersTable extends Migration
      */
     public function up()
     {
-        Schema::create('dispanesers', function (Blueprint $table) {
+        Schema::create('p_f_cs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('pfc_id');
+            $table->string('ip');
+            $table->integer('port');
             $table->integer('created_at');
             $table->integer('updated_at');
         });
@@ -29,6 +30,6 @@ class CreateDispanesersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dispanesers');
+        Schema::dropIfExists('p_f_cs');
     }
 }

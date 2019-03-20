@@ -9,10 +9,10 @@
   <div class="row">
     <div class="box">
       <div class="box-header">
-          <div class="col-md-2">
+          <div class="col-md-1">
              <button type="button" class="btn btn-success" id="export">Export Excel</button>
           </div>
-          <div class="col-xs-offset-1 col-md-9">
+          <div class="col-md-11">
             <form class="form-inline">
                 <div class="form-row">
                   <div class="form-group">
@@ -46,6 +46,16 @@
                   </div>
 
                   <div class="form-group">
+                    <label for="User:">Company:</label>
+                    <select class="form-control" id="company">
+                      <option value="">Choose a Company</option>
+                        @foreach($companies as $id => $name)
+                          <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select> 
+                  </div>
+
+                  <div class="form-group">
                     <button type="button" class="btn btn-success" id="search">Search</button>
                   </div>
                 </div>
@@ -71,8 +81,8 @@
                 <tbody>
                 @foreach($transactions as $transaction)
                 <tr>
-                    <td>{{ $transaction->rfid->user->name }}</td>
-                    <td>{{ $transaction->rfid->rfid_name }}</td>
+                    <td>{{ $transaction->rfid ? $transaction->rfid->user->name : '' }}</td>
+                    <td>{{ $transaction->rfid ? $transaction->rfid->rfid_name  : '' }}</td>
                     <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
                     <td>{{ $transaction->price }}</td>
                     <td>{{ $transaction->lit }}</td>
@@ -103,6 +113,11 @@
     $(".datepicker" ).datepicker();
   });
 
+  // Hide alert message after few seconds
+  $(".alert").delay(4000).slideUp(200, function() {
+      $(this).alert('close');
+  });
+
 
   $(document).ready(function(){
     $('#search').click(function(){
@@ -110,10 +125,11 @@
       var toDate = $("#to_date").val();
       var user = $("#user").val();
       var rfid = $("#rfid").val();
+      var company = $("#company").val();
 
       $.ajax({
         type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,rfid: rfid},
+        data: {fromDate: fromDate, toDate: toDate, user: user,rfid: rfid,company:company},
         url: "{{ URL('/search')}}",
         dataType: 'JSON',
         success: function(data){
@@ -130,10 +146,11 @@
       var toDate = $("#to_date").val();
       var user = $("#user").val();
       var rfid = $("#rfid").val();
+      var company = $("#company").val();
 
       $.ajax({
         type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,rfid: rfid},
+        data: {fromDate: fromDate, toDate: toDate, user: user,rfid: rfid,company:company},
         url: "{{ URL('/export')}}",
         dataType: "JSON",
         success: function(response, textStatus, request){

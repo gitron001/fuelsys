@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->double('price');
+            $table->integer('pfc_id');
             $table->double('vat')->nullable();
             $table->double('pfc_pr_id')->nullable();
             $table->tinyInteger('status')->default(1);

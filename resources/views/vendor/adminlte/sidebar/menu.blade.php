@@ -1,4 +1,12 @@
 <li class="header">MAIN NAVIGATION</li>
+
+<li class="">
+        <a href="{{ URL('/') }}"">
+            <i class="fa fa-fw fa-file "></i>
+            <span>{{ trans('adminlte::adminlte.home') }}</span>
+        </a>
+</li>
+
 <li class="">
         <a href="{{ URL('admin/companies') }}">
             <i class="fa fa-fw fa-file "></i>
@@ -54,3 +62,11 @@
             <span>{{ trans('adminlte::adminlte.payments') }}</span>
         </a>
 </li>
+
+<li class="">
+        <a href="{{ URL('admin/pfc') }}"">
+            <i class="fa fa-fw fa-file "></i>
+            <span>{{ trans('adminlte::adminlte.pfc') }}</span>
+        </a>
+</li>
+
