@@ -14,12 +14,6 @@
         </a>
 </li>
 <li class="">
-        <a href="{{ URL('admin/users') }}"">
-            <i class="fa fa-fw fa-file "></i>
-            <span>{{ trans('adminlte::adminlte.user') }}</span>
-        </a>
-</li>
-<li class="">
         <a href="{{ URL('admin/tanks') }}"">
             <i class="fa fa-fw fa-file "></i>
             <span>{{ trans('adminlte::adminlte.tank') }}</span>
@@ -50,9 +44,9 @@
         </a>
 </li>
 <li class="">
-        <a href="{{ URL('admin/rfids') }}"">
+        <a href="{{ URL('admin/users') }}"">
             <i class="fa fa-fw fa-file "></i>
-            <span>{{ trans('adminlte::adminlte.rfid') }}</span>
+            <span>{{ trans('adminlte::adminlte.users') }}</span>
         </a>
 </li>
 

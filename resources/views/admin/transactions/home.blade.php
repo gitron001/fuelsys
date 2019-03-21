@@ -9,10 +9,10 @@
   <div class="row">
     <div class="box">
       <div class="box-header">
-          <div class="col-md-1">
+          <div class="col-md-2">
              <button type="button" class="btn btn-success" id="export">Export Excel</button>
           </div>
-          <div class="col-md-11">
+          <div class="col-md-10">
             <form class="form-inline">
                 <div class="form-row">
                   <div class="form-group">
@@ -34,17 +34,17 @@
                         @endforeach
                     </select> 
                   </div>
-
+                  <!--
                   <div class="form-group">
                     <label for="User:">RFID:</label>
                     <select class="form-control" id="rfid">
                       <option value="">Choose a RFID</option>
-                        @foreach($rfids as $id => $name)
+                        {{--@foreach($rfids as $id => $name)
                           <option value="{{ $id }}">{{ $name }}</option>
-                        @endforeach
+                        @endforeach--}}
                     </select> 
                   </div>
-
+                  -->
                   <div class="form-group">
                     <label for="User:">Company:</label>
                     <select class="form-control" id="company">

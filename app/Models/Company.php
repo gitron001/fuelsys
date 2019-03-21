@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    //	
+    protected $table = 'companies';
+    
     protected $fillable = [
         'name', 
         'fis_number', 
@@ -28,7 +29,7 @@ class Company extends Model
     public function getDateFormat(){
         return 'U';
     }
-
+    
     public function users(){
         return $this->hasMany('App\Models\Rfid');
     }

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Dispaneser;
 use App\Models\Transaction;
-use App\Models\RFID;
-use App\Models\User;
+//use App\Models\RFID;
+use App\Models\Users;
 
 class HomeController extends Controller
 {

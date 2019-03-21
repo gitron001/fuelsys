@@ -17,6 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->integer('date');
             $table->double('amount');
+            $table->integer('user_id');
             $table->integer('company_id');
             $table->integer('created_at');
             $table->integer('updated_at');

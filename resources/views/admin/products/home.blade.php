@@ -36,7 +36,7 @@
                   	<td>{{ $product->name }}</td>
                   	<td>{{ $product->price }}</td>
                     <td>{{ $product->vat }}</td>
-                    <td>{{ $product->pfc->name }}</td>
+                    <td>{{ $product->pfc ? $product->pfc->name : '' }}</td>
                     <td>{{ $product->created_at->diffForHumans() }}</td>
                   	<td>{{ $product->updated_at->diffForHumans() }}</td>
                   	<td><a href="{{ url('admin/products/'.$product->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>

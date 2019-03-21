@@ -4,11 +4,11 @@
 
 @include('includes/alert_info')
 
-<div class="content">
-	<div class="row">
-		<div class="box">
+	<div class="content">
+		<div class="row">
+			   <div class="box">
             <div class="box-header">
-              <div class="col-md-6"><h3 class="box-title">User</h3></div>
+              <div class="col-md-6"><h3 class="box-title">Users</h3></div>
               <div class="col-md-6">
                 <span class="pull-right">
                   <a href="{{ url('admin/users/create') }}"><button type="button" class="btn btn-block btn-success">+ Create new user</button></a>
@@ -20,31 +20,34 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-        					<th>Name</th>
-        					<th>Email</th>
-        					<th>Branch</th>
-        					<th>Role</th>
-        					<th>Status</th>
-        					<th>Created At</th>
-        					<th>Updated At</th>
-        					<th>Edit</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>RFID</th>
+                  <th>Company</th>
+                  <th>One time limit</th>
+                  <th>Plates</th>
+                  <th>Vehicle</th>
+                  <th>Created At</th>
+                  <th>Updated At</th>
+                  <th>Edit</th>
                   <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($users as $user)
                 <tr>
-          					<td>{{ $user->name }}</td>
-          					<td>{{ $user->email }}</td>
-          					<td>{{ $user->branch->name }}</td>
-          					<td>{{ $user->role->name }}</td>
-          					<td>{{ $user->status == 1 ? 'Active' : 'No Active' }}</td>
-          					<td>{{ $user->created_at->diffForHumans() }}</td>
-          					<td>{{ $user->updated_at->diffForHumans() }}</td>
-                  	
+                    <td>{{ $user->name }}</td>
+                  	<td>{{ $user->email }}</td>
+                    <td>{{ $user->rfid }}</td>
+                    <td>{{ $user->company->name ? $user->company->name : 'No Company' }}</td>
+                    <td>{{ $user->one_time_limit }}</td>
+                    <td>{{ $user->plates }}</td>
+                    <td>{{ $user->vehicle }}</td>
+                    <td>{{ $user->created_at->diffForHumans() }}</td>
+                  	<td>{{ $user->updated_at->diffForHumans() }}</td>
                   	<td><a href="{{ url('admin/users/'.$user->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
                     <td>
-                      {!! Form::open(['method'=>'DELETE', 'action'=>['UserController@destroy',$user->id]]) !!}
+                      {!! Form::open(['method'=>'DELETE', 'action'=>['UsersController@destroy',$user->id]]) !!}
                         <div class="form-group">
                           {!! Form::button('Delete', ['class'=>'btn btn-block btn-danger delete-item']); !!}
                         </div>
@@ -58,10 +61,10 @@
                 {{ $users->links() }}
               </div>
             </div>
-        </div>
+            <!-- /.box-body -->
+          </div>
+		</div>
 	</div>
-</div>
-
 @endsection
 
 @section('css')

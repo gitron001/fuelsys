@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PFC extends Model
 {
-    protected $table = 'p_f_cs';
+    protected $table = 'pfc_controller';
 
     protected $fillable = [
         'ip', 
@@ -17,7 +17,7 @@ class PFC extends Model
     public function getDateFormat(){
         return 'U';
     }
-
+    
     public function dispanesers(){
         return $this->hasMany('App\Models\Dispaneser');
     }

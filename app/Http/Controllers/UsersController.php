@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Rfid;
-use App\Models\User;
+use App\Models\Users;
 use App\Models\Products;
 use App\Models\Branch;
 use App\Models\RFID_Discounts;
@@ -12,7 +11,7 @@ use App\Models\RFID_Limits;
 use App\Models\Company;
 use DB;
 
-class RfidController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +20,8 @@ class RfidController extends Controller
      */
     public function index()
     {
-        $rfids = Rfid::paginate(15);
-        return view('/admin/rfids/home',compact('rfids'));
+        $users = Users::paginate(15);
+        return view('/admin/users/home',compact('users'));
     }
 
     /**
@@ -32,12 +31,11 @@ class RfidController extends Controller
      */
     public function create()
     {
-        $users      = User::pluck('name','id')->all();
         $products   = Products::pluck('name','id')->all();
         $branches   = Branch::pluck('name','id')->all();
         $companies  = Company::pluck('name','id')->all();
 
-        return view('/admin/rfids/create',compact('users','products','branches','companies'));
+        return view('/admin/users/create',compact('products','branches','companies'));
     }
 
     /**
@@ -54,10 +52,10 @@ class RfidController extends Controller
         $firstValueOfArrayBranch  = array_values($request->input('branch'))[0];
         $firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
 
-        $id = Rfid::insertGetId([
+        $id = Users::insertGetId([
             'rfid'          => $request->input('rfid'),
-            'rfid_name'     => $request->input('rfid_name'),
-            'user_id'       => $request->input('user_id'),
+            'name'          => $request->input('name'),
+            'email'         => $request->input('email'),
             'company_id'    => $request->input('company_id') ? : 0,
             'one_time_limit'=> $request->input('one_time_limit') ? : 0,
             'plates'        => $request->input('plates') ? : 0,
@@ -93,7 +91,7 @@ class RfidController extends Controller
 
         session()->flash('info','Success');
 
-        return redirect('/admin/rfids');
+        return redirect('/admin/users');
     }
 
     /**
@@ -115,15 +113,14 @@ class RfidController extends Controller
      */
     public function edit($id)
     {
-        $rfid           = Rfid::findOrFail($id);
-        $users          = User::pluck('name','id')->all();
+        $user          = Users::findOrFail($id);
         $branches       = Branch::pluck('name','id')->all();
         $products       = Products::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
         $rfid_limits    = RFID_Limits::where('rfid_id',$id)->get();
         $rfid_discounts = RFID_Discounts::where('rfid_id',$id)->get();
 
-        return view('/admin/rfids/edit',compact('rfid','users','companies','rfid_limits','rfid_discounts','branches','products'));
+        return view('/admin/users/edit',compact('user','companies','rfid_limits','rfid_discounts','branches','products'));
     }
 
     /**
@@ -136,8 +133,8 @@ class RfidController extends Controller
     public function update(Request $request, $id)
     {
 
-        $rfid = Rfid::findOrFail($id);
-        $rfid->update($request->all());
+        $users = Users::findOrFail($id);
+        $users->update($request->all());
 
         // DELETE Discount
         if(empty($request->input('deleteDiscount'))){
@@ -203,7 +200,7 @@ class RfidController extends Controller
         
         session()->flash('info','Success');
 
-        return redirect('/admin/rfids');
+        return redirect('/admin/users');
     }
 
     /**
@@ -214,10 +211,10 @@ class RfidController extends Controller
      */
     public function destroy($id)
     {
-        $rfid = Rfid::findOrFail($id);
+        $rfid = Users::findOrFail($id);
         $rfid->delete();
         session()->flash('info','Success');
 
-        return redirect('/admin/rfids');
+        return redirect('/admin/users');
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payments extends Model
 {
+    protected $table = 'payments';
+    
     protected $fillable = [
         'date', 
         'amount',
@@ -15,7 +17,7 @@ class Payments extends Model
     public function getDateFormat(){
         return 'U';
     }
-
+    
     public function company(){
     	return $this->belongsTo('App\Models\Company');
     }

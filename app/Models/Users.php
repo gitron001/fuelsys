@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Rfid extends Model
+class Users extends Model
 {
+    protected $table = 'users';
+
     protected $fillable = [
         'rfid',
-        'rfid_name',
-        'user_id',
+        'name',
+        'email',
         'company_id',
         'one_time_limit',
         'plates',
@@ -21,16 +23,9 @@ class Rfid extends Model
     public function getDateFormat(){
         return 'U';
     }
-
+    
     public function company(){
         return $this->belongsTo('App\Models\Company')->withDefault([
-            'name' => '',
-            'status' => 1,
-        ]);
-    }
-
-    public function user(){
-        return $this->belongsTo('App\Models\User')->withDefault([
             'name' => '',
             'status' => 1,
         ]);

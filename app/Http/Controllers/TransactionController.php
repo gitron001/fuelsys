@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Transaction;
-use App\Models\User;
-use App\Models\Rfid;
+use App\Models\Users;
 use App\Models\PFC;
 use App\Models\Dispaneser;
 use App\Models\Company;
-use App\Models\products;
+use App\Models\Products;
 use App\Services\TransactionService;
 use Excel;
 use DB;
@@ -24,11 +23,11 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions   = Transaction::orderBy('created_at', 'desc')->paginate(15);
-        $users          = User::pluck('name','id')->all();
-        $rfids          = RFID::pluck('rfid_name','id')->all();
+        $users          = Users::pluck('name','id')->all();
+        //$rfids          = RFID::pluck('rfid_name','id')->all();
         $companies      = Company::pluck('name','id')->all();
 
-        return view('/admin/transactions/home',compact('transactions','users','rfids','companies'));
+        return view('/admin/transactions/home',compact('transactions','users','companies'));
     }
 
     /**
@@ -38,10 +37,10 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $users       = User::pluck('name','id')->all();
+        $users       = Users::pluck('name','id')->all();
         $products    = Products::pluck('name','id')->all();
         $dispanesers = Dispaneser::pluck('name','id')->all();
-        $pfc  = PFC::pluck('name','id')->all();
+        $pfc         = PFC::pluck('name','id')->all();
         
         return view('/admin/transactions/create',compact('users','dispanesers','products','pfc'));
     }
@@ -82,9 +81,9 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::findOrFail($id);
         $dispanesers = Dispaneser::pluck('name','id')->all();
-        $users       = User::pluck('name','id')->all();
+        $users       = Users::pluck('name','id')->all();
         $products    = Products::pluck('name','id')->all();
-        $pfc  = PFC::pluck('name','id')->all();
+        $pfc         = PFC::pluck('name','id')->all();
 
         return view('/admin/transactions/edit',compact('transaction','dispanesers','users','products','pfc'));
     }
@@ -143,7 +142,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('user')) {
-            $getRfid    = Rfid::where('user_id',$user)->get();
+            $getRfid    = Users::where('user_id',$user)->get();
 
             foreach ($getRfid as $rfid) {
                 $getID[] =  $rfid->id;
@@ -153,7 +152,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('company')) {
-            $getRfid    = Rfid::where('company_id',$company)->get();
+            $getRfid    = Users::where('company_id',$company)->get();
 
             foreach ($getRfid as $rfid) {
                 $getID[] =  $rfid->id;
@@ -202,7 +201,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('user')) {
-            $getRfid    = Rfid::where('user_id',$user)->get();
+            $getRfid    = Users::where('user_id',$user)->get();
 
             foreach ($getRfid as $rfid) {
                 $getID[] =  $rfid->id;
@@ -212,7 +211,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('company')) {
-            $getRfid    = Rfid::where('company_id',$company)->get();
+            $getRfid    = Users::where('company_id',$company)->get();
 
             foreach ($getRfid as $rfid) {
                 $getID[] =  $rfid->id;

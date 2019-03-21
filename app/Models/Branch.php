@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
+    protected $table = 'branches';
+    
     protected $fillable = [
         'name', 
         'address', 
@@ -16,7 +18,7 @@ class Branch extends Model
     public function getDateFormat(){
         return 'U';
     }
-
+    
     public function users(){
         return $this->hasMany('App\Models\User');
     }
@@ -24,4 +26,5 @@ class Branch extends Model
     public function rfid_limit(){
         return $this->hasMany('App\Models\RFID_Limits');
     }
+    
 }

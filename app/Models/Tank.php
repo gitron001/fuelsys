@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tank extends Model
 {
+    protected $table = 'tanks';
+
     protected $fillable = [
         'name',  
         'product_id',
@@ -16,7 +18,7 @@ class Tank extends Model
     public function getDateFormat(){
         return 'U';
     }
-
+    
     public function product(){
         return $this->belongsTo('App\Models\Products');
     }

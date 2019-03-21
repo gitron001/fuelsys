@@ -13,7 +13,7 @@ class CreatePFCsTable extends Migration
      */
     public function up()
     {
-        Schema::create('p_f_cs', function (Blueprint $table) {
+        Schema::create('pfc_controller', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('ip');
@@ -30,6 +30,6 @@ class CreatePFCsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('p_f_cs');
+        Schema::dropIfExists('pfc_controller');
     }
 }
