@@ -22,7 +22,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //$transactions   = Transaction::orderBy('created_at', 'desc')->paginate(15);
+        $transactions   = Transaction::orderBy('created_at', 'desc')->paginate(15);
         $users          = Users::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
 
