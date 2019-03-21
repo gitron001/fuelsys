@@ -34,17 +34,7 @@
                         @endforeach
                     </select> 
                   </div>
-                  <!--
-                  <div class="form-group">
-                    <label for="User:">RFID:</label>
-                    <select class="form-control" id="rfid">
-                      <option value="">Choose a RFID</option>
-                        {{--@foreach($rfids as $id => $name)
-                          <option value="{{ $id }}">{{ $name }}</option>
-                        @endforeach--}}
-                    </select> 
-                  </div>
-                  -->
+
                   <div class="form-group">
                     <label for="User:">Company:</label>
                     <select class="form-control" id="company">
@@ -70,7 +60,7 @@
                 <thead>
                 <tr>
                   <th>User</th>
-                  <th>RFID Name</th>
+                  <th>RFID</th>
                   <th>Product</th>
                   <th>Price</th>
                   <th>Lit</th>
@@ -81,8 +71,8 @@
                 <tbody>
                 @foreach($transactions as $transaction)
                 <tr>
-                    <td>{{ $transaction->rfid ? $transaction->rfid->user->name : '' }}</td>
-                    <td>{{ $transaction->rfid ? $transaction->rfid->rfid_name  : '' }}</td>
+                    <td>{{ $transaction->users ? $transaction->users->name : '' }}</td>
+                    <td>{{ $transaction->users ? $transaction->users->rfid : '' }}</td>
                     <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
                     <td>{{ $transaction->price }}</td>
                     <td>{{ $transaction->lit }}</td>
@@ -124,12 +114,11 @@
       var fromDate = $("#from_date").val();
       var toDate = $("#to_date").val();
       var user = $("#user").val();
-      var rfid = $("#rfid").val();
       var company = $("#company").val();
 
       $.ajax({
         type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,rfid: rfid,company:company},
+        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
         url: "{{ URL('/search')}}",
         dataType: 'JSON',
         success: function(data){
@@ -145,12 +134,11 @@
       var fromDate = $("#from_date").val();
       var toDate = $("#to_date").val();
       var user = $("#user").val();
-      var rfid = $("#rfid").val();
       var company = $("#company").val();
 
       $.ajax({
         type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,rfid: rfid,company:company},
+        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
         url: "{{ URL('/export')}}",
         dataType: "JSON",
         success: function(response, textStatus, request){

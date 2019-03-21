@@ -36,14 +36,10 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\Dispaneser');
     }
 
-    public function user(){
-        return $this->belongsTo('App\Models\Users');
+    public function users(){
+        return $this->belongsTo('App\Models\Users','rfid_id', 'id');
     }
-
-    public function rfid(){
-        return $this->belongsTo('App\Models\Rfid');
-    }
-
+    
     public function product(){
         return $this->belongsTo('App\Models\Products');
     }

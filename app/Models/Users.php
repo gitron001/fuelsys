@@ -31,10 +31,6 @@ class Users extends Model
         ]);
     }
 
-    public function username(){
-        return $this->hasMany('App\Models\Transaction', 'rfid_id', 'rfid');
-    }
-
     public function discounts(){
         return $this->hasMany('App\Models\RFID_Discounts', 'rfid_id', 'id');
     }
@@ -42,4 +38,9 @@ class Users extends Model
     public function limits(){
         return $this->hasMany('App\Models\RFID_Limits', 'rfid_id', 'id');
     }
+
+    public function transactions(){
+        return $this->hasMany('App\Models\Transaction','rfid_id', 'id');
+    }
+
 }

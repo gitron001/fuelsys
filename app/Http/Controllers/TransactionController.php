@@ -22,9 +22,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions   = Transaction::orderBy('created_at', 'desc')->paginate(15);
+        //$transactions   = Transaction::orderBy('created_at', 'desc')->paginate(15);
         $users          = Users::pluck('name','id')->all();
-        //$rfids          = RFID::pluck('rfid_name','id')->all();
         $companies      = Company::pluck('name','id')->all();
 
         return view('/admin/transactions/home',compact('transactions','users','companies'));
@@ -128,21 +127,16 @@ class TransactionController extends Controller
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
-        $rfidID     = $request->input('rfid');
         $company    = $request->input('company');
 
         $query = new Transaction();
-
-        if ($request->input('rfid')) {
-            $query = $query->where('rfid_id',$rfidID);
-        }
 
         if ($request->input('fromDate')) {
             $query = $query->whereBetween('created_at',[$from_date, $to_date]);
         }
 
         if ($request->input('user')) {
-            $getRfid    = Users::where('user_id',$user)->get();
+            $getRfid    = Users::where('id',$user)->get();
 
             foreach ($getRfid as $rfid) {
                 $getID[] =  $rfid->id;
@@ -187,21 +181,16 @@ class TransactionController extends Controller
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
-        $rfidID     = $request->input('rfid');
         $company    = $request->input('company');
 
         $query = new Transaction;
-
-        if ($request->input('rfid')) {
-            $query = $query->where('rfid_id',$rfidID);
-        }
 
         if ($request->input('fromDate')) {
             $query = $query->whereBetween('created_at',[$from_date, $to_date]);
         }
 
         if ($request->input('user')) {
-            $getRfid    = Users::where('user_id',$user)->get();
+            $getRfid    = Users::where('id',$user)->get();
 
             foreach ($getRfid as $rfid) {
                 $getID[] =  $rfid->id;
