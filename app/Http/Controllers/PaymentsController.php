@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Payments;
 use App\Models\Company;
+use App\Models\Users;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
@@ -19,8 +20,9 @@ class PaymentsController extends Controller
     public function index()
     {
         $payments   = Payments::orderBy('created_at', 'desc')->paginate(15);
+        $users      = Users::pluck('name','id')->all();
 
-        return view('/admin/payments/home',compact('payments'));
+        return view('/admin/payments/home',compact('payments','users'));
     }
 
     /**
@@ -31,7 +33,9 @@ class PaymentsController extends Controller
     public function create()
     {
         $companies  = Company::pluck('name','id')->all();
-        return view('/admin/payments/create',compact('companies'));
+        $users      = Users::pluck('name','id')->all();
+
+        return view('/admin/payments/create',compact('companies','users'));
     }
 
     /**
@@ -46,6 +50,7 @@ class PaymentsController extends Controller
 
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
+        $payments->user_id      = $request->input('user_id');
         $payments->company_id   = $request->input('company_id');
         $payments->created_at   = now()->timestamp;
         $payments->updated_at   = now()->timestamp;
@@ -77,7 +82,8 @@ class PaymentsController extends Controller
     {
         $payment    = Payments::findOrFail($id);
         $companies  = Company::pluck('name','id')->all();
-        return view('/admin/payments/edit',compact('payment','companies'));
+        $users      = Users::pluck('name','id')->all();
+        return view('/admin/payments/edit',compact('payment','companies','users'));
     }
 
     /**
@@ -93,6 +99,7 @@ class PaymentsController extends Controller
 
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
+        $payments->user_id      = $request->input('user_id');
         $payments->company_id   = $request->input('company_id');
         $payments->updated_at   = now()->timestamp;
         $payments->update();

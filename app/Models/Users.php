@@ -43,4 +43,8 @@ class Users extends Model
         return $this->hasMany('App\Models\Transaction','rfid_id', 'id');
     }
 
+    public function payments(){
+        return $this->hasMany('App\Models\Payments');
+    }
+
 }

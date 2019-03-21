@@ -21,4 +21,8 @@ class Payments extends Model
     public function company(){
     	return $this->belongsTo('App\Models\Company');
     }
+
+    public function user(){
+        return $this->belongsTo('App\Models\Users');
+    }
 }
