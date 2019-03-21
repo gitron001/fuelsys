@@ -31,7 +31,7 @@
     <thead>
       <tr>
         <th>RFID</th>
-        <th>Username</th>
+        <th>Name</th>
         <th>Amount</th>
         <th>Date</th>
       </tr>
@@ -39,8 +39,8 @@
     <tbody>
 	@foreach($transactions as $transaction)
       <tr>
-        <td>{{ $transaction->rfid ? $transaction->rfid->rfid_name : '' }}</td>
-        <td>{{ $transaction->rfid ? $transaction->rfid->user->name : ''}}</td>
+        <td>{{ $transaction->users ? $transaction->users->name : '' }}</td>
+        <td>{{ $transaction->users ? $transaction->users->rfid : '' }}</td>
         <td>{{ $transaction->money }}</td>
         <td>{{ $transaction->created_at }}</td>
       </tr>
