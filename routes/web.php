@@ -27,4 +27,4 @@ Route::get('/search','TransactionController@search');
 Route::get('/export','TransactionController@excel_export');
 
 // Test Printer Here
-Route::get('/admin/test', 'PaymentsController@test');
+Route::get('/admin/test/{id}', 'PaymentsController@printFunction');
