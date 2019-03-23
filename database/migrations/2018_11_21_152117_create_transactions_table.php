@@ -28,7 +28,7 @@ class CreateTransactionsTable extends Migration
             $table->longText('dis_tot');
             $table->longText('pfc_tot');
             $table->char('tr_status')->nullable();
-            $table->integer('rfid_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->char('ctype')->nullable();
             $table->char('method')->nullable();
             $table->integer('bill_no')->nullable();

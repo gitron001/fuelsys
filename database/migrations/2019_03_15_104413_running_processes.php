@@ -19,7 +19,8 @@ class RunningProcesses extends Migration
             $table->integer('refresh_time')->nullable();
             $table->double('faild_attempt')->nullable();
             $table->char('class_name')->nullable();
-            $table->double('type_id');
+            $table->integer('pfc_id');
+            $table->integer('type_id');
             $table->integer('created_at');
             $table->integer('updated_at');
         });

@@ -9,7 +9,8 @@ use App\Services\TransactionService;
 use App\Services\PFCServices as PFC;
 use App\Services\DispanserService as Dispanser;
 use App\Models\RunninProcessModel as Process;
-use App\Models\Rfid;
+use App\Models\Users;
+use App\Models\PFC as PfcModel;
 
 class CheckCardReadersCommand extends Command
 {
@@ -18,7 +19,7 @@ class CheckCardReadersCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'card:reader';
+    protected $signature = 'card:reader {pfc_id}';
 
     /**
      * The console command description.
@@ -51,41 +52,54 @@ class CheckCardReadersCommand extends Command
             echo $c_discount->product_details->price;
         }
         dd();*/
-        $socket = PFC::create_socket();
+        $pfc_id = $this->argument('pfc_id') ;
+
+        $pfc    = PfcModel::where('id', $pfc_id)->first();
+
+
+        $socket = PFC::create_socket($pfc);
+
+        $loadPrice = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->count();
+        if($loadPrice != 0){
+            Process::where('type_id', 2)->where('pfc_id', $pfc_id)->delete();
+        }
         Process::insert(array('start_time'=> time(),
                                 'refresh_time' => time(),
                                 'faild_attempt'=> 0,
                                 'class_name'=>'card:reader',
+                                'pfc_id' =>$pfc_id,
                                 'type_id' =>1,
                                 'created_at' => time(),
                                 'updated_at' => time()
                             ));
         while(true){
-            $loadPrice = Process::where('type_id', 2)->count();
+            $loadPrice = Process::where('type_id', 2)->where('pfc_id', $pfc_id)->count();
             if($loadPrice != 0){
                 Dispanser::fuelPrices($socket);
-                Process::where('type_id', 2)->delete();
+                Process::where('type_id', 2)->where('pfc_id', $pfc_id)->delete();
             }
-            $loadChannel = Process::where('type_id', 3)->count();
+            $loadChannel = Process::where('type_id', 3)->where('pfc_id', $pfc_id)->count();
             if($loadChannel != 0){
                 Dispanser::dispanserChannels($socket);
-                Process::where('type_id', 3)->delete();
+                Process::where('type_id', 3)->where('pfc_id', $pfc_id)->delete();
             }
 
-            $stopCommand = Process::where('type_id', 4)->count();
+            $stopCommand = Process::where('type_id', 4)->where('pfc_id', $pfc_id)->count();
             if($stopCommand != 0){
-                Process::where('type_id', 4)->delete();
+                Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();
                 break;
             }
 
-            CardService::check_readers($socket);
+            CardService::check_readers($socket, $pfc_id);
             usleep(150000);
-            TransactionService::read($socket);
+            TransactionService::read($socket, $pfc_id);
             usleep(150000);
-            $proccess = Process::where('type_id', 1)->first();
+            $proccess = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->first();
             $proccess->refresh_time = time();
             $proccess->save();
         }
+
         socket_close($socket);
+
     }
 }

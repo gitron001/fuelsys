@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Payments;
 use App\Models\Company;
 use App\Models\Users;
+use App\Models\PFC;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
@@ -21,7 +22,7 @@ class PaymentsController extends Controller
     {
         $payments   = Payments::orderBy('created_at', 'desc')->paginate(15);
         $users      = Users::pluck('name','id')->all();
-
+        $pfcs       = PFC::where('status', 1)->get();
         return view('/admin/payments/home',compact('payments','users'));
     }
 

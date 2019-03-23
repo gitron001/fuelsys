@@ -18,7 +18,11 @@
 			{!! Form::label('email', 'Email'); !!}
 			{!! Form::text('email',null,['class'=>'form-control']); !!} 
 		</div>
-		
+
+		<div class="form-group">
+			{!! Form::label('status', 'Status'); !!}
+			{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
+		</div>
 		@if($user->company_id != 0)
 			<div class="form-group">
 				{!! Form::label('company_id', 'Company'); !!}

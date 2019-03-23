@@ -12,9 +12,9 @@ class PFCServices extends ServiceProvider
      *
      * @return void
      */
-    public static function create_socket() {
-		$address = "192.168.1.197";
-		$port = 40097;
+    public static function create_socket($pfc) {
+		$address = $pfc->ip;
+		$port = $pfc->port;
 
 		/* Create a TCP/IP socket. */
 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -86,6 +86,7 @@ class PFCServices extends ServiceProvider
 
     //Validate the returned message from PFC
     public static function send_message($socket, $binarydata, $message = null){
+        $j = 1;
         while(true) {
             //Send Message to the socket
             socket_write($socket, $binarydata);
@@ -104,6 +105,11 @@ class PFCServices extends ServiceProvider
                 }
                 echo 'Invalid Transactions<bd>';
                 sleep(1);
+                if($j == 3){
+                    return false;
+                    break;
+                }
+                $j++;
                 continue;
             }
 

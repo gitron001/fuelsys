@@ -18,6 +18,7 @@ class CreatePFCsTable extends Migration
             $table->string('name');
             $table->string('ip');
             $table->integer('port');
+            $table->integer('status')->default('1');
             $table->integer('created_at');
             $table->integer('updated_at');
         });
