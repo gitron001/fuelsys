@@ -32,6 +32,8 @@ class CreateCompaniesTable extends Migration
             $table->double('limits');
             $table->integer('last_balance_update');
             $table->tinyInteger('has_limit')->default(0);
+            $table->tinyInteger('has_receipt')->default(0);
+            $table->tinyInteger('has_receipt_nr')->default(0);
             $table->integer('created_at');
             $table->integer('updated_at');
         });

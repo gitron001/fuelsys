@@ -6,16 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Payments;
 use App\Models\Company;
 use App\Models\Users;
-<<<<<<< HEAD
 use App\Models\PFC;
-=======
 use App\Models\Transaction;
->>>>>>> bcba577b8649608dbb3d609f8d6a8d4c1117a8ae
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 use DateTime;
+use App\Jobs\PrintFuelRecept;
+use Config;
 
 class PaymentsController extends Controller
 {
@@ -134,6 +133,11 @@ class PaymentsController extends Controller
     
     public function printFunction($id)
     {
+        $recepit = new PrintFuelRecept($id);
+        $this->dispatch($recepit);
+
+
+        dd('Hell YEAHHH' . $id);
         try {
             
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);

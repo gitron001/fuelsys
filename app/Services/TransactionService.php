@@ -7,6 +7,7 @@ use App\Services\PFCServices as PFC;
 use Config;
 use App\Models\Transaction;
 use App\Models\Users;
+use App\Jobs\PrintFuelRecept;
 
 class TransactionService extends ServiceProvider
 {
@@ -83,71 +84,19 @@ class TransactionService extends ServiceProvider
 
         $response = PFC::send_message($socket, $binarydata);
 
-        $transaction = new Transaction();
-
-        $transaction->status = $response[4];
-
-        $transaction->pfc_id = $pfc_id;
-
-        $transaction->locker = $response[5];
-
-        $tr_no = pack('c', $response[7]).pack('c', $response[6]);
-        $tr_no = unpack('s', $tr_no)[1];
-
-        $transaction->tr_no = $tr_no;
-
-        $transaction->sl_no = $response[8];
-
-        $transaction->product_id = $response[9];
-
-        $transaction->dis_tot = $response[10];
-
-        $price = pack('c', $response[12]).pack('c', $response[11]);
-        $price = unpack('s', $price)[1];
-        $transaction->price = number_format(($price/1000),2);
-
-        $lit = pack('c', $response[16]).pack('c', $response[15]).pack('c', $response[14]).pack('c', $response[13]);
-        $lit = unpack('i', $lit)[1];
-        $transaction->lit = number_format(($lit/100),2);
-
-        $money = pack('c', $response[20]).pack('c', $response[19]).pack('c', $response[18]).pack('c', $response[17]);
-        $money = unpack('i', $money)[1];
-        $transaction->money = number_format(($money/100),2);
-
-        $dis_tot = pack('c', $response[24]).pack('c', $response[23]).pack('c', $response[22]).pack('c', $response[21]);
-        $dis_tot = unpack('i', $dis_tot)[1];
-        $transaction->dis_tot = $dis_tot;
-
-
-        $pfc_tot = pack('c', $response[28]).pack('c', $response[27]).pack('c', $response[26]).pack('c', $response[25]);
-        $pfc_tot = unpack('i', $pfc_tot)[1];
-        $transaction->pfc_tot = $pfc_tot;
-
-        $transaction->tr_status = $response[29];
-
-        $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
-        $rfid = unpack('i', $rfid)[1];
-
-        $user = Users::where("rfid", $rfid)->where('status', 1)->first();
-        //Query the rfid ID from the RFID table
-        $transaction->user_id = $user->id;
-
-        $transaction->ctype = $response[34];
-
-        $transaction->method = $response[35];
-
-        $bill_no = pack('c', $response[37]).pack('c', $response[36]);
-        $bill_no = unpack('s', $bill_no)[1];
-        $transaction->bill_no = $bill_no;
-
-        $transaction->save();
+        $transaction_id  =  Transaction::insertTransactionData($response);
 
         //Clear status transaction
         $status = 2;
+
         //call job to update company balance
         //HERE
 
         $changed_status = self::transaction_status($channel, $status, $socket);
+
+        $recepit = new PrintFuelRecept($transaction_id);
+
+        $this->dispatch($recepit);
         echo 'stored';
         return true;
     }

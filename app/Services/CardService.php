@@ -225,7 +225,6 @@ class CardService extends ServiceProvider
 
     public static function setPrepay($socket, $channel, $limit_left) {
         //Get all transaction by channel
-        $limit_left = 2000;
         $channel_id = PFC::conver_to_bin($channel);
         $limit_left_bin = strrev(pack("I",2000));
         $message = "\x1\x9\x8C".$channel_id.$limit_left_bin;
