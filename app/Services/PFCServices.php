@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
+use App\Models\PFC as PfcModel;
 
 class PFCServices extends ServiceProvider
 {
@@ -12,8 +13,8 @@ class PFCServices extends ServiceProvider
      *
      * @return void
      */
-    public static function create_socket($pfc) {
-		$address = $pfc->ip;
+    public static function create_socket($pfc = false) {
+    	$address = $pfc->ip;
 		$port = $pfc->port;
 
 		/* Create a TCP/IP socket. */

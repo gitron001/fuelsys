@@ -37,11 +37,11 @@ class Transaction extends Model
     }
 
     public function users(){
-        return $this->belongsTo('App\Models\Users','rfid_id', 'id');
+        return $this->belongsTo('App\Models\Users','user_id', 'id');
     }
     
     public function product(){
-        return $this->belongsTo('App\Models\Products');
+        return $this->belongsTo('App\Models\Products', 'product_id', 'pfc_pr_id');
     }
 
     public function pfc(){

@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
 use Config;
 use App\Models\Transaction;
-use App\Models\Rfid;
+use App\Models\Users;
 
 class TransactionService extends ServiceProvider
 {
@@ -18,7 +18,8 @@ class TransactionService extends ServiceProvider
     public static function read($socket = null, $pfc_id = 1)
     {
         if($socket === null) {
-            $socket = PFC::create_socket();
+            $pfc    = PfcModel::where('id', $pfc_id)->first();
+            $socket = PFC::create_socket($pfc);
         }
 
         //Get all transaction by channel
@@ -49,7 +50,7 @@ class TransactionService extends ServiceProvider
                     echo 'UPDATED';
             }else if($response[$i] == 2){
                 $channel = (($i/4));
-                self::read_data($socket, $channel);
+                self::read_data($socket, $channel, $pfc_id);
             }
         }
         //LOCKED
@@ -103,7 +104,7 @@ class TransactionService extends ServiceProvider
 
         $price = pack('c', $response[12]).pack('c', $response[11]);
         $price = unpack('s', $price)[1];
-        $transaction->price = number_format(($price/100),2);
+        $transaction->price = number_format(($price/1000),2);
 
         $lit = pack('c', $response[16]).pack('c', $response[15]).pack('c', $response[14]).pack('c', $response[13]);
         $lit = unpack('i', $lit)[1];
@@ -127,9 +128,9 @@ class TransactionService extends ServiceProvider
         $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
         $rfid = unpack('i', $rfid)[1];
 
-        $the_card = Rfid::where("rfid", $rfid)->where('status', 1)->first();
+        $user = Users::where("rfid", $rfid)->where('status', 1)->first();
         //Query the rfid ID from the RFID table
-        $transaction->user_id = $the_card->id;
+        $transaction->user_id = $user->id;
 
         $transaction->ctype = $response[34];
 

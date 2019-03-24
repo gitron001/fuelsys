@@ -61,7 +61,7 @@ class CheckCardReadersCommand extends Command
 
         $loadPrice = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->count();
         if($loadPrice != 0){
-            Process::where('type_id', 2)->where('pfc_id', $pfc_id)->delete();
+            Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();
         }
         Process::insert(array('start_time'=> time(),
                                 'refresh_time' => time(),
@@ -75,12 +75,12 @@ class CheckCardReadersCommand extends Command
         while(true){
             $loadPrice = Process::where('type_id', 2)->where('pfc_id', $pfc_id)->count();
             if($loadPrice != 0){
-                Dispanser::fuelPrices($socket);
+                Dispanser::fuelPrices($socket,$pfc_id);
                 Process::where('type_id', 2)->where('pfc_id', $pfc_id)->delete();
             }
             $loadChannel = Process::where('type_id', 3)->where('pfc_id', $pfc_id)->count();
             if($loadChannel != 0){
-                Dispanser::dispanserChannels($socket);
+                Dispanser::dispanserChannels($socket, $pfc_id);
                 Process::where('type_id', 3)->where('pfc_id', $pfc_id)->delete();
             }
 
