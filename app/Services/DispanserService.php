@@ -14,7 +14,7 @@ class DispanserService extends ServiceProvider
      *
      * @return void
      */
-    public static function fuelPrices($socket)
+    public static function fuelPrices($socket, $pfc_id = 1)
     {
         //Create socket if it does not exist
         if($socket === null) {
@@ -37,6 +37,7 @@ class DispanserService extends ServiceProvider
             $price = unpack('s', $price)[1];
             if($price == 0 ){  $j++; continue; }
             $data['price'] = $price;
+            $data['pfc_id'] = $pfc_id;
             $data['pfc_pr_id'] = $j;
             $data['created_at'] = time();
             $data['updated_at'] = time();
@@ -52,7 +53,7 @@ class DispanserService extends ServiceProvider
      *
      * @return void
      */
-    public static function dispanserChannels($socket)
+    public static function dispanserChannels($socket, $pfc_id = 1)
     {
         $message = "\x1\x4\x9";
         $the_crc = PFC::crc16($message);
@@ -70,9 +71,30 @@ class DispanserService extends ServiceProvider
 
                 $data['name']      = 'Pump - '.$channel;
                 $data['created_at'] = time();
+                $data['pfc_id'] = $pfc_id;
                 $data['updated_at'] = time();
                 Dispaneser::insert($data);
             }
         }
     }
+
+    public static function checkForUpdates($socket, $pfc_id = 1){
+
+        $loadPrice = Process::where('type_id', 2)->where('pfc_id', $pfc_id)->count();
+        if($loadPrice != 0){
+            Dispanser::fuelPrices($socket,$pfc_id);
+            Process::where('type_id', 2)->where('pfc_id', $pfc_id)->delete();
+        }
+        $loadChannel = Process::where('type_id', 3)->where('pfc_id', $pfc_id)->count();
+        if($loadChannel != 0){
+            Dispanser::dispanserChannels($socket, $pfc_id);
+            Process::where('type_id', 3)->where('pfc_id', $pfc_id)->delete();
+        }
+
+        $stopCommand = Process::where('type_id', 4)->where('pfc_id', $pfc_id)->count();
+        if($stopCommand != 0){
+            Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();
+        }
+    }
+
 }

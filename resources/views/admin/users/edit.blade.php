@@ -18,7 +18,20 @@
 			{!! Form::label('email', 'Email'); !!}
 			{!! Form::text('email',null,['class'=>'form-control']); !!} 
 		</div>
+<<<<<<< HEAD
 		
+=======
+
+		<div class="form-group">
+			{!! Form::label('status', 'Status'); !!}
+			{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
+		</div>
+		@if($user->company_id != 0)
+			<div class="form-group">
+				{!! Form::label('company_id', 'Company'); !!}
+				{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!} 
+			</div>
+>>>>>>> ce5e54537c91408c5098ae63224e5f5ac80a4ef6
 
 		<div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
 			<label for="type">Type</label>

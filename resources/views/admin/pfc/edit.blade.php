@@ -18,6 +18,10 @@
 			{!! Form::label('port', 'Port'); !!}
 			{!! Form::number('port',null,['class'=>'form-control']); !!} 
 		</div>
+		<div class="form-group">
+			{!! Form::label('status', 'Status'); !!}
+			{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
+		</div>
 
 		<div class="form-group">
 			{!! Form::submit('Edit PFC', ['class'=>'btn btn-block btn-primary']); !!}

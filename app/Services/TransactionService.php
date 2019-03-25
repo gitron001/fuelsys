@@ -6,7 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
 use Config;
 use App\Models\Transaction;
-use App\Models\Rfid;
+use App\Models\Users;
+use App\Jobs\PrintFuelRecept;
 
 class TransactionService extends ServiceProvider
 {
@@ -15,45 +16,46 @@ class TransactionService extends ServiceProvider
      *
      * Lock Transaction and call store function if there is one
      */
-    public static function read($socket = null)
+    public static function read($socket = null, $pfc_id = 1)
     {
         if($socket === null) {
-            $socket = PFC::create_socket();
+            $pfc    = PfcModel::where('id', $pfc_id)->first();
+            $socket = PFC::create_socket($pfc);
         }
 
-            //Get all transaction by channel
-            $message = "\x1\x5\x2\x1";
-            $the_crc = PFC::crc16( $message);
+        //Get all transaction by channel
+        $message = "\x1\x5\x2\x1";
+        $the_crc = PFC::crc16( $message);
 
-            $binarydata = pack("c*", 0x01)
-                .pack("c*",0x05)
-                .pack("c*",0x02)
-                .pack("c*",0x1)
-                .strrev(pack("s",$the_crc))
-                .pack("c*",02);
+        $binarydata = pack("c*", 0x01)
+            .pack("c*",0x05)
+            .pack("c*",0x02)
+            .pack("c*",0x1)
+            .strrev(pack("s",$the_crc))
+            .pack("c*",02);
 
 
-            $response = PFC::send_message($socket, $binarydata);
-            //print_r($response);
+        $response = PFC::send_message($socket, $binarydata);
+        //print_r($response);
 
-            $total_msg_legth = count($response);
-            for($i = 4; $i <= $total_msg_legth; $i+= 4) {
-                if ($response[$i] == 1) {
-                     $channel = (($i/4));
-                    //Lock status transaction
-                    $status = 1;
-                    $changed_status = self::transaction_status($channel, $status, $socket);
-                    usleep(150000);
-                    self::read_data($socket, $channel);
-                    if($changed_status)
-                        echo 'UPDATED';
-                }else if($response[$i] == 2){
-                    $channel = (($i/4));
-                    self::read_data($socket, $channel);
-                }
+        $total_msg_legth = count($response);
+        for($i = 4; $i <= $total_msg_legth; $i+= 4) {
+            if ($response[$i] == 1) {
+                 $channel = (($i/4));
+                //Lock status transaction
+                $status = 1;
+                $changed_status = self::transaction_status($channel, $status, $socket);
+                usleep(150000);
+                self::read_data($socket, $channel, $pfc_id);
+                if($changed_status)
+                    echo 'UPDATED';
+            }else if($response[$i] == 2){
+                $channel = (($i/4));
+                self::read_data($socket, $channel, $pfc_id);
             }
-            //LOCKED
-            return true;
+        }
+        //LOCKED
+        return true;
 
     }
     /**
@@ -61,7 +63,7 @@ class TransactionService extends ServiceProvider
      *
      *
      */
-    public static function read_data($socket, $channel)
+    public static function read_data($socket, $channel, $pfc_id)
     {
         $controller = Config::get('app.controller_id');
         $controller_id =  PFC::conver_to_bin($controller);
@@ -82,80 +84,32 @@ class TransactionService extends ServiceProvider
 
         $response = PFC::send_message($socket, $binarydata);
 
-        $transaction = new Transaction();
-
-        $transaction->status = $response[4];
-
-        $transaction->locker = $response[5];
-
-        $tr_no = pack('c', $response[7]).pack('c', $response[6]);
-        $tr_no = unpack('s', $tr_no)[1];
-
-        $transaction->tr_no = $tr_no;
-
-        $transaction->sl_no = $response[8];
-
-        $transaction->product_id = $response[9];
-
-        $transaction->dis_tot = $response[10];
-
-        $price = pack('c', $response[12]).pack('c', $response[11]);
-        $price = unpack('s', $price)[1];
-        $transaction->price = number_format(($price/100),2);
-
-        $lit = pack('c', $response[16]).pack('c', $response[15]).pack('c', $response[14]).pack('c', $response[13]);
-        $lit = unpack('i', $lit)[1];
-        $transaction->lit = number_format(($lit/100),2);
-
-        $money = pack('c', $response[20]).pack('c', $response[19]).pack('c', $response[18]).pack('c', $response[17]);
-        $money = unpack('i', $money)[1];
-        $transaction->money = number_format(($money/100),2);
-
-        $dis_tot = pack('c', $response[24]).pack('c', $response[23]).pack('c', $response[22]).pack('c', $response[21]);
-        $dis_tot = unpack('i', $dis_tot)[1];
-        $transaction->dis_tot = $dis_tot;
-
-
-        $pfc_tot = pack('c', $response[28]).pack('c', $response[27]).pack('c', $response[26]).pack('c', $response[25]);
-        $pfc_tot = unpack('i', $pfc_tot)[1];
-        $transaction->pfc_tot = $pfc_tot;
-
-        $transaction->tr_status = $response[29];
-
-        $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
-        $rfid = unpack('i', $rfid)[1];
-
-        $the_card = Rfid::where("rfid", $rfid)->where('status', 1)->first();
-        //Query the rfid ID from the RFID table
-        $transaction->rfid_id = $the_card->id;
-
-        $transaction->ctype = $response[34];
-
-        $transaction->method = $response[35];
-
-        $bill_no = pack('c', $response[37]).pack('c', $response[36]);
-        $bill_no = unpack('s', $bill_no)[1];
-        $transaction->bill_no = $bill_no;
-
-        $transaction->save();
+        $transaction_id  =  Transaction::insertTransactionData($response);
 
         //Clear status transaction
         $status = 2;
+
+        //call job to update company balance
+        //HERE
+
         $changed_status = self::transaction_status($channel, $status, $socket);
+
+        $recepit = new PrintFuelRecept($transaction_id);
+        $this->dispatch($recepit);
         echo 'stored';
         return true;
     }
 
-    /**\
-     *Change Transaction status
-     * Status 0 - unlock transaction
-     * Status 1 - lock transaction
-     * Status 2 - clear transaction
-     * Status 3 - block dispanser
-     * Status 4 - unblock dispanser
-     * Status 5 - suspend fueling
-     * Status 6 - resume fueling
-     */
+     /**
+         *Change Transaction status
+         * Status 0 - unlock transaction
+         * Status 1 - lock transaction
+         * Status 2 - clear transaction
+         * Status 3 - block dispanser
+         * Status 4 - unblock dispanser
+         * Status 5 - suspend fueling
+         * Status 6 - resume fueling
+     **/
     public static function transaction_status($channel, $status,  $socket)
     {
         $controller = Config::get('app.controller_id');

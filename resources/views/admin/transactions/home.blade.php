@@ -60,7 +60,7 @@
                 <thead>
                 <tr>
                   <th>User</th>
-                  <th>RFID</th>
+                  <th>Company</th>
                   <th>Product</th>
                   <th>Price</th>
                   <th>Lit</th>
@@ -72,7 +72,7 @@
                 @foreach($transactions as $transaction)
                 <tr>
                     <td>{{ $transaction->users ? $transaction->users->name : '' }}</td>
-                    <td>{{ $transaction->users ? $transaction->users->rfid : '' }}</td>
+                    <td>{{ $transaction->users->company ? $transaction->users->company->name : '' }}</td>
                     <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
                     <td>{{ $transaction->price }}</td>
                     <td>{{ $transaction->lit }}</td>

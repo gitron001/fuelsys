@@ -76,9 +76,23 @@
 
 		<div class="form-group">
 			{!! Form::label('status', 'Status'); !!}
-			{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!} 
+			{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
 		</div>
 
+		<div class="form-group">
+			{!! Form::label('has_limit', 'Has Limit'); !!}
+			{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('has_receipt', 'Has Receipt'); !!}
+			{!! Form::select('has_receipt',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('has_receipt_nr', 'Has Receipt Number'); !!}
+			{!! Form::select('has_receipt_nr',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+		</div>
 		<!-- *** DISCOUNT *** -->
 
 		@if(count($company_discounts) > 0)

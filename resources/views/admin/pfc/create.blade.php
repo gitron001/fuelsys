@@ -22,6 +22,11 @@
 			{!! Form::number('port',null,['class'=>'form-control']); !!} 
 			{!! $errors->first('port','<span class="help-block">:message</span>') !!}
 		</div>
+		<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
+			{!! Form::label('status', 'Status:'); !!}
+			{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
+			{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+		</div>
 
 		<div class="form-group">
 			{!! Form::submit('Create new PFC', ['class'=>'btn btn-block btn-success']); !!}

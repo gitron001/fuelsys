@@ -16,9 +16,8 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('fis_number');
-            $table->integer('starting_balance');
             $table->integer('bis_number');
+            $table->integer('fis_number');
             $table->string('contact_person');
             $table->integer('tax_number');
             $table->integer('res_number');
@@ -27,9 +26,14 @@ class CreateCompaniesTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('country');
-            $table->integer('type');
+            $table->tinyInteger('type');
             $table->integer('status');
-            $table->integer('limits');
+            $table->double('starting_balance')->default(0);
+            $table->double('limits');
+            $table->integer('last_balance_update');
+            $table->tinyInteger('has_limit')->default(0);
+            $table->tinyInteger('has_receipt')->default(0);
+            $table->tinyInteger('has_receipt_nr')->default(0);
             $table->integer('created_at');
             $table->integer('updated_at');
         });

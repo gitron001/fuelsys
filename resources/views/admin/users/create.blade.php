@@ -23,6 +23,12 @@
 			{!! $errors->first('email','<span class="help-block">:message</span>') !!}
 		</div>
 
+		<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
+			{!! Form::label('status', 'Status:'); !!}
+			{!! Form::select('status',[1=>'Active',0=>'No Active'],null,['class'=>'form-control']); !!}
+			{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+		</div>
+
 		<div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
 			{!! Form::label('type', 'Type:'); !!}
 			{!! Form::select('type',[1 => 'Staff',2=> 'Company',3=> 'Admin'],null,['class'=>'form-control', 'id' => 'showHide']); !!} 
