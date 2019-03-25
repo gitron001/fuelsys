@@ -29,4 +29,5 @@ return [
     'payments'                    => 'Pagesat',
     'pfc'                         => 'PFC',
     'home'                        => 'Ballina',
+    'settings'                    => 'Settings',
 ];

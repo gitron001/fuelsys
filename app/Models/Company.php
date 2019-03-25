@@ -15,6 +15,7 @@ class Company extends Model
         'tax_number',
         'res_number',
         'starting_balance',
+        'last_balance_update',
         'tel_number',
         'contact_person',
         'email',

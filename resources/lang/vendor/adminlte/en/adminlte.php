@@ -30,4 +30,5 @@ return [
     'payments'                    => 'Payments',
     'pfc'                         => 'PFC',
     'home'                        => 'Home',
+    'settings'                    => 'Settings',
 ];

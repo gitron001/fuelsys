@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
@@ -12,7 +9,6 @@ Route::resource('/admin/transactions', 'TransactionController');
 Route::view('transactions-info','admin.transactions.transactions-info',[
 		'transactions' => App\Models\Transaction::orderBy('created_at', 'DESC')->limit(15)->get()
 	]);
-
 
 Route::group(['middleware' => 'authenticated'], function () {
 
@@ -24,6 +20,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::resource('/admin/users', 'UsersController');
 	Route::resource('/admin/payments', 'PaymentsController');
 	Route::resource('/admin/pfc', 'PFCController');
+	Route::resource('/admin/settings', 'SettingsController');
 
 	Route::post('/transaction/excel_export', 'TransactionController@excel_export');
 

@@ -221,6 +221,6 @@ class CompaniesController extends Controller
 
         session()->flash('info','Success');
 
-        return redirect('/admin/companies');
+        return redirect('/admin/settings');
     }
 }

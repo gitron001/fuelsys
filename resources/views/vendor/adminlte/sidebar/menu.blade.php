@@ -63,6 +63,14 @@
                 <span>{{ trans('adminlte::adminlte.pfc') }}</span>
             </a>
     </li>
+    <li class="header">Settings</li>
+    <li class="">
+            <a href="{{ URL('admin/settings') }}"">
+                <i class="fa fa-fw fa-file "></i>
+                <span>{{ trans('adminlte::adminlte.settings') }}</span>
+            </a>
+    </li>
+    
 @else
     <li class="">
             <a href="{{ URL('/') }}"">
