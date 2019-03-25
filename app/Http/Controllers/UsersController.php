@@ -10,6 +10,7 @@ use App\Models\RFID_Discounts;
 use App\Models\RFID_Limits;
 use App\Models\Company;
 use DB;
+use Hash;
 
 class UsersController extends Controller
 {
@@ -52,6 +53,8 @@ class UsersController extends Controller
         $firstValueOfArrayBranch  = array_values($request->input('branch'))[0];
         $firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
 
+        $password = $request->input('password');
+
         $id = Users::insertGetId([
             'rfid'          => $request->input('rfid'),
             'name'          => $request->input('name'),
@@ -60,6 +63,8 @@ class UsersController extends Controller
             'one_time_limit'=> $request->input('one_time_limit') ? : 0,
             'plates'        => $request->input('plates') ? : 0,
             'vehicle'       => $request->input('vehicle') ? : 0,
+            'type'          => $request->input('type'),
+            'password'      => Hash::make($password),
             'status'        => 1,
             'created_at'    => now()->timestamp,
             'updated_at'    => now()->timestamp
@@ -113,7 +118,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user          = Users::findOrFail($id);
+        $user           = Users::findOrFail($id);
         $branches       = Branch::pluck('name','id')->all();
         $products       = Products::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
@@ -131,10 +136,21 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
+        $user = Users::findOrFail($id);
+        
+        $password = $request->input('password');
 
-        $users = Users::findOrFail($id);
-        $users->update($request->all());
+        $user->rfid         = $request->input('rfid');
+        $user->name         = $request->input('name');
+        $user->email        = $request->input('email');
+        $user->company_id   = $request->input('company_id');
+        $user->plates       = $request->input('plates');
+        $user->vehicle      = $request->input('vehicle');
+        $user->type         = $request->input('type');
+        $user->password     = Hash::make($password);
+        $user->updated_at   = now()->timestamp;
+        $user->update();
 
         // DELETE Discount
         if(empty($request->input('deleteDiscount'))){

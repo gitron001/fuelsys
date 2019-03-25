@@ -17,6 +17,12 @@
 			{!! $errors->first('name','<span class="help-block">:message</span>') !!}
 		</div>
 
+		<div class="form-group {{ $errors->has('password') ? 'has-error' :'' }}">
+			{!! Form::label('password', 'Password:'); !!}
+			{!! Form::password('password',['class'=>'form-control']); !!} 
+			{!! $errors->first('password','<span class="help-block">:message</span>') !!}
+		</div>
+
 		<div class="form-group {{ $errors->has('email') ? 'has-error' :'' }}">
 			{!! Form::label('email', 'Email:'); !!}
 			{!! Form::text('email',null,['class'=>'form-control']); !!} 
@@ -31,7 +37,7 @@
 
 		<div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
 			{!! Form::label('type', 'Type:'); !!}
-			{!! Form::select('type',[1 => 'Staff',2=> 'Company',3=> 'Admin'],null,['class'=>'form-control', 'id' => 'showHide']); !!} 
+			{!! Form::select('type',['' => 'Select', 1 => 'Staff',2=> 'Company',3=> 'Administrator'],null,['class'=>'form-control', 'id' => 'showHide']); !!} 
 			{!! $errors->first('type','<span class="help-block">:message</span>') !!}
 		</div>
 
@@ -119,7 +125,7 @@
 	    var e = document.getElementById("showHide");
 		var value = e.options[e.selectedIndex].value;
 
-		if(value == 1){
+		if(value == 2){
 			$("#company").show();
 			$("#one_time_limit").show();
 			$("#plates").show();

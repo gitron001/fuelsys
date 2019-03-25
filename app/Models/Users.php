@@ -16,6 +16,7 @@ class Users extends Model
         'one_time_limit',
         'plates',
         'vehicle',
+        'password',
         'created_at',
         'updated_at', 
     ];

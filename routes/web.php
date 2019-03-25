@@ -28,3 +28,9 @@ Route::get('/export','TransactionController@excel_export');
 
 // Test Printer Here
 Route::get('/admin/test/{id}', 'PaymentsController@printFunction');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
