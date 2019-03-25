@@ -23,7 +23,7 @@ class Transaction extends Model
         'dis_tot',
         'pfc_tot',
         'tr_status',
-        'rfid_id',
+        'user_id',
         'ctype',
         'method',
         'bill_no',

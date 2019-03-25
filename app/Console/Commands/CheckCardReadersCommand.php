@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Dispaneser;
 use App\Models\RFID_Discounts;
 use Illuminate\Console\Command;
 use App\Services\CardService;
@@ -52,12 +53,21 @@ class CheckCardReadersCommand extends Command
             echo $c_discount->product_details->price;
         }
         dd();*/
+        $check_cron = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->latest()->first();
+        $now = time();
+        if(isset($check_cron->refesh_time) && $check_cron->refesh_time < ($now + 30)){
+            dd();
+        }
         $pfc_id = $this->argument('pfc_id') ;
+
 
         $pfc    = PfcModel::where('id', $pfc_id)->first();
 
-
-        $socket = PFC::create_socket($pfc);
+        try {
+            $socket = PFC::create_socket($pfc);
+        } catch (Exception $e) {
+                dd( "Couldn't connect to socket " . $e -> getMessage() . "\n");
+        }
 
         $loadPrice = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->count();
         if($loadPrice != 0){
@@ -73,23 +83,8 @@ class CheckCardReadersCommand extends Command
                                 'updated_at' => time()
                             ));
         while(true){
-            $loadPrice = Process::where('type_id', 2)->where('pfc_id', $pfc_id)->count();
-            if($loadPrice != 0){
-                Dispanser::fuelPrices($socket,$pfc_id);
-                Process::where('type_id', 2)->where('pfc_id', $pfc_id)->delete();
-            }
-            $loadChannel = Process::where('type_id', 3)->where('pfc_id', $pfc_id)->count();
-            if($loadChannel != 0){
-                Dispanser::dispanserChannels($socket, $pfc_id);
-                Process::where('type_id', 3)->where('pfc_id', $pfc_id)->delete();
-            }
 
-            $stopCommand = Process::where('type_id', 4)->where('pfc_id', $pfc_id)->count();
-            if($stopCommand != 0){
-                Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();
-                break;
-            }
-
+            Dispaneser::checkForUpdates($socket, $pfc_id);
             CardService::check_readers($socket, $pfc_id);
             usleep(150000);
             TransactionService::read($socket, $pfc_id);

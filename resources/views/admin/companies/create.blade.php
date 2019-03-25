@@ -121,7 +121,25 @@
 			{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
 			{!! $errors->first('status','<span class="help-block">:message</span>') !!} 
 		</div>
-		
+
+		<div class="form-group {{ $errors->has('has_receipt') ? 'has-error' :'' }}">
+			{!! Form::label('has_receipt', 'Has Receipt:'); !!}
+			{!! Form::select('has_receipt',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+			{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+		</div>
+
+		<div class="form-group {{ $errors->has('has_receipt_nr') ? 'has-error' :'' }}">
+			{!! Form::label('has_receipt_nr', 'Has Receipt Number:'); !!}
+			{!! Form::select('has_receipt_nr',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+			{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+		</div>
+
+		<div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
+			{!! Form::label('has_limit', 'Has Limit:'); !!}
+			{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+			{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+		</div>
+
 		<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}">
 			{!! Form::label('limits', 'Limit:'); !!}
 			{!! Form::number('limits',null,['class'=>'form-control']); !!}
