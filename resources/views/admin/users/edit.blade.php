@@ -19,27 +19,36 @@
 			{!! Form::text('email',null,['class'=>'form-control']); !!} 
 		</div>
 		
-		@if($user->company_id != 0)
-			<div class="form-group">
-				{!! Form::label('company_id', 'Company'); !!}
-				{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!} 
-			</div>
 
-			<div class="form-group">
-				{!! Form::label('one_time_limit', 'One_Time_Limit'); !!}
-				{!! Form::text('one_time_limit',null,['class'=>'form-control']); !!} 
-			</div>
+		<div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
+			<label for="type">Type</label>
+			<select name="type" class="form-control" id="showHide">
+                <option value="1" @if ($user->type == 1) {{ 'selected' }} @endif>Staff</option>
+                <option value="2" @if ($user->type == 2) {{ 'selected' }} @endif>Company</option>
+                <option value="3" @if ($user->type == 3) {{ 'selected' }} @endif>Admin></option>
+            </select>
+		</div>
+		
+		<div class="form-group" id="company" @if ($user->company_id == 0) {{ 'style="display: none"' }} @endif>
+			{!! Form::label('company_id', 'Company'); !!}
+			{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!} 
+		</div>
 
-			<div class="form-group">
-				{!! Form::label('plates', 'Plates'); !!}
-				{!! Form::text('plates',null,['class'=>'form-control']); !!} 
-			</div>
+		<div class="form-group" id="one_time_limit" @if ($user->company_id == 0) {{ 'style="display: none"' }} @endif>
+			{!! Form::label('one_time_limit', 'One_Time_Limit'); !!}
+			{!! Form::text('one_time_limit',null,['class'=>'form-control']); !!} 
+		</div>
 
-			<div class="form-group">
-				{!! Form::label('vehicle', 'Vehicle'); !!}
-				{!! Form::text('vehicle',null,['class'=>'form-control']); !!} 
-			</div>
-		@endif
+		<div class="form-group" id="plates" @if ($user->company_id == 0) {{ 'style="display: none"' }} @endif>
+			{!! Form::label('plates', 'Plates'); !!}
+			{!! Form::text('plates',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group" id="vehicle" @if ($user->company_id == 0) {{ 'style="display: none"' }} @endif>
+			{!! Form::label('vehicle', 'Vehicle'); !!}
+			{!! Form::text('vehicle',null,['class'=>'form-control']); !!} 
+		</div>
+		
 	
 		<!-- *** DISCOUNT *** -->
 
@@ -168,6 +177,24 @@
 @section('js')
 
 <script>
+
+	// Check if company is selected and show discount fields
+	$(document).on('click','#showHide',function(){
+	    var e = document.getElementById("showHide");
+		var value = e.options[e.selectedIndex].value;
+
+		if(value == 2){
+			$("#company").show();
+			$("#one_time_limit").show();
+			$("#plates").show();
+			$("#vehicle").show();
+		}else {
+			$("#company").hide();
+			$("#one_time_limit").hide();
+			$("#plates").hide();
+			$("#vehicle").hide();
+		}
+	});
 
 	//Append another div if button(discounts) + is clicked
 	$(document).on('click','#addProduct',function(){

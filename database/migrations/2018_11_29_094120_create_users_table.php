@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('plates')->default('0');
             $table->string('vehicle')->default('0');
             $table->integer('status')->default('1');
+            $table->integer('type')->default('1');
             $table->integer('created_at');
             $table->integer('updated_at');
         });
