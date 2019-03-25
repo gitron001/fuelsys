@@ -25,7 +25,7 @@
 
 		<div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
 			{!! Form::label('type', 'Type:'); !!}
-			{!! Form::select('type',[0 => 'Staff',1=>'Company'],null,['class'=>'form-control', 'id' => 'showHide']); !!} 
+			{!! Form::select('type',[1 => 'Staff',2=> 'Company',3=> 'Admin'],null,['class'=>'form-control', 'id' => 'showHide']); !!} 
 			{!! $errors->first('type','<span class="help-block">:message</span>') !!}
 		</div>
 
