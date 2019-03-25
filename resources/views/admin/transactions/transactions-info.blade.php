@@ -10,8 +10,8 @@
 <tbody>
 @foreach($transactions as $transaction)
   <tr>
-    <td>{{ $transaction->users->rfid_name }}</td>
-    <td>{{ $transaction->users ? $transaction->user->name : ''}}</td>
+    <td>{{ $transaction->users->rfid }}</td>
+    <td>{{ $transaction->users ? $transaction->users->name : ''}}</td>
     <td>{{ $transaction->money }}</td>
     <td>{{ $transaction->created_at }}</td>
   </tr>

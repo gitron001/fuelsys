@@ -3,9 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Static Title -->
+    <title>Fuel System</title>
+    <!-- Dynamic web title -->
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
-@yield('title', config('app.name'))
-@yield('title_postfix', config('adminlte.title_postfix', ''))</title>
+    @yield('title', config('app.name'))
+    @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
+    <!-- End Dynamic web title -->
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->

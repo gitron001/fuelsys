@@ -56,7 +56,7 @@
 
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-hover table-bordered" >
+              <table id="example2" class="table table-hover table-bordered text-center">
                 <thead>
                 <tr>
                   <th>User</th>

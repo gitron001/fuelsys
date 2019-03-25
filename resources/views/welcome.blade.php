@@ -1,7 +1,5 @@
 @extends('adminlte::page')
 
-@section('title', 'Fuel System')
-
 @section('content_header')
     <h1>Dashboard</h1>
 @stop
@@ -25,7 +23,7 @@
 
 
 
-<div class="col-md-4" id="loadTransaction">
+<div class="col-md-4 table-wrapper-scroll-y my-custom-scrollbar" id="loadTransaction">
   <h2 class="text-center">LIVE Feed</h2>           
   <table class="table table-bordered text-center">
     <thead>
@@ -39,10 +37,10 @@
     <tbody>
 	@foreach($transactions as $transaction)
       <tr>
-        <td>{{ $transaction->users ? $transaction->users->name : '' }}</td>
         <td>{{ $transaction->users ? $transaction->users->rfid : '' }}</td>
+        <td>{{ $transaction->users ? $transaction->users->name : '' }}</td>
         <td>{{ $transaction->money }}</td>
-        <td>{{ $transaction->created_at }}</td>
+        <td>{{ $transaction->created_at->format('H:i:s') }}</td>
       </tr>
 	@endforeach
     </tbody>
@@ -53,6 +51,18 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    
+    <style>
+      .my-custom-scrollbar {
+        position: relative;
+        height: 480px;
+        overflow: auto;
+      }
+      .table-wrapper-scroll-y {
+        display: block;
+      }
+    </style>
+
 @stop
 
 @section('js')

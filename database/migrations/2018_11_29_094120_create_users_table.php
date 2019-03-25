@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
             'rfid' => '000000',
             'email' => 'administrator@fuelsystem.com',
             'password' => Hash::make('administrator'),
-            'type' => '2',
+            'type' => '3',
             'created_at' => now()->timestamp,
             'updated_at' => now()->timestamp,
         ]);
