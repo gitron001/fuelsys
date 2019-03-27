@@ -19,8 +19,7 @@ class CardService extends ServiceProvider
      *
      *
      */
-    public static function check_readers($socket = null, $pfc_id = 1)
-    {
+    public static function check_readers($socket = null, $pfc_id = 1) {
         //Create socket if it does not exist
         if($socket === null) {
                 $pfc    = PfcModel::where('id', $pfc_id)->first();
@@ -75,6 +74,7 @@ class CardService extends ServiceProvider
         //echo '<br> Card Number: '. $cardNumber;
         $user = Users::where("rfid", $cardNumber)->where('status', 1)->first();
         $card_count = Users::where("rfid", $cardNumber)->where('status', 1)->count();
+			
         if($card_count == 0 ){ return false; }
 
         if($user->status != 1 ){ return false; }

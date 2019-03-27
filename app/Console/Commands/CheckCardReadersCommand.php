@@ -52,16 +52,15 @@ class CheckCardReadersCommand extends Command
         foreach($the_cart->company->discounts as $c_discount){
             echo $c_discount->product_details->price;
         }
-        dd();*/\
-		$pfc_id = $this->argument('pfc_id') ;
+        dd();*/
+		$pfc_id = $this->argument('pfc_id');
+		
         $check_cron = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->latest()->first();
         $now = time();
         if(isset($check_cron->refesh_time) && $check_cron->refesh_time < ($now + 30)){
             dd('running');
         }
         
-
-
         $pfc    = PfcModel::where('id', $pfc_id)->first();
 
         try {
@@ -85,7 +84,8 @@ class CheckCardReadersCommand extends Command
                             ));
         while(true){
 
-            Dispaneser::checkForUpdates($socket, $pfc_id);
+            Dispanser::checkForUpdates($socket, $pfc_id);
+			
             CardService::check_readers($socket, $pfc_id);
             usleep(150000);
             TransactionService::read($socket, $pfc_id);

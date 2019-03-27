@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
 use App\Models\Products;
 use App\Models\Dispaneser;
+use App\Models\RunninProcessModel as Process;
 
 class DispanserService extends ServiceProvider
 {
@@ -14,8 +15,7 @@ class DispanserService extends ServiceProvider
      *
      * @return void
      */
-    public static function fuelPrices($socket, $pfc_id = 1)
-    {
+    public static function fuelPrices($socket, $pfc_id = 1) {
         //Create socket if it does not exist
         if($socket === null) {
             $socket = PFC::create_socket();
@@ -53,8 +53,7 @@ class DispanserService extends ServiceProvider
      *
      * @return void
      */
-    public static function dispanserChannels($socket, $pfc_id = 1)
-    {
+    public static function dispanserChannels($socket, $pfc_id = 1) {
         $message = "\x1\x4\x9";
         $the_crc = PFC::crc16($message);
         $binarydata = pack("c*", 0x01)
@@ -95,6 +94,8 @@ class DispanserService extends ServiceProvider
         if($stopCommand != 0){
             Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();
         }
+		
+		return true;
     }
 
 }
