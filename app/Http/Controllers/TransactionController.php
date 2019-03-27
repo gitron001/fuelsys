@@ -135,35 +135,45 @@ class TransactionController extends Controller
         $transactions = DB::table("transactions")
                     ->select("transactions.product_id",DB::RAW(" 'transaction' as type"),
                         DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
-                      ,"transactions.money"
+                      ,"transactions.money",DB::RAW(" 0 as company")
                       ,"users.name as username","transactions.created_at")
                     ->join('users', 'transactions.user_id', '=', 'users.id');
 
         if ($request->input('company')) {
             $transactions->where('company_id','=',$company);
         }
-        $transactions->where('created_at', '>=', $request->input('fromDate'));
-        $transactions->where('created_at', '<=', $request->input('toDate'));
-        /*if ($request->input('users')) {
+
+        if ($request->input('user')) {
             $transactions->where('user_id','=',$user);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
-            $transactions->whereBetween('created_at',[$from_date, $to_date]);
-        }*/
+            $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
 
         $payments = DB::table("payments")
                     ->select("payments.user_id",DB::RAW(" 'payment' as type")
                       ,"payments.amount","payments.date",
-                      DB::RAW(" 0 as money")
+                      DB::RAW(" 0 as money"),"payments.company_id"
                       ,"users.name as username","payments.created_at")
-                    ->leftJoin('users', 'payments.user_id', '=', 'users.id')
+                    ->join('users', 'payments.user_id', '=', 'users.id')
                     ->union($transactions)
-                    ->orderBy('created_at')
-                    ->get();
+                    ->orderBy('created_at');
 
-        //dd($payments);exit();
+        if ($request->input('company')) {
+            $payments->where('payments.company_id','=',$company);
+        }
 
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $payments->whereBetween('payments.date',[$from_date, $to_date]);
+        }
+
+        if ($request->input('user')) {
+            $payments->where('user_id','=',$user);
+        }
+
+        $payments = $payments->get();
+        
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
            

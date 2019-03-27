@@ -45,10 +45,6 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\Products', 'product_id', 'pfc_pr_id');
     }
 
-    public function productName(){
-        return $this->belongsTo('App\Models\Products', 'product_id', 'id');
-    }
-
     public function pfc(){
         return $this->belongsTo('App\Models\PFC');
     }
