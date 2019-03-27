@@ -23,8 +23,7 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index()  {
         $transactions   = Transaction::orderBy('created_at', 'desc')->paginate(15);
         $users          = Users::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
@@ -37,8 +36,7 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         $users       = Users::pluck('name','id')->all();
         $products    = Products::pluck('name','id')->all();
         $dispanesers = Dispaneser::pluck('name','id')->all();
@@ -53,8 +51,7 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         Transaction::create($request->all());
 
         session()->flash('info','Success');
@@ -68,8 +65,7 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -79,8 +75,7 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $transaction = Transaction::findOrFail($id);
         $dispanesers = Dispaneser::pluck('name','id')->all();
         $users       = Users::pluck('name','id')->all();
@@ -97,8 +92,7 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $transaction = Transaction::findOrFail($id);
         $transaction->update($request->all());
         session()->flash('info','Success');
@@ -112,8 +106,7 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $transaction = Transaction::findOrFail($id);
         $transaction->delete();
         session()->flash('info','Success');
@@ -121,60 +114,13 @@ class TransactionController extends Controller
         return redirect('/admin/transactions');
     }
 	
-	public function read()
-    {
+	public function read() {
         TransactionService::read();
     }
 
-    public function excel_export(Request $request){
-        $from_date  = strtotime($request->input('fromDate'));
-        $to_date    = strtotime($request->input('toDate'));
-        $user       = $request->input('user');
-        $company    = $request->input('company');
+    public function excel_export(Request $request) {
 
-
-        $transactions = DB::table("transactions")
-                    ->select("transactions.product_id",DB::RAW(" 'transaction' as type"),
-                        DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
-                      ,"transactions.money",DB::RAW(" 0 as company")
-                      ,"users.name as username","transactions.created_at")
-                    ->join('users', 'transactions.user_id', '=', 'users.id');
-
-        if ($request->input('company')) {
-            $transactions->where('company_id','=',$company);
-        }
-
-        if ($request->input('user')) {
-            $transactions->where('user_id','=',$user);
-        }
-
-        if ($request->input('fromDate') && $request->input('toDate')) {
-            $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        }
-
-        $payments = DB::table("payments")
-                    ->select("payments.user_id",DB::RAW(" 'payment' as type")
-                      ,"payments.amount","payments.date",
-                      DB::RAW(" 0 as money"),"payments.company_id"
-                      ,"users.name as username","payments.created_at")
-                    ->join('users', 'payments.user_id', '=', 'users.id')
-                    ->union($transactions)
-                    ->orderBy('created_at');
-
-        if ($request->input('company')) {
-            $payments->where('payments.company_id','=',$company);
-        }
-
-        if ($request->input('fromDate') && $request->input('toDate')) {
-            $payments->whereBetween('payments.date',[$from_date, $to_date]);
-        }
-
-        if ($request->input('user')) {
-            $payments->where('user_id','=',$user);
-        }
-
-        $payments = $payments->get();
-        $exportedPDF = $this->exportPDF($payments);
+        $payments = self::generate_data($request);
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
            
@@ -229,12 +175,65 @@ class TransactionController extends Controller
         return response()->json($response);       
     }
 
-   public function exportPDF($payments){
+   public static function exportPDF(Request $request){
+        $payments = self::generate_data($request);
+
         $pdf = PDF::loadView('admin.pdfReport',compact('payments'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->download($file_name.'.pdf');
     }
 
+    public static function generate_data($request){
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
+        $user       = $request->input('user');
+        $company    = $request->input('company');
+
+
+        $transactions = DB::table("transactions")
+            ->select("transactions.product_id",DB::RAW(" 'transaction' as type"),
+                DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
+                ,"transactions.money",DB::RAW(" 0 as company")
+                ,"users.name as username","transactions.created_at")
+            ->join('users', 'transactions.user_id', '=', 'users.id');
+
+        if ($request->input('company')) {
+            $transactions->where('company_id','=',$company);
+        }
+
+        if ($request->input('user')) {
+            $transactions->where('user_id','=',$user);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
+
+        $payments = DB::table("payments")
+            ->select("payments.user_id",DB::RAW(" 'payment' as type")
+                ,"payments.amount","payments.date",
+                DB::RAW(" 0 as money"),"payments.company_id"
+                ,"users.name as username","payments.created_at")
+            ->join('users', 'payments.user_id', '=', 'users.id')
+            ->union($transactions)
+            ->orderBy('created_at');
+
+        if ($request->input('company')) {
+            $payments->where('payments.company_id','=',$company);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $payments->whereBetween('payments.date',[$from_date, $to_date]);
+        }
+
+        if ($request->input('user')) {
+            $payments->where('user_id','=',$user);
+        }
+
+        $payments = $payments->get();
+
+        return $payments;
+    }
     public function search(Request $request) {
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
