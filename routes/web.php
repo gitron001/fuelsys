@@ -28,7 +28,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::resource('/admin/settings', 'SettingsController');
 
 	Route::post('/transaction/excel_export', 'TransactionController@excel_export');
-    Route::get('/admin/pfc/import_prices/{$pfc_id}/{$command_id}', 'PFCController');
+    Route::post('/admin/pfc/import_data/{pfc_id}/{command_id}', 'PFCController@import_data')->name('admin/pfc/import_data');
+    //Route::post('/admin/pfc/command/{pfc_id}/{command_id}', 'PFCController@import_data')->name('admin/pfc/command');
 	Route::get('/search','TransactionController@search');
 	Route::get('/export','TransactionController@excel_export');
 
