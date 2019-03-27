@@ -25,7 +25,7 @@
                   <th>Port</th>
                   <th>Created At</th>
                   <th>Updated At</th>
-                  <th>Import Pumps</th>
+                  <th>Import Channels</th>
                   <th>Update Prices</th>
                   <th>Import Prices</th>
                   <th>Edit</th>
@@ -40,28 +40,22 @@
                     <td>{{ $p->port }}</td>
                     <td>{{ $p->created_at->diffForHumans() }}</td>
                     <td>{{ $p->updated_at->diffForHumans() }}</td>
+                    <td>
+                        {!! Form::open(['method' => 'ImportChannel', 'route' => ['admin/pfc/import_data',$p->id, '2']]) !!}
+                            <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-block btn-success">Import Channels</button>
+                        {!! Form::close() !!}
+                    </td>
+                    <td>
+                        {!! Form::open(['method' => 'UpdatePrice', 'route' => ['admin/pfc/import_data',$p->id, '4']]) !!}
+                        <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-block btn-success">Update Prices</button>
+                        {!! Form::close() !!}
+                    </td>
+                    <td>
+                        {!! Form::open(['method' => 'ImportPrice', 'route' => ['admin/pfc/import_data',$p->id, '3']]) !!}
+                        <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-block btn-success">Import Prices</button>
+                        {!! Form::close() !!}
+                    </td>
                     <td><a href="{{ url('admin/pfc/'.$p->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
-                    <td>
-                        {!! Form::open(['method'=>'import_channels', 'action'=>['PFCController@import_data',$p->id]]) !!}
-                        <div class="form-group">
-                            {!! Form::button('Import Channels', ['class'=>'btn btn-block btn-success']); !!}
-                        </div>
-                        {!! Form::close() !!}
-                    </td>
-                    <td>
-                        {!! Form::open(['method'=>'update_prices', 'action'=>['PFCController@import_data',$p->id]]) !!}
-                        <div class="form-group">
-                            {!! Form::button('Update Prices', ['class'=>'btn btn-block btn-success']); !!}
-                        </div>
-                        {!! Form::close() !!}
-                    </td>
-                    <td>
-                        {!! Form::open(['method'=>'import_prices', 'action'=>['PFCController@import_data',$p->id]]) !!}
-                        <div class="form-group">
-                            {!! Form::button('Import Prices', ['class'=>'btn btn-block btn-success']); !!}
-                        </div>
-                        {!! Form::close() !!}
-                    </td>
                     <td>
                       {!! Form::open(['method'=>'DELETE', 'action'=>['PFCController@destroy',$p->id]]) !!}
                         <div class="form-group">

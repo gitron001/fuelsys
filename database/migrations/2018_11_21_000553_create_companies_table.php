@@ -16,7 +16,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('bis_number');
+            $table->integer('bis_number')->index();
             $table->integer('fis_number');
             $table->string('contact_person');
             $table->integer('tax_number');

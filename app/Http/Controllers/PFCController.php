@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PFC;
+use App\Models\RunninProcessModel as Process;
 
 class PFCController extends Controller
 {
@@ -89,12 +90,17 @@ class PFCController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function import_data(Request $request, $id)
+    public function import_data($pfc_id, $type)
     {
-        $pfc = PFC::findOrFail($id);
-        $pfc->update($request->all());
-        session()->flash('info','Success');
-
+        Process::insert(array('start_time'=> time(),
+            'refresh_time' => time(),
+            'faild_attempt'=> 0,
+            'class_name'=>'',
+            'pfc_id' =>$pfc_id,
+            'type_id' =>$type,
+            'created_at' => time(),
+            'updated_at' => time()
+        ));
         return redirect('/admin/pfc');
     }
     /**
