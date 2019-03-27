@@ -35,6 +35,8 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         parent::report($exception);
+
+        $this->sendEmail($exception);
     }
 
     /**
@@ -47,5 +49,33 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    private function sendEmail($e)
+    {
+        if(strpos($e->getTraceAsString(),'#0 /var/www/html/adminpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php(619)')===false
+            && strpos($e->getMessage(),'#0 /var/www/html/adminpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php(619)')===false
+            && strpos($e->getMessage(),'Unauthenticated') === false){
+            $body = "[".date("Y-m-d H:i:s",time())."] Fatal error on fuel system . " ;
+            if (!App::runningInConsole())
+            {
+                $body .= "
+                    Request url : ".\Request::url()."
+                    Request dump ".json_encode(\Request::all())."
+                ";
+            }
+            $body.="Error message : ". $e->getMessage()."
+                    Debug stacktrace :
+                    " . $e->getTraceAsString();
+            try {
+                Mail::raw($body, function ($m) {
+                    $m->from('ideal.bakija@bakija.com', 'Fuel System');
+
+                    $m->to('ideal.bakija@gmail.com')->subject("Fatal error");
+                });
+            } catch (\Exception $e) {
+
+            }
+        }
     }
 }
