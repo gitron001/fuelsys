@@ -49,6 +49,44 @@ class DispanserService extends ServiceProvider
     }
 
     /**
+     * Register services.
+     *
+     * @return void
+     */
+    public static function UpdatefuelPrices($socket, $pfc_id = 1) {
+        //Create socket if it does not exist
+        if($socket === null) {
+            $socket = PFC::create_socket();
+        }
+        $message = "\x1\x4\x1";
+        $the_crc = PFC::crc16($message);
+        $binarydata = pack("c*", 0x01)
+            .pack("c*",0x04)
+            .pack("c*",0x01)
+            .strrev(pack("s",$the_crc))
+            .pack("c*",02);
+        $response = PFC::send_message($socket, $binarydata, $message);
+
+        $length = count($response) - 4;
+        $j = 1;
+
+        for($i = 4; $i <= $length; $i=$i+2){
+            $price = pack('c', $response[$i+1]).pack('c', $response[$i]);
+            $price = unpack('s', $price)[1];
+            if($price == 0 ){  $j++; continue; }
+            $product = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $j)->where('status', 1)->get();
+            $product->price = $price;
+            $product->pfc_id = $pfc_id;
+            $product->pfc_pr_id = $j;
+            $product->updated_at = time();
+            $product->save();
+            $j++;
+        }
+
+        return true;
+    }
+
+    /**
      * Bootstrap services.
      *
      * @return void
@@ -93,6 +131,11 @@ class DispanserService extends ServiceProvider
         $stopCommand = Process::where('type_id', 4)->where('pfc_id', $pfc_id)->count();
         if($stopCommand != 0){
             Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();
+        }
+
+        $stopCommand = Process::where('type_id', 5)->where('pfc_id', $pfc_id)->count();
+        if($stopCommand != 0){
+            Process::where('type_id', 5)->where('pfc_id', $pfc_id)->delete();
         }
 		
 		return true;

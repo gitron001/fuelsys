@@ -42,21 +42,21 @@
                     <td>{{ $p->updated_at->diffForHumans() }}</td>
                     <td><a href="{{ url('admin/pfc/'.$p->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
                     <td>
-                        {!! Form::open(['method'=>'import_channels', 'action'=>['PFCController@import_data',$p->id]]) !!}
+                        {!! Form::open(['method'=>'/admin/pfc/import_prices', 'action'=>['PFCController@import_data',$p->id, '2']]) !!}
                         <div class="form-group">
                             {!! Form::button('Import Channels', ['class'=>'btn btn-block btn-success']); !!}
                         </div>
                         {!! Form::close() !!}
                     </td>
                     <td>
-                        {!! Form::open(['method'=>'update_prices', 'action'=>['PFCController@import_data',$p->id]]) !!}
+                        {!! Form::open(['method'=>'/admin/pfc/import_prices', 'action'=>['PFCController@import_data',$p->id, '3']]) !!}
                         <div class="form-group">
                             {!! Form::button('Update Prices', ['class'=>'btn btn-block btn-success']); !!}
                         </div>
                         {!! Form::close() !!}
                     </td>
                     <td>
-                        {!! Form::open(['method'=>'import_prices', 'action'=>['PFCController@import_data',$p->id]]) !!}
+                        {!! Form::open(['method'=>'/admin/pfc/import_prices', 'action'=>['PFCController@import_data',$p->id, '4']]) !!}
                         <div class="form-group">
                             {!! Form::button('Import Prices', ['class'=>'btn btn-block btn-success']); !!}
                         </div>

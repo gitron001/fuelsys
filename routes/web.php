@@ -24,10 +24,11 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::resource('/admin/users', 'UsersController');
 	Route::resource('/admin/payments', 'PaymentsController');
 	Route::resource('/admin/pfc', 'PFCController');
+
 	Route::resource('/admin/settings', 'SettingsController');
 
 	Route::post('/transaction/excel_export', 'TransactionController@excel_export');
-
+    Route::get('/admin/pfc/import_prices/{$pfc_id}/{$command_id}', 'PFCController');
 	Route::get('/search','TransactionController@search');
 	Route::get('/export','TransactionController@excel_export');
 

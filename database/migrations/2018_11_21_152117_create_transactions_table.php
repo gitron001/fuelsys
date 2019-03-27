@@ -18,7 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->char('status');
             $table->char('locker');
             $table->integer('tr_no');
-            $table->char('receipt_no')->nullable();
+            $table->char('receipt_no')->nullable()->index();
             $table->char('sl_no');
             $table->integer('pfc_id');
             $table->integer('product_id');
@@ -29,7 +29,7 @@ class CreateTransactionsTable extends Migration
             $table->longText('dis_tot');
             $table->longText('pfc_tot');
             $table->char('tr_status')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->integer('user_id')->nullable()->index();
             $table->char('ctype')->nullable();
             $table->char('method')->nullable();
             $table->integer('bill_no')->nullable();
