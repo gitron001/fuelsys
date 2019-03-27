@@ -83,6 +83,21 @@ class PFCController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function import_data(Request $request, $id)
+    {
+        $pfc = PFC::findOrFail($id);
+        $pfc->update($request->all());
+        session()->flash('info','Success');
+
+        return redirect('/admin/pfc');
+    }
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

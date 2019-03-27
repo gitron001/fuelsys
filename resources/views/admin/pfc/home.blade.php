@@ -49,14 +49,14 @@
                         {!! Form::close() !!}
                     </td>
                     <td>
-                        {!! Form::open(['method'=>'update_prices', 'action'=>['PFCController@destroy',$p->id]]) !!}
+                        {!! Form::open(['method'=>'update_prices', 'action'=>['PFCController@import_data',$p->id]]) !!}
                         <div class="form-group">
                             {!! Form::button('Update Prices', ['class'=>'btn btn-block btn-success']); !!}
                         </div>
                         {!! Form::close() !!}
                     </td>
                     <td>
-                        {!! Form::open(['method'=>'import_prices', 'action'=>['PFCController@destroy',$p->id]]) !!}
+                        {!! Form::open(['method'=>'import_prices', 'action'=>['PFCController@import_data',$p->id]]) !!}
                         <div class="form-group">
                             {!! Form::button('Import Prices', ['class'=>'btn btn-block btn-success']); !!}
                         </div>
