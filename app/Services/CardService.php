@@ -213,7 +213,7 @@ class CardService extends ServiceProvider
             ->where('transactions.created_at', '>', $company->last_balance_update)->get();
 
         $limit_left = str_replace('.', '', number_format($company->limits - ($total_transactions[0]->sum+ $company->starting_balance), 2));
-        echo ' limit left '.$limit_left;
+
         if($limit_left < 0){
             self::activate_card($socket, $channel, 1);
             return false;
