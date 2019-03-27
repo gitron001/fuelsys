@@ -180,7 +180,14 @@ class TransactionController extends Controller
 
         $pdf = PDF::loadView('admin.pdfReport',compact('payments'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
-        return $pdf->download($file_name.'.pdf');
+        $myFile = $pdf->download($file_name.'.pdf');
+
+        $response =  array(
+           'name' => $file_name, 
+           'file' => "data:application/pdf;base64,".base64_encode($myFile)
+        );
+
+        return response()->json($response);
     }
 
     public static function generate_data($request){
