@@ -16,8 +16,7 @@ class TransactionService extends ServiceProvider
      *
      * Lock Transaction and call store function if there is one
      */
-    public static function read($socket = null, $pfc_id = 1)
-    {
+    public static function read($socket = null, $pfc_id = 1) {
         if($socket === null) {
             $pfc    = PfcModel::where('id', $pfc_id)->first();
             $socket = PFC::create_socket($pfc);
@@ -63,8 +62,7 @@ class TransactionService extends ServiceProvider
      *
      *
      */
-    public static function read_data($socket, $channel, $pfc_id)
-    {
+    public static function read_data($socket, $channel, $pfc_id) {
         $controller = Config::get('app.controller_id');
         $controller_id =  PFC::conver_to_bin($controller);
         $channel_id =  PFC::conver_to_bin($channel);
@@ -84,7 +82,7 @@ class TransactionService extends ServiceProvider
 
         $response = PFC::send_message($socket, $binarydata);
 
-        $transaction_id  =  Transaction::insertTransactionData($response);
+        $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id);
 
         //Clear status transaction
         $status = 2;
@@ -110,8 +108,7 @@ class TransactionService extends ServiceProvider
          * Status 5 - suspend fueling
          * Status 6 - resume fueling
      **/
-    public static function transaction_status($channel, $status,  $socket)
-    {
+    public static function transaction_status($channel, $status,  $socket) {
         $controller = Config::get('app.controller_id');
         $pos_id =  PFC::conver_to_bin($controller);
         $bin_channel = PFC::conver_to_bin($channel);

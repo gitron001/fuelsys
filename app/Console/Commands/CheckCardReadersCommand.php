@@ -53,7 +53,7 @@ class CheckCardReadersCommand extends Command
             echo $c_discount->product_details->price;
         }
         dd();*/
-		$pfc_id = $this->argument('pfc_id');
+		$pfc_id = (int) $this->argument('pfc_id');
 		
         $check_cron = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->latest()->first();
         $now = time();
@@ -61,18 +61,14 @@ class CheckCardReadersCommand extends Command
             dd('running');
         }
         
-        $pfc    = PfcModel::where('id', $pfc_id)->first();
-
+        $pfc    = PfcModel::find($pfc_id);
+	
         try {
             $socket = PFC::create_socket($pfc);
         } catch (Exception $e) {
                 dd( "Couldn't connect to socket " . $e -> getMessage() . "\n");
         }
 
-        $loadPrice = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->count();
-        if($loadPrice != 0){
-            Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();
-        }
         Process::insert(array('start_time'=> time(),
                                 'refresh_time' => time(),
                                 'faild_attempt'=> 0,

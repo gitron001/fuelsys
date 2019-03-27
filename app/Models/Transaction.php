@@ -49,7 +49,7 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\PFC');
     }
 
-    public static function insertTransactionData($data){
+    public static function insertTransactionData($response, $pfc_id){
 
         $transaction = new Transaction();
 
