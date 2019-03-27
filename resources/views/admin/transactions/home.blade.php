@@ -11,6 +11,7 @@
       <div class="box-header">
           <div class="col-md-2">
              <button type="button" class="btn btn-success" id="export">Export Excel</button>
+             <a class="btn btn-primary" href="{{ URL('/pdf')}}" role="button">PDF</a>
           </div>
           <div class="col-md-10">
             <form class="form-inline">
