@@ -10,9 +10,9 @@ Route::view('transactions-info','admin.transactions.transactions-info',[
 
 //Change language
 Route::get('locale/{locale}',function($locale){
-		Session::put('locale',$locale);
-		return redirect()->back();
-	});
+	Session::put('locale',$locale);
+	return redirect()->back();
+});
 
 Route::group(['middleware' => 'authenticated'], function () {
 
@@ -33,7 +33,11 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/search','TransactionController@search');
 	Route::get('/export','TransactionController@excel_export');
 
+	Route::get('/pdf','TransactionController@exportPDF');
 });
+
+
+
 
 
 

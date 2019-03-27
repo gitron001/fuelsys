@@ -14,6 +14,7 @@ use App\Services\TransactionService;
 use Excel;
 use DB;
 use DateTime;
+use PDF;
 
 class TransactionController extends Controller
 {
@@ -173,7 +174,7 @@ class TransactionController extends Controller
         }
 
         $payments = $payments->get();
-        
+        $exportedPDF = $this->exportPDF($payments);
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
            
@@ -217,8 +218,6 @@ class TransactionController extends Controller
 
             });
 
-                
-
         });
 
         $myFile = $myFile->string('xlsx'); 
@@ -227,7 +226,13 @@ class TransactionController extends Controller
            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
         );
 
-        return response()->json($response);        
+        return response()->json($response);       
+    }
+
+   public function exportPDF($payments){
+        $pdf = PDF::loadView('admin.pdfReport',compact('payments'));
+        $file_name  = 'Transaction - '.date('Y-m-d', time());
+        return $pdf->download($file_name.'.pdf');
     }
 
     public function search(Request $request) {
@@ -291,4 +296,4 @@ class TransactionController extends Controller
 
         echo json_encode($data);
     }
-}
+} 
