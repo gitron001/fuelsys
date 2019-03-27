@@ -142,7 +142,8 @@ class TransactionController extends Controller
         if ($request->input('company')) {
             $transactions->where('company_id','=',$company);
         }
-
+        $transactions->where('created_at', '>=', $request->input('fromDate'));
+        $transactions->where('created_at', '<=', $request->input('toDate'));
         /*if ($request->input('users')) {
             $transactions->where('user_id','=',$user);
         }
