@@ -174,7 +174,7 @@ class TransactionController extends Controller
         }
 
         $payments = $payments->get();
-        $this->exportPDF($payments);
+        $exportedPDF = $this->exportPDF($payments);
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
            
@@ -229,8 +229,7 @@ class TransactionController extends Controller
         return response()->json($response);       
     }
 
-   public function exportPDF($payments = ''){
-        return dd($payments);exit();
+   public function exportPDF($payments){
         $pdf = PDF::loadView('admin.pdfReport',compact('payments'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->download($file_name.'.pdf');
