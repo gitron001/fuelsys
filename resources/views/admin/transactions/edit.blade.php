@@ -70,8 +70,8 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('rfid_id', 'RFID'); !!}
-			{!! Form::number('rfid_id',null,['class'=>'form-control']); !!} 
+			{!! Form::label('user_id', 'RFID'); !!}
+			{!! Form::number('user_id',null,['class'=>'form-control']); !!} 
 		</div>
 
 		<div class="form-group">

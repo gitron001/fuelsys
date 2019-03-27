@@ -8,10 +8,12 @@ use App\Models\Users;
 use App\Models\PFC;
 use App\Models\Dispaneser;
 use App\Models\Company;
+use App\Models\Payments;
 use App\Models\Products;
 use App\Services\TransactionService;
 use Excel;
 use DB;
+use DateTime;
 
 class TransactionController extends Controller
 {
@@ -129,42 +131,82 @@ class TransactionController extends Controller
         $user       = $request->input('user');
         $company    = $request->input('company');
 
-        $query = new Transaction();
 
-        if ($request->input('fromDate')) {
-            $query = $query->whereBetween('created_at',[$from_date, $to_date]);
-        }
-
-        if ($request->input('user')) {
-            $getRfid    = Users::where('id',$user)->get();
-
-            foreach ($getRfid as $rfid) {
-                $getID[] =  $rfid->id;
-            }
-
-            $query = $query->whereIn('rfid_id',$getID);
-        }
+        $transactions = DB::table("transactions")
+                    ->select("transactions.product_id",DB::RAW(" 'transaction' as type"),
+                        DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
+                      ,"transactions.money"
+                      ,"users.name as username","transactions.created_at")
+                    ->join('users', 'transactions.user_id', '=', 'users.id');
 
         if ($request->input('company')) {
-            $getRfid    = Users::where('company_id',$company)->get();
-
-            foreach ($getRfid as $rfid) {
-                $getID[] =  $rfid->id;
-            }
-
-            $query = $query->whereIn('rfid_id',$getID);
+            $transactions->where('company_id','=',$company);
         }
 
-        $transaction = $query->get();
+        /*if ($request->input('users')) {
+            $transactions->where('user_id','=',$user);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $transactions->whereBetween('created_at',[$from_date, $to_date]);
+        }*/
+
+        $payments = DB::table("payments")
+                    ->select("payments.user_id",DB::RAW(" 'payment' as type")
+                      ,"payments.amount","payments.date",
+                      DB::RAW(" 0 as money")
+                      ,"users.name as username","payments.created_at")
+                    ->leftJoin('users', 'payments.user_id', '=', 'users.id')
+                    ->union($transactions)
+                    ->orderBy('created_at')
+                    ->get();
+
+        //dd($payments);exit();
+
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
            
-        $myFile = Excel::create($file_name, function($excel) use( $transaction ) 
+        $myFile = Excel::create($file_name, function($excel) use( $payments ) 
         {
-            $excel->sheet('Transaction', function($sheet) use( $transaction ) 
+            $excel->sheet('Transaction', function($sheet) use( $payments ) 
             {
-                $sheet->fromArray(  $transaction  );
+                $sheet->appendRow(array(
+                    'DATA',
+                    'LLOJI',
+                    'PERSONI',
+                    'MBUSHJA',
+                    'PAGESA',
+                    'MBETJA',
+                ));
+
+                $total = 0;
+                $totalToPay = 0;
+                $totalAmount = 0;
+                $totalPayed = 0;
+                foreach ($payments as $row)
+                {
+                    if($row->money == 0){
+                        $fueling = 0;
+                        $payment = $row->amount;
+                    }else{
+                        $fueling = $row->money;
+                        $payment = 0;                  
+                    }
+                    $total = $total + $fueling - $payment;
+                    
+                    $sheet->appendRow(array(
+                        (!empty($row->date)) ? date('m/d/Y h:i:sa',$row->date) : date('m/d/Y h:i:sa',$row->created_at),
+                        $row->type,
+                        $row->username,
+                        $fueling,
+                        $payment,
+                        $total,
+                    ));
+                }
+
             });
+
+                
 
         });
 
@@ -196,7 +238,7 @@ class TransactionController extends Controller
                 $getID[] =  $rfid->id;
             }
 
-            $query = $query->whereIn('rfid_id',$getID);
+            $query = $query->whereIn('user_id',$getID);
         }
 
         if ($request->input('company')) {
@@ -206,7 +248,7 @@ class TransactionController extends Controller
                 $getID[] =  $rfid->id;
             }
 
-            $query = $query->whereIn('rfid_id',$getID);
+            $query = $query->whereIn('user_id',$getID);
         }
 
         $data = $query->get();
@@ -217,9 +259,9 @@ class TransactionController extends Controller
             foreach ($data as $row) {
                 $output .= '
                 <tr>
-                    <td>'.$row->rfid->user->name.'</td>
-                    <td>'.$row->rfid->rfid_name.'</td>
-                    <td>'.$row->product->name.'</td>
+                    <td>'.($row->users ? $row->users->name : '').'</td>
+                    <td>'.($row->users->company ? $row->users->company->name : '').'</td>
+                    <td>'.($row->product ? $row->product->name : '').'</td>
                     <td>'.$row->price.'</td>
                     <td>'.$row->lit.'</td>
                     <td>'.$row->money.'</td>
