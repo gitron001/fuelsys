@@ -10,8 +10,8 @@
     <div class="box">
       <div class="box-header">
           <div class="col-md-2">
-             <button type="button" class="btn btn-success" id="export">Export Excel</button>
-             <a class="btn btn-primary" href="{{ URL('/pdf')}}" role="button">PDF</a>
+             <button type="button" class="btn btn-success" id="exportEXCEL">Export Excel</button>
+             <button type="button" class="btn btn-primary" id="exportPDF">PDF</button>
           </div>
           <div class="col-md-10">
             <form class="form-inline">
@@ -131,7 +131,7 @@
   });
 
   $(document).ready(function(){
-    $('#export').click(function(){
+    $('#exportEXCEL').click(function(){
       var fromDate = $("#from_date").val();
       var toDate = $("#to_date").val();
       var user = $("#user").val();
@@ -150,6 +150,31 @@
           a.click();
           a.remove();
           }
+      });
+
+    });
+  });
+
+  $(document).ready(function(){
+    $('#exportPDF').click(function(){
+      var fromDate = $("#from_date").val();
+      var toDate = $("#to_date").val();
+      var user = $("#user").val();
+      var company = $("#company").val();
+
+      $.ajax({
+        type: "GET",
+        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
+        url: "{{ URL('/pdf')}}",
+        dataType: "JSON",
+        success: function(response, textStatus, request){
+          var a = document.createElement("a");
+          a.href = response.file; 
+          a.download = response.name;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }
       });
 
     });
