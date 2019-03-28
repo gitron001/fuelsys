@@ -1415,3 +1415,8237 @@ Attempting to connect to '192.168.1.197' on port '40097'...
       /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
 
   Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+
+  Please use the argument -v to see more details.
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Trying to get property 'ip' of non-object
+
+  at /var/www/app/Services/PFCServices.php:17
+    13|      *
+    14|      * @return void
+    15|      */
+    16|     public static function create_socket($pfc = false) {
+  > 17|     	$address = $pfc->ip;
+    18| 		$port = $pfc->port;
+    19| 
+    20| 		/* Create a TCP/IP socket. */
+    21| 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Trying to get property 'ip' of non-object", "/var/www/app/Services/PFCServices.php", [])
+      /var/www/app/Services/PFCServices.php:17
+
+  2   App\Services\PFCServices::create_socket()
+      /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
+
+  Please use the argument -v to see more details.
