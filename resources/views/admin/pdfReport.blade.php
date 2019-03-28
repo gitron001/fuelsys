@@ -41,20 +41,20 @@
 	<tr>
 	    <td valign="top"><img src="{{ public_path().'/images/nesim-bakija.png' }}" alt="" width="150"/></td>
 	    <td align="right">
-	        <h3>NESIM BAKIJA SH.P.K</h3>
 	        <pre>
-			    Rruga Skënderbeu
+	        	Raporti mbi kompaninë
 			    Gjakovë, Kosovë
-			    044 - 457 - 961
+			    {{ date('m/d/Y h:i:s a', strtotime('+1 hour')) }}
 			</pre>
 	    </td>
 	</tr>
 	<tr>
 	    <td valign="top">
+	    	<h3>NESIM BAKIJA SH.P.K</h3>
 	    	<p style="line-height:1.5">
-	            <span>Raporti mbi kompaninë</span><br/>
+	            <span>Rruga Skënderbeu </span><br/>
 	            <span>Gjakovë, Kosovë</span><br/>
-	            <span>{{ date('m/d/Y h:i:s a', strtotime('+1 hour')) }}</span>
+	            <span> 044 - 457 - 961</span>
 	        </p>
 	    </td>
 	</tr>

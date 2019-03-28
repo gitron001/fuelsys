@@ -241,6 +241,7 @@ class TransactionController extends Controller
 
         return $payments;
     }
+
     public function search(Request $request) {
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
