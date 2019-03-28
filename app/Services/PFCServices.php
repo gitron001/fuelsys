@@ -100,9 +100,8 @@ class PFCServices extends ServiceProvider
             $validation = self::validate_message($response);
             if (!$validation) {
                 if(count($response) == 0){
-                    socket_close($socket);
+                    return false;
                     usleep(150000);
-                    $socket = PFC::create_socket();
                 }
                 echo 'Invalid Transactions<bd>';
                 sleep(1);

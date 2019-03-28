@@ -67,7 +67,9 @@ class CardService extends ServiceProvider
             . pack("c*", 02);
 
         $response = PFC::send_message($socket, $binarydata, $message);
-
+			
+		if(!$response){ return false; } 
+		
         $cardNumber = pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]).pack('c', $response[5]);
         $cardNumber = unpack('i', $cardNumber)[1];
 
