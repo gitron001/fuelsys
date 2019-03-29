@@ -163,7 +163,7 @@
 
 	<!-- *** NEW LIMITS *** -->
 
-	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="limits">
+	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="addlimits">
 		@if(count($rfid_limits) == 0)
 			{!! Form::label('limits', 'New Limits:'); !!}
 		@endif
@@ -255,7 +255,7 @@
 
         //Append another div if button(limits) + is clicked
         $(document).on('click','#addBranch',function(){
-            $("#limits").append('<div class="row" id="branches"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_limit[]" type="number" required></div></div><br>');
+            $("#addlimits").append('<div class="row" id="branches"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_limit[]" type="number" required></div></div><br>');
         });
 
         $(document).on('click','#deleteDiscount',function(){
