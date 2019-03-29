@@ -17,6 +17,10 @@ class Users extends Model
         'plates',
         'vehicle',
         'password',
+        'starting_balance',
+        'limits',
+        'limit_left',
+        'type',
         'created_at',
         'updated_at', 
     ];

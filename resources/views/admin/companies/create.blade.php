@@ -95,13 +95,13 @@
 		{!! $errors->first('status','<span class="help-block">:message</span>') !!}
 	</div>
 
-	<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}">
+	<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
 		{!! Form::label('starting_balance', 'Starting Balance:'); !!}
 		{!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
 		{!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
 	</div>
 
-	<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}">
+	<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
 		{!! Form::label('limits', 'Limit:'); !!}
 		{!! Form::number('limits',null,['class'=>'form-control']); !!}
 		{!! $errors->first('limits','<span class="help-block">:message</span>') !!}
@@ -123,7 +123,7 @@
 		</div>
 	</div>
 
-	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="limits">
+	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="addlimits">
 		{!! Form::label('limits', 'Limits:'); !!}
 
 		<div class="row">
@@ -160,15 +160,17 @@
 
 	<script>
 
-		// Check if company is selected and show discount fields
+		// Check has_limit field
         $(document).on('click','#showHide',function(){
             var e = document.getElementById("showHide");
             var value = e.options[e.selectedIndex].value;
 
-            if(value == 0){
-
+            if(value == 1){
+            	$("#starting_balance").show();
+                $("#has_limits").show();
             }else {
-
+            	$("#starting_balance").hide();
+                $("#has_limits").hide();
             }
         });
 
@@ -179,7 +181,7 @@
 
         //Append another div if button(limits) + is clicked
         $(document).on('click','#addBranch',function(){
-            $("#limits").append('<div class="row" id="branches"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" step="any" placeholder="0.01" name="limit[]" type="number"></div></div>');
+            $("#addlimits").append('<div class="row" id="branches"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" step="any" placeholder="0.01" name="limit[]" type="number"></div></div>');
         });
 
         $(document).on('click','#removeProduct',function(){

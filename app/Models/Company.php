@@ -25,6 +25,10 @@ class Company extends Model
         'type',
         'status',
         'limits',
+        'limit_left',
+        'has_limit',
+        'has_receipt',
+        'has_receipt_nr',
     ];
 
     public function getDateFormat(){

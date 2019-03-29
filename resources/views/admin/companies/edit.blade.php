@@ -85,18 +85,19 @@
 
     <div class="form-group">
         {!! Form::label('has_limit', 'Has Limit'); !!}
-        {!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+        {!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
     </div>
 
-    <div class="form-group">
+    <div class="form-group" id="has_limits">
         {!! Form::label('limits', 'Limits'); !!}
-        {!! Form::text('limits',null,['class'=>'form-control']); !!}
+        {!! Form::text('limits',null,['class'=>'form-control','id'=>'has_limits']); !!}
     </div>
 
-    <div class="form-group">
+    <div class="form-group" id="starting_balance">
         {!! Form::label('starting_balance', 'Starting Balance'); !!}
-        {!! Form::text('starting_balance',null,['class'=>'form-control']); !!}
+        {!! Form::text('starting_balance',null,['class'=>'form-control','id'=>'starting_balance']); !!}
     </div>
+    
 
     <!-- *** DISCOUNT *** -->
 
@@ -224,6 +225,33 @@
 @section('js')
 
     <script>
+        
+        $(document).ready(function() {
+            var e = document.getElementById("showHideLimits");
+            var value = e.options[e.selectedIndex].value;
+
+            if(value == 1){
+                $("#starting_balance").show();
+                $("#has_limits").show();
+            }else {
+                $("#starting_balance").hide();
+                $("#has_limits").hide();
+            }
+        });
+
+        // Check has_limit field
+        $(document).on('click','#showHideLimits',function(){
+            var e = document.getElementById("showHideLimits");
+            var value = e.options[e.selectedIndex].value;
+
+            if(value == 1){
+                $("#starting_balance").show();
+                $("#has_limits").show();
+            }else {
+                $("#starting_balance").hide();
+                $("#has_limits").hide();
+            }
+        });
 
         //Append another div if button(discounts) + is clicked
         $(document).on('click','#addProduct',function(){
