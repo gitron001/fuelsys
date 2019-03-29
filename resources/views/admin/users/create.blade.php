@@ -37,23 +37,29 @@
 
     <div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
         {!! Form::label('type', 'Type:'); !!}
-        {!! Form::select('type',['' => 'Select', 1 => 'Staff',2=> 'Company',3=> 'Administrator'],null,['class'=>'form-control', 'id' => 'showHide']); !!}
+        {!! Form::select('type',['' => 'Select', 1 => 'Staff',2=> 'Company',3=> 'Administrator',4=>'Client'],null,['class'=>'form-control', 'id' => 'showHide']); !!}
         {!! $errors->first('type','<span class="help-block">:message</span>') !!}
+    </div>
+
+    <div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company" style="display: none">
+        {!! Form::label('company_id', 'Company:'); !!}
+        {!! Form::select('company_id',['Choose Company'] + $companies,null,['class'=>'form-control']); !!}
+        {!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
     </div>
 
     <div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
         {!! Form::label('has_limit', 'Has Limit:'); !!}
-        {!! Form::select('has_limit',[1=>'Yes',0=>'No'],null,['class'=>'form-control']); !!}
+        {!! Form::select('has_limit',[0=>'No',1=>'Yes',],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
         {!! $errors->first('status','<span class="help-block">:message</span>') !!}
     </div>
 
-    <div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}">
+    <div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
         {!! Form::label('limits', 'Limit:'); !!}
         {!! Form::number('limits',null,['class'=>'form-control']); !!}
         {!! $errors->first('limits','<span class="help-block">:message</span>') !!}
     </div>
 
-    <div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}">
+    <div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
         {!! Form::label('starting_balance', 'Starting Balance:'); !!}
         {!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
         {!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
@@ -91,12 +97,6 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company" style="display: none">
-        {!! Form::label('company_id', 'Company:'); !!}
-        {!! Form::select('company_id',['Choose Company'] + $companies,null,['class'=>'form-control']); !!}
-        {!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
     </div>
 
     <div class="form-group {{ $errors->has('one_time_limit') ? 'has-error' :'' }}" id="one_time_limit" style="display: none">
@@ -137,6 +137,20 @@
 @section('js')
 
     <script>
+
+        // Check has_limit field
+        $(document).on('click','#showHideLimits',function(){
+            var e = document.getElementById("showHideLimits");
+            var value = e.options[e.selectedIndex].value;
+
+            if(value == 1){
+                $("#starting_balance").show();
+                $("#has_limits").show();
+            }else {
+                $("#starting_balance").hide();
+                $("#has_limits").hide();
+            }
+        });
 
         // Check if company is selected and show discount fields
         $(document).on('click','#showHide',function(){

@@ -146,7 +146,9 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+        
         $company = Company::findOrFail($id);
+
         if($company->has_limit == 1){
             $limit_left = $request->input('limits') - $request->input('starting_balance');
             $request->merge(['limit_left' => $limit_left]);

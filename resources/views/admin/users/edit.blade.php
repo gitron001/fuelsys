@@ -35,8 +35,24 @@
 			<option value="1" @if ($user->type == 1) {{ 'selected' }} @endif>Staff</option>
 			<option value="2" @if ($user->type == 2) {{ 'selected' }} @endif>Company</option>
 			<option value="3" @if ($user->type == 3) {{ 'selected' }} @endif>Admin</option>
+			<option value="4" @if ($user->type == 4) {{ 'selected' }} @endif>Client</option>
 		</select>
 	</div>
+
+	<div class="form-group">
+        {!! Form::label('has_limit', 'Has Limit'); !!}
+        {!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
+    </div>
+
+    <div class="form-group" id="has_limits">
+        {!! Form::label('limits', 'Limits'); !!}
+        {!! Form::text('limits',null,['class'=>'form-control']); !!}
+    </div>
+
+    <div class="form-group" id="starting_balance">
+        {!! Form::label('starting_balance', 'Starting Balance'); !!}
+        {!! Form::text('starting_balance',null,['class'=>'form-control','id'=>'starting_balance']); !!}
+    </div>
 
 	<div class="form-group" id="company" @if ($user->type != 2) echo style="display: none" @endif>
 		{!! Form::label('company_id', 'Company'); !!}
@@ -170,7 +186,7 @@
 	<!-- *** END NEW LIMITS *** -->
 
 	<div class="form-group">
-		{!! Form::submit('Update RFID', ['class'=>'btn btn-block btn-primary']); !!}
+		{!! Form::submit('Update User', ['class'=>'btn btn-block btn-primary']); !!}
 	</div>
 
 	{!! Form::close() !!}
@@ -186,6 +202,33 @@
 @section('js')
 
 	<script>
+
+		$(document).ready(function() {
+            var e = document.getElementById("showHideLimits");
+            var value = e.options[e.selectedIndex].value;
+
+            if(value == 1){
+                $("#starting_balance").show();
+                $("#has_limits").show();
+            }else {
+                $("#starting_balance").hide();
+                $("#has_limits").hide();
+            }
+        });
+
+        // Check has_limit field
+        $(document).on('click','#showHideLimits',function(){
+            var e = document.getElementById("showHideLimits");
+            var value = e.options[e.selectedIndex].value;
+
+            if(value == 1){
+                $("#starting_balance").show();
+                $("#has_limits").show();
+            }else {
+                $("#starting_balance").hide();
+                $("#has_limits").hide();
+            }
+        });
 
         // Check if company is selected and show discount fields
         $(document).on('click','#showHide',function(){

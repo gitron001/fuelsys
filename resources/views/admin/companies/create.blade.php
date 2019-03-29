@@ -95,13 +95,13 @@
 		{!! $errors->first('status','<span class="help-block">:message</span>') !!}
 	</div>
 
-	<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}">
+	<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
 		{!! Form::label('starting_balance', 'Starting Balance:'); !!}
 		{!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
 		{!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
 	</div>
 
-	<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}">
+	<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
 		{!! Form::label('limits', 'Limit:'); !!}
 		{!! Form::number('limits',null,['class'=>'form-control']); !!}
 		{!! $errors->first('limits','<span class="help-block">:message</span>') !!}
@@ -160,15 +160,17 @@
 
 	<script>
 
-		// Check if company is selected and show discount fields
+		// Check has_limit field
         $(document).on('click','#showHide',function(){
             var e = document.getElementById("showHide");
             var value = e.options[e.selectedIndex].value;
 
-            if(value == 0){
-
+            if(value == 1){
+            	$("#starting_balance").show();
+                $("#has_limits").show();
             }else {
-
+            	$("#starting_balance").hide();
+                $("#has_limits").hide();
             }
         });
 
