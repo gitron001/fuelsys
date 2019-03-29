@@ -29,6 +29,8 @@ class DispanserService extends ServiceProvider
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
 
+		if(!$response){ return false; } 
+		
         $length = count($response) - 4;
         $j = 1;
         Products::where('pfc_id',$pfc_id)->deleted();
@@ -67,6 +69,8 @@ class DispanserService extends ServiceProvider
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
 
+		if(!$response){ return false; } 
+		
         $length = count($response) - 4;
         $j = 1;
 
@@ -100,6 +104,8 @@ class DispanserService extends ServiceProvider
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
+
+		if(!$response){ return false; } 
 
         $length = count($response) - 3;
         Dispaneser::where('pfc_id',$pfc_id)->deleted();

@@ -36,7 +36,9 @@ class TransactionService extends ServiceProvider
 
         $response = PFC::send_message($socket, $binarydata);
         //print_r($response);
-
+		
+		if(!$response){ return false; } 
+		
         $total_msg_legth = count($response);
         for($i = 4; $i <= $total_msg_legth; $i+= 4) {
             if ($response[$i] == 1) {
@@ -81,6 +83,8 @@ class TransactionService extends ServiceProvider
          .pack("c*",02);
 
         $response = PFC::send_message($socket, $binarydata);
+
+		if(!$response){ return false; } 
 
         $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id);
 
@@ -129,6 +133,7 @@ class TransactionService extends ServiceProvider
             .pack("c*", 02);
 
         $response = PFC::send_message($socket, $binarydata);
+		
         return true;
     }
 }
