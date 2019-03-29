@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Company as Company;
+use App\Models\Company as Company;
+use App\Models\Users as Users;
 
 class Transaction extends Model
 {
@@ -97,6 +100,15 @@ class Transaction extends Model
         $rfid = unpack('i', $rfid)[1];
 
         $user = Users::where("rfid", $rfid)->where('status', 1)->first();
+
+        if(!is_null($user->company->id) && $user->company->has_limit == 1){
+            $company = Company::find( $id );
+            $company->limit_left -= $transaction->money;
+            $company->save();
+        }elseif($user->has_limit == 1){
+            $user->limit_left -= $transaction->money;
+            $user->save();
+        }
         //Query the rfid ID from the RFID table
         $transaction->user_id = $user->id;
 
