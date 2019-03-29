@@ -1,6 +1,9 @@
 @extends('adminlte::page')
 
 @section('content')
+
+	@include('includes/alert_info')
+
 	<h1>Create new payment</h1>
 	
 		{!! Form::open(['method'=>'POST', 'action'=>['PaymentsController@store']]) !!}
@@ -15,6 +18,11 @@
 			{!! Form::label('amount', 'Amount:'); !!}
 			{!! Form::number('amount',null,['class'=>'form-control','step'=>'any']); !!} 
 			{!! $errors->first('amount','<span class="help-block">:message</span>') !!}
+		</div>
+
+		<div class="form-group {{ $errors->has('select') ? 'has-error' :'' }}">
+			<label class="checkbox-inline"><input type="checkbox" name="user" id="user">User</label>
+			<label class="checkbox-inline"><input type="checkbox" name="company" id="company">Company</label>
 		</div>
 
 		<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
@@ -46,9 +54,17 @@
 @section('js')
 
 <script>
-  $(function() {
-    $(".datepicker" ).datepicker();
-  });
+	$(function() {
+		$(".datepicker" ).datepicker();
+	});
+
+	$(document).ready(function() {
+    	$('input[type=checkbox]').on('change', function() {
+		    if($(this).is(':checked'))
+		        console.log($(this).val());
+		});
+	});
+
 </script>
 
 @endsection
