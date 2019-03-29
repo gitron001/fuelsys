@@ -102,10 +102,10 @@ class Transaction extends Model
 
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
             $company = Company::find( $user->company->id );
-            $company->limit_left -= number_format(($money/100),2);
+            $company->limit_left -= $transaction->money;
             $company->save();
         }elseif($user->has_limit == 1){
-            $user->limit_left -= number_format(($money/100),2);
+            $user->limit_left -= $transaction->money;
             $user->save();
         }
         //Query the rfid ID from the RFID table
