@@ -71,12 +71,6 @@
 		{!! $errors->first('country','<span class="help-block">:message</span>') !!}
 	</div>
 
-	<div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
-		{!! Form::label('type', 'Type:'); !!}
-		{!! Form::text('type',null,['class'=>'form-control']); !!}
-		{!! $errors->first('type','<span class="help-block">:message</span>') !!}
-	</div>
-
 	<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
 		{!! Form::label('status', 'Status:'); !!}
 		{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
@@ -97,7 +91,7 @@
 
 	<div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
 		{!! Form::label('has_limit', 'Has Limit:'); !!}
-		{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+		{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id' => 'showHide']); !!}
 		{!! $errors->first('status','<span class="help-block">:message</span>') !!}
 	</div>
 
@@ -165,6 +159,18 @@
 @section('js')
 
 	<script>
+
+		// Check if company is selected and show discount fields
+        $(document).on('click','#showHide',function(){
+            var e = document.getElementById("showHide");
+            var value = e.options[e.selectedIndex].value;
+
+            if(value == 0){
+
+            }else {
+
+            }
+        });
 
         //Append another div if button(discounts) + is clicked
         $(document).on('click','#addProduct',function(){
