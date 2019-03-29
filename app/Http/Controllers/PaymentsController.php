@@ -52,8 +52,20 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        $payments = new Payments();
+        $payments   = new Payments();
+        $user       = $request->input('user_id');
+        $company    = $request->input('company_id');
 
+        if($user){
+            $user = Users::find( $user );
+            $user->limit_left += $request->input('amount');
+            $user->save();
+        }elseif($company){
+            $company = Company::find( $company );
+            $company->limit_left += $request->input('amount');
+            $company->save();
+        }
+        
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
         $payments->user_id      = $request->input('user_id');

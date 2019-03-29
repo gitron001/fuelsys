@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Company as Company;
-use App\Models\Company as Company;
 use App\Models\Users as Users;
 
 class Transaction extends Model

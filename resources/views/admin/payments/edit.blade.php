@@ -14,12 +14,12 @@
 			{!! Form::number('amount',null,['class'=>'form-control','step'=>'any']); !!} 
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" @if ($payment->user_id == 0) echo style="display: none" @endif>
 			{!! Form::label('user_id', 'User'); !!}
 			{!! Form::select('user_id',['Select a User'] + $users,null,['class'=>'form-control']); !!} 
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" @if ($payment->company_id == 0) echo style="display: none" @endif>
 			{!! Form::label('company_id', 'Company'); !!}
 			{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!} 
 		</div>
