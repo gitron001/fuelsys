@@ -15,7 +15,6 @@ class Company extends Model
         'tax_number',
         'res_number',
         'starting_balance',
-        'last_balance_update',
         'tel_number',
         'contact_person',
         'email',
@@ -25,6 +24,7 @@ class Company extends Model
         'type',
         'status',
         'limits',
+        'limit_left',
     ];
 
     public function getDateFormat(){

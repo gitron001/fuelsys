@@ -41,6 +41,24 @@
 			{!! $errors->first('type','<span class="help-block">:message</span>') !!}
 		</div>
 
+		<div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
+			{!! Form::label('has_limit', 'Has Limit:'); !!}
+			{!! Form::select('has_limit',[1=>'Yes',0=>'No'],null,['class'=>'form-control']); !!}
+			{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+		</div>
+
+		<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}">
+			{!! Form::label('limits', 'Limit:'); !!}
+			{!! Form::number('limits',null,['class'=>'form-control']); !!}
+			{!! $errors->first('limits','<span class="help-block">:message</span>') !!}
+		</div>
+
+		<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}">
+			{!! Form::label('starting_balance', 'Starting Balance:'); !!}
+			{!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
+			{!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
+		</div>
+
 		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
 		{!! Form::label('discounts', 'Discounts:'); !!}
 
