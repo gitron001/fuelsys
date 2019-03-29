@@ -16,7 +16,7 @@ class PFCServices extends ServiceProvider
     public static function create_socket($pfc = false) {
     	$address = $pfc->ip;
 		$port = $pfc->port;
-
+        ini_set( 'default_socket_timeout', 99999999);
 		/* Create a TCP/IP socket. */
 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 		if ($socket === false) {
