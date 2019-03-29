@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Company;
 use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
 use Config;
@@ -83,12 +84,27 @@ class CardService extends ServiceProvider
 
         if($user->status != 1 ){ return false; }
         if($user->company->status != 1 ){ return false; }
-
+        $limit = false;
         //Call Function to check limit
+        $limit = false;
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
-           $limit =  self::checkCompLimit($socket, $channel, $user->company);
-           if(!$limit){ return false; }
+           $limit = true;
+           $company = Company::where('id', $user->company->id)->first();
+           $limit_left = $company->limit_left;
+        }elseif($user->has_limit == 1){
+            $limit = true;
+            $company = Company::where('id', $user->company->id)->first();
+            $limit_left = $company->limit_left;
         }
+
+        if($limit){
+            if($limit_left < 0){
+                self::activate_card($socket, $channel, 1);
+            }else{
+                self::setPrepay($socket, $channel, $limit_left);
+            }
+        }
+		
         //print_r($cardNumber);
         if(count($user->discounts) == 0){
             self::activate_card($socket, $channel);
@@ -210,14 +226,6 @@ class CardService extends ServiceProvider
     }
 
     public static function checkCompLimit($socket, $channel, $company){
-        $total_transactions = Transaction::select(DB::raw('sum(price * lit) as sum'))
-            ->join('users' ,'users.id', '=', 'transactions.user_id')
-            ->where('users.company_id', $company->id)
-
-            ->where('transactions.created_at', '>', $company->last_balance_update)->get();
-
-        $limit_left = str_replace('.', '', number_format($company->limits - ($total_transactions[0]->sum+ $company->starting_balance), 2));
-
         if($limit_left < 0){
             self::activate_card($socket, $channel, 1);
             return false;
