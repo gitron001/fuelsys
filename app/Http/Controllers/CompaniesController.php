@@ -69,7 +69,6 @@ class CompaniesController extends Controller
             'contact_person'    => $request->input('contact_person'),
             'city'              => $request->input('city'),
             'country'           => $request->input('country'),
-            'type'              => $request->input('type'),
             'status'            => $request->input('status'),
             'limits'            => $request->input('limits'),
             'has_receipt'       => $request->input('has_receipt'),

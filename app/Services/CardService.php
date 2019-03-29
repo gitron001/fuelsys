@@ -101,7 +101,8 @@ class CardService extends ServiceProvider
             if($limit_left < 0){
                 self::activate_card($socket, $channel, 1);
             }else{
-                self::setPrepay($socket, $channel, $limit_left);
+                self::setPrepay($socket, $channel, $limit_left*100);
+				echo 'limit left'.$limit_left;
             }
         }
 		

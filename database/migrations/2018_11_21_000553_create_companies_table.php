@@ -26,7 +26,6 @@ class CreateCompaniesTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('country');
-            $table->tinyInteger('type');
             $table->integer('status');
             $table->double('starting_balance')->default(0);
             $table->double('limits');
