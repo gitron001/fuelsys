@@ -30,6 +30,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('status');
             $table->double('starting_balance')->default(0);
             $table->double('limits');
+            $table->double('limit_left');
             $table->tinyInteger('has_limit')->default(0);
             $table->tinyInteger('has_receipt')->default(0);
             $table->tinyInteger('has_receipt_nr')->default(0);
