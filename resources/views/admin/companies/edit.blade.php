@@ -20,6 +20,11 @@
 		</div>
 
 		<div class="form-group">
+			{!! Form::label('starting_balance', 'Starting Balance'); !!}
+			{!! Form::text('starting_balance',null,['class'=>'form-control']); !!} 
+		</div>
+
+		<div class="form-group">
 			{!! Form::label('contact_person', 'Contact Person:'); !!}
 			{!! Form::text('contact_person',null,['class'=>'form-control']); !!} 
 		</div>
@@ -73,6 +78,12 @@
 			{!! Form::label('status', 'Status'); !!}
 			{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
 		</div>
+
+		<div class="form-group">
+			{!! Form::label('has_limit', 'Has Limit'); !!}
+			{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+		</div>
+
 		<div class="form-group">
 			{!! Form::label('has_receipt', 'Has Receipt'); !!}
 			{!! Form::select('has_receipt',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
@@ -82,22 +93,6 @@
 			{!! Form::label('has_receipt_nr', 'Has Receipt Number'); !!}
 			{!! Form::select('has_receipt_nr',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
 		</div>
-
-		<div class="form-group">
-			{!! Form::label('has_limit', 'Has Limit'); !!}
-			{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
-		</div>
-
-        <div class="form-group">
-            {!! Form::label('limits', 'Limits'); !!}
-            {!! Form::text('limits',null,['class'=>'form-control']); !!}
-        </div>
-
-		<div class="form-group">
-			{!! Form::label('starting_balance', 'Starting Balance'); !!}
-			{!! Form::text('starting_balance',null,['class'=>'form-control']); !!}
-		</div>
-
 		<!-- *** DISCOUNT *** -->
 
 		@if(count($company_discounts) > 0)
@@ -207,6 +202,12 @@
 		</div>
 
 		<!-- *** END NEW LIMITS *** -->
+
+		<div class="form-group">
+			{!! Form::label('limits', 'Limits'); !!}
+			{!! Form::text('limits',null,['class'=>'form-control']); !!} 
+		</div>
+		
 
 		<div class="form-group">
 			{!! Form::submit('Edit Company', ['class'=>'btn btn-block btn-primary']); !!}

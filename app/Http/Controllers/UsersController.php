@@ -30,7 +30,8 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $products   = Products::pluck('name','id')->all();
         $branches   = Branch::pluck('name','id')->all();
         $companies  = Company::pluck('name','id')->all();

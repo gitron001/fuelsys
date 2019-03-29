@@ -9742,6 +9742,7 @@ Attempting to connect to '192.168.1.197' on port '40097'...
 
   Please use the argument -v to see more details.
 socket successfully created.
+<<<<<<< HEAD
 Attempting to connect to '192.168.1.197' on port '40097'...
    ErrorException  : socket_connect(): unable to connect [111]: Connection refused
 
@@ -12405,3 +12406,7 @@ Attempting to connect to '192.168.1.197' on port '40097'...
       /var/www/app/Console/Commands/CheckCardReadersCommand.php:67
 
   Please use the argument -v to see more details.
+=======
+Attempting to connect to '192.168.0.197' on port '40097'...successfully connected to 192.168.0.197.
+Invalid Transactions<bd>
+>>>>>>> 108dbb94c4f3a5978af444524be3de5e6d5066e1
