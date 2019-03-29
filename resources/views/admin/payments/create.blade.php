@@ -21,8 +21,8 @@
 		</div>
 
 		<div class="form-group {{ $errors->has('select') ? 'has-error' :'' }}">
-			<label class="checkbox-inline"><input type="checkbox" name="user" id="user">User</label>
-			<label class="checkbox-inline"><input type="checkbox" name="company" id="company">Company</label>
+			<label class="checkbox-inline"><input type="checkbox" class="check_class" value="user" />User</label>
+			<label class="checkbox-inline"><input type="checkbox" class="check_class" value="company" />Company</label>
 		</div>
 
 		<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
@@ -56,6 +56,13 @@
 <script>
 	$(function() {
 		$(".datepicker" ).datepicker();
+	});
+
+	$(document).ready(function() {
+	  $(document).on('change', ".check_class", function () {
+	    $(".check_class").prop("checked", false);
+	    $(this).prop("checked", true);
+	  });
 	});
 
 	$(document).ready(function() {
