@@ -29,8 +29,7 @@ class CompaniesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         $products   = Products::pluck('name','id')->all();
         $branches   = Branch::pluck('name','id')->all();
 
@@ -43,14 +42,20 @@ class CompaniesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CompanyCreateRequest $request)
-    {
+    public function store(CompanyCreateRequest $request) {
         $firstValueOfArrayProduct  = array_values($request->input('product'))[0];
         $firstValueOfArrayDiscount = array_values($request->input('discount'))[0];
 
         $firstValueOfArrayBranch  = array_values($request->input('branch'))[0];
         $firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
-        
+
+        if($request->input('has_limit') == 1){
+            $limit_left = $request->input('limits') - $request->input('starting_balance');
+        }else{
+            $limit_left = 0;
+        }
+
+
         $id = Company::insertGetId([
             'name'              => $request->input('name'),
             'fis_number'        => $request->input('fis_number'),
@@ -67,9 +72,15 @@ class CompaniesController extends Controller
             'type'              => $request->input('type'),
             'status'            => $request->input('status'),
             'limits'            => $request->input('limits'),
+            'has_receipt'       => $request->input('has_receipt'),
+            'has_receipt_nr'    => $request->input('has_receipt_nr'),
+            'has_limit'         => $request->input('has_limit'),
+            'limit_left'        => $limit_left,
             'created_at'        => now()->timestamp,
             'updated_at'        => now()->timestamp
         ]);
+
+
 
         if($firstValueOfArrayProduct !== 0 && !empty($firstValueOfArrayDiscount)){
             foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
@@ -106,8 +117,7 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
 
     }
 
@@ -117,8 +127,7 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id)  {
         $company            = Company::findOrFail($id);
         $branches           = Branch::pluck('name','id')->all();
         $products           = Products::pluck('name','id')->all();
@@ -136,9 +145,14 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $company = Company::findOrFail($id);
+        if($company->has_limit == 1){
+            $limit_left = $request->input('limits') - $request->input('starting_balance');
+            $request->merge(['limit_left' => $limit_left]);
+        }else{
+            $limit_left = 0;
+        }
         $company->update($request->all());
 
         // DELETE Discount
@@ -214,8 +228,7 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $company = Company::findOrFail($id);
         $company->delete();
 
