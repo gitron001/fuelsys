@@ -52,8 +52,20 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        $payments = new Payments();
+        $payments   = new Payments();
+        $user       = $request->input('user_id');
+        $company    = $request->input('company_id');
 
+        if($user){
+            $user = Users::find( $user );
+            $user->limit_left += $request->input('amount');
+            $user->save();
+        }elseif($company){
+            $company = Company::find( $company );
+            $company->limit_left += $request->input('amount');
+            $company->save();
+        }
+        
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
         $payments->user_id      = $request->input('user_id');
@@ -101,18 +113,60 @@ class PaymentsController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $payments = Payments::findOrFail($id);
 
+        if($request->input('checkbox') == 'user'){
+            $user_id      = $request->input('user_id');
+            $company_id   = 0;
+        }else{
+            $user_id      = 0;
+            $company_id   = $request->input('company_id');   
+        }
+
+
+
+        if($payments->user_id != $user_id){
+            if($payments->user_id != 0){
+                $prev_user = Users::find($payments->user_id);
+                $prev_user->limit_left -= $request->input('amount');
+                $prev_user->update();
+            }
+
+            if($user_id != 0){
+                $new_user = Users::find($request->input('user_id'));
+                $new_user->limit_left += $request->input('amount'); 
+                $new_user->save();
+            }
+        }
+
+        if($payments->company_id != $company_id){
+            if($payments->company_id != 0){
+                $prev_company = Company::find($payments->company_id);
+                $prev_company->limit_left -= $request->input('amount');
+                $prev_company->update();
+            }
+
+            if($company_id != 0){
+                $new_company = Company::find($request->input('company_id'));
+                $new_company->limit_left += $request->input('amount'); 
+                $new_company->save();
+            }
+        }
+
+        $payments->user_id      = $user_id;
+        $payments->company_id   = $company_id;   
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
-        $payments->user_id      = $request->input('user_id');
-        $payments->company_id   = $request->input('company_id');
         $payments->updated_at   = now()->timestamp;
         $payments->update();
 
         session()->flash('info','Success');
 
         return redirect('/admin/payments');
+
+
+        
     }
 
     /**
