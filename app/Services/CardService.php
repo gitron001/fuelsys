@@ -88,18 +88,13 @@ class CardService extends ServiceProvider
         //Call Function to check limit
         $limit = false;
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
-<<<<<<< HEAD
            $limit = true;
            $company = Company::where('id', $user->company->id)->first();
            $limit_left = $company->limit_left;
         }elseif($user->has_limit == 1){
             $limit = true;
-=======
-            $limit = true;
             $company = Company::where('id', $user->company->id)->first();
             $limit_left = $company->limit_left;
-        }elseif($user->has_limit == 1){
-            $limit = true;
         }
 
         if($limit){
@@ -108,8 +103,8 @@ class CardService extends ServiceProvider
             }else{
                 self::setPrepay($socket, $channel, $limit_left);
             }
->>>>>>> 927600535b8e1ae22f6c0fb2cc0d0c8fedba47ac
         }
+		
         //print_r($cardNumber);
         if(count($user->discounts) == 0){
             self::activate_card($socket, $channel);
