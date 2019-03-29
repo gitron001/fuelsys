@@ -84,7 +84,7 @@ class CardService extends ServiceProvider
 
         if($user->status != 1 ){ return false; }
         if($user->company->status != 1 ){ return false; }
-        $limit = false;
+
         //Call Function to check limit
         $limit = false;
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
@@ -97,16 +97,16 @@ class CardService extends ServiceProvider
             $limit_left = $company->limit_left;
         }
 
-        if($limit){
+        if($limit){		
             if($limit_left < 0){
                 self::activate_card($socket, $channel, 1);
+				return false;
             }else{
-                self::setPrepay($socket, $channel, $limit_left*100);
-				echo 'limit left'.$limit_left;
+				$limit_left = $limit_left*100;
+                self::setPrepay($socket, $channel, $limit_left);
             }
         }
 		
-        //print_r($cardNumber);
         if(count($user->discounts) == 0){
             self::activate_card($socket, $channel);
         }else{
@@ -226,20 +226,11 @@ class CardService extends ServiceProvider
             return true;
     }
 
-    public static function checkCompLimit($socket, $channel, $company){
-        if($limit_left < 0){
-            self::activate_card($socket, $channel, 1);
-            return false;
-        }else{
-            self::setPrepay($socket, $channel, $limit_left);
-            return true;
-        }
-    }
-
     public static function setPrepay($socket, $channel, $limit_left) {
         //Get all transaction by channel
+		echo 'limit left' . $limit_left;
         $channel_id = PFC::conver_to_bin($channel);
-        $limit_left_bin = strrev(pack("I",2000));
+        $limit_left_bin = strrev(pack("I",$limit_left));
         $message = "\x1\x9\x8C".$channel_id.$limit_left_bin;
         $the_crc = PFC::crc16($message);
         //Start of mesasge
@@ -251,14 +242,17 @@ class CardService extends ServiceProvider
         //Message
         $binarydata .= pack("C*", $channel);
         //Command
-        $binarydata .= strrev(pack("I",2000));
+        $binarydata .= strrev(pack("I",$limit_left));
         //CRC
         $binarydata .= strrev(pack("s",$the_crc));
         //End of Message
         $binarydata .= pack("c*",02);
 		
+		print_r(unpack('c*', $binarydata));
+		
         $response = PFC::send_message($socket, $binarydata, $message);
-      
+		
+		print_r($response);
         return true;
     }
 }
