@@ -120,13 +120,33 @@ class TransactionController extends Controller
 
     public function excel_export(Request $request) {
 
-        $payments = self::generate_data($request);
+        $paymentsAll = self::generate_data($request);
+        $payments = $paymentsAll[0];
+        $oldPayments = $paymentsAll[1];
+
+        $total = 0;
+        $totalAmount = 0;
+        foreach ($oldPayments as $row)
+        {
+            if($row->money == 0){
+                $fueling = 0;
+                $payment = $row->amount;
+            }else{
+                $fueling = $row->money;
+                $payment = 0;                  
+            }
+            $total = $total + $fueling - $payment;
+            
+        }
+
+        $totalAmount = $total;
+
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
            
-        $myFile = Excel::create($file_name, function($excel) use( $payments ) 
+        $myFile = Excel::create($file_name, function($excel) use( $payments,$totalAmount ) 
         {
-            $excel->sheet('Transaction', function($sheet) use( $payments ) 
+            $excel->sheet('Transaction', function($sheet) use( $payments,$totalAmount ) 
             {
                 $sheet->appendRow(array(
                     'DATA',
@@ -137,7 +157,7 @@ class TransactionController extends Controller
                     'MBETJA',
                 ));
 
-                $total = 0;
+                if($totalAmount != 0){ $total = $totalAmount; }else{ $total = 0; };
                 $totalToPay = 0;
                 $totalAmount = 0;
                 $totalPayed = 0;
@@ -160,6 +180,8 @@ class TransactionController extends Controller
                         $payment,
                         $total,
                     ));
+
+
                 }
 
             });
@@ -223,7 +245,7 @@ class TransactionController extends Controller
                 ,"users.name as username","payments.created_at")
             ->join('users', 'payments.user_id', '=', 'users.id')
             ->union($transactions)
-            ->orderBy('created_at');
+            ->orderBy('created_at','DESC');
 
         if ($request->input('company')) {
             $payments->where('payments.company_id','=',$company);
@@ -239,7 +261,51 @@ class TransactionController extends Controller
 
         $payments = $payments->get();
 
-        return $payments;
+
+        // ANOTHER DATA 
+        $tr = DB::table("transactions")
+            ->select("transactions.product_id",DB::RAW(" 'transaction' as type"),
+                DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
+                ,"transactions.money",DB::RAW(" 0 as company")
+                ,"users.name as username","transactions.created_at")
+            ->join('users', 'transactions.user_id', '=', 'users.id');
+
+        if ($request->input('company')) {
+            $tr->where('company_id','=',$company);
+        }
+
+        if ($request->input('user')) {
+            $tr->where('user_id','=',$user);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $tr->where('transactions.created_at','<',$from_date);
+        }
+
+        $paymentsOLD = DB::table("payments")
+            ->select("payments.user_id",DB::RAW(" 'payment' as type")
+                ,"payments.amount","payments.date",
+                DB::RAW(" 0 as money"),"payments.company_id"
+                ,"users.name as username","payments.created_at")
+            ->join('users', 'payments.user_id', '=', 'users.id')
+            ->union($tr)
+            ->orderBy('created_at');
+
+        if ($request->input('company')) {
+            $paymentsOLD->where('payments.company_id','=',$company);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $paymentsOLD->where('payments.date','<',$from_date);
+        }
+
+        if ($request->input('user')) {
+            $paymentsOLD->where('user_id','=',$user);
+        }
+
+        $paymentsOLD = $paymentsOLD->get();
+
+        return [$payments,$paymentsOLD];
     }
 
     public function search(Request $request) {
