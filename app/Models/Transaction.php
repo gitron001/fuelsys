@@ -101,7 +101,7 @@ class Transaction extends Model
         $user = Users::where("rfid", $rfid)->where('status', 1)->first();
 
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
-            $company = Company::find( $id );
+            $company = Company::find( $user->company->id );
             $company->limit_left -= $transaction->money;
             $company->save();
         }elseif($user->has_limit == 1){

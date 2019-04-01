@@ -97,7 +97,7 @@ class TransactionService extends ServiceProvider
         $changed_status = self::transaction_status($channel, $status, $socket);
 
         $recepit = new PrintFuelRecept($transaction_id);
-        PrintFuelRecept::dispatch($recepit);
+        dispatch($recepit);
         echo 'stored';
         return true;
     }
