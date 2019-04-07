@@ -125,7 +125,9 @@ class TransactionController extends Controller
         $oldPayments = $paymentsAll[1];
 
         $total = 0;
+        $totalToPay = 0;
         $totalAmount = 0;
+        $totalPayed = 0;
         foreach ($oldPayments as $row)
         {
             if($row->money == 0){
@@ -140,27 +142,44 @@ class TransactionController extends Controller
         }
 
         $totalAmount = $total;
+        $startDate = $request->fromDate;
 
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
            
-        $myFile = Excel::create($file_name, function($excel) use( $payments,$totalAmount ) 
+        $myFile = Excel::create($file_name, function($excel) use( $payments,$totalAmount,$startDate ) 
         {
-            $excel->sheet('Transaction', function($sheet) use( $payments,$totalAmount ) 
+            $excel->sheet('Transaction', function($sheet) use( $payments,$totalAmount,$startDate ) 
             {
+
+                if($totalAmount != 0){ $total = $totalAmount; }else{ $total = 0; };
+                $totalToPay = 0;
+                $totalPayed = 0;
+
                 $sheet->appendRow(array(
                     'DATA',
                     'LLOJI',
                     'PERSONI',
                     'MBUSHJA',
                     'PAGESA',
-                    'MBETJA',
+                    'GJENDJA',
                 ));
 
-                if($totalAmount != 0){ $total = $totalAmount; }else{ $total = 0; };
-                $totalToPay = 0;
-                $totalAmount = 0;
-                $totalPayed = 0;
+                $sheet->cell('A2', function($cell) use( $startDate ){
+                        $cell->setValue($startDate);
+
+                });
+
+                $sheet->cell('B2', function($cell) use( $totalAmount ){
+                        $cell->setValue('GJENDJA FILLESTARE');
+
+                });
+
+                $sheet->cell('F2', function($cell) use( $totalAmount ){
+                        $cell->setValue($totalAmount);
+
+                });
+                
                 foreach ($payments as $row)
                 {
                     if($row->money == 0){
@@ -180,9 +199,16 @@ class TransactionController extends Controller
                         $payment,
                         $total,
                     ));
-
-
                 }
+
+                $sheet->appendRow(array(
+                    '',
+                    '',
+                    '',
+                    '',
+                    'Totali €',
+                    $total.' €',
+                ));
 
             });
 
@@ -198,9 +224,13 @@ class TransactionController extends Controller
     }
 
    public static function exportPDF(Request $request){
-        $payments = self::generate_data($request);
+        $paymentsAll = self::generate_data($request);
 
-        $pdf = PDF::loadView('admin.pdfReport',compact('payments'));
+        $payments = $paymentsAll[0];
+        $oldPayments = $paymentsAll[1];
+        $date = $request->fromDate;
+
+        $pdf = PDF::loadView('admin.pdfReport',compact('payments','oldPayments','date'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         $myFile = $pdf->download($file_name.'.pdf');
 
@@ -278,7 +308,7 @@ class TransactionController extends Controller
             $tr->where('user_id','=',$user);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
+        if ($request->input('fromDate')) {
             $tr->where('transactions.created_at','<',$from_date);
         }
 
@@ -295,7 +325,7 @@ class TransactionController extends Controller
             $paymentsOLD->where('payments.company_id','=',$company);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
+        if ($request->input('fromDate')) {
             $paymentsOLD->where('payments.date','<',$from_date);
         }
 
