@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Dispaneser;
 use App\Models\Transaction;
+use App\Mail\ReportMail;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -30,5 +32,27 @@ class HomeController extends Controller
         $dispanesers    = Dispaneser::all();
 
         return view('welcome',compact('dispanesers','transactions'));
+    }
+
+    public function email(Request $request){
+        $title = 'Title';
+        $content = 'Content';
+
+        Mail::send('emails.report', ['title' => $title, 'content' => $content], function ($message)
+        {
+
+            $message->from('orges1@hotmail.com', 'Orges Thaqi');
+
+            $message->to('orgesthaqi96@gmail.com');
+
+
+            //Add a subject
+            $message->subject("Hello from FUEL SYSTEM");
+
+        });
+
+
+        return response()->json(['message' => 'Request completed']);
+        
     }
 }
