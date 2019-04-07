@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use App\Models\Transaction as Transactions;
 use App\Models\Users;
 use App\Models\PFC;
 use App\Models\Dispaneser;
@@ -24,7 +24,7 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()  {
-        $transactions   = Transaction::orderBy('created_at', 'desc')->paginate(15);
+        $transactions   = Transactions::orderBy('created_at', 'desc')->paginate(15);
         $users          = Users::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
 
@@ -76,7 +76,7 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transactions::findOrFail($id);
         $dispanesers = Dispaneser::pluck('name','id')->all();
         $users       = Users::pluck('name','id')->all();
         $products    = Products::pluck('name','id')->all();
@@ -93,7 +93,7 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transactions::findOrFail($id);
         $transaction->update($request->all());
         session()->flash('info','Success');
 
@@ -107,7 +107,7 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transactions::findOrFail($id);
         $transaction->delete();
         session()->flash('info','Success');
 
@@ -128,20 +128,8 @@ class TransactionController extends Controller
         $totalToPay = 0;
         $totalAmount = 0;
         $totalPayed = 0;
-        foreach ($oldPayments as $row)
-        {
-            if($row->money == 0){
-                $fueling = 0;
-                $payment = $row->amount;
-            }else{
-                $fueling = $row->money;
-                $payment = 0;                  
-            }
-            $total = $total + $fueling - $payment;
-            
-        }
 
-        $totalAmount = $total;
+        $totalAmount = $oldPayments;
         $startDate = $request->fromDate;
 
         
@@ -223,7 +211,6 @@ class TransactionController extends Controller
         return response()->json($response);       
     }
 
-
     public static function exportPDF(Request $request){
         $paymentsAll = self::generate_data($request);
 
@@ -294,7 +281,7 @@ class TransactionController extends Controller
 
 
         // Get the fuel history
-        $tr = Transaction;
+        $tr = Transactions::where('transactions.created_at','<',$from_date);
 
         if ($request->input('company')) {
             $tr->where('company_id','=',$company);
@@ -304,20 +291,12 @@ class TransactionController extends Controller
             $tr->where('user_id','=',$user);
         }
 
-        if ($request->input('fromDate')) {
-            $tr->where('transactions.created_at','<',$from_date);
-        }
-
         $transaction_total = $tr->sum('money');
 
-        $paymentsOLD = Payments;
+        $paymentsOLD = Payments::where('payments.date','<',$from_date);;
 
         if ($request->input('company')) {
             $paymentsOLD->where('payments.company_id','=',$company);
-        }
-
-        if ($request->input('fromDate')) {
-            $paymentsOLD->where('payments.date','<',$from_date);
         }
 
         if ($request->input('user')) {
@@ -326,41 +305,34 @@ class TransactionController extends Controller
 
         $paymentsOLD = $paymentsOLD->sum('amount');
 
-        $starting_balance = $paymentsOLD - $transaction_total;
+        $starting_balance = $transaction_total - $paymentsOLD;
 
         return [$payments,$starting_balance];
     }
 
     public function search(Request $request) {
+
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
         $company    = $request->input('company');
 
-        $query = new Transaction;
-
-        if ($request->input('fromDate')) {
-            $query = $query->whereBetween('created_at',[$from_date, $to_date]);
-        }
+        $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
+           'transactions.price', 'transactions.lit')
+            ->join('products', 'products.id', '=', 'transactions.product_id')
+            ->join('users', 'users.id', '=', 'transactions.user_id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('user')) {
-            $getRfid    = Users::where('id',$user)->get();
-
-            foreach ($getRfid as $rfid) {
-                $getID[] =  $rfid->id;
-            }
-
-            $query = $query->whereIn('user_id',$getID);
+            $query = $query->where('users.id',$user);
         }
 
         if ($request->input('company')) {
-            $getRfid    = Users::where('company_id',$company)->get();
+            $query = $query->whereIn('companies.id',$company);
+        }
 
-            foreach ($getRfid as $rfid) {
-                $getID[] =  $rfid->id;
-            }
-
-            $query = $query->whereIn('user_id',$getID);
+        if ($request->input('fromDate')) {
+            $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
 
         $data = $query->get();
@@ -371,9 +343,9 @@ class TransactionController extends Controller
             foreach ($data as $row) {
                 $output .= '
                 <tr>
-                    <td>'.($row->users ? $row->users->name : '').'</td>
-                    <td>'.($row->users->company ? $row->users->company->name : '').'</td>
-                    <td>'.($row->product ? $row->product->name : '').'</td>
+                    <td>'.$row->user_name.'</td>
+                    <td>'.$row->comp_name.'</td>
+                    <td>'.$row->product.'</td>
                     <td>'.$row->price.'</td>
                     <td>'.$row->lit.'</td>
                     <td>'.$row->money.'</td>

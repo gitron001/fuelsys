@@ -22,7 +22,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     cron \
     supervisor \
-    smbclient
+    smbclient \
+    ssmtp \
+    mailutils
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
