@@ -34,7 +34,11 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/export','TransactionController@excel_export');
 
 	Route::get('/pdf','TransactionController@exportPDF');
+
+	Route::get('/sendemail','HomeController@email');
 });
+
+
 
 
 
