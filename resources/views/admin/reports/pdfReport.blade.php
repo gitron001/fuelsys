@@ -75,33 +75,13 @@
 	  </tr>
 	</thead>
 	<tbody>
-	<?php 
-		$total = 0;
-        $totalToPay = 0;
-        $totalAmount = 0;
-        $totalPayed = 0;
-        foreach ($oldPayments as $row)
-        {
-            if($row->money == 0){
-                $fueling = 0;
-                $payment = $row->amount;
-            }else{
-                $fueling = $row->money;
-                $payment = 0;                  
-            }
-            $total = $total + $fueling - $payment;
-            
-        }
-
-        $totalAmount = $total;
-    ?>
 	<tr>
 		<th scope="row">{{ $date }}</th>
 	    <td>Gjendja Fillestare</td>
 	    <td align="right"></td>
 	    <td align="right"></td>
 	    <td align="right"></td>
-	    <td align="right">@if($totalAmount != 0) {{ $totalAmount }} @else {{ 0 }}@endif</td>
+	    <td align="right">@if($oldPayments != 0) {{ $oldPayments }} @else {{ 0 }}@endif</td>
 	</tr>
 	@foreach($payments as $py)
 		<?php 

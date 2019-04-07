@@ -223,14 +223,15 @@ class TransactionController extends Controller
         return response()->json($response);       
     }
 
-   public static function exportPDF(Request $request){
+
+    public static function exportPDF(Request $request){
         $paymentsAll = self::generate_data($request);
 
         $payments = $paymentsAll[0];
         $oldPayments = $paymentsAll[1];
         $date = $request->fromDate;
 
-        $pdf = PDF::loadView('admin.pdfReport',compact('payments','oldPayments','date'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','oldPayments','date'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         $myFile = $pdf->download($file_name.'.pdf');
 
@@ -292,13 +293,8 @@ class TransactionController extends Controller
         $payments = $payments->get();
 
 
-        // ANOTHER DATA 
-        $tr = DB::table("transactions")
-            ->select("transactions.product_id",DB::RAW(" 'transaction' as type"),
-                DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
-                ,"transactions.money",DB::RAW(" 0 as company")
-                ,"users.name as username","transactions.created_at")
-            ->join('users', 'transactions.user_id', '=', 'users.id');
+        // Get the fuel history
+        $tr = Transaction;
 
         if ($request->input('company')) {
             $tr->where('company_id','=',$company);
@@ -312,14 +308,9 @@ class TransactionController extends Controller
             $tr->where('transactions.created_at','<',$from_date);
         }
 
-        $paymentsOLD = DB::table("payments")
-            ->select("payments.user_id",DB::RAW(" 'payment' as type")
-                ,"payments.amount","payments.date",
-                DB::RAW(" 0 as money"),"payments.company_id"
-                ,"users.name as username","payments.created_at")
-            ->join('users', 'payments.user_id', '=', 'users.id')
-            ->union($tr)
-            ->orderBy('created_at');
+        $transaction_total = $tr->sum('money');
+
+        $paymentsOLD = Payments;
 
         if ($request->input('company')) {
             $paymentsOLD->where('payments.company_id','=',$company);
@@ -333,9 +324,11 @@ class TransactionController extends Controller
             $paymentsOLD->where('user_id','=',$user);
         }
 
-        $paymentsOLD = $paymentsOLD->get();
+        $paymentsOLD = $paymentsOLD->sum('amount');
 
-        return [$payments,$paymentsOLD];
+        $starting_balance = $paymentsOLD - $transaction_total;
+
+        return [$payments,$starting_balance];
     }
 
     public function search(Request $request) {
