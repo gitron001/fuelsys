@@ -83,6 +83,10 @@
 	    <td align="right"></td>
 	    <td align="right">@if($oldPayments != 0) {{ $oldPayments }} @else {{ 0 }}@endif</td>
 	</tr>
+	<?php
+		$total = $oldPayments;
+	?>
+
 	@foreach($payments as $py)
 		<?php 
 

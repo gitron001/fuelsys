@@ -155,17 +155,14 @@ class TransactionController extends Controller
 
                 $sheet->cell('A2', function($cell) use( $startDate ){
                         $cell->setValue($startDate);
-
                 });
 
                 $sheet->cell('B2', function($cell) use( $totalAmount ){
                         $cell->setValue('GJENDJA FILLESTARE');
-
                 });
 
                 $sheet->cell('F2', function($cell) use( $totalAmount ){
                         $cell->setValue($totalAmount);
-
                 });
                 
                 foreach ($payments as $row)
