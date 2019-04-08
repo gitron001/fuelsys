@@ -83,16 +83,18 @@
 	    <td align="right"></td>
 	    <td align="right">@if($oldPayments != 0) {{ $oldPayments }} @else {{ 0 }}@endif</td>
 	</tr>
-	<?php $total = 0; ?>
+	<?php
+		$total = $oldPayments;
+	?>
 	@foreach($payments as $py)
-		<?php 
+		<?php
 
 		if($py->money == 0){
 		    $fueling = 0;
 		    $payment = $py->amount;
 		}else{
 		    $fueling = $py->money;
-		    $payment = 0;                  
+		    $payment = 0;
 		}
 
 		$total = $total + $fueling - $payment;
