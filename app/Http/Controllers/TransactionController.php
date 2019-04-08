@@ -254,11 +254,10 @@ class TransactionController extends Controller
                 DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
                 ,"users.name as username","transactions.created_at")
-            ->join('users', 'transactions.user_id', '=', 'users.id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
+            ->join('users', 'transactions.user_id', '=', 'users.id');
 
         if ($request->input('company')) {
-            $transactions->where('companies.id','=',$company);
+            $transactions->where('company_id','=',$company);
         }
 
         if ($request->input('user')) {
@@ -275,12 +274,11 @@ class TransactionController extends Controller
                 DB::RAW(" 0 as money"),"payments.company_id"
                 ,"users.name as username","payments.created_at")
             ->join('users', 'payments.user_id', '=', 'users.id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->union($transactions)
             ->orderBy('created_at','DESC');
 
         if ($request->input('company')) {
-            $payments->where('companies.id','=',$company);
+            $payments->where('payments.company_id','=',$company);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
@@ -310,7 +308,7 @@ class TransactionController extends Controller
         $paymentsOLD = Payments::where('payments.date','<',$from_date);;
 
         if ($request->input('company')) {
-            $paymentsOLD->where('payments.id','=',$company);
+            $paymentsOLD->where('payments.company_id','=',$company);
         }
 
         if ($request->input('user')) {
@@ -342,7 +340,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('company')) {
-            $query = $query->where('companies.id',$company);
+            $query = $query->whereIn('companies.id',$company);
         }
 
         if ($request->input('fromDate')) {
