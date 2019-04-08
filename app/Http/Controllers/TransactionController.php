@@ -15,6 +15,7 @@ use Excel;
 use DB;
 use DateTime;
 use PDF;
+use Mail;
 
 class TransactionController extends Controller
 {
@@ -202,6 +203,11 @@ class TransactionController extends Controller
 
         });
 
+        Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($myFile){
+            $m->to('orgesthaqi96@gmail.com')->subject('Raporti Mujor - Nesim Bakija');
+            $m->attach($myFile->store("xls",false,true)['full']);
+        });
+
         $myFile = $myFile->string('xlsx'); 
         $response =  array(
            'name' => $file_name, 
@@ -220,8 +226,14 @@ class TransactionController extends Controller
 
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','oldPayments','date'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
-        $myFile = $pdf->download($file_name.'.pdf');
+        
 
+        Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
+            $m->to('orgesthaqi96@gmail.com')->subject('Raporti Mujor - Nesim Bakija');
+            $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
+        });
+
+        $myFile = $pdf->download($file_name.'.pdf');
         $response =  array(
            'name' => $file_name, 
            'file' => "data:application/pdf;base64,".base64_encode($myFile)
@@ -242,10 +254,11 @@ class TransactionController extends Controller
                 DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
                 ,"users.name as username","transactions.created_at")
-            ->join('users', 'transactions.user_id', '=', 'users.id');
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('company')) {
-            $transactions->where('company_id','=',$company);
+            $transactions->where('companies.id','=',$company);
         }
 
         if ($request->input('user')) {
@@ -262,11 +275,12 @@ class TransactionController extends Controller
                 DB::RAW(" 0 as money"),"payments.company_id"
                 ,"users.name as username","payments.created_at")
             ->join('users', 'payments.user_id', '=', 'users.id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->union($transactions)
             ->orderBy('created_at','DESC');
 
         if ($request->input('company')) {
-            $payments->where('payments.company_id','=',$company);
+            $payments->where('companies.id','=',$company);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
@@ -296,7 +310,7 @@ class TransactionController extends Controller
         $paymentsOLD = Payments::where('payments.date','<',$from_date);;
 
         if ($request->input('company')) {
-            $paymentsOLD->where('payments.company_id','=',$company);
+            $paymentsOLD->where('payments.id','=',$company);
         }
 
         if ($request->input('user')) {
@@ -318,9 +332,9 @@ class TransactionController extends Controller
         $company    = $request->input('company');
 
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
-           'transactions.price', 'transactions.lit')
-            ->join('products', 'products.id', '=', 'transactions.product_id')
-            ->join('users', 'users.id', '=', 'transactions.user_id')
+           'transactions.price', 'transactions.lit','transactions.created_at')
+            ->leftJoin('products', 'products.id', '=', 'transactions.product_id')
+            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('user')) {
@@ -328,7 +342,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('company')) {
-            $query = $query->whereIn('companies.id',$company);
+            $query = $query->where('companies.id',$company);
         }
 
         if ($request->input('fromDate')) {
