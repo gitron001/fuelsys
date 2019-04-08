@@ -15,15 +15,16 @@
           </div>
           <div class="col-md-10">
             <form class="form-inline">
+
                 <div class="form-row">
                   <div class="form-group">
                     <label for="Start Date:">Start Date:</label>
-                    <input class="form-control datepicker" autocomplete="off" id="from_date" type="text">
+                    <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="from_date">
                   </div>
 
                   <div class="form-group">
                     <label for="End Date:">End Date:</label>
-                    <input class="form-control datepicker" autocomplete="off" id="to_date" type="text">
+                    <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="to_date">
                   </div>
 
                   <div class="form-group">
@@ -100,8 +101,27 @@
 @section('js')
 
 <script>
-  $(function() {
-    $(".datepicker" ).datepicker();
+
+    $(function () {
+        var date = new Date();
+        date.setDate(date.getDate() -1);
+        $('#datetimepicker4').datetimepicker({
+            defaultDate:date
+        });
+
+        var dateNow = new Date();
+        $('#datetimepicker5').datetimepicker({
+            defaultDate:dateNow
+        });
+    });
+
+  $(document).ready(function() {
+
+    var date = new Date();
+    date.setDate(date.getDate() - 1);
+
+    $('#datetimepicker4').datetimepicker('setDate', date);
+
   });
 
   // Hide alert message after few seconds
@@ -112,10 +132,12 @@
 
   $(document).ready(function(){
     $('#search').click(function(){
-      var fromDate = $("#from_date").val();
-      var toDate = $("#to_date").val();
+      var fromDate = $('[name=from_date]').val();
+      var toDate = $('[name=to_date]').val();
       var user = $("#user").val();
       var company = $("#company").val();
+
+      console.log(fromDate);
 
       $.ajax({
         type: "GET",
@@ -132,8 +154,8 @@
 
   $(document).ready(function(){
     $('#exportEXCEL').click(function(){
-      var fromDate = $("#from_date").val();
-      var toDate = $("#to_date").val();
+      var fromDate = $('[name=from_date]').val();
+      var toDate = $('[name=to_date]').val();
       var user = $("#user").val();
       var company = $("#company").val();
 
@@ -157,8 +179,8 @@
 
   $(document).ready(function(){
     $('#exportPDF').click(function(){
-      var fromDate = $("#from_date").val();
-      var toDate = $("#to_date").val();
+      var fromDate = $('[name=from_date]').val();
+      var toDate = $('[name=to_date]').val();
       var user = $("#user").val();
       var company = $("#company").val();
 
