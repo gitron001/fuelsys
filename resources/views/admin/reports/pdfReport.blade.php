@@ -87,20 +87,6 @@
 		$total = $oldPayments;
 	?>
 
-	@foreach($payments as $py)
-		<?php 
-
-		if($py->money == 0){
-		    $fueling = 0;
-		    $payment = $py->amount;
-		}else{
-		    $fueling = $py->money;
-		    $payment = 0;                  
-		}
-
-		$total = $total + $fueling - $payment;
-		?>
-
 	  <tr>
 	    <th scope="row">{{ (!empty($py->date)) ? date('m/d/Y h:i:sa',$py->date) : date('m/d/Y h:i:sa',$py->created_at) }}</th>
 	    <td>{{ $py->type}}</td>
