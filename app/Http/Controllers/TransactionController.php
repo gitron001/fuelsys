@@ -121,16 +121,15 @@ class TransactionController extends Controller
 
     public function excel_export(Request $request) {
 
-        $paymentsAll = self::generate_data($request);
-        $payments = $paymentsAll[0];
-        $oldPayments = $paymentsAll[1];
+        $payments       = self::generate_data($request);
+        $balance        = self::generate_balance($request);
 
         $total = 0;
         $totalToPay = 0;
         $totalAmount = 0;
         $totalPayed = 0;
 
-        $totalAmount = $oldPayments;
+        $totalAmount = $balance;
         $startDate = $request->fromDate;
 
         
@@ -215,20 +214,19 @@ class TransactionController extends Controller
     }
 
     public static function exportPDF(Request $request){
-        $paymentsAll = self::generate_data($request);
+        $payments   = self::generate_data($request);
+        $balance    = self::generate_balance($request);
 
-        $payments = $paymentsAll[0];
-        $oldPayments = $paymentsAll[1];
         $date = $request->fromDate;
 
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','oldPayments','date'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         
 
-        Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
+        /*Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
             $m->to('orgesthaqi96@gmail.com')->subject('Raporti Mujor - Nesim Bakija');
             $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
-        });
+        });*/
 
         $myFile = $pdf->download($file_name.'.pdf');
         $response =  array(
@@ -290,6 +288,14 @@ class TransactionController extends Controller
 
         $payments = $payments->get();
 
+        return $payments;
+    }
+
+    public static function generate_balance($request){
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
+        $user       = $request->input('user');
+        $company    = $request->input('company');
 
         $tr = Transactions::where('transactions.created_at','<',$from_date);
 
@@ -323,7 +329,7 @@ class TransactionController extends Controller
 
         $starting_balance = $transaction_total - $paymentsOLD;
 
-        return [$payments,$starting_balance];
+        return $starting_balance;
     }
 
     public function search(Request $request) {
