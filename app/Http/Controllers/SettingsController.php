@@ -14,7 +14,7 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        $company = Company::where('type',1)->first();
+        $company = Company::where('status',4)->first();
         return view('/admin/settings/edit',compact('company'));
     }
 

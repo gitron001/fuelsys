@@ -66,7 +66,7 @@
 
     <div class="form-group">
         {!! Form::label('status', 'Status'); !!}
-        {!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
+        {!! Form::select('status',[1=>'Active',2=>'No Active',],null,['class'=>'form-control']); !!}
     </div>
     <div class="form-group">
         {!! Form::label('has_receipt', 'Has Receipt'); !!}
