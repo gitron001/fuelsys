@@ -93,8 +93,7 @@ class CardService extends ServiceProvider
            $limit_left = $company->limit_left;
         }elseif($user->has_limit == 1){
             $limit = true;
-            $company = Company::where('id', $user->company->id)->first();
-            $limit_left = $company->limit_left;
+            $limit_left = $user->limit_left;
         }
 
         if($limit){		
@@ -107,7 +106,7 @@ class CardService extends ServiceProvider
             }
         }
 		
-        if(count($user->discounts) == 0){
+        if(count($user->discounts) == 0 && count($user->company->discount) == 0){
             self::activate_card($socket, $channel);
         }else{
             $all_discounts = array();
