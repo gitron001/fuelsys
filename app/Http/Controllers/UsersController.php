@@ -227,7 +227,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        Users::where('id', $id)->update(['status' => 0]);
+        Users::where('id', $id)->update(['status' => 3]);
         session()->flash('info','Success');
 
         return redirect('/admin/users');

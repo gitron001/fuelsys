@@ -231,7 +231,7 @@ class CompaniesController extends Controller
      */
     public function destroy($id) {
 
-        Company::where('id',$id)->update(['status' => 0]);
+        Company::where('id',$id)->update(['status' => 3]);
 
         session()->flash('info','Success');
 
