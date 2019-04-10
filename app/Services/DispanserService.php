@@ -33,7 +33,7 @@ class DispanserService extends ServiceProvider
 		
         $length = count($response) - 4;
         $j = 1;
-        Products::where('pfc_id',$pfc_id)->deleted();
+        Products::where('pfc_id',$pfc_id)->delete();
         for($i = 4; $i <= $length; $i=$i+2){
             $price = pack('c', $response[$i+1]).pack('c', $response[$i]);
             $price = unpack('s', $price)[1];
@@ -108,7 +108,7 @@ class DispanserService extends ServiceProvider
 		if(!$response){ return false; } 
 
         $length = count($response) - 3;
-        Dispaneser::where('pfc_id',$pfc_id)->deleted();
+        Dispaneser::where('pfc_id',$pfc_id)->delete();
         for($i = 3; $i <= $length; $i++){
             if($response[$i] == 1){
                 $channel = ($i - 3);
