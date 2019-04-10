@@ -149,11 +149,13 @@ class CompaniesController extends Controller
         $company = Company::findOrFail($id);
 
         if($company->has_limit == 1){
-            $limit_left = $request->input('limits') - $request->input('starting_balance');
-            $request->merge(['limit_left' => $limit_left]);
+            $new_limit   = $request->input('limits') - $request->input('starting_balance');
+            $old_limit   =  $company->limits - $company->starting_balance;
+            $limit_left  =  $company->limit_left + ($new_limit - $old_limit);
         }else{
             $limit_left = 0;
         }
+        $request->merge(['limit_left' => $limit_left]);
         $company->update($request->all());
 
         // DELETE Discount

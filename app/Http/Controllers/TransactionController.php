@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
 use App\Models\Users;
@@ -243,9 +244,7 @@ class TransactionController extends Controller
         $user       = $request->input('user');
         $company    = $request->input('company');
 
-
-        $transactions = DB::table("transactions")
-            ->select("transactions.product_id",DB::RAW(" 'transaction' as type"),
+        $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
                 ,"users.name as username","transactions.created_at")
@@ -264,18 +263,16 @@ class TransactionController extends Controller
             $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
 
-        $payments = DB::table("payments")
-            ->select("payments.user_id",DB::RAW(" 'payment' as type")
+        $payments = Payments::select("payments.user_id",DB::RAW(" 'payment' as type")
                 ,"payments.amount","payments.date",
                 DB::RAW(" 0 as money"),"payments.company_id"
                 ,"users.name as username","payments.created_at")
             ->join('users', 'payments.user_id', '=', 'users.id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->union($transactions)
             ->orderBy('created_at','DESC');
 
         if ($request->input('company')) {
-            $payments->where('companies.id','=',$company);
+            $payments->where('payments.company_id','=',$company);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
@@ -293,29 +290,27 @@ class TransactionController extends Controller
 
     public static function generate_balance($request){
         $from_date  = strtotime($request->input('fromDate'));
-        $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
         $company    = $request->input('company');
+        $starting_balance = 0;
 
-        $tr = Transactions::where('transactions.created_at','<',$from_date);
-
-        if ($request->input('company')) {
-            $getUserID    = Users::where('company_id',$company)->get();
-
-            foreach ($getUserID as $rfid) {
-                $getID[] =  $rfid->id;
-            }
-
-            $tr->whereIn('user_id',$getID);
-        }
+        $tr = Transactions::where('transactions.created_at','<',$from_date)
+            ->join('users', 'payments.user_id', '=', 'users.id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('user')) {
             $tr->where('user_id','=',$user);
+            $starting_balance = Users::findorFail($company)->starting_balance;
+        }
+
+        if ($request->input('company')) {
+            $tr->where('company_id','=',$company);
+            $starting_balance = Company::findorFail($company)->starting_balance;
         }
 
         $transaction_total = $tr->sum('money');
 
-        $paymentsOLD = Payments::where('payments.date','<',$from_date);;
+        $paymentsOLD = Payments::where('payments.date','<',$from_date);
 
         if ($request->input('company')) {
             $paymentsOLD->where('payments.company_id','=',$company);
@@ -327,9 +322,9 @@ class TransactionController extends Controller
 
         $paymentsOLD = $paymentsOLD->sum('amount');
 
-        $starting_balance = $transaction_total - $paymentsOLD;
+        $balance = $transaction_total + $starting_balance - $paymentsOLD;
 
-        return $starting_balance;
+        return $balance;
     }
 
     public function search(Request $request) {
