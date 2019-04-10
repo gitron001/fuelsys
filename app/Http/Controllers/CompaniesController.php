@@ -19,7 +19,7 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companies = Company::paginate(15);
+        $companies = Company::where('status',1)->paginate(15);
 
         return view('admin/companies/home',compact('companies'));
     }
@@ -65,14 +65,14 @@ class CompaniesController extends Controller
             'tel_number'        => $request->input('tel_number'),
             'email'             => $request->input('email'),
             'address'           => $request->input('address'),
-            'starting_balance'  => $request->input('starting_balance'),
+            'starting_balance'  => $request->input('starting_balance') ? : 0,
             'contact_person'    => $request->input('contact_person'),
             'city'              => $request->input('city'),
             'country'           => $request->input('country'),
             'status'            => $request->input('status'),
-            'limits'            => $request->input('limits'),
-            'has_receipt'       => $request->input('has_receipt'),
-            'has_receipt_nr'    => $request->input('has_receipt_nr'),
+            'limits'            => $request->input('limits') ? : 0,
+            'has_receipt'       => $request->input('has_receipt') ? : 0,
+            'has_receipt_nr'    => $request->input('has_receipt_nr') ? : 0,
             'has_limit'         => $request->input('has_limit'),
             'limit_left'        => $limit_left,
             'created_at'        => now()->timestamp,
@@ -230,11 +230,11 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $company = Company::findOrFail($id);
-        $company->delete();
+
+        Company::where('id',$id)->update(['status' => 0]);
 
         session()->flash('info','Success');
 
-        return redirect('/admin/settings');
+        return redirect('/admin/companies');
     }
 }

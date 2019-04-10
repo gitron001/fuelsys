@@ -60,8 +60,8 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('type', 'Type'); !!}
-        {!! Form::text('type',null,['class'=>'form-control']); !!}
+        {!! Form::label('limit_left', 'Limit Left'); !!}
+        {!! Form::number('limit_left',null,['class'=>'form-control','step'=>'any']); !!}
     </div>
 
     <div class="form-group">

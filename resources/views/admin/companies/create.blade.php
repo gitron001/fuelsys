@@ -71,6 +71,12 @@
 		{!! $errors->first('country','<span class="help-block">:message</span>') !!}
 	</div>
 
+	<div class="form-group {{ $errors->has('limit_left') ? 'has-error' :'' }}">
+		{!! Form::label('limit_left', 'Limit Left:'); !!}
+		{!! Form::number('limit_left',null,['class'=>'form-control','step'=>'any']); !!}
+		{!! $errors->first('limit_left','<span class="help-block">:message</span>') !!}
+	</div>
+
 	<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
 		{!! Form::label('status', 'Status:'); !!}
 		{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}

@@ -21,7 +21,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = Users::paginate(15);
+        $users = Users::where('status',1)->paginate(15);
         return view('/admin/users/home',compact('users'));
     }
 
@@ -227,8 +227,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $rfid = Users::findOrFail($id);
-        $rfid->delete();
+        Users::where('id', $id)->update(['status' => 0]);
         session()->flash('info','Success');
 
         return redirect('/admin/users');
