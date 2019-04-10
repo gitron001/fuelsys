@@ -225,10 +225,10 @@ class TransactionController extends Controller
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         
 
-        /*Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
+        Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
             $m->to('orgesthaqi96@gmail.com')->subject('Raporti Mujor - Nesim Bakija');
             $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
-        });*/
+        });
 
         $myFile = $pdf->download($file_name.'.pdf');
         $response =  array(
