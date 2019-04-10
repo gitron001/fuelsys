@@ -291,7 +291,6 @@ class TransactionController extends Controller
         $payments = $payments->get();
 
 
-        // Get the fuel history
         $tr = Transactions::where('transactions.created_at','<',$from_date);
 
         if ($request->input('company')) {
