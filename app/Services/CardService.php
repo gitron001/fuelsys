@@ -55,7 +55,7 @@ class CardService extends ServiceProvider
      *
      *
      */
-    public static function check_card($socket, $channel = 1) {
+    public static function check_card($socket, $channel = 1, $pfc_id) {
 
         //Get all transaction by channel
         $channel_id = PFC::conver_to_bin($channel);
@@ -93,8 +93,7 @@ class CardService extends ServiceProvider
            $limit_left = $company->limit_left;
         }elseif($user->has_limit == 1){
             $limit = true;
-            $company = Company::where('id', $user->company->id)->first();
-            $limit_left = $company->limit_left;
+            $limit_left = $user->limit_left;
         }
 
         if($limit){		
@@ -107,8 +106,8 @@ class CardService extends ServiceProvider
             }
         }
 		
-        if(count($user->discounts) == 0){
-            self::activate_card($socket, $channel);
+        if(count($user->discounts) == 0 && count($user->company->discounts) == 0){
+					self::activate_card($socket, $channel);
         }else{
             $all_discounts = array();
             for($i = 10; $i < 15; $i++){
@@ -124,7 +123,7 @@ class CardService extends ServiceProvider
                     foreach($user->company->discounts as $c_discount){
                         if(is_null($c_discount->product_details->price)){ continue; }
                         if($c_discount->product_details->pfc_pr_id == $response[$i]) {
-                            $all_discounts[$i] = (int)($discount->product_details->price - $discount->discount*1000);
+                            $all_discounts[$i] = (int)($c_discount->product_details->price - $c_discount->discount*1000);
                             break;
                         }
                     }
@@ -160,7 +159,7 @@ class CardService extends ServiceProvider
             $command    = pack("C*",$status);
             $message = "\x1\x7\x8A".$channel_id.$command.$command;
             $the_crc = PFC::crc16($message);
-
+	
             //Start of mesasge
             $binarydata = pack("c*", 0x01);
             //Length
@@ -192,10 +191,11 @@ class CardService extends ServiceProvider
             $channel_id = PFC::conver_to_bin($channel);
             $command    = pack("c*", 0x03);
             $prices     = "";
-
+			
             for($i = 10; $i < 15; $i++){
-                $prices    .= strrev(pack('s', str_replace('.', '', $ds)));
+                $prices    .= strrev(pack('s', str_replace('.', '', $all_discounts[$i])));
             }
+		
             $message = "\x1\x11\x8A".$channel_id.$command.$command.$prices;
             //dd(unpack('c*',$message));
             $the_crc = PFC::crc16($message);
@@ -228,7 +228,6 @@ class CardService extends ServiceProvider
 
     public static function setPrepay($socket, $channel, $limit_left) {
         //Get all transaction by channel
-		echo 'limit left' . $limit_left;
         $channel_id = PFC::conver_to_bin($channel);
         $limit_left_bin = strrev(pack("I",$limit_left));
         $message = "\x1\x9\x8C".$channel_id.$limit_left_bin;
@@ -246,13 +245,10 @@ class CardService extends ServiceProvider
         //CRC
         $binarydata .= strrev(pack("s",$the_crc));
         //End of Message
-        $binarydata .= pack("c*",02);
-		
-		print_r(unpack('c*', $binarydata));
+        $binarydata .= pack("c*",02);		
 		
         $response = PFC::send_message($socket, $binarydata, $message);
-		
-		print_r($response);
+
         return true;
     }
 }

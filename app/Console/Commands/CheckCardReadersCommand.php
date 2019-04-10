@@ -68,7 +68,8 @@ class CheckCardReadersCommand extends Command
         } catch (Exception $e) {
                 dd( "Couldn't connect to socket " . $e -> getMessage() . "\n");
         }
-
+		Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();
+			
         Process::insert(array('start_time'=> time(),
                                 'refresh_time' => time(),
                                 'faild_attempt'=> 0,
