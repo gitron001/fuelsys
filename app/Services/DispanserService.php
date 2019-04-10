@@ -126,12 +126,12 @@ class DispanserService extends ServiceProvider
 
         $loadPrice = Process::where('type_id', 2)->where('pfc_id', $pfc_id)->count();
         if($loadPrice != 0){
-            Dispanser::fuelPrices($socket,$pfc_id);
+            self::fuelPrices($socket,$pfc_id);
             Process::where('type_id', 2)->where('pfc_id', $pfc_id)->delete();
         }
         $loadChannel = Process::where('type_id', 3)->where('pfc_id', $pfc_id)->count();
         if($loadChannel != 0){
-            Dispanser::dispanserChannels($socket, $pfc_id);
+            self::dispanserChannels($socket, $pfc_id);
             Process::where('type_id', 3)->where('pfc_id', $pfc_id)->delete();
         }
 
