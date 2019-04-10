@@ -128,20 +128,13 @@ class CardService extends ServiceProvider
                         }
                     }
                 }
-            }
-            $products = Products::where('pfc_id', $pfc_id)->where('status', 1)->get();
-            for($i = 10; $i < 15; $i++){
-                if(!isset($all_discounts[$i] )){
-                    foreach($products as $pr) {
-                        if($pr->pfc_pr_id == $response[$i]){
-                            $all_discounts[$i] = (int)$pr->price;
-                            break;
-                        }
-                    }
+
+                if(!isset($all_discounts[$i])){
+                    $products = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $response[$i])->where('status', 1)->first();
+                    $all_discounts[$i] = (int)$products->price;
                 }
             }
-
-           self::activate_card_discount($socket, $channel, $all_discounts);
+            self::activate_card_discount($socket, $channel, $all_discounts);
         }
 
         return true;
