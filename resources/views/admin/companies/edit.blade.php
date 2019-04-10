@@ -25,12 +25,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('fis_number', 'Fis.Number'); !!}
-        {!! Form::text('fis_number',null,['class'=>'form-control']); !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('tax_number', 'tax.Number'); !!}
+        {!! Form::label('tax_number', 'Tax.Number'); !!}
         {!! Form::text('tax_number',null,['class'=>'form-control']); !!}
     </div>
 

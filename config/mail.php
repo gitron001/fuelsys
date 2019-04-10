@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'fuelsystem.ks@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Fuel System'),
     ],
 
     /*
@@ -84,9 +84,8 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME'),
-
-    'password' => env('MAIL_PASSWORD'),
+    'username' =>  env('MAIL_USERNAME', 'fuelsystem.ks@gmail.com'),
+    'password' => env('MAIL_PASSWORD', 'FuelSystemnb2019'),
 
     /*
     |--------------------------------------------------------------------------
