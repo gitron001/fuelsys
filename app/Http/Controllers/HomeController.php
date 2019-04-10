@@ -38,13 +38,18 @@ class HomeController extends Controller
         $title = 'Title';
         $content = 'Content';
 
-        Mail::raw('', function ($m) {
-            $m->from('ideal.bakija@turbado.eu', 'Turbado Monitoring');
+        Mail::send('emails.report', ['title' => $title, 'content' => $content], function ($message)
+        {
 
-            $m->to('ideal.bakija@gmail.com')->subject("Fatal error");
+            $message->from('orges1@hotmail.com', 'Christian Nwamba');
+
+            $message->to('orges1@hotmail.com');
+
+
+            //Add a subject
+            $message->subject("Hello from Scotch");
+
         });
-
-        return response()->json(['message' => 'Request completed']);
         
     }
 }
