@@ -25,12 +25,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('fis_number', 'Fis.Number'); !!}
-        {!! Form::text('fis_number',null,['class'=>'form-control']); !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('tax_number', 'tax.Number'); !!}
+        {!! Form::label('tax_number', 'Tax.Number'); !!}
         {!! Form::text('tax_number',null,['class'=>'form-control']); !!}
     </div>
 
@@ -65,13 +60,13 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('type', 'Type'); !!}
-        {!! Form::text('type',null,['class'=>'form-control']); !!}
+        {!! Form::label('limit_left', 'Limit Left'); !!}
+        {!! Form::number('limit_left',null,['class'=>'form-control','step'=>'any']); !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('status', 'Status'); !!}
-        {!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
+        {!! Form::select('status',[1=>'Active',2=>'No Active',],null,['class'=>'form-control']); !!}
     </div>
     <div class="form-group">
         {!! Form::label('has_receipt', 'Has Receipt'); !!}

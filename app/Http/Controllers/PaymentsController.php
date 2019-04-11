@@ -123,13 +123,23 @@ class PaymentsController extends Controller
             $user_id      = 0;
             $company_id   = $request->input('company_id');   
         }
-
-
+        $amount  = $request->input('amount');
+        if($payments->amount != $amount && $payments->user_id == $user_id && $request->input('checkbox')== 'user'){
+            $limit_difference = $amount - $payments->amount;
+            $user = Users::find($request->input('user_id'));
+            $user->limit_left += $limit_difference;
+            $user->save();
+        }elseif($payments->amount != $amount && $payments->company_id == $company_id && $request->input('checkbox') != 'user'){
+            $limit_difference = $amount - $payments->amount;
+            $company = Company::find($request->input('company_id'));
+            $company->limit_left += $limit_difference;
+            $company->save();
+        }
 
         if($payments->user_id != $user_id){
             if($payments->user_id != 0){
                 $prev_user = Users::find($payments->user_id);
-                $prev_user->limit_left -= $request->input('amount');
+                $prev_user->limit_left -= $payments->amount;
                 $prev_user->update();
             }
 
@@ -143,7 +153,7 @@ class PaymentsController extends Controller
         if($payments->company_id != $company_id){
             if($payments->company_id != 0){
                 $prev_company = Company::find($payments->company_id);
-                $prev_company->limit_left -= $request->input('amount');
+                $prev_company->limit_left -= $payments->amount;
                 $prev_company->update();
             }
 
@@ -157,7 +167,7 @@ class PaymentsController extends Controller
         $payments->user_id      = $user_id;
         $payments->company_id   = $company_id;   
         $payments->date         = strtotime($request->input('date'));
-        $payments->amount       = $request->input('amount');
+        $payments->amount       = $amount;
         $payments->updated_at   = now()->timestamp;
         $payments->update();
 
