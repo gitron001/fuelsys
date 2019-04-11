@@ -26,6 +26,7 @@
                   <th>Contact Person</th>
                   <th>Email</th>
                   <th>Status</th>
+                  <th>Limit Left</th>
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Edit</th>
@@ -41,6 +42,7 @@
                     <td>{{ $company->contact_person }}</td>
                     <td>{{ $company->email }}</td>
                     <td>{{ $company->status == 1 ? 'Active' : 'No active'  }}</td>
+                    <td>{{ $company->limit_left }}</td>
                   	<td>{{ $company->created_at->diffForHumans() }}</td>
                   	<td>{{ $company->updated_at->diffForHumans() }}</td>
                   	<td><a href="{{ url('admin/companies/'.$company->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>

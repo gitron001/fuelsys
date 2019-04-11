@@ -123,8 +123,8 @@ class TransactionController extends Controller
     public function excel_export(Request $request) {
 
         $transactions       = self::generate_data($request);
-        $balance        = self::generate_balance($request);
-
+        $balance        	= self::generate_balance($request);
+		
         $total = 0;
         $totalToPay = 0;
         $totalAmount = 0;
@@ -178,7 +178,7 @@ class TransactionController extends Controller
                     $total = $total + $fueling - $payment;
                     
                     $sheet->appendRow(array(
-                        (!empty($row->date)) ? date('m/d/Y h:i:sa',$row->date) : date('m/d/Y h:i:sa',$row->created_at),
+                        $row->created_at,
                         $row->type,
                         $row->username,
                         $fueling,
