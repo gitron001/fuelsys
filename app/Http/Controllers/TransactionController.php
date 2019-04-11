@@ -295,7 +295,7 @@ class TransactionController extends Controller
         $starting_balance = 0;
 
         $tr = Transactions::where('transactions.created_at','<',$from_date)
-            ->join('users', 'payments.user_id', '=', 'users.id')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('user')) {
