@@ -68,9 +68,9 @@ class CardService extends ServiceProvider
             . pack("c*", $channel)
             . strrev(pack("s", $the_crc))
             . pack("c*", 02);
-
+		
         $response = PFC::send_message($socket, $binarydata, $message);
-			
+
 		if(!$response){ return false; } 
 		
         $cardNumber = pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]).pack('c', $response[5]);
@@ -145,8 +145,7 @@ class CardService extends ServiceProvider
      *
      * @return void
      */
-    public static function activate_card($socket, $channel = 1, $status = 3)
-    {
+    public static function activate_card($socket, $channel = 1, $status = 3) {
             //Get all transaction by channel
             $channel_id = PFC::conver_to_bin($channel);
             $command    = pack("C*",$status);
