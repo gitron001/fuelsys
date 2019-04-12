@@ -124,7 +124,7 @@ class TransactionController extends Controller
 
         $transactions       = self::generate_data($request);
         $balance        	= self::generate_balance($request);
-		
+
         $total = 0;
         $totalToPay = 0;
         $totalAmount = 0;
@@ -269,7 +269,7 @@ class TransactionController extends Controller
                 ,"users.name as username","payments.created_at")
             ->leftJoin('users', 'payments.user_id', '=', 'users.id')
             ->union($transactions)
-            ->orderBy('created_at','DESC');
+            ->orderBy('created_at','ASC');
 
         if ($request->input('company')) {
             $payments->where('payments.company_id','=',$company);
@@ -300,7 +300,7 @@ class TransactionController extends Controller
 
         if ($request->input('user')) {
             $tr->where('user_id','=',$user);
-            $starting_balance = Users::findorFail($company)->starting_balance;
+            $starting_balance = Users::findorFail($user)->starting_balance;
         }
 
         if ($request->input('company')) {
