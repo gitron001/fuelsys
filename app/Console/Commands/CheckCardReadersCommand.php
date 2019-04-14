@@ -81,8 +81,8 @@ class CheckCardReadersCommand extends Command
                             ));
         while(true){
 
-            Dispanser::checkForUpdates($socket, $pfc_id);
-			
+            $dispanser_status = Dispanser::checkForUpdates($socket, $pfc_id);
+			if(!$dispanser_status){ break; }
             CardService::check_readers($socket, $pfc_id);
             usleep(150000);
             TransactionService::read($socket, $pfc_id);
