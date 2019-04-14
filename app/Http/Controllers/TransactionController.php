@@ -130,7 +130,7 @@ class TransactionController extends Controller
         $totalAmount = 0;
         $totalPayed = 0;
 
-        $totalAmount = $balance;
+        $totalAmount = number_format($balance, 2);
         $startDate = $request->fromDate;
 
         
@@ -351,7 +351,7 @@ class TransactionController extends Controller
         if ($request->input('fromDate')) {
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
-
+        $query->orderBy('transactions.created_at', 'DESC');
         $data = $query->get();
 
         $output = '';
