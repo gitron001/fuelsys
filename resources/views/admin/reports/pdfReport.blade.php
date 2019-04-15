@@ -102,7 +102,7 @@
 		?>
 
 	  <tr>
-	    <th scope="row">{{ (!empty($py->date)) ? date('m/d/Y h:i:sa',$py->date) : date('m/d/Y h:i:sa',$py->created_at) }}</th>
+	    <th scope="row">{{ $py->created_at }}</th>
 	    <td>{{ $py->type}}</td>
 	    <td align="right">{{ $py->username }}</td>
 	    <td align="right">{{ $fueling }}</td>

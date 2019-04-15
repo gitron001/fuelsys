@@ -111,8 +111,7 @@ class PaymentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
 
         $payments = Payments::findOrFail($id);
 
@@ -188,118 +187,21 @@ class PaymentsController extends Controller
     public function destroy($id)
     {
         $payment = Payments::findOrFail($id);
+
+        if($payments->user_id != 0){
+            $user = Users::find($payments->user_id);
+            $user->limit_left -=  $payments->amount;
+            $user->save();
+        }elseif($payments->company_id != 0){
+            $company = Company::find($payments->company_id);
+            $company->limit_left -= $payments->amount;
+            $company->save();
+        }
         $payment->delete();
         session()->flash('info','Success');
 
         return redirect('/admin/payments');
     }
-
-    
-    public function printFunction($id)
-    {
-        $recepit = new PrintFuelRecept($id);
-        $this->dispatch($recepit);
-
-
-        dd('Hell YEAHHH' . $id);
-        try {
-            
-            $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
-            $transaction    = Transaction::where('id', $id)->first();
-            $image          = public_path().'/images/nesim-bakija.png';
-            $logo           = EscposImage::load($image, false);
-            $printer        = new Printer($connector);
-            $date           = date("F j, Y, H:i", strtotime('+1 hour'));
-
-            /* Print top logo */
-            $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            $printer -> graphics($logo);
-            $printer->text("\n");
-            
-            /* Name & Info of Company */
-            $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-            $printer->setEmphasis(true);
-            $printer->text("Nesim Bakija SH.P.K.\n");
-            $printer->setEmphasis(false);
-            $printer->selectPrintMode(); 
-            $printer->text("\n");
-            $printer->text("Rruga Skënderbeu, Gjakovë, Kosovë\n"); // blank line
-            $printer->text("NRB. 810235722\n"); 
-            $printer->text("________________________________________________\n");
-            $printer -> feed(2);
-
-
-            $printer->setLineSpacing(32);
-            $printer->setJustification(Printer::JUSTIFY_LEFT);
-
-            $printer->text("PRODUKTI                LIT      ÇMIMI  TOTALI  \n");     
-            $printer->setEmphasis(false);
-            $printer->text("------------------------------------------------\n");
-
-            $total = ($transaction['lit']*($transaction['price'] / 1000));
-            $totalPrice = round($total,2).' E ';
-            $transaction->product->name = substr($transaction->product->name, 0, 18);
-            $item = new item($transaction->product->name, $transaction['lit'] ,$transaction['price'] , $totalPrice);
-
-            $printer->textRaw($item);
-
-            $printer->text("------------------------------------------------\n");
-
-            $printer -> feed(2);
-            $printer->text("Kilometrat: ____________________________________\n");
-            $printer->text("\n"); // blank line
-            $printer->text('Përdoruesi: '.$transaction->users->name. "\n");
-            $printer->text("\n"); // blank line
-
-            if($transaction->users->company->name){
-                $printer->text('Kompania: '.$transaction->users->company->name. "\n");
-                $printer->text("\n");
-                $printer->text('Makina: '.$transaction->users->vehicle. "\n");
-                $printer->text("\n"); 
-                $printer->text('Tabelat: '.$transaction->users->plates. "\n");
-                $printer->text("\n"); 
-            }
-
-            /* Footer */
-            $printer -> feed(2);
-            $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            $printer -> text("Ju faleminderit / Thank You\n");
-            $printer -> feed(2);
-            $printer -> text($date . "\n");
-
-            $printer -> cut();
-            $printer -> close();
-
-        } catch (Exception $e) {
-            echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
-        }
-    }
 }
 
-class item {
-    private $name;
-    private $price;
-    private $dollarSign;
 
-    public function __construct($name = '', $lit, $price, $total = '' )
-    {
-        $this -> name   = $name;
-        $this -> price  = $price;
-        $this -> lit    = $lit;
-        $this -> total  = $total;
-    }
-
-    public function __toString()
-    {
-        $rightCols = 10;
-        $leftCols = 22;
-        
-        $left = str_pad($this -> name, $leftCols) ;
-
-        $lit = $this -> lit;
-        $price = $this -> price/1000;
-       
-        $right = str_pad(' '.$lit.'     '.$price.'   ' . $this -> total, $rightCols, ' ', STR_PAD_LEFT);
-        return "$left$right\n";
-    }
-}

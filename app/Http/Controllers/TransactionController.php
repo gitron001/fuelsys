@@ -122,23 +122,23 @@ class TransactionController extends Controller
 
     public function excel_export(Request $request) {
 
-        $payments       = self::generate_data($request);
-        $balance        = self::generate_balance($request);
+        $transactions       = self::generate_data($request);
+        $balance        	= self::generate_balance($request);
 
         $total = 0;
         $totalToPay = 0;
         $totalAmount = 0;
         $totalPayed = 0;
 
-        $totalAmount = $balance;
+        $totalAmount = number_format($balance, 2);
         $startDate = $request->fromDate;
 
         
         $file_name  = 'Transaction - '.date('Y-m-d', time());
            
-        $myFile = Excel::create($file_name, function($excel) use( $payments,$totalAmount,$startDate ) 
+        $myFile = Excel::create($file_name, function($excel) use( $transactions,$totalAmount,$startDate )
         {
-            $excel->sheet('Transaction', function($sheet) use( $payments,$totalAmount,$startDate ) 
+            $excel->sheet('Transaction', function($sheet) use( $transactions,$totalAmount,$startDate )
             {
 
                 if($totalAmount != 0){ $total = $totalAmount; }else{ $total = 0; };
@@ -166,7 +166,7 @@ class TransactionController extends Controller
                         $cell->setValue($totalAmount);
                 });
                 
-                foreach ($payments as $row)
+                foreach ($transactions as $row)
                 {
                     if($row->money == 0){
                         $fueling = 0;
@@ -178,7 +178,7 @@ class TransactionController extends Controller
                     $total = $total + $fueling - $payment;
                     
                     $sheet->appendRow(array(
-                        (!empty($row->date)) ? date('m/d/Y h:i:sa',$row->date) : date('m/d/Y h:i:sa',$row->created_at),
+                        $row->created_at,
                         $row->type,
                         $row->username,
                         $fueling,
@@ -248,7 +248,7 @@ class TransactionController extends Controller
                 DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
                 ,"users.name as username","transactions.created_at")
-            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');;
 
         if ($request->input('company')) {
@@ -267,9 +267,9 @@ class TransactionController extends Controller
                 ,"payments.amount","payments.date",
                 DB::RAW(" 0 as money"),"payments.company_id"
                 ,"users.name as username","payments.created_at")
-            ->join('users', 'payments.user_id', '=', 'users.id')
+            ->leftJoin('users', 'payments.user_id', '=', 'users.id')
             ->union($transactions)
-            ->orderBy('created_at','DESC');
+            ->orderBy('created_at','ASC');
 
         if ($request->input('company')) {
             $payments->where('payments.company_id','=',$company);
@@ -295,12 +295,12 @@ class TransactionController extends Controller
         $starting_balance = 0;
 
         $tr = Transactions::where('transactions.created_at','<',$from_date)
-            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('user')) {
             $tr->where('user_id','=',$user);
-            $starting_balance = Users::findorFail($company)->starting_balance;
+            $starting_balance = Users::findorFail($user)->starting_balance;
         }
 
         if ($request->input('company')) {
@@ -351,7 +351,7 @@ class TransactionController extends Controller
         if ($request->input('fromDate')) {
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
-
+        $query->orderBy('transactions.created_at', 'DESC');
         $data = $query->get();
 
         $output = '';
