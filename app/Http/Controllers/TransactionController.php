@@ -335,8 +335,8 @@ class TransactionController extends Controller
         $company    = $request->input('company');
 
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
-           'transactions.price', 'transactions.lit','transactions.created_at')
-            ->leftJoin('products', 'products.id', '=', 'transactions.product_id')
+           'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
