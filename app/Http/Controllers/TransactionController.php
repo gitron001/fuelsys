@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
+use Illuminate\Support\Facades\Input;
 use App\Models\Users;
 use App\Models\PFC;
 use App\Models\Dispaneser;
@@ -115,15 +116,15 @@ class TransactionController extends Controller
 
         return redirect('/admin/transactions');
     }
-	
-	public function read() {
+    
+    public function read() {
         TransactionService::read();
     }
 
     public function excel_export(Request $request) {
 
         $transactions       = self::generate_data($request);
-        $balance        	= self::generate_balance($request);
+        $balance            = self::generate_balance($request);
 
         $total = 0;
         $totalToPay = 0;
@@ -335,8 +336,8 @@ class TransactionController extends Controller
         $company    = $request->input('company');
 
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
-           'transactions.price', 'transactions.lit','transactions.created_at')
-            ->leftJoin('products', 'products.id', '=', 'transactions.product_id')
+           'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
@@ -380,5 +381,38 @@ class TransactionController extends Controller
         $data['table_data'] = $output;
 
         echo json_encode($data);
+    }
+
+    public function searchWithPagination(Request $request) {
+        $users          = Users::pluck('name','id')->all();
+        $companies      = Company::pluck('name','id')->all();
+
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
+        $user       = $request->input('user');
+        $company    = $request->input('company');
+
+        $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
+           'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
+
+        if ($request->input('user')) {
+            $query = $query->where('users.id',$user);
+        }
+
+        if ($request->input('company')) {
+            $query = $query->where('companies.id',$company);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
+        $query->orderBy('transactions.created_at', 'DESC');
+        $transactions = $query->paginate(5);
+
+        return view('/admin/transactions/home',compact('transactions','users','companies'));
+
     }
 } 

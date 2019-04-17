@@ -34,7 +34,7 @@ class CardService extends ServiceProvider
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
-
+		echo 'ok';
 		if(!$response){ return false; } 
 		
         //Get all transaction by channel
@@ -70,12 +70,12 @@ class CardService extends ServiceProvider
             . pack("c*", 02);
 		
         $response = PFC::send_message($socket, $binarydata, $message);
-
-		if(!$response){ return false; } 
 		
+		if(!$response){ return false; } 
+	
         $cardNumber = pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]).pack('c', $response[5]);
         $cardNumber = unpack('i', $cardNumber)[1];
-
+		
         //echo '<br> Card Number: '. $cardNumber;
         $user = Users::where("rfid", $cardNumber)->where('status', 1)->first();
         $card_count = Users::where("rfid", $cardNumber)->where('status', 1)->count();

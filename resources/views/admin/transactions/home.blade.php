@@ -1,3 +1,4 @@
+<?php use Illuminate\Support\Facades\Input; ?>
 @extends('adminlte::page')
 
 @section('content')
@@ -14,41 +15,41 @@
              <button type="button" class="btn btn-primary" id="exportPDF">PDF</button>
           </div>
           <div class="col-md-10">
-            <form class="form-inline">
+            <form class="form-inline" method="GET" action="{{ URL::to('/admin/transactions') }}">
 
                 <div class="form-row">
                   <div class="form-group">
                     <label for="Start Date:">Start Date:</label>
-                    <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="from_date">
+                    <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{Input::get("fromDate")}}">
                   </div>
 
                   <div class="form-group">
                     <label for="End Date:">End Date:</label>
-                    <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="to_date">
+                    <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
                   </div>
 
                   <div class="form-group">
                     <label for="User:">User:</label>
-                    <select class="form-control" id="user">
+                    <select class="form-control" id="user" name="user">
                       <option value="">Choose a User</option>
                         @foreach($users as $id => $name)
-                          <option value="{{ $id }}">{{ $name }}</option>
+                          <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
                         @endforeach
                     </select> 
                   </div>
 
                   <div class="form-group">
                     <label for="User:">Company:</label>
-                    <select class="form-control" id="company">
+                    <select class="form-control" id="company" name="company">
                       <option value="">Choose a Company</option>
                         @foreach($companies as $id => $name)
-                          <option value="{{ $id }}">{{ $name }}</option>
+                          <option value="{{ $id }}" {{ (Input::get("company") == $id ? "selected":"") }}>{{ $name }}</option>
                         @endforeach
                     </select> 
                   </div>
 
                   <div class="form-group">
-                    <button type="button" class="btn btn-success" id="search">Search</button>
+                    <button type="submit" class="btn btn-success" id="search">Search</button>
                   </div>
                 </div>
               </form>
@@ -71,21 +72,33 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($transactions as $transaction)
-                <tr>
-                    <td>{{ $transaction->users ? $transaction->users->name : '' }}</td>
-                    <td>{{ $transaction->users->company ? $transaction->users->company->name : '' }}</td>
-                    <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
-                    <td>{{ $transaction->price }}</td>
-                    <td>{{ $transaction->lit }}</td>
-                    <td>{{ $transaction->money }}</td>
-                    <td>{{ $transaction->created_at }}</td>
-                </tr>
-                @endforeach
+                @if(Request::isMethod('get'))
+                  @foreach($transactions as $transaction)
+                    <tr>
+                        <td>{{ $transaction->user_name ? $transaction->user_name : '' }}</td>
+                        <td>{{ $transaction->comp_name ? $transaction->comp_name : '' }}</td>
+                        <td>{{ $transaction->product ? $transaction->product : '' }}</td>
+                        <td>{{ $transaction->price }}</td>
+                        <td>{{ $transaction->lit }}</td>
+                        <td>{{ $transaction->money }}</td>
+                        <td>{{ $transaction->created_at }}</td>
+                    </tr>
+                  @endforeach
+                @else
+                  @foreach($transactions as $transaction)
+                      <td>{{ $transaction->user_name ? $transaction->users->name : '' }}</td>
+                      <td>{{ $transaction->users->company ? $transaction->users->company->name : '' }}</td>
+                      <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
+                      <td>{{ $transaction->price }}</td>
+                      <td>{{ $transaction->lit }}</td>
+                      <td>{{ $transaction->money }}</td>
+                      <td>{{ $transaction->created_at }}</td>
+                  @endforeach
+                @endif
                 </tfoot>
               </table>
               <div class="text-center">
-                {{ $transactions->links() }}
+                {{ $transactions->appends(Request::input())->links() }}
               </div>
             </div>
         </div>
@@ -101,6 +114,11 @@
 @section('js')
 
 <script>
+
+    function get(name){
+     if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+        return decodeURIComponent(name[1]);
+    }
 
     $(function () {
         var date = new Date();
@@ -130,7 +148,7 @@
   });
 
 
-  $(document).ready(function(){
+  /*$(document).ready(function(){
     $('#search').click(function(){
       var fromDate = $('[name=from_date]').val();
       var toDate = $('[name=to_date]').val();
@@ -150,7 +168,7 @@
       });
 
     });
-  });
+  });*/
 
   $(document).ready(function(){
     $('#exportEXCEL').click(function(){
