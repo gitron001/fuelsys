@@ -188,13 +188,13 @@ class PaymentsController extends Controller
     {
         $payment = Payments::findOrFail($id);
 
-        if($payments->user_id != 0){
-            $user = Users::find($payments->user_id);
-            $user->limit_left -=  $payments->amount;
+        if($payment->user_id != 0){
+            $user = Users::find($payment->user_id);
+            $user->limit_left -=  $payment->amount;
             $user->save();
-        }elseif($payments->company_id != 0){
-            $company = Company::find($payments->company_id);
-            $company->limit_left -= $payments->amount;
+        }elseif($payment->company_id != 0){
+            $company = Company::find($payment->company_id);
+            $company->limit_left -= $payment->amount;
             $company->save();
         }
         $payment->delete();
