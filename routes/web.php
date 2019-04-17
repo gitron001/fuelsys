@@ -36,6 +36,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/pdf','TransactionController@exportPDF');
 
 	Route::get('/sendemail','HomeController@email');
+
+	Route::get('/admin/transactions','TransactionController@searchWithPagination');
 });
 
 
