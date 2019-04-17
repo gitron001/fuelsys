@@ -23,6 +23,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::resource('/admin/branches', 'BranchController');
 	Route::resource('/admin/users', 'UsersController');
 	Route::resource('/admin/payments', 'PaymentsController');
+	Route::get('/payments/generate/{$id}','TransactionController@printFunction');
 	Route::resource('/admin/pfc', 'PFCController');
 
 	Route::resource('/admin/settings', 'SettingsController');

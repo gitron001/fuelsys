@@ -17,7 +17,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="table table-bordered table-hover table-responsive">
                 <thead>
                 <tr>
                   <th>Date</th>
@@ -26,8 +26,7 @@
                   <th>Company</th>
                   <th>Created At</th>
                   <th>Updated At</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>Option</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,13 +38,24 @@
                     <td>{{ $payment->company ? $payment->company->name : 'Empty' }}</td>
                   	<td>{{ $payment->created_at->diffForHumans() }}</td>
                   	<td>{{ $payment->updated_at->diffForHumans() }}</td>
-                  	<td><a href="{{ url('admin/payments/'.$payment->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
-                    <td>
-                      {!! Form::open(['method'=>'DELETE', 'action'=>['PaymentsController@destroy',$payment->id]]) !!}
-                        <div class="form-group">
-                          {!! Form::button('Delete', ['class'=>'btn btn-block btn-danger delete-item']); !!}
-                        </div>
-                     {!! Form::close() !!}
+                    <td width="12%">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Options</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                          <span class="caret"></span>
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li class="text-center"><a href="{{ url('admin/payments/'.$payment->id.'/edit') }}"><i class="fa fa-edit"></i></button>Edit</a></li>
+                          <li class="text-center"><a href="{{ url('admin/payments/'.$payment->id) }}"><i class="fa fa-print"></i></button>Generate Bill</a></li>
+                          <li class="divider"></li>
+                          <li>
+                            {!! Form::open(['method'=>'DELETE', 'action'=>['PaymentsController@destroy',$payment->id]]) !!}
+                              {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete',['class'=>'btn btn-block btn-danger delete-item']); !!}
+                            {!! Form::close() !!}
+                          </li>
+                        </ul>
+                      </div>
                     </td>
                 </tr>
                 @endforeach
