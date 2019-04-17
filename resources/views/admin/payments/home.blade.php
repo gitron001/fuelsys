@@ -26,7 +26,7 @@
                   <th>Company</th>
                   <th>Created At</th>
                   <th>Updated At</th>
-                  <th>Option</th>
+                  <th>Options</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,24 +38,10 @@
                     <td>{{ $payment->company ? $payment->company->name : 'Empty' }}</td>
                   	<td>{{ $payment->created_at->diffForHumans() }}</td>
                   	<td>{{ $payment->updated_at->diffForHumans() }}</td>
-                    <td width="12%">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-primary">Options</button>
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                          <span class="caret"></span>
-                          <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                          <li class="text-center"><a href="{{ url('admin/payments/'.$payment->id.'/edit') }}"><i class="fa fa-edit"></i></button>Edit</a></li>
-                          <li class="text-center"><a href="{{ url('admin/payments/'.$payment->id) }}"><i class="fa fa-print"></i></button>Generate Bill</a></li>
-                          <li class="divider"></li>
-                          <li>
-                            {!! Form::open(['method'=>'DELETE', 'action'=>['PaymentsController@destroy',$payment->id]]) !!}
-                              {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete',['class'=>'btn btn-block btn-danger delete-item']); !!}
-                            {!! Form::close() !!}
-                          </li>
-                        </ul>
-                      </div>
+                    <td class="text-center" width="8%">
+                      <a href="{{ url('admin/payments/'.$payment->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
+                      <a href="{{ url('admin/payments/'.$payment->id) }}" data-toggle="tooltip" title="Generate bill"><i class="fa fa-print"></i></a>&nbsp;
+                      <a href="{{ route('payment.delete', $payment->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 @endforeach
