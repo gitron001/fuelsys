@@ -3,7 +3,9 @@
 <script>
 
   // Sweet Alert confirmation before delete
-  $(document).on('click', '.delete-item', function(){
+  $(document).on('click', '.delete-item', function(e){
+    e.preventDefault();
+    var link = $(this).attr('href');
      swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover this!",
@@ -13,12 +15,18 @@
       })
       .then((willDelete) => {
         if (willDelete) {
-          $(this).closest('form').submit();
           swal("Success!", "Record deleted successfully!", "success");
+          window.location.href = link;
         } else {
           swal("The current change request has been cancelled.");
         }
       });
+
+      return false;
+  });
+
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
   });
 
 

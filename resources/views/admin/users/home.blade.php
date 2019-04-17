@@ -44,24 +44,10 @@
                     <td>{{ $user->vehicle }}</td>
                     <td>{{ $user->created_at->diffForHumans() }}</td>
                   	<td>{{ $user->updated_at->diffForHumans() }}</td>
-                    <td width="12%">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-primary">Options</button>
-                        <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown">
-                          <span class="caret"></span>
-                          <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                          <li class="text-center"><a href="{{ url('admin/users/'.$user->id.'/edit') }}"><i class="fa fa-edit"></i></button>Edit</a></li>
-                          <li class="divider"></li>
-                          <li>
-                            {!! Form::open(['method'=>'DELETE', 'action'=>['UsersController@destroy',$user->id]]) !!}
-                              {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete',['class'=>'btn btn-block btn-danger delete-item']); !!}
-                            {!! Form::close() !!}
-                          </li>
-                        </ul>
-                      </div>
-                    </td>
+                    <td class="text-center" width="8%">
+                      <a href="{{ url('admin/users/'.$user->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
+                      <a href="{{ route('user.delete', $user->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
+                    </td>    
                 </tr>
                 @endforeach
                 </tfoot>
