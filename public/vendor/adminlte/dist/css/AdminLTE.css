@@ -4975,3 +4975,6 @@ table.text-center th {
     white-space: normal !important;
   }
 }
+.fa {
+  padding: 100px;
+}
