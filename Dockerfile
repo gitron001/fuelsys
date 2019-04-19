@@ -24,7 +24,9 @@ RUN apt-get update && apt-get install -y \
     supervisor \
     smbclient \
     ssmtp \
-    mailutils
+    mailutils \
+    node \
+    npm
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

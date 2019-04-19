@@ -90,15 +90,14 @@ class CardService extends ServiceProvider
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
            $limit = true;
            $company = Company::where('id', $user->company->id)->first();
-           $limit_left = $company->limit_left;
+           $limit_left = (int) $company->limit_left;
         }elseif($user->has_limit == 1){
             $limit = true;
-            $limit_left = $user->limit_left;
+            $limit_left = (int) $user->limit_left;
         }
 
         if($limit){		
-            if($limit_left < 0){
-                self::activate_card($socket, $channel, 1);
+            if($limit_left <= 0){
 				return false;
             }else{
 				$limit_left = $limit_left*100;
