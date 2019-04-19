@@ -24,24 +24,19 @@
                   <th>PFC</th>
                   <th>Created At</th>
                   <th>Updated At</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>Options</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($dispanesers as $dispaneser)
                 <tr>
                   	<td>{{ $dispaneser->name }}</td>
-                    <td>{{ $dispaneser->pfc->name }}</td>
+                    <td>{{ $dispaneser->pfc ? $dispaneser->pfc->name : '' }}</td>
                   	<td>{{ $dispaneser->created_at->diffForHumans() }}</td>
                   	<td>{{ $dispaneser->updated_at->diffForHumans() }}</td>
-                  	<td><a href="{{ url('admin/dispanesers/'.$dispaneser->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
-                    <td>
-                      {!! Form::open(['method'=>'DELETE', 'action'=>['DispaneserController@destroy',$dispaneser->id]]) !!}
-                        <div class="form-group">
-                          {!! Form::button('Delete', ['class'=>'btn btn-block btn-danger delete-item']); !!}
-                        </div>
-                     {!! Form::close() !!}
+                    <td class="text-center" width="8%">
+                      <a href="{{ url('admin/dispanesers/'.$dispaneser->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
+                      <a href="{{ route('dispaneser.delete', $dispaneser->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 @endforeach

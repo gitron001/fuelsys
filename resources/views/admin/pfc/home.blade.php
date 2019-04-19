@@ -28,8 +28,7 @@
                   <th>Import Channels</th>
                   <th>Update Prices</th>
                   <th>Import Prices</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>Options</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -55,13 +54,9 @@
                         <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-block btn-success">Import Prices</button>
                         {!! Form::close() !!}
                     </td>
-                    <td><a href="{{ url('admin/pfc/'.$p->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
-                    <td>
-                      {!! Form::open(['method'=>'DELETE', 'action'=>['PFCController@destroy',$p->id]]) !!}
-                        <div class="form-group">
-                          {!! Form::button('Delete', ['class'=>'btn btn-block btn-danger delete-item']); !!}
-                        </div>
-                     {!! Form::close() !!}
+                    <td class="text-center" width="8%">
+                      <a href="{{ url('admin/pfc/'.$p->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
+                      <a href="{{ route('pfc.delete', $p->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 @endforeach

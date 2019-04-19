@@ -26,8 +26,7 @@
                   <th>PFC</th>
                   <th>Created At</th>
                   <th>Updated At</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>Options</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,13 +38,9 @@
                     <td>{{ $product->pfc ? $product->pfc->name : '' }}</td>
                     <td>{{ $product->created_at->diffForHumans() }}</td>
                   	<td>{{ $product->updated_at->diffForHumans() }}</td>
-                  	<td><a href="{{ url('admin/products/'.$product->id.'/edit') }}"><button type="button" class="btn btn-block btn-primary">Edit</button></a></td>
-                    <td>
-                      {!! Form::open(['method'=>'DELETE', 'action'=>['ProductController@destroy',$product->id]]) !!}
-                        <div class="form-group">
-                          {!! Form::button('Delete', ['class'=>'btn btn-block btn-danger delete-item']); !!}
-                        </div>
-                     {!! Form::close() !!}
+                    <td class="text-center" width="8%">
+                      <a href="{{ url('admin/products/'.$product->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
+                      <a href="{{ route('product.delete', $product->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 @endforeach

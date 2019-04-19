@@ -28,8 +28,8 @@
   <table class="table table-bordered text-center">
     <thead>
       <tr>
-        <th>RFID</th>
         <th>Name</th>
+        <th>Product</th>
         <th>Amount</th>
         <th>Date</th>
       </tr>
@@ -37,10 +37,10 @@
     <tbody>
 	@foreach($transactions as $transaction)
       <tr>
-        <td>{{ $transaction->users ? $transaction->users->rfid : '' }}</td>
-        <td>{{ $transaction->users ? $transaction->users->name : '' }}</td>
+        <td>{{ $transaction->users ? $transaction->users->name : '' }} {{ $transaction->users->company->name != '' ? '( '.$transaction->users->company->name.' )' : '' }}</td>
+        <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
         <td>{{ $transaction->money }}</td>
-        <td>{{ $transaction->created_at->format('H:i:s') }}</td>
+        <td>{{ $transaction->created_at->format('m-d H:i:s') }}</td>
       </tr>
 	@endforeach
     </tbody>
