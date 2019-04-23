@@ -56,6 +56,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Transactions - Generate EXCEL & PDF 
 	Route::post('/transaction/excel_export', 'TransactionController@excel_export');
     //Route::post('/admin/pfc/command/{pfc_id}/{command_id}', 'PFCController@import_data')->name('admin/pfc/command');
+    Route::get('/admin/pfc/command/{pfc_id}/{command_id}', ['as' => 'pfc.command', 'uses' => 'PFCController@import_data']);
 	Route::get('/search','TransactionController@search');
 	Route::get('/export','TransactionController@excel_export');
 	Route::get('/admin/transactions','TransactionController@searchWithPagination');

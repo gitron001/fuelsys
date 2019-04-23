@@ -3,8 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Static Title -->
-    <title>Fuel System</title>
     <!-- Dynamic web title -->
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
     @yield('title', config('app.name'))

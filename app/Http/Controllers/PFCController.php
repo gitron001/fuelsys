@@ -90,7 +90,7 @@ class PFCController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function import_data($pfc_id, $type)
+    public function import_data($pfc_id, $type = null)
     {
         Process::insert(array('start_time'=> time(),
             'refresh_time' => time(),

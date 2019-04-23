@@ -172,8 +172,8 @@
 
   $(document).ready(function(){
     $('#exportEXCEL').click(function(){
-      var fromDate = $('[name=from_date]').val();
-      var toDate = $('[name=to_date]').val();
+      var fromDate = $('#datetimepicker4').val();
+      var toDate = $('#datetimepicker5').val();
       var user = $("#user").val();
       var company = $("#company").val();
 
@@ -197,8 +197,8 @@
 
   $(document).ready(function(){
     $('#exportPDF').click(function(){
-      var fromDate = $('[name=from_date]').val();
-      var toDate = $('[name=to_date]').val();
+      var fromDate = $('#datetimepicker4').val();
+      var toDate = $('#datetimepicker5').val();
       var user = $("#user").val();
       var company = $("#company").val();
 
