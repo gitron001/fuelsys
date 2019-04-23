@@ -32,16 +32,6 @@ class CreateUsersTable extends Migration
             $table->integer('created_at');
             $table->integer('updated_at');
         });
-
-        DB::table('users')->insert([
-            'name' => 'Administrator',
-            'rfid' => '000000',
-            'email' => 'administrator@fuelsystem.com',
-            'password' => Hash::make('administrator'),
-            'type' => '3',
-            'created_at' => now()->timestamp,
-            'updated_at' => now()->timestamp,
-        ]);
     }
 
     /**
