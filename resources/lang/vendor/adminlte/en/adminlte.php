@@ -31,4 +31,5 @@ return [
     'pfc'                         => 'PFC',
     'home'                        => 'Home',
     'settings'                    => 'Settings',
+    'report'                      => 'Reports',
 ];

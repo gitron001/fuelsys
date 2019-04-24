@@ -66,6 +66,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Email
 	Route::get('/sendemail','HomeController@email');
 
+	// Reports
+	Route::resource('/admin/reports', 'ReportsController');
+
 });
 
 
