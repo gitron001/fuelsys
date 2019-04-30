@@ -67,7 +67,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/sendemail','HomeController@email');
 
 	// Reports
-	Route::resource('/admin/reports', 'ReportsController');
+	//Route::resource('/admin/reports', 'ReportsController');
+	Route::get('/search','ReportsController@search');
+	Route::get('/admin/reports','ReportsController@searchWithPagination');
 
 });
 

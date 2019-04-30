@@ -112,6 +112,13 @@
         </a>
     </li>
 
+    <li>
+        <a href="{{ URL('admin/reports') }}">
+            <i class="fa fa-file-text" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.report') }}</span>
+        </a>
+    </li>
+
 @else
     
     <li>
