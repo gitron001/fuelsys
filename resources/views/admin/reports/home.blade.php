@@ -2,12 +2,11 @@
 @extends('adminlte::page')
 
 @section('content')
-
 <style>
   button.multiselect {
-  background-color: initial;
-  border: 1px solid #ced4da;
-}
+    background-color: initial;
+    border: 1px solid #ced4da;
+  }
 </style>
 
 @include('includes/alert_info')
@@ -33,7 +32,7 @@
 
                   <div class="form-group">
                     <label for="User:">User:</label>
-                    <select id="user" name="user[]" multiple="multiple" style="">
+                    <select id="user" name="user[]" multiple="multiple" sty>
                         @foreach($users as $id => $name)
                           <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
                         @endforeach
