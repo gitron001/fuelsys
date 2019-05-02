@@ -2,12 +2,6 @@
 @extends('adminlte::page')
 
 @section('content')
-<style>
-  button.multiselect {
-    background-color: initial;
-    border: 1px solid #ced4da;
-  }
-</style>
 
 @include('includes/alert_info')
 
@@ -19,58 +13,62 @@
           <div class="col-md-12">
             <form class="form-inline" method="GET" action="{{ URL::to('/admin/reports') }}">
 
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="Start Date:">Start Date:</label>
-                    <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{Input::get("fromDate")}}">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="End Date:">End Date:</label>
-                    <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="User:">User:</label>
-                    <select id="user" name="user[]" multiple="multiple" sty>
-                        @foreach($users as $id => $name)
-                          <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
-                        @endforeach
-                    </select> 
-                  </div>
-
-                  <div class="form-group">
-                    <input type="checkbox" name="last_payment" value="Yes">From last payment<br>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="User:">Company:</label>
-                    <select class="form-control" id="company" name="company">
-                      <option value="">Choose a Company</option>
-                        @foreach($companies as $id => $name)
-                          <option value="{{ $id }}" {{ (Input::get("company") == $id ? "selected":"") }}>{{ $name }}</option>
-                        @endforeach
-                    </select> 
-                  </div>
-
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-success" id="search" style="margin-right: 2.5em">Search</button>
-                    <button type="button" class="btn btn-success" id="exportEXCEL">Export Excel</button>
-                    <button type="button" class="btn btn-primary" id="exportPDF">Export PDF</button>
-                  </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="Start Date:">Start Date:</label>
+                  <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{Input::get("fromDate")}}">
                 </div>
-              </form>
+
+                <div class="form-group">
+                  <label for="End Date:">End Date:</label>
+                  <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
+                </div>
+
+                <div class="form-group">
+                  <label for="User:">User:</label>
+                  <select id="user" name="user[]" multiple="multiple" sty>
+                      @foreach($users as $id => $name)
+                        <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
+                      @endforeach
+                  </select> 
+                </div>
+
+                <div class="form-group">
+                  <input type="checkbox" name="last_payment" value="Yes">From last payment<br>
+                </div>
+
+                <div class="form-group">
+                  <label for="User:">Company:</label>
+                  <select class="form-control" id="company" name="company">
+                    <option value="">Choose a Company</option>
+                      @foreach($companies as $id => $name)
+                        <option value="{{ $id }}" {{ (Input::get("company") == $id ? "selected":"") }}>{{ $name }}</option>
+                      @endforeach
+                  </select> 
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" id="search"><i class="fa fa-search"></i> Search</button>
+                  <a href="{{ request()->url() }}" class="btn btn-danger"><i class="fa fa-trash"></i> Clear all</a>
+                  <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportEXCEL" title="Export Excel" style="position: absolute; right: 40px;bottom: 0;"><i class="fa fa-file-excel-o"></i></button>
+                  <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportPDF" title="Export PDF" style="position: absolute; right: 0;bottom: 0;"><i class="fa fa-file-pdf-o"></i></button>
+                </div>
+                  
+              </div>
+                
+            </form>
           </div>
       </div>
       
-      @if(Request::isMethod('get') && !(Input::get('last_payment') == 'Yes'))
+      @if(Request::isMethod('get') && !Input::get('last_payment'))
         @include('admin.reports.inc.table-get')
-      @elseif(Input::get('last_payment') == 'Yes')
+      @elseif(Request::isMethod('get') && Input::get('last_payment') == 'Yes')
         @include('admin.reports.inc.last_payments')
       @else
        @include('admin.reports.inc.basic-table')
       @endif
-    
+
+    </div>
   </div>
 </div>
 
@@ -103,6 +101,8 @@
     });
 
   $(document).ready(function() {
+
+    $('[data-toggle="tooltip"]').tooltip();
 
     $('#user').multiselect({
         includeSelectAllOption: true,

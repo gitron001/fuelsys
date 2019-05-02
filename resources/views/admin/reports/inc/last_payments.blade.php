@@ -8,7 +8,6 @@
       <th>User</th>
       <th>Company</th>
       <th>Created At</th>
-      <th>Updated At</th>
     </tr>
     </thead>
     <tbody>
@@ -18,8 +17,7 @@
         <td>{{ $payment->amount }}</td>
         <td>{{ $payment->user ? $payment->user->name : 'Empty' }}</td>
         <td>{{ $payment->company ? $payment->company->name : 'Empty' }}</td>
-        <td>{{ $payment->created_at->diffForHumans() }}</td>
-        <td>{{ $payment->updated_at->diffForHumans() }}</td>
+        <td>{{ $payment->created_at }}</td>
     </tr>
     @endforeach
     </tfoot>
