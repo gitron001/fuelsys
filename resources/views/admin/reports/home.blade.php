@@ -5,7 +5,7 @@
 
 @include('includes/alert_info')
 
-<h3 class="box-title">Transaction</h3>
+<h3 class="box-title">Reports</h3>
 <div class="content">
   <div class="row">
     <div class="box">
@@ -15,7 +15,7 @@
              <button type="button" class="btn btn-primary" id="exportPDF">PDF</button>
           </div>
           <div class="col-md-10">
-            <form class="form-inline" method="GET" action="{{ URL::to('/admin/transactions') }}">
+            <form class="form-inline" method="GET" action="{{ URL::to('/admin/reports') }}">
 
                 <div class="form-row">
                   <div class="form-group">
@@ -30,12 +30,16 @@
 
                   <div class="form-group">
                     <label for="User:">User:</label>
-                    <select class="form-control" id="user" name="user">
+                    <select class="form-control" id="user" name="user[]" multiple>
                       <option value="">Choose a User</option>
                         @foreach($users as $id => $name)
                           <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
                         @endforeach
                     </select> 
+                  </div>
+
+                  <div class="form-group">
+                    <input type="checkbox" name="last_payment" value="Yes">From last payment<br>
                   </div>
 
                   <div class="form-group">
@@ -55,53 +59,15 @@
               </form>
           </div>
       </div>
-
-
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-hover table-bordered text-center">
-                <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Company</th>
-                  <th>Product</th>
-                  <th>Price</th>
-                  <th>Lit</th>
-                  <th>Total</th>
-                  <th>Created At</th>
-                </tr>
-                </thead>
-                <tbody>
-                @if(Request::isMethod('get'))
-                  @foreach($transactions as $transaction)
-                    <tr>
-                        <td>{{ $transaction->user_name ? $transaction->user_name : '' }}</td>
-                        <td>{{ $transaction->comp_name ? $transaction->comp_name : '' }}</td>
-                        <td>{{ $transaction->product ? $transaction->product : '' }}</td>
-                        <td>{{ $transaction->price }}</td>
-                        <td>{{ $transaction->lit }}</td>
-                        <td>{{ $transaction->money }}</td>
-                        <td>{{ $transaction->created_at }}</td>
-                    </tr>
-                  @endforeach
-                @else
-                  @foreach($transactions as $transaction)
-                      <td>{{ $transaction->user_name ? $transaction->users->name : '' }}</td>
-                      <td>{{ $transaction->users->company ? $transaction->users->company->name : '' }}</td>
-                      <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
-                      <td>{{ $transaction->price }}</td>
-                      <td>{{ $transaction->lit }}</td>
-                      <td>{{ $transaction->money }}</td>
-                      <td>{{ $transaction->created_at }}</td>
-                  @endforeach
-                @endif
-                </tfoot>
-              </table>
-              <div class="text-center">
-                {{ $transactions->appends(Request::input())->links() }}
-              </div>
-            </div>
-        </div>
+      
+      @if(Request::isMethod('get') && !(Input::get('last_payment') == 'Yes'))
+        @include('admin.reports.inc.table-get')
+      @elseif(Input::get('last_payment') == 'Yes')
+        @include('admin.reports.inc.last_payments')
+      @else
+       @include('admin.reports.inc.basic-table')
+      @endif
+    
   </div>
 </div>
 

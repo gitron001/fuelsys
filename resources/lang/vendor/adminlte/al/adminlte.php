@@ -30,4 +30,5 @@ return [
     'pfc'                         => 'PFC',
     'home'                        => 'Ballina',
     'settings'                    => 'Settings',
+    'report'                      => 'Raportet',
 ];

@@ -36,6 +36,7 @@
 			<option value="2" @if ($user->type == 2) {{ 'selected' }} @endif>Company</option>
 			<option value="3" @if ($user->type == 3) {{ 'selected' }} @endif>Admin</option>
 			<option value="4" @if ($user->type == 4) {{ 'selected' }} @endif>Client</option>
+			<option value="5" @if ($user->type == 5) {{ 'selected' }} @endif>Manager</option>
 		</select>
 	</div>
 
