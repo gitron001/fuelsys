@@ -34,10 +34,6 @@
                 </div>
 
                 <div class="form-group">
-                  <input type="checkbox" name="last_payment" value="Yes">From last payment<br>
-                </div>
-
-                <div class="form-group">
                   <label for="User:">Company:</label>
                   <select class="form-control" id="company" name="company">
                     <option value="">Choose a Company</option>
