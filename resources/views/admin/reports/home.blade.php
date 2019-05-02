@@ -3,6 +3,13 @@
 
 @section('content')
 
+<style>
+  button.multiselect {
+  background-color: initial;
+  border: 1px solid #ced4da;
+}
+</style>
+
 @include('includes/alert_info')
 
 <h3 class="box-title">Reports</h3>
@@ -10,11 +17,7 @@
   <div class="row">
     <div class="box">
       <div class="box-header">
-          <div class="col-md-2">
-             <button type="button" class="btn btn-success" id="exportEXCEL">Export Excel</button>
-             <button type="button" class="btn btn-primary" id="exportPDF">PDF</button>
-          </div>
-          <div class="col-md-10">
+          <div class="col-md-12">
             <form class="form-inline" method="GET" action="{{ URL::to('/admin/reports') }}">
 
                 <div class="form-row">
@@ -30,8 +33,7 @@
 
                   <div class="form-group">
                     <label for="User:">User:</label>
-                    <select class="form-control" id="user" name="user[]" multiple>
-                      <option value="">Choose a User</option>
+                    <select id="user" name="user[]" multiple="multiple" style="">
                         @foreach($users as $id => $name)
                           <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
                         @endforeach
@@ -53,7 +55,9 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="submit" class="btn btn-success" id="search">Search</button>
+                    <button type="submit" class="btn btn-success" id="search" style="margin-right: 2.5em">Search</button>
+                    <button type="button" class="btn btn-success" id="exportEXCEL">Export Excel</button>
+                    <button type="button" class="btn btn-primary" id="exportPDF">Export PDF</button>
                   </div>
                 </div>
               </form>
@@ -100,6 +104,10 @@
     });
 
   $(document).ready(function() {
+
+    $('#user').multiselect({
+        includeSelectAllOption: true,
+    });
 
     var date = new Date();
     date.setDate(date.getDate() - 1);

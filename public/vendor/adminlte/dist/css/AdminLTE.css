@@ -1299,6 +1299,12 @@ a:focus {
 .icheck > label {
   padding-left: 0;
 }
+button.multiselect {
+  background-color: initial;
+  border: 1px solid #ced4da;
+  pointer-events: none;
+  border-radius: 0 !important;
+
 /* support Font Awesome icons in form-control */
 .form-control-feedback.fa {
   line-height: 34px;
