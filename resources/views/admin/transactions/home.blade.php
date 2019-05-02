@@ -11,7 +11,7 @@
     <div class="box">
       <div class="box-header">
           <div class="col-md-12">
-            <form class="form-inline" method="GET" action="{{ URL::to('/admin/reports') }}">
+            <form class="form-inline" method="GET" action="{{ URL::to('/admin/transactions') }}">
 
               <div class="form-row">
                 <div class="form-group">
