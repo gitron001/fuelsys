@@ -5,72 +5,70 @@
 
 @include('includes/alert_info')
 
-<h3 class="box-title">Reports</h3>
-<div class="content">
-  <div class="row">
-    <div class="box">
-      <div class="box-header">
-          <div class="col-md-12">
-            <form class="form-inline" method="GET" action="{{ URL::to('/admin/reports') }}">
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Reports</h3>
+  </div>
+  <div class="box-body">
+    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+      <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/reports') }}">
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="Start Date:">Start Date:</label>
-                  <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{Input::get("fromDate")}}">
-                </div>
+        <div class="form-group">
+          <label for="Start Date:">Start Date:</label>
+          <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{Input::get("fromDate")}}">
+        </div>
 
-                <div class="form-group">
-                  <label for="End Date:">End Date:</label>
-                  <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
-                </div>
+        <div class="form-group">
+          <label for="End Date:">End Date:</label>
+          <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
+        </div>
 
-                <div class="form-group">
-                  <label for="User:">User:</label>
-                  <select id="user" name="user[]" multiple="multiple" sty>
-                      @foreach($users as $id => $name)
-                        <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
-                      @endforeach
-                  </select> 
-                </div>
+        <div class="form-group">
+          <label for="User:">User:</label>
+          <select id="user" name="user[]" multiple="multiple" sty>
+              @foreach($users as $id => $name)
+                <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
+              @endforeach
+          </select> 
+        </div>
 
-                <div class="form-group">
-                  <input type="checkbox" name="last_payment" value="Yes">From last payment<br>
-                </div>
+        <div class="form-group">
+          <input type="checkbox" name="last_payment" value="Yes">From last payment<br>
+        </div>
 
-                <div class="form-group">
-                  <label for="User:">Company:</label>
-                  <select class="form-control" id="company" name="company">
-                    <option value="">Choose a Company</option>
-                      @foreach($companies as $id => $name)
-                        <option value="{{ $id }}" {{ (Input::get("company") == $id ? "selected":"") }}>{{ $name }}</option>
-                      @endforeach
-                  </select> 
-                </div>
+        <div class="form-group">
+          <label for="User:">Company:</label>
+          <select class="form-control" id="company" name="company">
+            <option value="">Choose a Company</option>
+              @foreach($companies as $id => $name)
+                <option value="{{ $id }}" {{ (Input::get("company") == $id ? "selected":"") }}>{{ $name }}</option>
+              @endforeach
+          </select> 
+        </div>
 
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary" id="search"><i class="fa fa-search"></i> Search</button>
-                  <a href="{{ request()->url() }}" class="btn btn-danger"><i class="fa fa-trash"></i> Clear all</a>
-                  <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportEXCEL" title="Export Excel" style="position: absolute; right: 40px;bottom: 0;"><i class="fas fa-file-excel"></i></button>
-                  <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportPDF" title="Export PDF" style="position: absolute; right: 0;bottom: 0;"><i class="fas fa-file-pdf"></i></button>
-                </div>
-                  
-              </div>
-                
-            </form>
-          </div>
-      </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i></button>
+          <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All"><i class="fa fa-trash"></i></a>
+          <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportEXCEL" title="Export Excel"><i class="fas fa-file-excel"></i></button>
+          <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportPDF" title="Export PDF"><i class="fas fa-file-pdf"></i></button>
+        </div>
+
+      </form>
+
+      <br>
       
       @if(Request::isMethod('get') && !Input::get('last_payment'))
         @include('admin.reports.inc.table-get')
       @elseif(Request::isMethod('get') && Input::get('last_payment') == 'Yes')
         @include('admin.reports.inc.last_payments')
       @else
-       @include('admin.reports.inc.basic-table')
+        @include('admin.reports.inc.basic-table')
       @endif
 
     </div>
   </div>
 </div>
+
 
 @endsection
 

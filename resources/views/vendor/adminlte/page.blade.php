@@ -118,7 +118,7 @@
                                     <a href="#"
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                     >
-                                        <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
+                                        <i class="fas fa-sign-out-alt"></i> {{ trans('adminlte::adminlte.log_out') }}
                                     </a>
                                     <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
                                         @if(config('adminlte.logout_method'))
@@ -128,7 +128,7 @@
                                     </form>
                                 @endif
                             @else
-                                <a href="/login"><i class="fa fa-fw fa-send"></i> {{ trans('adminlte::adminlte.sign_in') }}</a>
+                                <a href="/login"><i class="fas fa-sign-in-alt"></i> {{ trans('adminlte::adminlte.sign_in') }}</a>
                             @endif
                         </li>
                     </ul>
