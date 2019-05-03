@@ -46,8 +46,8 @@
                 <div class="form-group">
                   <button type="submit" class="btn btn-primary" id="search"><i class="fa fa-search"></i> Search</button>
                   <a href="{{ request()->url() }}" class="btn btn-danger"><i class="fa fa-trash"></i> Clear all</a>
-                  <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportEXCEL" title="Export Excel" style="position: absolute; right: 40px;bottom: 0;"><i class="fa fa-file-excel-o"></i></button>
-                  <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportPDF" title="Export PDF" style="position: absolute; right: 0;bottom: 0;"><i class="fa fa-file-pdf-o"></i></button>
+                  <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportEXCEL" title="Export Excel" style="position: absolute; right: 40px;bottom: 0;"><i class="fas fa-file-excel"></i></button>
+                  <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportPDF" title="Export PDF" style="position: absolute; right: 0;bottom: 0;"><i class="fas fa-file-pdf"></i></button>
                 </div>
                   
               </div>
