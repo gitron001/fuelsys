@@ -22,11 +22,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     cron \
     supervisor \
-    smbclient \
-    ssmtp \
-    mailutils \
-    node \
-    npm
+    smbclient
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
