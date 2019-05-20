@@ -21,7 +21,7 @@ return [
     'send_password_reset_link'    => 'Send Password Reset Link',
     'company'                     => 'Company',
     'tank'                        => 'Tank',
-    'transaction'                 => 'Transaction',
+    'transaction'                 => 'Transactions',
     'products'                    => 'Products',
     'dispanesers'                 => 'Dispanesers',
     'branches'                    => 'Branches',
@@ -31,4 +31,5 @@ return [
     'pfc'                         => 'PFC',
     'home'                        => 'Home',
     'settings'                    => 'Settings',
+    'report'                      => 'Reports',
 ];

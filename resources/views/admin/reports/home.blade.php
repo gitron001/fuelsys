@@ -7,11 +7,11 @@
 
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Transactions</h3>
+    <h3 class="box-title">Reports</h3>
   </div>
   <div class="box-body">
     <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-      <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/transactions') }}">
+      <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/reports') }}">
 
         <div class="form-group">
           <label for="Start Date:">Start Date:</label>
@@ -30,6 +30,10 @@
                 <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
               @endforeach
           </select> 
+        </div>
+
+        <div class="form-group">
+          <input type="checkbox" name="last_payment" value="Yes">From last payment<br>
         </div>
 
         <div class="form-group">
@@ -52,55 +56,15 @@
       </form>
 
       <br>
+      
+      @if(Request::isMethod('get') && !Input::get('last_payment'))
+        @include('admin.reports.inc.table-get')
+      @elseif(Request::isMethod('get') && Input::get('last_payment') == 'Yes')
+        @include('admin.reports.inc.last_payments')
+      @else
+        @include('admin.reports.inc.basic-table')
+      @endif
 
-
-      <div class="row">
-        <div class="col-sm-12">
-          <table id="example2" class="table table-bordered table-hover text-center">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Company</th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Lit</th>
-                <th>Total</th>
-                <th>Created At</th>
-              </tr>
-            </thead>
-            <tbody>
-              @if(Request::isMethod('get'))
-                @foreach($transactions as $transaction)
-                  <tr>
-                      <td>{{ $transaction->user_name ? $transaction->user_name : '' }}</td>
-                      <td>{{ $transaction->comp_name ? $transaction->comp_name : '' }}</td>
-                      <td>{{ $transaction->product ? $transaction->product : '' }}</td>
-                      <td>{{ $transaction->price }}</td>
-                      <td>{{ $transaction->lit }}</td>
-                      <td>{{ $transaction->money }}</td>
-                      <td>{{ $transaction->created_at }}</td>
-                  </tr>
-                @endforeach
-              @else
-                @foreach($transactions as $transaction)
-                    <td>{{ $transaction->user_name ? $transaction->users->name : '' }}</td>
-                    <td>{{ $transaction->users->company ? $transaction->users->company->name : '' }}</td>
-                    <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
-                    <td>{{ $transaction->price }}</td>
-                    <td>{{ $transaction->lit }}</td>
-                    <td>{{ $transaction->money }}</td>
-                    <td>{{ $transaction->created_at }}</td>
-                @endforeach
-              @endif
-            </tbody>
-          </table>
-
-          <div class="text-center">
-            {{ $transactions->appends(Request::input())->links() }}
-          </div>
-
-        </div>
-      </div>
     </div>
   </div>
 </div>

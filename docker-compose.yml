@@ -56,8 +56,10 @@ services:
     - app-network
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
     links:
     - db:db
+    restart: always
     ports:
     - 8000:80
     environment:

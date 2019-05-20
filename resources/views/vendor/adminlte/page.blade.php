@@ -5,6 +5,17 @@
           href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
     @stack('css')
     @yield('css')
+    
+    <!-- STYLE FOR MULTISELECT BUTTONS IN REPORST AND TRANSACTIONS PAGE -->
+    <style>
+      button.multiselect {
+        background-color: initial;
+        border: 1px solid #ced4da;
+        border-radius: 0px;
+      }
+    </style>
+    <!-- END STYLE FOR MULTISELECT BUTTONS IN REPORST AND TRANSACTIONS PAGE -->
+    
 @stop
 
 @section('body_class', 'skin-' . config('adminlte.skin', 'blue') . ' sidebar-mini ' . (config('adminlte.layout') ? [
@@ -107,7 +118,7 @@
                                     <a href="#"
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                     >
-                                        <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
+                                        <i class="fas fa-sign-out-alt"></i> {{ trans('adminlte::adminlte.log_out') }}
                                     </a>
                                     <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
                                         @if(config('adminlte.logout_method'))
@@ -117,7 +128,7 @@
                                     </form>
                                 @endif
                             @else
-                                <a href="/login"><i class="fa fa-fw fa-send"></i> {{ trans('adminlte::adminlte.sign_in') }}</a>
+                                <a href="/login"><i class="fas fa-sign-in-alt"></i> {{ trans('adminlte::adminlte.sign_in') }}</a>
                             @endif
                         </li>
                     </ul>
