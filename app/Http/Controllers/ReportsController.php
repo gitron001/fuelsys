@@ -198,7 +198,7 @@ class ReportsController extends Controller
                 $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
             }
             $query->orderBy('transactions.created_at', 'DESC');
-            $transactions = $query->paginate(5);
+            $transactions = $query->paginate(15);
 
             return view('/admin/reports/home',compact('transactions','users','companies'));
 

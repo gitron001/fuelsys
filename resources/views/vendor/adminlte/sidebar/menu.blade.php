@@ -60,7 +60,7 @@
 
     <li>
         <a href="{{ URL('admin/payments') }}">
-            <i class="fa fa-eur" aria-hidden="true"></i>
+            <i class="fas fa-euro-sign"></i>
             <span>{{ trans('adminlte::adminlte.payments') }}</span>
         </a>
     </li>
@@ -74,7 +74,7 @@
 
     <li>
         <a href="{{ URL('admin/reports') }}">
-            <i class="fa fa-file-text" aria-hidden="true"></i>
+            <i class="fas fa-chart-bar"></i>
             <span>{{ trans('adminlte::adminlte.report') }}</span>
         </a>
     </li>
@@ -107,14 +107,14 @@
 
     <li>
         <a href="{{ URL('admin/payments') }}">
-            <i class="fa fa-eur" aria-hidden="true"></i>
+            <i class="fas fa-euro-sign"></i>
             <span>{{ trans('adminlte::adminlte.payments') }}</span>
         </a>
     </li>
 
     <li>
         <a href="{{ URL('admin/reports') }}">
-            <i class="fa fa-file-text" aria-hidden="true"></i>
+            <i class="fas fa-chart-bar"></i>
             <span>{{ trans('adminlte::adminlte.report') }}</span>
         </a>
     </li>

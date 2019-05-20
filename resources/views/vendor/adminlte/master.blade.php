@@ -15,19 +15,17 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/font-awesome.min.css') }}">
+
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">  
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css') }}">
 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ui/1.11.2/themes/smoothness/jquery-ui.css') }}">  
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">-->
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>-->
 
 
     @if(config('adminlte.plugins.select2'))
@@ -60,11 +58,20 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-
+<script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-1.10.2.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-ui.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/font-awesome/js/all.js') }}"></script>
+<!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
+<!--<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
+<script src="{{ asset('vendor/adminlte/vendor/ajax/libs/moment.js/2.13.0/moment.min.js') }}"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>-->
+<script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') }}"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>-->
+<script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js') }}"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">-->
+<script src="{{ asset('vendor/adminlte/vendor/sweetalert/dist/sweetalert.min.js') }}"></script>
+<!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
 
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->

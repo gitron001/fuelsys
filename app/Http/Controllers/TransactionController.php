@@ -399,7 +399,7 @@ class TransactionController extends Controller
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('user')) {
-            $query = $query->where('users.id',$user);
+            $query = $query->whereIn('users.id',$user);
         }
 
         if ($request->input('company')) {
@@ -410,7 +410,7 @@ class TransactionController extends Controller
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
         $query->orderBy('transactions.created_at', 'DESC');
-        $transactions = $query->paginate(5);
+        $transactions = $query->paginate(15);
 
         return view('/admin/transactions/home',compact('transactions','users','companies'));
 
