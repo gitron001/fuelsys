@@ -16,7 +16,7 @@
         <tr>
           <td>{{ $transaction->user_name ? $transaction->user_name : '' }}</td>
           <td>{{ $transaction->comp_name ? $transaction->comp_name : '' }}</td>
-          <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
+          <td>{{ $transaction->product ? $transaction->product : '' }}</td>
           <td>{{ $transaction->price }}</td>
           <td>{{ $transaction->lit }}</td>
           <td>{{ $transaction->money }}</td>

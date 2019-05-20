@@ -325,7 +325,7 @@ class TransactionController extends Controller
 
         $balance = $transaction_total + $starting_balance - $paymentsOLD;
 
-        return $balance;
+        return number_format($balance, 2);
     }
 
     public function search(Request $request) {
