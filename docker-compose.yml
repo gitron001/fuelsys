@@ -6,9 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: digitalocean.com/php
-    container_name: app
-    restart: unless-stopped
     tty: true
     environment:
       SERVICE_NAME: app
@@ -16,7 +13,7 @@ services:
     working_dir: /var/www
     volumes:
     - ./:/var/www
-    - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
     networks:
     - app-network
 
@@ -24,7 +21,7 @@ services:
   webserver:
     image: nginx:alpine
     container_name: webserver
-    restart: unless-stopped
+    restart: always
     tty: true
     ports:
     - "80:80"
@@ -39,7 +36,7 @@ services:
   db:
     image: mysql:5.7
     container_name: db
-    restart: unless-stopped
+    restart: always
     tty: true
     ports:
     - "3306:3306"
@@ -56,8 +53,10 @@ services:
     - app-network
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
     links:
     - db:db
+    restart: always
     ports:
     - 8000:80
     environment:
