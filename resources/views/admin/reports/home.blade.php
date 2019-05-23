@@ -22,18 +22,22 @@
           <label for="End Date:">End Date:</label>
           <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
         </div>
-
         <div class="form-group">
           <label for="User:">User:</label>
-          <select id="user" name="user[]" multiple="multiple" sty>
+          <select id="user" name="user[]" multiple="multiple">
               @foreach($users as $id => $name)
-                <option value="{{ $id }}" {{ (Input::get("user") == $id ? "selected":"") }}>{{ $name }}</option>
+                <option value="{{ $id }}" 
+                @if(!empty(Input::get("user")))
+                  @foreach(Input::get("user") as $us) 
+                    {{ $us == $id ? 'selected' : '' }} 
+                  @endforeach
+                @endif > {{ $name }} </option>
               @endforeach
           </select> 
         </div>
 
         <div class="form-group">
-          <input type="checkbox" name="last_payment" value="Yes">From last payment<br>
+          <input type="checkbox" name="last_payment" value="Yes" {{Input::get("last_payment") == 'Yes' ? 'checked' : ''}}>From last payment<br>
         </div>
 
         <div class="form-group">

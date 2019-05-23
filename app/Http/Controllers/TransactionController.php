@@ -250,14 +250,14 @@ class TransactionController extends Controller
                 ,"transactions.money",DB::RAW(" 0 as company")
                 ,"users.name as username","transactions.created_at")
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');;
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('company')) {
             $transactions->where('companies.id','=',$company);
         }
 
         if ($request->input('user')) {
-            $transactions->where('user_id','=',$user);
+            $transactions->whereIn('user_id',$user);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
@@ -281,7 +281,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('user')) {
-            $payments->where('user_id','=',$user);
+            $payments->whereIn('user_id',$user);
         }
 
         $payments = $payments->get();
@@ -300,8 +300,18 @@ class TransactionController extends Controller
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
         if ($request->input('user')) {
-            $tr->where('user_id','=',$user);
-            $starting_balance = Users::findorFail($user)->starting_balance;
+            $tr->whereIn('user_id',$user);
+            $users = Users::whereIn('id',$user)->get();
+            if(count($users) == 1){
+                $starting_balance = $users->starting_balance;
+            }else{
+                $sb = [];
+                foreach($users as $user){
+                    $sb[] = $user->starting_balance;
+                }
+                $starting_balance = array_sum($sb);
+            }
+            
         }
 
         if ($request->input('company')) {
@@ -318,7 +328,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('user')) {
-            $paymentsOLD->where('user_id','=',$user);
+            $paymentsOLD->whereIn('user_id',$user);
         }
 
         $paymentsOLD = $paymentsOLD->sum('amount');
