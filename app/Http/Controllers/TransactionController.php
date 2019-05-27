@@ -303,7 +303,7 @@ class TransactionController extends Controller
             $tr->whereIn('user_id',$user);
             $users = Users::whereIn('id',$user)->get();
             if(count($users) == 1){
-                $starting_balance = $users->starting_balance;
+                $starting_balance = $users[0]->starting_balance;
             }else{
                 $sb = [];
                 foreach($users as $user){
