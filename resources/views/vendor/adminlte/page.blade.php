@@ -6,16 +6,6 @@
     @stack('css')
     @yield('css')
     
-    <!-- STYLE FOR MULTISELECT BUTTONS IN REPORST AND TRANSACTIONS PAGE -->
-    <style>
-      button.multiselect {
-        background-color: initial;
-        border: 1px solid #ced4da;
-        border-radius: 0px;
-      }
-    </style>
-    <!-- END STYLE FOR MULTISELECT BUTTONS IN REPORST AND TRANSACTIONS PAGE -->
-    
 @stop
 
 @section('body_class', 'skin-' . config('adminlte.skin', 'blue') . ' sidebar-mini ' . (config('adminlte.layout') ? [

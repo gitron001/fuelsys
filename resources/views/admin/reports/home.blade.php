@@ -24,8 +24,8 @@
         </div>
         <div class="form-group">
           <label for="User:">User:</label>
-          <select id="user" name="user[]" multiple="multiple">
-              @foreach($users as $id => $name)
+          <select class="users-dropdown form-control" name="user[]" multiple="multiple">
+            @foreach($users as $id => $name)
                 <option value="{{ $id }}" 
                 @if(!empty(Input::get("user")))
                   @foreach(Input::get("user") as $us) 
@@ -33,7 +33,7 @@
                   @endforeach
                 @endif > {{ $name }} </option>
               @endforeach
-          </select> 
+          </select>
         </div>
 
         <div class="form-group">
@@ -52,7 +52,7 @@
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i></button>
-          <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All"><i class="fa fa-trash"></i></a>
+          <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i></a>
           <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportEXCEL" title="Export Excel"><i class="fas fa-file-excel"></i></button>
           <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportPDF" title="Export PDF"><i class="fas fa-file-pdf"></i></button>
         </div>
@@ -102,13 +102,16 @@
         });
     });
 
+  // Users dropdown 
+  $(document).ready(function() {
+    $('.users-dropdown').select2({
+      placeholder: "Select a user"
+    });
+  });
+
   $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
-
-    $('#user').multiselect({
-        includeSelectAllOption: true,
-    });
 
     var date = new Date();
     date.setDate(date.getDate() - 1);
