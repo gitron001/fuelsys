@@ -71,6 +71,10 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/search','ReportsController@search');
 	Route::get('/admin/reports','ReportsController@searchWithPagination');
 
+	// Settings
+	Route::get('/admin/staff','StaffController@searchWithPagination');
+	//Route::get('/admin/staff','StaffController@searchWithPagination');
+
 });
 
 

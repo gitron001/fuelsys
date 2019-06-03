@@ -22,6 +22,7 @@
           <label for="End Date:">End Date:</label>
           <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
         </div>
+        
         <div class="form-group">
           <label for="User:">User:</label>
           <select class="users-dropdown form-control" name="user[]" multiple="multiple">
