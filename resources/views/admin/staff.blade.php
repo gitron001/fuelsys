@@ -27,7 +27,7 @@
           <label for="User:">Staff:</label>
           <select class="users-dropdown form-control" name="user[]" multiple="multiple">
             <option value="">Select a user</option>
-            @foreach($users as $id => $name)
+            @foreach($usersFilter as $id => $name)
                 <option value="{{ $id }}" 
                 @if(!empty(Input::get("user")))
                   @foreach(Input::get("user") as $us) 
@@ -51,25 +51,27 @@
         <thead>
         <tr>
           <th>Perdoruesi</th>
-          <th>Produkti</th>
-          <th>Total</th>
+          <th>Benzin</th>
+          <th>Nafte</th>
+          <th>Plin</th>
           <th>Euro</th>
         </tr>
         </thead>
         <tbody>
         @foreach($staffData as $transaction)
         <tr>
-            <td>{{ $transaction->user_name }}</td>
-            <td>{{ $transaction->product }}</td>
-            <td>{{ $transaction->total }} lit.</td>
-            <td>{{ $transaction->money }}</td>
+            <td>{{ $transaction['user_name'] }}</td>
+            <td>{{ !empty($transaction['Nafte']) ? $transaction['Nafte'] : '0' }} lit.</td>
+            <td>{{ !empty($transaction['Benzin']) ? $transaction['Benzin'] : '0' }} lit.</td>
+            <td>{{ !empty($transaction['Plin']) ? $transaction['Plin'] : '0'}} lit.</td>
+            <td>{{ $transaction['totalMoney']  }} Euro</td>
         </tr>
         @endforeach
         </tfoot>
       </table>
 
       <div class="text-center">
-        
+        {{ $staffData->render() }}
       </div>
     </div>
   </div>
