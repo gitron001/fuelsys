@@ -45,12 +45,13 @@ class StaffController extends Controller
             $staffData[$value->user_id]['totalMoney'] = $value->totalMoney;
         }
         
-        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('products.name as product'))
-            ->leftJoin('products', 'products.id', '=', 'transactions.product_id')
+        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'), DB::raw('products.name as product'))
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->where('users.type','1')
             ->groupBy('users.id')
-            ->groupBy('transactions.product_id');
+            ->groupBy('products.pfc_pr_id')
+            ->groupBy('products.name');
 
         if ($request->input('user')) {
             $transactions = $transactions->whereIn('users.id',$user);
