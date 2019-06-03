@@ -27,7 +27,7 @@ class StaffController extends Controller
             ->paginate(15);*/
 
         // Transactions without product name and price
-        $users = Transactions::select(DB::RAW('users.id as user_id'))
+        $users = Transactions::select(DB::RAW('users.id as user_id'), 'users.name as user_name')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->where('users.type','1')
             ->groupBy('users.id')
@@ -37,19 +37,24 @@ class StaffController extends Controller
         
         $staffData = [];
         foreach($users as $value) {
-            $staffData[$value->user_id] = $value->user_id;
+            $staffData[$value->user_id]['id'] = $value->user_id;
+            $staffData[$value->user_id]['user_name'] = $value->user_name;
         }
-
-        foreach ($staffData as $key => $value) {
-            $transactions = Transactions::select(DB::RAW('users.name as user_name'), DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.name as user_name'),DB::raw('group_concat(DISTINCT products.name SEPARATOR " | ") as product'))
+        
+        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('products.name as product'))
             ->leftJoin('products', 'products.id', '=', 'transactions.product_id')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->where('users.type','1')
             ->where('transactions.user_id',$key)
             ->groupBy('users.name')
+            ->groupBy('transactions.product_id')
             ->get();
-            foreach($transactions as $value){
-                $staffData[$key] = $value;
+            
+        foreach ($staffData as $key => $value) {            
+            foreach($transactions as $tr){
+                if($key == $tr->user_id){
+                    $staffData[$tr->product] = $tr->total;
+                }
             }
         }
 
