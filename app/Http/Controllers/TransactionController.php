@@ -252,12 +252,16 @@ class TransactionController extends Controller
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
-        if ($request->input('company')) {
+        if ($request->input('user') && empty($request->input('company'))) {
+            $transactions->whereIn('user_id',$user);
+        }
+
+        if ($request->input('company') && empty($request->input('user'))) {
             $transactions->where('companies.id','=',$company);
         }
 
-        if ($request->input('user')) {
-            $transactions->whereIn('user_id',$user);
+        if($request->input('user') && $request->input('company')){
+            $transactions->whereIn('user_id',$user)->orWhere('companies.id','=',$company);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
@@ -272,18 +276,22 @@ class TransactionController extends Controller
             ->union($transactions)
             ->orderBy('created_at','ASC');
 
-        if ($request->input('company')) {
+        if ($request->input('user') && empty($request->input('company'))) {
+            $payments->whereIn('user_id',$user);
+        }
+
+        if ($request->input('company') && empty($request->input('user'))) {
             $payments->where('payments.company_id','=',$company);
+        }
+
+        if ($request->input('company') && $request->input('user')) {
+            $payments->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
             $payments->whereBetween('payments.date',[$from_date, $to_date]);
         }
-
-        if ($request->input('user')) {
-            $payments->whereIn('user_id',$user);
-        }
-
+        
         $payments = $payments->get();
 
         return $payments;
@@ -299,7 +307,7 @@ class TransactionController extends Controller
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
-        if ($request->input('user')) {
+        if ($request->input('user') ) {
             $tr->whereIn('user_id',$user);
             $users = Users::whereIn('id',$user)->get();
             if(count($users) == 1){
@@ -323,12 +331,16 @@ class TransactionController extends Controller
 
         $paymentsOLD = Payments::where('payments.date','<',$from_date);
 
-        if ($request->input('company')) {
+        if ($request->input('company') && empty($request->input('user'))) {
             $paymentsOLD->where('payments.company_id','=',$company);
         }
 
-        if ($request->input('user')) {
+        if ($request->input('user') && empty($request->input('company')) {
             $paymentsOLD->whereIn('user_id',$user);
+        }
+
+        if($request->input('company') && $request->input('user')){
+            $paymentsOLD->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
         }
 
         $paymentsOLD = $paymentsOLD->sum('amount');

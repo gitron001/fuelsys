@@ -25,7 +25,7 @@
 
         <div class="form-group">
           <label for="User:">User:</label>
-          <select class="users-dropdown form-control" name="user[]" multiple="multiple">
+          <select class="users-dropdown form-control" name="user[]" multiple="multiple" id="user">
             @foreach($users as $id => $name)
                 <option value="{{ $id }}" 
                 @if(!empty(Input::get("user")))

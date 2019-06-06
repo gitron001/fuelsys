@@ -178,7 +178,7 @@ class ReportsController extends Controller
             return view('/admin/reports/home',compact('payments','users','companies'));
         }
 
-        // If checkbox is not selected get others data
+        // If checkbox(from last payment) is not selected get others data
         if(empty($last_payment)){
 
             $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
