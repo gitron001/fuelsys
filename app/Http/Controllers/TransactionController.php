@@ -307,19 +307,13 @@ class TransactionController extends Controller
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
-        if ($request->input('user') ) {
+        if ($request->input('user') & empty($request->input('company'))) {
             $tr->whereIn('user_id',$user);
             $users = Users::whereIn('id',$user)->get();
-            if(count($users) == 1){
-                $starting_balance = $users[0]->starting_balance;
-            }else{
-                $sb = [];
-                foreach($users as $user){
-                    $sb[] = $user->starting_balance;
-                }
-                $starting_balance = array_sum($sb);
+
+            foreach($users as $user){
+                $starting_balance += $user->starting_balance;
             }
-            
         }
 
         if ($request->input('company')) {
@@ -331,11 +325,11 @@ class TransactionController extends Controller
 
         $paymentsOLD = Payments::where('payments.date','<',$from_date);
 
-        if ($request->input('company') && empty($request->input('user'))) {
+        if ($request->input('company')) {
             $paymentsOLD->where('payments.company_id','=',$company);
         }
 
-        if ($request->input('user') && empty($request->input('company')) {
+        if ($request->input('user') && empty($request->input('company'))) {
             $paymentsOLD->whereIn('user_id',$user);
         }
 
