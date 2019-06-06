@@ -187,12 +187,16 @@ class ReportsController extends Controller
                 ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
                 ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
-            if ($request->input('user')) {
+            if ($request->input('user') && empty($request->input('company'))) {
                 $query = $query->whereIn('users.id',$user);
             }
 
-            if ($request->input('company')) {
+            if ($request->input('company') && empty($request->input('user'))) {
                 $query = $query->where('companies.id',$company);
+            }
+
+            if($request->input('user') && $request->input('company')){
+                $query = $query->whereIn('users.id',$user)->orWhere('companies.id',$company);
             }
 
             if ($request->input('fromDate') && $request->input('toDate')) {

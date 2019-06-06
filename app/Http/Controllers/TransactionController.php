@@ -125,7 +125,7 @@ class TransactionController extends Controller
 
         $transactions       = self::generate_data($request);
         $balance            = self::generate_balance($request);
-
+        
         $total = 0;
         $totalToPay = 0;
         $totalAmount = 0;
@@ -181,7 +181,7 @@ class TransactionController extends Controller
                     $sheet->appendRow(array(
                         $row->created_at,
                         $row->type,
-                        $row->username,
+                        $row->username ? $row->username : $row->company_id,
                         $fueling,
                         $payment,
                         $total,
@@ -316,16 +316,29 @@ class TransactionController extends Controller
             }
         }
 
-        if ($request->input('company')) {
+        if ($request->input('company') & empty($request->input('user'))) {
             $tr->where('company_id','=',$company);
             $starting_balance = Company::findorFail($company)->starting_balance;
+        }
+
+        if($request->input('company') && $request->input('user')){
+            $tr->whereIn('user_id',$user)->orWhere('company_id','=',$company);
+
+            $users = Users::whereIn('id',$user)->get();
+
+            foreach($users as $user){
+                $starting_balance += $user->starting_balance;
+            }
+
+            $starting_balance += Company::findorFail($company)->starting_balance;
+
         }
 
         $transaction_total = $tr->sum('money');
 
         $paymentsOLD = Payments::where('payments.date','<',$from_date);
 
-        if ($request->input('company')) {
+        if ($request->input('company') && empty($request->input('user'))) {
             $paymentsOLD->where('payments.company_id','=',$company);
         }
 
