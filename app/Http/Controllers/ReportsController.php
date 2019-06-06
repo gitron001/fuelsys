@@ -168,7 +168,13 @@ class ReportsController extends Controller
 
         // Check if last payment checkbox is selected
         if($last_payment == 'Yes'){
-            $payments = Payments::where('user_id',$user)->orderBy('date', 'desc')->paginate('5');
+
+            if(!empty($user)){
+               $payments = Payments::where('user_id',$user)->orderBy('date', 'desc')->paginate('5'); 
+           }else{
+                $payments = Payments::where('company_id',$company)->orderBy('date', 'desc')->paginate('5');
+           }
+            
 
             if(count($payments) == 0){
                 $payments = Payments::paginate('5');
