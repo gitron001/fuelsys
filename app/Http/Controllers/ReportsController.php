@@ -197,6 +197,7 @@ class ReportsController extends Controller
 
             if(count($payments) != 0){
                 $p_date = $payments[0]->date;
+                $check_transactions = $query;
                 $check_transactions = $query->where('transactions.created_at','>', $p_date)->count();
                 if($check_transactions == 0){
                     if(!isset($payments[1]->date)){ return false; }
