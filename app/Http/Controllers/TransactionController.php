@@ -125,7 +125,7 @@ class TransactionController extends Controller
 
         $transactions       = self::generate_data($request);
         $balance            = self::generate_balance($request);
-        
+
         $total = 0;
         $totalToPay = 0;
         $totalAmount = 0;
@@ -293,6 +293,7 @@ class TransactionController extends Controller
         }
         
         $payments = $payments->get();
+        dd($payments);exit();
 
         return $payments;
     }
