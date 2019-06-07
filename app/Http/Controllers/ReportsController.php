@@ -191,38 +191,44 @@ class ReportsController extends Controller
         }
 
         if($last_payment == 'Yes'){
+            
 
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->limit('5');
+            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->limit('5')->get();
 
-            if(count($payments) == 0){
+            if(count($payments) != 0){
                 $p_date = $payments[0]->date;
-                $check_transactions = $query->whereBetween('transactions.created_at','<', $p_date])->count();
+                $check_transactions = $query->where('transactions.created_at','>', $p_date)->count();
                 if($check_transactions == 0){
-                    if(!isset($payments[1]->date)){ break; }
+                    if(!isset($payments[1]->date)){ return false; }
                     $p_date = $payments[1]->date;
-                    $check_transactions = $query->whereBetween('transactions.created_at','<', $p_date])->count();
-                }
-
-                 if($check_transactions == 0){
-                     if(!isset($payments[2]->date)){ break; }
-                     $p_date = $payments[2]->date;
-                     $check_transactions = $query->whereBetween('transactions.created_at','<', $p_date])->count();
+                    $check_transactions = $query;
+                    $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
                 }
 
                 if($check_transactions == 0){
-                     if(!isset($payments[3]->date)){ break; }
+                    if(!isset($payments[2]->date)){ return false; }
+                    $p_date = $payments[2]->date;
+                    $check_transactions = $query;
+                    $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
+                }
+
+                if($check_transactions == 0){
+                     if(!isset($payments[3]->date)){ return false; }
                      $p_date = $payments[3]->date;
-                     $check_transactions = $query->whereBetween('transactions.created_at','<', $p_date])->count();
+                     $check_transactions = $query;
+                     $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
                 }
                 if($check_transactions == 0){
-                    if(!isset($payments[4]->date)){ break; }
+                    if(!isset($payments[4]->date)){ return false; }
                     $p_date = $payments[4]->date;
-                    $check_transactions = $query->whereBetween('transactions.created_at','<', $p_date])->count();
+                    $check_transactions = $query;
+                    $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
                 }
                 if($check_transactions == 0){
-                    if(!isset($payments[4]->date)){ break; }
+                    if(!isset($payments[4]->date)){ return false; }
                     $p_date = $payments[4]->date;
-                    $check_transactions = $query->whereBetween('transactions.created_at','<', $p_date])->count();
+                    $check_transactions = $query;
+                    $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
                 }
             }
         }
