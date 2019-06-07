@@ -166,48 +166,44 @@ class ReportsController extends Controller
         $company        = $request->input('company');
         $last_payment   = $request->input('last_payment');
 
-        // Check if last payment checkbox is selected
-        if($last_payment == 'Yes'){
+        $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
+                    ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+                    ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+                    ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->paginate('5');
-
-            if(count($payments) == 0){
-                $payments = Payments::orderBy('date', 'desc')->paginate('5');
-            }
-
-            return view('/admin/reports/home',compact('payments','users','companies'));
+        if ($request->input('user') && empty($request->input('company'))) {
+            $query = $query->whereIn('users.id',$user);
         }
 
-        // If checkbox(from last payment) is not selected get others data
-        if(empty($last_payment)){
+        if ($request->input('company') && empty($request->input('user'))) {
+            $query = $query->where('companies.id',$company);
+        }
 
-            $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
-               'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
-                ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-                ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-                ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
+        if($request->input('user') && $request->input('company')){
+            $query = $query->whereIn('users.id',$user)->orWhere('companies.id',$company);
+        }
 
-            if ($request->input('user') && empty($request->input('company'))) {
-                $query = $query->whereIn('users.id',$user);
-            }
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
 
-            if ($request->input('company') && empty($request->input('user'))) {
-                $query = $query->where('companies.id',$company);
-            }
+        if($last_payment == 'Yes'){
 
-            if($request->input('user') && $request->input('company')){
-                $query = $query->whereIn('users.id',$user)->orWhere('companies.id',$company);
-            }
-
-            if ($request->input('fromDate') && $request->input('toDate')) {
-                $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
-            }
+            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();
+            $query = $query->where('transactions.created_at','>',$payments->date);
             $query->orderBy('transactions.created_at', 'DESC');
             $transactions = $query->paginate(15);
 
-            return view('/admin/reports/home',compact('transactions','users','companies'));
+            dd($transactions);exit;
+
+        } else {
+
+            $query->orderBy('transactions.created_at', 'DESC');
+            $transactions = $query->paginate(15);
 
         }
+
+        return view('/admin/reports/home',compact('payments','users','companies','transactions'));
 
     }
 }

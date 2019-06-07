@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-group">
-          <input type="checkbox" name="last_payment" value="Yes" {{Input::get("last_payment") == 'Yes' ? 'checked' : ''}}>From last payment<br>
+          <input type="checkbox" name="last_payment"  id="last_payment" {{Input::get("last_payment") == 'Yes' ? 'checked' : ''}}>From last payment<br>
         </div>
 
         <div class="form-group">
@@ -64,7 +64,7 @@
       
       @if(Request::isMethod('get') && !Input::get('last_payment'))
         @include('admin.reports.inc.table-get')
-      @elseif(Request::isMethod('get') && Input::get('last_payment') == 'Yes')
+      @elseif(Request::isMethod('get') && Input::get('last_payment') == 'da')
         @include('admin.reports.inc.last_payments')
       @else
         @include('admin.reports.inc.basic-table')
@@ -84,12 +84,31 @@
 @section('js')
 
 <script>
+    
+    // Show checkbox value after page load
+    $(document).ready(function(){
+      if ($('input#last_payment').is(':checked')) {
+        $('input[name="last_payment"]').val('Yes');
+      } else {
+        $('input[name="last_payment"]').val('No');
+      }
+    });
+    
+    // Change Checkbox value onclick
+    $('#last_payment').click(function(){
+      if($(this).is(':checked')){
+          $('input[name="last_payment"]').val('Yes');
+      } else {
+          $('input[name="last_payment"]').val('No');
+      }
+    });
 
     function get(name){
      if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
         return decodeURIComponent(name[1]);
     }
 
+    // Start Date & End Date Filters
     $(function () {
         var date = new Date();
         date.setDate(date.getDate() -1);
@@ -154,11 +173,12 @@
       var fromDate = $('#datetimepicker4').val();
       var toDate = $('#datetimepicker5').val();
       var user = $("#user").val();
+      var last_payment = $("#last_payment").val();
       var company = $("#company").val();
 
       $.ajax({
         type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
+        data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment},
         url: "{{ URL('/export')}}",
         dataType: "JSON",
         success: function(response, textStatus, request){
@@ -179,11 +199,12 @@
       var fromDate = $('#datetimepicker4').val();
       var toDate = $('#datetimepicker5').val();
       var user = $("#user").val();
+      var last_payment = $("#last_payment").val();
       var company = $("#company").val();
 
       $.ajax({
         type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
+        data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment},
         url: "{{ URL('/pdf')}}",
         dataType: "JSON",
         success: function(response, textStatus, request){
