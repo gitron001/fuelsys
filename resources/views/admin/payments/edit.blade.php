@@ -53,8 +53,6 @@
 
 	$(document).ready(function() {
 
-		$('.datepicker').datepicker('setDate', 'now');
-
 		$(document).on('change', ".check_class", function () {
 			$(".check_class").prop("checked", false);
 			$(this).prop("checked", true);

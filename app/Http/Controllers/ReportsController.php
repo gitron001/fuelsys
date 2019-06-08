@@ -171,9 +171,6 @@ class ReportsController extends Controller
                     ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
                     ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
-        // If checkbox(from last payment) is not selected get others data
-        //if(empty($last_payment)){
-
         if ($request->input('user') && empty($request->input('company'))) {
             $query = $query->whereIn('users.id',$user);
         }
@@ -186,50 +183,43 @@ class ReportsController extends Controller
             $query = $query->whereIn('users.id',$user)->orWhere('companies.id',$company);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
-            $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        }
-
         if($last_payment == 'Yes'){
             
-
             $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->limit('5')->get();
 
             if(count($payments) != 0){
                 $p_date = $payments[0]->date;
-                $check_transactions = $query;
-                $check_transactions = $query->where('transactions.created_at','>', $p_date)->count();
+                $trans_query = clone $query;
+                $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
                 if($check_transactions == 0){
                     if(!isset($payments[1]->date)){ return false; }
                     $p_date = $payments[1]->date;
-                    $check_transactions = $query;
-                    $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
+                    unset($trans_query);
+                    $trans_query = clone $query;
+                    $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
                 }
 
                 if($check_transactions == 0){
                     if(!isset($payments[2]->date)){ return false; }
                     $p_date = $payments[2]->date;
-                    $check_transactions = $query;
-                    $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
+                    unset($trans_query);
+                    $trans_query = clone $query;
+                    $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
                 }
 
                 if($check_transactions == 0){
-                     if(!isset($payments[3]->date)){ return false; }
-                     $p_date = $payments[3]->date;
-                     $check_transactions = $query;
-                     $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
+                    if(!isset($payments[3]->date)){ return false; }
+                    $p_date = $payments[3]->date;
+                    unset($trans_query);
+                    $trans_query = clone $query;
+                    $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
                 }
                 if($check_transactions == 0){
                     if(!isset($payments[4]->date)){ return false; }
                     $p_date = $payments[4]->date;
-                    $check_transactions = $query;
-                    $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
-                }
-                if($check_transactions == 0){
-                    if(!isset($payments[4]->date)){ return false; }
-                    $p_date = $payments[4]->date;
-                    $check_transactions = $query;
-                    $check_transactions = $check_transactions->where('transactions.created_at','>', $p_date)->count();
+                    unset($trans_query);
+                    $trans_query = clone $query;
+                    $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
                 }
             }
         }
