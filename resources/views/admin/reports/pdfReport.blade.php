@@ -96,7 +96,9 @@
 		    $fueling = $py->money;
 		    $payment = 0;
 		}
-
+		$total = str_replace(',', '', $total);
+		$fueling = str_replace(',', '', $fueling);
+		$payment = str_replace(',', '', $payment);
 		$total = $total + $fueling - $payment;
 
 		?>

@@ -124,7 +124,7 @@ class TransactionController extends Controller
     public function excel_export(Request $request) {
 
         $transactions       = self::generate_data($request);
-        $balance            = self::generate_balance($request);
+        $balance            = str_replace(',', '', self::generate_balance($request));
 
         $total = 0;
         $totalToPay = 0;
@@ -176,6 +176,9 @@ class TransactionController extends Controller
                         $fueling = $row->money;
                         $payment = 0;                  
                     }
+                    $total = str_replace(',', '', $total);
+                    $fueling = str_replace(',', '', $fueling);
+                    $payment = str_replace(',', '', $payment);
                     $total = $total + $fueling - $payment;
                     
                     $sheet->appendRow(array(
@@ -293,8 +296,6 @@ class TransactionController extends Controller
         }
         
         $payments = $payments->get();
-        dd($payments);exit();
-
         return $payments;
     }
 
