@@ -131,7 +131,7 @@ class TransactionController extends Controller
         $totalAmount = 0;
         $totalPayed = 0;
 
-        $totalAmount = number_format($balance, 2);
+        $totalAmount = $balance;
         $startDate = $request->fromDate;
 
         
@@ -220,7 +220,7 @@ class TransactionController extends Controller
         $balance    = self::generate_balance($request);
 
         $date = $request->fromDate;
-
+	
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         
@@ -293,7 +293,6 @@ class TransactionController extends Controller
         }
         
         $payments = $payments->get();
-        dd($payments);exit();
 
         return $payments;
     }
@@ -334,28 +333,31 @@ class TransactionController extends Controller
             $starting_balance += Company::findorFail($company)->starting_balance;
 
         }
-
+		
         $transaction_total = $tr->sum('money');
 
         $paymentsOLD = Payments::where('payments.date','<',$from_date);
-
+		
         if ($request->input('company') && empty($request->input('user'))) {
             $paymentsOLD->where('payments.company_id','=',$company);
         }
 
         if ($request->input('user') && empty($request->input('company'))) {
-            $paymentsOLD->whereIn('user_id',$user);
+            $paymentsOLD->whereIn('user_id',$request->input('user'));
         }
 
         if($request->input('company') && $request->input('user')){
-            $paymentsOLD->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
+			$user = $request->input('user');
+			$paymentsOLD->orWhere(function ($query, $user, $company) {
+				$query->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
+			});
+            //$paymentsOLD->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
         }
 
         $paymentsOLD = $paymentsOLD->sum('amount');
-
         $balance = $transaction_total + $starting_balance - $paymentsOLD;
-
-        return number_format($balance, 2);
+	
+        return $balance;
     }
 
     public function search(Request $request) {

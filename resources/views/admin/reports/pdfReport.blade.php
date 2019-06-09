@@ -107,13 +107,13 @@
 	    <td align="right">{{ $py->username }}</td>
 	    <td align="right">{{ $fueling }}</td>
 	    <td align="right">{{ $payment }}</td>
-	    <td align="right">{{ $total }}</td>
+	    <td align="right">{{ number_format($total, 2) }}</td>
 	  </tr>
 	@endforeach
 	    <tr>
 	        <td colspan="4"></td>
 	        <td align="right">Totali €</td>
-	        <td align="right" class="gray"> {{ $total }} €</td>
+	        <td align="right" class="gray"> {{ number_format($total, 2) }} €</td>
 	    </tr>
 	</tfoot>
 	</table>

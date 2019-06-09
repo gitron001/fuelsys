@@ -84,7 +84,7 @@ class CardService extends ServiceProvider
 
         if($user->status != 1 ){ return false; }
         if($user->company->status != 1 ){ return false; }
-
+		//dd($user);
         //Call Function to check limit
         $limit = false;
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
