@@ -79,7 +79,7 @@ class CardService extends ServiceProvider
         //echo '<br> Card Number: '. $cardNumber;
         $user = Users::where("rfid", $cardNumber)->where('status', 1)->first();
         $card_count = Users::where("rfid", $cardNumber)->where('status', 1)->count();
-			
+	   
         if($card_count == 0 ){ return false; }
 
         if($user->status != 1 ){ return false; }

@@ -245,6 +245,8 @@ class TransactionController extends Controller
     public static function generate_data($request){
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
+		$from_payment	= strtotime(date('Y-m-d', $from_date));
+		$to_payment	= strtotime(date('Y-m-d', $to_date));
         $user       = $request->input('user');
         $company    = $request->input('company');
 
@@ -292,7 +294,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
-            $payments->whereBetween('payments.date',[$from_date, $to_date]);
+            $payments->whereBetween('payments.date',[$from_payment, $to_payment]);
         }
         
         $payments = $payments->get();
@@ -302,6 +304,7 @@ class TransactionController extends Controller
 
     public static function generate_balance($request){
         $from_date  = strtotime($request->input('fromDate'));
+		$from_payment	= strtotime(date('Y-m-d', $from_date));
         $user       = $request->input('user');
         $company    = $request->input('company');
         $starting_balance = 0;
@@ -339,7 +342,7 @@ class TransactionController extends Controller
 		
         $transaction_total = $tr->sum('money');
 
-        $paymentsOLD = Payments::where('payments.date','<',$from_date);
+        $paymentsOLD = Payments::where('payments.date','<',$from_payment);
 		
         if ($request->input('company') && empty($request->input('user'))) {
             $paymentsOLD->where('payments.company_id','=',$company);

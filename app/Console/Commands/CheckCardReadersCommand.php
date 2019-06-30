@@ -88,7 +88,7 @@ class CheckCardReadersCommand extends Command
             TransactionService::read($socket, $pfc_id);
             usleep(150000);
             $proccess = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->first();
-            $proccess->refresh_time = time();
+		    $proccess->refresh_time = time();
             $proccess->save();
         }
 

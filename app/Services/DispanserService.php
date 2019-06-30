@@ -78,7 +78,7 @@ class DispanserService extends ServiceProvider
             $price = pack('c', $response[$i+1]).pack('c', $response[$i]);
             $price = unpack('s', $price)[1];
             if($price == 0 ){  $j++; continue; }
-            $product = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $j)->where('status', 1)->get();
+            $product = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $j)->where('status', 1)->first();
             $product->price = $price;
             $product->pfc_id = $pfc_id;
             $product->pfc_pr_id = $j;
@@ -137,8 +137,8 @@ class DispanserService extends ServiceProvider
 
         $stopCommand = Process::where('type_id', 4)->where('pfc_id', $pfc_id)->count();
         if($stopCommand != 0){
-            Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();
-
+			self::UpdatefuelPrices($socket, $pfc_id);
+            Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();		
         }
 
         $stopCommand = Process::where('type_id', 5)->where('pfc_id', $pfc_id)->count();
