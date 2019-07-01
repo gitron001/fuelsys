@@ -2,77 +2,106 @@
 
 @section('content')
 	<h1>Edit User</h1>
+
 	{!! Form::model($user,['method'=>'PATCH', 'action'=>['UsersController@update',$user->id]]) !!}
 
-	<div class="form-group">
-		{!! Form::label('rfid', 'RFID'); !!}
-		{!! Form::text('rfid',null,['class'=>'form-control']); !!}
-	</div>
+	<div class="row">
+		<div class="col-md-6">	
+			<div class="form-group">
+				{!! Form::label('rfid', 'RFID'); !!}
+				{!! Form::text('rfid',null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 
-	<div class="form-group">
-		{!! Form::label('name', 'Name'); !!}
-		{!! Form::text('name',null,['class'=>'form-control']); !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				{!! Form::label('name', 'Name'); !!}
+				{!! Form::text('name',null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 
-	<div class="form-group">
-		{!! Form::label('email', 'Email'); !!}
-		{!! Form::text('email',null,['class'=>'form-control']); !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				{!! Form::label('email', 'Email'); !!}
+				{!! Form::text('email',null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 
-	<div class="form-group">
-		<label for="password">Password</label>
-		<input type="password" id="pass" name="password" class="form-control" value="password">
-	</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" id="pass" name="password" class="form-control" value="password">
+			</div>
+		</div>
 
-	<div class="form-group">
-		{!! Form::label('status', 'Status'); !!}
-		{!! Form::select('status',[1 =>'Active',2 =>'No Active'],null,['class'=>'form-control']); !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				{!! Form::label('status', 'Status'); !!}
+				{!! Form::select('status',[1 =>'Active',2 =>'No Active'],null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
-		<label for="type">Type</label>
-		<select name="type" class="form-control" id="showHide">
-			<option value="1" @if ($user->type == 1) {{ 'selected' }} @endif>Staff</option>
-			<option value="2" @if ($user->type == 2) {{ 'selected' }} @endif>Company</option>
-			<option value="3" @if ($user->type == 3) {{ 'selected' }} @endif>Admin</option>
-			<option value="4" @if ($user->type == 4) {{ 'selected' }} @endif>Client</option>
-			<option value="5" @if ($user->type == 5) {{ 'selected' }} @endif>Manager</option>
-		</select>
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
+				<label for="type">Type</label>
+				<select name="type" class="form-control" id="showHide">
+					<option value="1" @if ($user->type == 1) {{ 'selected' }} @endif>Staff</option>
+					<option value="2" @if ($user->type == 2) {{ 'selected' }} @endif>Company</option>
+					<option value="3" @if ($user->type == 3) {{ 'selected' }} @endif>Admin</option>
+					<option value="4" @if ($user->type == 4) {{ 'selected' }} @endif>Client</option>
+					<option value="5" @if ($user->type == 5) {{ 'selected' }} @endif>Manager</option>
+				</select>
+			</div>
+		</div>
 
-	<div class="form-group">
-        {!! Form::label('has_limit', 'Has Limit'); !!}
-        {!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
-    </div>
+		<div class="col-md-6">
+			<div class="form-group">
+				{!! Form::label('has_limit', 'Has Limit'); !!}
+				{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
+			</div>
+		</div>
 
-    <div class="form-group" id="has_limits">
-        {!! Form::label('limits', 'Limits'); !!}
-        {!! Form::text('limits',null,['class'=>'form-control']); !!}
-    </div>
+		<div class="col-md-6">
+			<div class="form-group" id="has_limits">
+				{!! Form::label('limits', 'Limits'); !!}
+				{!! Form::text('limits',null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 
-    <div class="form-group" id="starting_balance">
-        {!! Form::label('starting_balance', 'Starting Balance'); !!}
-        {!! Form::text('starting_balance',null,['class'=>'form-control','id'=>'starting_balance']); !!}
-    </div>
+		<div class="col-md-6">
+			<div class="form-group" id="starting_balance">
+				{!! Form::label('starting_balance', 'Starting Balance'); !!}
+				{!! Form::text('starting_balance',null,['class'=>'form-control','id'=>'starting_balance']); !!}
+			</div>
+		</div>
 
-	<div class="form-group" id="company" @if ($user->type != 2) echo style="display: none" @endif>
-		{!! Form::label('company_id', 'Company'); !!}
-		{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group" id="company" @if ($user->type != 2) echo style="display: none" @endif>
+				{!! Form::label('company_id', 'Company'); !!}
+				{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 
-	<div class="form-group" id="one_time_limit" @if ($user->type != 2) echo style="display: none" @endif>
-		{!! Form::label('one_time_limit', 'One_Time_Limit'); !!}
-		{!! Form::text('one_time_limit',null,['class'=>'form-control']); !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group" id="one_time_limit" @if ($user->type != 2) echo style="display: none" @endif>
+				{!! Form::label('one_time_limit', 'One_Time_Limit'); !!}
+				{!! Form::text('one_time_limit',null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 
-	<div class="form-group" id="plates" @if ($user->type != 2) echo style="display: none" @endif>
-		{!! Form::label('plates', 'Plates'); !!}
-		{!! Form::text('plates',null,['class'=>'form-control']); !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group" id="plates" @if ($user->type != 2) echo style="display: none" @endif>
+				{!! Form::label('plates', 'Plates'); !!}
+				{!! Form::text('plates',null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 
-	<div class="form-group" id="vehicle" @if ($user->type != 2) echo style="display: none" @endif>
-		{!! Form::label('vehicle', 'Vehicle'); !!}
-		{!! Form::text('vehicle',null,['class'=>'form-control']); !!}
+		<div class="col-md-6">
+			<div class="form-group" id="vehicle" @if ($user->type != 2) echo style="display: none" @endif>
+				{!! Form::label('vehicle', 'Vehicle'); !!}
+				{!! Form::text('vehicle',null,['class'=>'form-control']); !!}
+			</div>
+		</div>
 	</div>
 
 

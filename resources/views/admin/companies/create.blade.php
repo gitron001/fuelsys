@@ -5,113 +5,143 @@
 
 	{!! Form::open(['method'=>'POST', 'action'=>['CompaniesController@store']]) !!}
 
-	<div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
-		{!! Form::label('name', 'Name:'); !!}
-		{!! Form::text('name',null,['class'=>'form-control']); !!}
-		{!! $errors->first('name','<span class="help-block">:message</span>') !!}
-	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
+				{!! Form::label('name', 'Name:'); !!}
+				{!! Form::text('name',null,['class'=>'form-control']); !!}
+				{!! $errors->first('name','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('fis_number') ? 'has-error' :'' }}">
-		{!! Form::label('fis_number', 'Fis.Number:'); !!}
-		{!! Form::number('fis_number',null,['class'=>'form-control']); !!}
-		{!! $errors->first('fis_number','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('fis_number') ? 'has-error' :'' }}">
+				{!! Form::label('fis_number', 'Fis.Number:'); !!}
+				{!! Form::number('fis_number',null,['class'=>'form-control']); !!}
+				{!! $errors->first('fis_number','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('bis_number') ? 'has-error' :'' }}">
-		{!! Form::label('bis_number', 'Bis.Number:'); !!}
-		{!! Form::number('bis_number',null,['class'=>'form-control']); !!}
-		{!! $errors->first('bis_number','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('bis_number') ? 'has-error' :'' }}">
+				{!! Form::label('bis_number', 'Bis.Number:'); !!}
+				{!! Form::number('bis_number',null,['class'=>'form-control']); !!}
+				{!! $errors->first('bis_number','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
+		
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('contact_person') ? 'has-error' :'' }}">
+				{!! Form::label('contact_person', 'Contact Person:'); !!}
+				{!! Form::text('contact_person',null,['class'=>'form-control']); !!}
+				{!! $errors->first('contact_person','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('contact_person') ? 'has-error' :'' }}">
-		{!! Form::label('contact_person', 'Contact Person:'); !!}
-		{!! Form::text('contact_person',null,['class'=>'form-control']); !!}
-		{!! $errors->first('contact_person','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('tax_number') ? 'has-error' :'' }}">
+				{!! Form::label('tax_number', 'Tax.Number:'); !!}
+				{!! Form::number('tax_number',null,['class'=>'form-control']); !!}
+				{!! $errors->first('tax_number','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('tax_number') ? 'has-error' :'' }}">
-		{!! Form::label('tax_number', 'Tax.Number:'); !!}
-		{!! Form::number('tax_number',null,['class'=>'form-control']); !!}
-		{!! $errors->first('tax_number','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('res_number') ? 'has-error' :'' }}">
+				{!! Form::label('res_number', 'Res.Number:'); !!}
+				{!! Form::number('res_number',null,['class'=>'form-control']); !!}
+				{!! $errors->first('res_number','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('res_number') ? 'has-error' :'' }}">
-		{!! Form::label('res_number', 'Res.Number:'); !!}
-		{!! Form::number('res_number',null,['class'=>'form-control']); !!}
-		{!! $errors->first('res_number','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('tel_number') ? 'has-error' :'' }}">
+				{!! Form::label('tel_number', 'Tel.Number:'); !!}
+				{!! Form::number('tel_number',null,['class'=>'form-control']); !!}
+				{!! $errors->first('tel_number','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('tel_number') ? 'has-error' :'' }}">
-		{!! Form::label('tel_number', 'Tel.Number:'); !!}
-		{!! Form::number('tel_number',null,['class'=>'form-control']); !!}
-		{!! $errors->first('tel_number','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('email') ? 'has-error' :'' }}">
+				{!! Form::label('email', 'Email:'); !!}
+				{!! Form::text('email',null,['class'=>'form-control']); !!}
+				{!! $errors->first('email','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('email') ? 'has-error' :'' }}">
-		{!! Form::label('email', 'Email:'); !!}
-		{!! Form::text('email',null,['class'=>'form-control']); !!}
-		{!! $errors->first('email','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('address') ? 'has-error' :'' }}">
+				{!! Form::label('address', 'Address:'); !!}
+				{!! Form::text('address',null,['class'=>'form-control']); !!}
+				{!! $errors->first('address','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('address') ? 'has-error' :'' }}">
-		{!! Form::label('address', 'Address:'); !!}
-		{!! Form::text('address',null,['class'=>'form-control']); !!}
-		{!! $errors->first('address','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('city') ? 'has-error' :'' }}">
+				{!! Form::label('city', 'City:'); !!}
+				{!! Form::text('city',null,['class'=>'form-control']); !!}
+				{!! $errors->first('city','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('city') ? 'has-error' :'' }}">
-		{!! Form::label('city', 'City:'); !!}
-		{!! Form::text('city',null,['class'=>'form-control']); !!}
-		{!! $errors->first('city','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('country') ? 'has-error' :'' }}">
+				{!! Form::label('country', 'Country:'); !!}
+				{!! Form::text('country',null,['class'=>'form-control']); !!}
+				{!! $errors->first('country','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('country') ? 'has-error' :'' }}">
-		{!! Form::label('country', 'Country:'); !!}
-		{!! Form::text('country',null,['class'=>'form-control']); !!}
-		{!! $errors->first('country','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
+				{!! Form::label('status', 'Status:'); !!}
+				{!! Form::select('status',[1=>'Active',2=>'No Active',],null,['class'=>'form-control']); !!}
+				{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('limit_left') ? 'has-error' :'' }}">
-		{!! Form::label('limit_left', 'Limit Left:'); !!}
-		{!! Form::number('limit_left',null,['class'=>'form-control','step'=>'any']); !!}
-		{!! $errors->first('limit_left','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('has_receipt') ? 'has-error' :'' }}">
+				{!! Form::label('has_receipt', 'Has Receipt:'); !!}
+				{!! Form::select('has_receipt',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+				{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
-		{!! Form::label('status', 'Status:'); !!}
-		{!! Form::select('status',[1=>'Active',2=>'No Active',],null,['class'=>'form-control']); !!}
-		{!! $errors->first('status','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('has_receipt_nr') ? 'has-error' :'' }}">
+				{!! Form::label('has_receipt_nr', 'Has Receipt Number:'); !!}
+				{!! Form::select('has_receipt_nr',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+				{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('has_receipt') ? 'has-error' :'' }}">
-		{!! Form::label('has_receipt', 'Has Receipt:'); !!}
-		{!! Form::select('has_receipt',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
-		{!! $errors->first('status','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
+				{!! Form::label('has_limit', 'Has Limit:'); !!}
+				{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id' => 'showHide']); !!}
+				{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('has_receipt_nr') ? 'has-error' :'' }}">
-		{!! Form::label('has_receipt_nr', 'Has Receipt Number:'); !!}
-		{!! Form::select('has_receipt_nr',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
-		{!! $errors->first('status','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
+				{!! Form::label('starting_balance', 'Starting Balance:'); !!}
+				{!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
+				{!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
 
-	<div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
-		{!! Form::label('has_limit', 'Has Limit:'); !!}
-		{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id' => 'showHide']); !!}
-		{!! $errors->first('status','<span class="help-block">:message</span>') !!}
-	</div>
-
-	<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
-		{!! Form::label('starting_balance', 'Starting Balance:'); !!}
-		{!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
-		{!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
-	</div>
-
-	<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
-		{!! Form::label('limits', 'Limit:'); !!}
-		{!! Form::number('limits',null,['class'=>'form-control']); !!}
-		{!! $errors->first('limits','<span class="help-block">:message</span>') !!}
-	</div>
+		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
+				{!! Form::label('limits', 'Limit:'); !!}
+				{!! Form::number('limits',null,['class'=>'form-control']); !!}
+				{!! $errors->first('limits','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
+</div>
 
 	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
 		{!! Form::label('discounts', 'Discounts:'); !!}

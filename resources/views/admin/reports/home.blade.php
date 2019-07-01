@@ -56,6 +56,7 @@
           <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i></a>
           <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportEXCEL" title="Export Excel"><i class="fas fa-file-excel"></i></button>
           <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportPDF" title="Export PDF"><i class="fas fa-file-pdf"></i></button>
+          <button type="button" data-toggle="tooltip" class="btn btn-primary" id="dailyReport" title="Daily Report"><i class="far fa-envelope"></i></button>
         </div>
 
       </form>
@@ -214,6 +215,24 @@
           document.body.appendChild(a);
           a.click();
           a.remove();
+        }
+      });
+
+    });
+  });
+
+  $(document).ready(function(){
+    $('#dailyReport').click(function(){
+      var company = $("#company").val();
+      var dailyReport = 1;
+
+      $.ajax({
+        type: "GET",
+        data: {company:company,dailyReport:dailyReport},
+        url: "{{ URL('/dailyReport')}}",
+        dataType: "JSON",
+        success: function(data){
+          console.log(data);
         }
       });
 

@@ -4,93 +4,133 @@
     <h1>Edit Company</h1>
     {!! Form::model($company,['method'=>'PATCH', 'action'=>['CompaniesController@update',$company->id]]) !!}
 
-    <div class="form-group">
-        {!! Form::label('name', 'Name'); !!}
-        {!! Form::text('name',null,['class'=>'form-control']); !!}
-    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('name', 'Name'); !!}
+                {!! Form::text('name',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
+    
 
-    <div class="form-group">
-        {!! Form::label('fis_number', 'Fis.Number'); !!}
-        {!! Form::text('fis_number',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('fis_number', 'Fis.Number'); !!}
+                {!! Form::text('fis_number',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('bis_number', 'Bis.Number'); !!}
-        {!! Form::text('bis_number',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('bis_number', 'Bis.Number'); !!}
+                {!! Form::text('bis_number',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('contact_person', 'Contact Person:'); !!}
-        {!! Form::text('contact_person',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('contact_person', 'Contact Person:'); !!}
+                {!! Form::text('contact_person',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('tax_number', 'Tax.Number'); !!}
-        {!! Form::text('tax_number',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('tax_number', 'Tax.Number'); !!}
+                {!! Form::text('tax_number',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('res_number', 'Res.Number'); !!}
-        {!! Form::text('res_number',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('res_number', 'Res.Number'); !!}
+                {!! Form::text('res_number',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('tel_number', 'Phone'); !!}
-        {!! Form::text('tel_number',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('tel_number', 'Phone'); !!}
+                {!! Form::text('tel_number',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('email', 'Email'); !!}
-        {!! Form::text('email',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('email', 'Email'); !!}
+                {!! Form::text('email',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('address', 'Address'); !!}
-        {!! Form::text('address',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('address', 'Address'); !!}
+                {!! Form::text('address',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('city', 'City'); !!}
-        {!! Form::text('city',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('city', 'City'); !!}
+                {!! Form::text('city',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('country', 'Country'); !!}
-        {!! Form::text('country',null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('country', 'Country'); !!}
+                {!! Form::text('country',null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('limit_left', 'Limit Left'); !!}
-        {!! Form::number('limit_left',null,['class'=>'form-control','step'=>'any']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('limit_left', 'Limit Left'); !!}
+                {!! Form::number('limit_left',null,['class'=>'form-control','step'=>'any']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('status', 'Status'); !!}
-        {!! Form::select('status',[1=>'Active',2=>'No Active',],null,['class'=>'form-control']); !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('has_receipt', 'Has Receipt'); !!}
-        {!! Form::select('has_receipt',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('status', 'Status'); !!}
+                {!! Form::select('status',[1=>'Active',2=>'No Active',],null,['class'=>'form-control']); !!}
+            </div>
+        </div>
+    
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('has_receipt', 'Has Receipt'); !!}
+                {!! Form::select('has_receipt',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('has_receipt_nr', 'Has Receipt Number'); !!}
-        {!! Form::select('has_receipt_nr',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('has_receipt_nr', 'Has Receipt Number'); !!}
+                {!! Form::select('has_receipt_nr',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+            </div>
+        </div>
 
-    <div class="form-group">
-        {!! Form::label('has_limit', 'Has Limit'); !!}
-        {!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('has_limit', 'Has Limit'); !!}
+                {!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
+            </div>
+        </div>
 
-    <div class="form-group" id="has_limits">
-        {!! Form::label('limits', 'Limits'); !!}
-        {!! Form::text('limits',null,['class'=>'form-control','id'=>'has_limits']); !!}
-    </div>
+        <div class="col-md-6">
+            <div class="form-group" id="has_limits">
+                {!! Form::label('limits', 'Limits'); !!}
+                {!! Form::text('limits',null,['class'=>'form-control','id'=>'has_limits']); !!}
+            </div>
+        </div>
 
-    <div class="form-group" id="starting_balance">
-        {!! Form::label('starting_balance', 'Starting Balance'); !!}
-        {!! Form::text('starting_balance',null,['class'=>'form-control','id'=>'starting_balance']); !!}
+        <div class="col-md-6">
+            <div class="form-group" id="starting_balance">
+                {!! Form::label('starting_balance', 'Starting Balance'); !!}
+                {!! Form::text('starting_balance',null,['class'=>'form-control','id'=>'starting_balance']); !!}
+            </div>
+        </div>
     </div>
     
 

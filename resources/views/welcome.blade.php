@@ -2,13 +2,14 @@
 
 @section('content_header')
     <h1>Dashboard</h1>
-@stop
+@endsection
 
 @section('content')
 
 <br>
 
-<div class="col-md-8 text-center">
+<!-- Dispanesers Area -->
+<div class="col-md-4 text-center">
   @foreach($dispanesers as $dispaneser)
   <div class="col-md-4 text-center">
     <div class="card" >
@@ -20,10 +21,32 @@
   </div>
   @endforeach
 </div>
+<!-- END Dispanesers Area -->
 
+<!-- Companies with low limit Area -->
+<div class="col-md-3 table-wrapper-scroll-y my-custom-scrollbar">
+  <h2 class="text-center">Companies with low limit</h2>           
+  <table class="table table-bordered text-center">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Limit left</th>
+      </tr>
+    </thead>
+    <tbody>
+  @foreach($company_low_limit as $comp_low_limit)
+      <tr>
+        <td>{{ $comp_low_limit->name }}</td>
+        <td>{{ $comp_low_limit->limit_left }}</td>
+      </tr>
+  @endforeach
+    </tbody>
+  </table>
+</div>
+<!-- END Companies with low limit Area -->
 
-
-<div class="col-md-4 table-wrapper-scroll-y my-custom-scrollbar" id="loadTransaction">
+<!-- LIVE Feed Area -->
+<div class="col-md-5 table-wrapper-scroll-y my-custom-scrollbar" id="loadTransaction">
   <h2 class="text-center">LIVE Feed</h2>           
   <table class="table table-bordered text-center">
     <thead>
@@ -35,19 +58,20 @@
       </tr>
     </thead>
     <tbody>
-	@foreach($transactions as $transaction)
+  @foreach($transactions as $transaction)
       <tr>
         <td>{{ $transaction->users ? $transaction->users->name : '' }} {{ $transaction->users->company->name != '' ? '( '.$transaction->users->company->name.' )' : '' }}</td>
         <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
         <td>{{ $transaction->money }}</td>
         <td>{{ $transaction->created_at->format('m-d H:i:s') }}</td>
       </tr>
-	@endforeach
+  @endforeach
     </tbody>
   </table>
 </div>
+<!-- END LIVE Feed Area -->
 
-@stop
+@endsection
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
@@ -63,7 +87,7 @@
       }
     </style>
 
-@stop
+@endsection
 
 @section('js')
 

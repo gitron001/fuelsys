@@ -10,7 +10,7 @@
 		
 		<div class="form-group {{ $errors->has('date') ? 'has-error' :'' }}">
 			{!! Form::label('date', 'Date:'); !!}
-			{!! Form::text('date',null,['class'=>'form-control datepicker','autocomplete'=>'off']); !!} 
+			{!! Form::text('date',null,['class'=>'form-control','autocomplete'=>'off','id' => 'datetimepicker']); !!} 
 			{!! $errors->first('date','<span class="help-block">:message</span>') !!}
 		</div>
 
@@ -61,7 +61,10 @@
 
 	$(document).ready(function() {
 
-		$('.datepicker').datepicker('setDate', 'now');
+		var date = new Date();
+		$('#datetimepicker').datetimepicker({
+            defaultDate:date
+        });
 
 		$(document).on('change', ".check_class", function () {
 			$(".check_class").prop("checked", false);

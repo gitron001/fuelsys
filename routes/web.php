@@ -60,6 +60,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/search','TransactionController@search');
 	Route::get('/export','TransactionController@excel_export');
 	Route::get('/admin/transactions','TransactionController@searchWithPagination');
+	Route::get('/dailyReport','TransactionController@generateDailyReport');
 
 	Route::get('/pdf','TransactionController@exportPDF');
 

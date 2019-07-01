@@ -6,7 +6,7 @@
 		
 		<div class="form-group">
 			<label for="Date:">Date:</label>
-			<input type="text" value="{{ date('m/d/Y', $payment->date) }}" name="date" class="form-control datepicker" autocomplete="off"> 
+			<input type="text" id="datetimepicker" value="{{ date('m/d/Y H:i:s', $payment->date) }}" name="date" class="form-control" autocomplete="off"> 
 		</div>
 
 		<div class="form-group">
@@ -47,9 +47,11 @@
 
 <script>
 
-  $(function() {
+  	$(function() {
 		$(".datepicker" ).datepicker();
 	});
+
+	$('#datetimepicker').datetimepicker();
 
 	$(document).ready(function() {
 

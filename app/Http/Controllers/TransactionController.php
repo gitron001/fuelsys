@@ -243,12 +243,14 @@ class TransactionController extends Controller
     }
 
     public static function generate_data($request){
-        $from_date  = strtotime($request->input('fromDate'));
-        $to_date    = strtotime($request->input('toDate'));
+        $from_date      = strtotime($request->input('fromDate'));
+        $to_date        = strtotime($request->input('toDate'));
 		$from_payment	= strtotime(date('Y-m-d', $from_date));
-		$to_payment	= strtotime(date('Y-m-d', $to_date));
-        $user       = $request->input('user');
-        $company    = $request->input('company');
+		$to_payment	    = strtotime(date('Y-m-d', $to_date));
+        $user           = $request->input('user');
+        $company        = $request->input('company');
+        $dailyReport    = $request->input('dailyReport');
+        $date           = date('Y-m-d').' 00:00:00';
 
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
@@ -269,8 +271,12 @@ class TransactionController extends Controller
             $transactions->whereIn('user_id',$user)->orWhere('companies.id','=',$company);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
+        if ($request->input('fromDate') && $request->input('toDate') && !$request->input('dailyReport')) {
             $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
+
+        if ($request->input('dailyReport')) {
+            $transactions->where('transactions.created_at', '>=', strtotime($date));
         }
 
         $payments = Payments::select("payments.user_id",DB::RAW(" 'payment' as type")
@@ -293,8 +299,12 @@ class TransactionController extends Controller
             $payments->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
+        if ($request->input('fromDate') && $request->input('toDate') && !$request->input('dailyReport')) {
             $payments->whereBetween('payments.date',[$from_payment, $to_payment]);
+        }
+
+        if ($request->input('dailyReport')) {
+            $payments->where('payments.date', '>=', strtotime($date));
         }
         
         $payments = $payments->get();
@@ -303,11 +313,14 @@ class TransactionController extends Controller
     }
 
     public static function generate_balance($request){
-        $from_date  = strtotime($request->input('fromDate'));
-		$from_payment	= strtotime(date('Y-m-d', $from_date));
-        $user       = $request->input('user');
-        $company    = $request->input('company');
-        $starting_balance = 0;
+        $from_date          = strtotime($request->input('fromDate'));
+		$from_payment	    = strtotime(date('Y-m-d', $from_date));
+        $user               = $request->input('user');
+        $company            = $request->input('company');
+        $starting_balance   = 0;
+        if($request->input('dailyReport')){
+            $from_date      = strtotime(date('Y-m-d').' 00:00:00');
+        }
 
         $tr = Transactions::where('transactions.created_at','<',$from_date)
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
@@ -453,4 +466,20 @@ class TransactionController extends Controller
         return view('/admin/transactions/home',compact('transactions','users','companies'));
 
     }
+
+    public function generateDailyReport(Request $request) {
+        $payments   = self::generate_data($request);
+        $balance    = self::generate_balance($request);
+
+        $date = $request->fromDate;
+	
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date'));
+        $file_name  = 'Transaction - '.date('Y-m-d', time());
+        
+
+        Mail::send('emails.report',["data"=>"Raporti Ditor - Nesim Bakija"],function($m) use($pdf){
+            $m->to('ideal.bakija@gmail.com')->subject('Raporti Ditor - Nesim Bakija');
+            $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
+        });
+   }
 } 

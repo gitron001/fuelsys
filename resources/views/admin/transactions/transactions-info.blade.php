@@ -1,3 +1,4 @@
+<h2 class="text-center">LIVE Feed</h2>
 <table class="table table-bordered text-center">
 <thead>
   <tr>
