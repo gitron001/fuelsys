@@ -10,7 +10,8 @@ class Products extends Model
     
     protected $fillable = [
         'name', 
-        'price', 
+        'price',
+        'product_group_id',
         'vat',
         'pfc_id',
     ];
@@ -31,7 +32,12 @@ class Products extends Model
         return $this->hasMany('App\Models\Transaction');
     }   
 
+    public function product_group(){
+        return $this->belongsTo('App\Models\ProductGroup');
+    }
+
     public function pfc(){
         return $this->belongsTo('App\Models\PFC');
     }
+    
 }

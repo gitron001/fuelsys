@@ -38,6 +38,13 @@
     </li>
 
     <li>
+        <a href="{{ URL('admin/products_group') }}">
+            <i class="fa fa-th-large" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.products_group') }}</span>
+        </a>
+    </li>
+
+    <li>
         <a href="{{ URL('admin/dispanesers') }}">
             <i class="fa fas fa-gas-pump" ></i>
             <span>{{ trans('adminlte::adminlte.dispanesers') }}</span>

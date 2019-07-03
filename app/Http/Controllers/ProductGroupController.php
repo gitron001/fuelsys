@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Products;
 use App\Models\ProductGroup;
-use App\Models\PFC;
 
-class ProductController extends Controller
+class ProductGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Products::paginate(15);
-        return view('/admin/products/home',compact('products'));
+        $products_group = ProductGroup::paginate(15);
+        return view('/admin/products_group/home',compact('products_group'));
     }
 
     /**
@@ -27,9 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $pfc            = PFC::pluck('name','id')->all();
-        $product_group  = ProductGroup::pluck('name','id')->all();
-        return view('/admin/products/create',compact('pfc','product_group'));
+        return view('/admin/products_group/create');
     }
 
     /**
@@ -40,10 +36,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Products::create($request->all());
+        ProductGroup::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/products');
+        return redirect('/admin/products_group');
     }
 
     /**
@@ -65,10 +61,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $pfc  = PFC::pluck('name','id')->all();
-        $product = Products::findOrFail($id);
-        $product_group  = ProductGroup::pluck('name','id')->all();
-        return view('/admin/products/edit',compact('product','pfc','product_group'));
+        $product_group = ProductGroup::find($id);
+        return view('/admin/products_group/edit',compact('product_group'));
     }
 
     /**
@@ -80,11 +74,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Products::findOrFail($id);
-        $product->update($request->all());
+        $product_group = ProductGroup::findOrFail($id);
+        $product_group->update($request->all());
+        
         session()->flash('info','Success');
 
-        return redirect('/admin/products');
+        return redirect('/admin/products_group');
     }
 
     /**
@@ -95,10 +90,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Products::findOrFail($id);
-        $product->delete();
+        $product_group = ProductGroup::findOrFail($id);
+        $product_group->delete();
         session()->flash('info','Success');
 
-        return redirect('/admin/products');
+        return redirect('/admin/products_group');
     }
 }

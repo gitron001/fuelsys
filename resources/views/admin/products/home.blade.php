@@ -22,6 +22,7 @@
                 <tr>
                   <th>Name</th>
                   <th>Price</th>
+                  <th>Product Group</th>
                   <th>Vat</th>
                   <th>PFC</th>
                   <th>Created At</th>
@@ -33,7 +34,8 @@
                 @foreach($products as $product)
                 <tr>
                   	<td>{{ $product->name }}</td>
-                  	<td>{{ $product->price }}</td>
+                    <td>{{ $product->price }}</td>
+                    <td>{{ $product->product_group->name }}</td>
                     <td>{{ $product->vat }}</td>
                     <td>{{ $product->pfc ? $product->pfc->name : '' }}</td>
                     <td>{{ $product->created_at->diffForHumans() }}</td>

@@ -20,6 +20,14 @@
 		</div>
 
 		<div class="col-md-6">
+			<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
+				{!! Form::label('product_group', 'Product Group:'); !!}
+				{!! Form::select('product_group_id',['Select product group'] + $product_group,null,['class'=>'form-control','id'=>'user']); !!} 
+				{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
+			</div>
+		</div>
+
+		<div class="col-md-6">
 			<div class="form-group">
 				{!! Form::label('pfc_id', 'PFC'); !!}
 				{!! Form::select('pfc_id',['Select PFC'] + $pfc,null,['class'=>'form-control']); !!} 

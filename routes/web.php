@@ -28,6 +28,10 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::resource('/admin/products', 'ProductController');
 	Route::get('product/{id}/delete', ['as' => 'product.delete', 'uses' => 'ProductController@destroy']);
 
+	// Products Group
+	Route::resource('/admin/products_group', 'ProductGroupController');
+	Route::get('product_group/{id}/delete', ['as' => 'product_group.delete', 'uses' => 'ProductGroupController@destroy']);
+
 	// Dispanesers
 	Route::resource('/admin/dispanesers', 'DispaneserController');
 	Route::get('dispaneser/{id}/delete', ['as' => 'dispaneser.delete', 'uses' => 'DispaneserController@destroy']);
