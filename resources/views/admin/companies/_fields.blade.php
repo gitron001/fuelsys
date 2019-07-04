@@ -304,8 +304,7 @@
 	<script>
 
 		$(document).ready(function() {
-            var e = document.getElementById("showHideLimits");
-            var value = e.options[e.selectedIndex].value;
+            var value = $('#showHide option:selected').val();
 
             if(value == 1){
                 $("#starting_balance").show();
@@ -313,13 +312,12 @@
             }else {
                 $("#starting_balance").hide();
                 $("#has_limits").hide();
-            }
+			}
         });
 
 		// Check has_limit field
         $(document).on('click','#showHide',function(){
-            var e = document.getElementById("showHide");
-            var value = e.options[e.selectedIndex].value;
+            var value = $('#showHide option:selected').val();
 
             if(value == 1){
             	$("#starting_balance").show();
