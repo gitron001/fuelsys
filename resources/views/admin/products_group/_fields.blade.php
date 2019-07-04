@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-	<h1>Create new product group</h1>
+	<h1>{{ !isset($product_group) ? 'Create new product group' : 'Edit product group'}}</h1>
 	
 	<div class="row">
 		<div class="col-md-6">
@@ -23,7 +23,7 @@
 	</div>
 
 	<div class="form-group">
-		{!! Form::submit('Create new product group', ['class'=>'btn btn-block btn-success']); !!}
+		{!! Form::submit((!isset($product_group) ? 'Create new product group' : 'Edit product group' ), ['class'=>'btn btn-block btn-success']); !!}
 	</div>
 
 @endsection
