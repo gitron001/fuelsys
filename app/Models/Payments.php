@@ -19,10 +19,14 @@ class Payments extends Model
     }
     
     public function company(){
-    	return $this->belongsTo('App\Models\Company');
+    	return $this->belongsTo('App\Models\Company')->withDefault([
+            'name' => ''
+        ]);
     }
 
     public function user(){
-        return $this->belongsTo('App\Models\Users');
+        return $this->belongsTo('App\Models\Users')->withDefault([
+            'name' => ''
+        ]);
     }
 }

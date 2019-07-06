@@ -73,7 +73,9 @@ class PaymentsController extends Controller
         $payments->created_at   = now()->timestamp;
         $payments->updated_at   = now()->timestamp;
         $payments->save();
-
+		
+		self::printFunction($id);
+		
         session()->flash('info','Success');
 
         return redirect('/admin/payments');
@@ -205,6 +207,7 @@ class PaymentsController extends Controller
 
     public static function printFunction($id)
     {
+		
         try {
 
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
@@ -238,15 +241,17 @@ class PaymentsController extends Controller
             $printer->setLineSpacing(32);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
 
-            $printer->text("DATA                PAGESA      KLIENTI  TOTALI  \n");
+            $printer->text("DATA                PAGESA      TOTALI  \n");
             $printer->setEmphasis(false);
             $printer->text("------------------------------------------------\n");
 
             $total = $payment['amount'];
             //$totalPrice = round($total,2).' E ';
             $client = ($payment->user->name == 0) ? $payment->company->name : $payment->user->name;
-            $transaction->product->name = substr($transaction->product->name, 0, 18);
-            $item = self::singleItem($payment->date->format('d M Y'), $payment['amount'] ,$client , $total);
+		
+			//$transaction->product->name = substr($transaction->product->name, 0, 18);
+            $limit_left = ($payment->user->name == 0) ? $payment->company->limit_left : $payment->user->limit_left;
+			$item = self::singleItem(date('d M Y', $payment->date), $payment['amount'], $limit_left);
 
             $printer->textRaw($item);
 
@@ -279,6 +284,24 @@ class PaymentsController extends Controller
             echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
         }
     }
+	
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public static function singleItem($name = '', $lit, $price, $limit_left = '') {
+        $rightCols = 10;
+        $leftCols = 22;
+
+        $left = str_pad($name, $leftCols) ;
+
+        $lit = $lit;
+
+        $right = str_pad(' '.$lit.'     '.$price.'   ' . $limit_left, $rightCols, ' ', STR_PAD_LEFT);
+        return "$left$right\n";
+    }	
 }
 
 

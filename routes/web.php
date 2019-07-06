@@ -47,7 +47,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Payments
 	Route::resource('/admin/payments', 'PaymentsController');
 	Route::get('payment/{id}/delete', ['as' => 'payment.delete', 'uses' => 'PaymentsController@destroy']);
-	Route::get('/payment/generate/{$id}','PaymentsController@printFunction');
+	Route::get('/payment/generate/{id}','PaymentsController@printFunction');
 
 	// PFC 
 	Route::resource('/admin/pfc', 'PFCController');

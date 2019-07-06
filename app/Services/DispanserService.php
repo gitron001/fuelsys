@@ -90,6 +90,54 @@ class DispanserService extends ServiceProvider
         return true;
     }
 
+
+	public static function UpdatePFCfuelPrices($socket, $pfc_id = 1) {
+		//Create socket if it does not exist
+        if($socket === null) {
+            $socket = PFC::create_socket();
+        }
+		
+		$products = Products::where('status', 1)->orderBy('pfc_pr_id')->groupBy('pfc_pr_id')->get();
+		
+		
+		$all_prices = array();
+		$prices		= "";
+		
+		foreach($products as $p){
+				$all_prices[$p->pfc_pr_id] = str_replace('.', '', $p->price);
+		}
+		
+		for($i = 1; $i <= 16; $i++){
+			if(!isset($all_prices[$i])){
+				$all_prices[$i] = 0;
+			}
+		}
+		for($i = 1; $i <= 16; $i++){
+            $prices    .= strrev(pack('s', str_replace('.', '', $all_prices[$i])));
+        }
+		
+        $message = "\x1\x24\x81".$prices;
+		
+        $the_crc = PFC::crc16($message);
+		//Start of message
+        $binarydata = pack("c*", 0x01);
+        //Number of Bytes
+		$binarydata .= pack("c*",0x24);
+		//Write Prices Command
+        $binarydata .= pack("c*",0x81);
+		//Adding prices data to the message
+		for($i = 1; $i <= 16; $i++){
+			$price = $all_prices[$i];
+			$binarydata .= strrev(pack('s', str_replace('.', '', $price)));
+        }
+        
+		$binarydata .= strrev(pack("s",$the_crc));
+        
+		$binarydata .= pack("c*",02);
+        
+		$response = PFC::send_message($socket, $binarydata, $message);
+		
+	}
     /**
      * Bootstrap services.
      *
@@ -137,9 +185,9 @@ class DispanserService extends ServiceProvider
 
         $stopCommand = Process::where('type_id', 4)->where('pfc_id', $pfc_id)->count();
         if($stopCommand != 0){
-			self::UpdatefuelPrices($socket, $pfc_id);
+			self::UpdatePFCfuelPrices($socket, $pfc_id);
             Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();		
-        }
+        }				
 
         $stopCommand = Process::where('type_id', 5)->where('pfc_id', $pfc_id)->count();
         if($stopCommand != 0){

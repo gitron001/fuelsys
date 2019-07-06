@@ -79,7 +79,7 @@ class CardService extends ServiceProvider
         //echo '<br> Card Number: '. $cardNumber;
         $user = Users::where("rfid", $cardNumber)->where('status', 1)->first();
         $card_count = Users::where("rfid", $cardNumber)->where('status', 1)->count();
-	   
+	
         if($card_count == 0 ){ return false; }
 
         if($user->status != 1 ){ return false; }
@@ -113,7 +113,7 @@ class CardService extends ServiceProvider
                 foreach($user->discounts as $discount){
                     if(is_null($discount->product_details->price)){ continue; }
                     if($discount->product_details->pfc_pr_id == $response[$i]){
-                        $all_discounts[$i] = (int)($discount->product_details->price - $discount->discount*1000);
+                        $all_discounts[$i] = (int)($discount->product_details->price - ($discount->discount*1000));
                         break;
                     }
                 }
@@ -122,7 +122,7 @@ class CardService extends ServiceProvider
                     foreach($user->company->discounts as $c_discount){
                         if(is_null($c_discount->product_details->price)){ continue; }
                         if($c_discount->product_details->pfc_pr_id == $response[$i]) {
-                            $all_discounts[$i] = (int)($c_discount->product_details->price - $c_discount->discount*1000);
+                            $all_discounts[$i] = (int)($c_discount->product_details->price - ($c_discount->discount*1000));
                             break;
                         }
                     }
@@ -133,6 +133,7 @@ class CardService extends ServiceProvider
                     $all_discounts[$i] = (int)$products->price;
                 }
             }
+			
             self::activate_card_discount($socket, $channel, $all_discounts);
         }
 
@@ -186,7 +187,7 @@ class CardService extends ServiceProvider
             for($i = 10; $i < 15; $i++){
                 $prices    .= strrev(pack('s', str_replace('.', '', $all_discounts[$i])));
             }
-		
+			
             $message = "\x1\x11\x8A".$channel_id.$command.$command.$prices;
             //dd(unpack('c*',$message));
             $the_crc = PFC::crc16($message);
@@ -211,9 +212,9 @@ class CardService extends ServiceProvider
             $binarydata .= strrev(pack("s",$the_crc));
             //End of Message
             $binarydata .= pack("c*",02);
-
+			
             $response = PFC::send_message($socket, $binarydata, $message);
-
+		
             return true;
     }
 
