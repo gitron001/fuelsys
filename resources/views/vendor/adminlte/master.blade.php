@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Dynamic web title -->
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
+    @section('title', 'Fuel System')
     @yield('title', config('app.name'))
     @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
     <!-- End Dynamic web title -->

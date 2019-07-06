@@ -25,7 +25,7 @@
 
 <!-- Companies with low limit Area -->
 <div class="col-md-3 table-wrapper-scroll-y my-custom-scrollbar">
-  <h2 class="text-center">Companies with low limit</h2>           
+    <h2 class="text-center">Companies with low limit</h2>          
   <table class="table table-bordered text-center">
     <thead>
       <tr>

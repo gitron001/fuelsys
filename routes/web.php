@@ -3,7 +3,7 @@
 Auth::routes();
 
 Route::resource('/', 'HomeController');
-Route::resource('/admin/transactions', 'TransactionController');
+Route::resource('/admin/transaction', 'TransactionController');
 Route::view('transactions-info','admin.transactions.transactions-info',[
 		'transactions' => App\Models\Transaction::orderBy('created_at', 'DESC')->limit(15)->get()
 	]);
