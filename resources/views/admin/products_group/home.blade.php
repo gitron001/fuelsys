@@ -20,31 +20,18 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>State Code</th>
-                  <th>Created At</th>
-                  <th>Updated At</th>
-                  <th>Options</th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="state_code">State Code <span id="state_code_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="text-center">Options</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($products_group as $product_group)
-                <tr>
-                  	<td>{{ $product_group->name }}</td>
-                  	<td>{{ $product_group->state_code }}</td>
-                    <td>{{ $product_group->created_at->diffForHumans() }}</td>
-                  	<td>{{ $product_group->updated_at->diffForHumans() }}</td>
-                    <td class="text-center" width="8%">
-                      <a href="{{ url('admin/products_group/'.$product_group->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
-                      <a href="{{ route('product_group.delete', $product_group->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                @endforeach
-                </tfoot>
+                  @include('admin.products_group.table_data')
+                </tbody>
               </table>
-              <div class="text-center">
-                {{ $products_group->links() }}
-              </div>
+              @include('includes.hidden_inputs')
             </div>
             <!-- /.box-body -->
           </div>

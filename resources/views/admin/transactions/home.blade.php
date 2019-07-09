@@ -64,46 +64,20 @@
           <table id="example2" class="table table-bordered table-hover text-center">
             <thead>
               <tr>
-                <th>User</th>
-                <th>Company</th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Lit</th>
-                <th>Total</th>
-                <th>Created At</th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="user_id">User <span id="user_id_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="company_id">Company <span id="company_id_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="product_id">Product <span id="product_id_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="price">Price <span id="price_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="lit">Lit <span id="lit_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="total">Total <span id="total_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
               </tr>
             </thead>
             <tbody>
-              @if(Request::isMethod('get'))
-                @foreach($transactions as $transaction)
-                  <tr>
-                      <td>{{ $transaction->user_name ? $transaction->user_name : '' }}</td>
-                      <td>{{ $transaction->comp_name ? $transaction->comp_name : '' }}</td>
-                      <td>{{ $transaction->product ? $transaction->product : '' }}</td>
-                      <td>{{ $transaction->price }}</td>
-                      <td>{{ $transaction->lit }}</td>
-                      <td>{{ $transaction->money }}</td>
-                      <td>{{ $transaction->created_at }}</td>
-                  </tr>
-                @endforeach
-              @else
-                @foreach($transactions as $transaction)
-                    <td>{{ $transaction->user_name ? $transaction->users->name : '' }}</td>
-                    <td>{{ $transaction->users->company ? $transaction->users->company->name : '' }}</td>
-                    <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
-                    <td>{{ $transaction->price }}</td>
-                    <td>{{ $transaction->lit }}</td>
-                    <td>{{ $transaction->money }}</td>
-                    <td>{{ $transaction->created_at }}</td>
-                @endforeach
-              @endif
+              @include('admin.transactions.table_data')
             </tbody>
           </table>
-
-          <div class="text-center">
-            {{ $transactions->appends(Request::input())->links() }}
-          </div>
-
+          @include('includes.hidden_inputs')
         </div>
       </div>
     </div>
@@ -117,123 +91,4 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@section('js')
-
-<script>
-
-    function get(name){
-     if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-        return decodeURIComponent(name[1]);
-    }
-
-    $(function () {
-        var date = new Date();
-        date.setDate(date.getDate() -1);
-        $('#datetimepicker4').datetimepicker({
-            defaultDate:date
-        });
-
-        var dateNow = new Date();
-        $('#datetimepicker5').datetimepicker({
-            defaultDate:dateNow
-        });
-    });
-
-  // Users dropdown 
-  $(document).ready(function() {
-    $('.users-dropdown').select2({
-      placeholder: "Select a user"
-    });
-  });
-
-  $(document).ready(function() {
-
-    $('[data-toggle="tooltip"]').tooltip();
-
-    var date = new Date();
-    date.setDate(date.getDate() - 1);
-
-    $('#datetimepicker4').datetimepicker('setDate', date);
-
-  });
-
-  // Hide alert message after few seconds
-  $(".alert").delay(4000).slideUp(200, function() {
-      $(this).alert('close');
-  });
-
-
-  /*$(document).ready(function(){
-    $('#search').click(function(){
-      var fromDate = $('[name=from_date]').val();
-      var toDate = $('[name=to_date]').val();
-      var user = $("#user").val();
-      var company = $("#company").val();
-
-      console.log(fromDate);
-
-      $.ajax({
-        type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
-        url: "{{ URL('/search')}}",
-        dataType: 'JSON',
-        success: function(data){
-          $('tbody').html(data.table_data);
-        }
-      });
-
-    });
-  });*/
-
-  $(document).ready(function(){
-    $('#exportEXCEL').click(function(){
-      var fromDate = $('#datetimepicker4').val();
-      var toDate = $('#datetimepicker5').val();
-      var user = $("#user").val();
-      var company = $("#company").val();
-
-      $.ajax({
-        type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
-        url: "{{ URL('/export')}}",
-        dataType: "JSON",
-        success: function(response, textStatus, request){
-          var a = document.createElement("a");
-          a.href = response.file; 
-          a.download = response.name;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          }
-      });
-
-    });
-  });
-
-  $(document).ready(function(){
-    $('#exportPDF').click(function(){
-      var fromDate = $('#datetimepicker4').val();
-      var toDate = $('#datetimepicker5').val();
-      var user = $("#user").val();
-      var company = $("#company").val();
-
-      $.ajax({
-        type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
-        url: "{{ URL('/pdf')}}",
-        dataType: "JSON",
-        success: function(response, textStatus, request){
-          var a = document.createElement("a");
-          a.href = response.file; 
-          a.download = response.name;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-        }
-      });
-
-    });
-  });
-</script>
-
-@endsection
+@include('includes/footer')

@@ -13,11 +13,17 @@ class PFCController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pfc   = PFC::orderBy('created_at', 'desc')->paginate(15);
-
-        return view('/admin/pfc/home',compact('pfc'));
+        if($request->ajax() == false){
+            $pfc   = PFC::orderBy('created_at', 'desc')->paginate(15);
+            return view('/admin/pfc/home',compact('pfc'));
+        } else {
+            $sort_by    = $request->get('sortby');
+            $sort_type  = $request->get('sorttype');
+            $pfc        = PFC::orderBy($sort_by,$sort_type)->paginate(15);
+            return view('/admin/pfc/table_data',compact('pfc'))->render();
+        }
     }
 
     /**

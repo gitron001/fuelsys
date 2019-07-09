@@ -20,53 +20,21 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>IP</th>
-                  <th>Port</th>
-                  <th>Created At</th>
-                  <th>Updated At</th>
-                  <th colspan="2">Prices</th>
-                  <th>Channels</th>
-                  <th>Options</th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="ip">IP <span id="ip_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="port">Port <span id="port_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th colspan="2" class="text-center">Prices</th>
+                  <th class="text-center">Channels</th>
+                  <th class="text-center">Options</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($pfc as $p)
-                <tr>
-                    <td>{{ $p->name }}</td>
-                    <td>{{ $p->ip }}</td>
-                    <td>{{ $p->port }}</td>
-                    <td>{{ $p->created_at->diffForHumans() }}</td>
-                    <td>{{ $p->updated_at->diffForHumans() }}</td>
-                    <td align="center">
-                        <a href="{{ route('pfc.command', [$p->id, '3']) }}" data-toggle="tooltip" title="Import Prices" onclick="return confirm('Are you sure?');">
-                            <i class="fa fa-arrow-circle-down"></i>
-                        </a>
-                    </td>
-                    <td align="center">
-                        <a href="{{ route('pfc.command', [$p->id, '4']) }}" data-toggle="tooltip" title="Upload Prices" onclick="return confirm('Are you sure?');">
-                            <i class="fa fa-arrow-circle-up"></i>
-                        </a>
-                    </td>
-                    <td align="center">
-                        <a href="{{ route('pfc.command', [$p->id, '2']) }}" data-toggle="tooltip" title="Import Channels" onclick="return confirm('Are you sure?');">
-                            <i class="fa fa-arrow-circle-down"></i>
-                        </a>
-                    </td>
-                    <td class="text-center" width="8%">
-                        <a href="{{ route('pfc.command', [$p->id, '5']) }}" data-toggle="tooltip" title="Restart PFC" onclick="return confirm('Are you sure?');">
-                            <i class="fas fa-sync-alt"></i>
-                        </a>
-                      <a href="{{ url('admin/pfc/'.$p->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
-                      <a href="{{ route('pfc.delete', $p->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                @endforeach
-                </tfoot>
+                    @include('admin.pfc.table_data')
+                </tbody>
               </table>
-              <div class="text-center">
-                {{ $pfc->links() }}
-              </div>
+              @include('includes.hidden_inputs')
             </div>
             <!-- /.box-body -->
           </div>

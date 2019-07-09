@@ -13,10 +13,17 @@ class TankController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tanks = Tank::paginate(15);
-        return view('/admin/tanks/home',compact('tanks'));
+        if($request->ajax() == false){
+            $tanks = Tank::paginate(15);
+            return view('/admin/tanks/home',compact('tanks'));
+        } else {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $tanks = Tank::orderBy($sort_by,$sort_type)->paginate(15);
+            return view('/admin/tanks/table_data',compact('tanks'))->render();
+        }
     }
 
     /**

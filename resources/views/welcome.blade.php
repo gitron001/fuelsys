@@ -6,20 +6,19 @@
 
 @section('content')
 
-<br>
-
+<div class='row'>
 <!-- Dispanesers Area -->
 <div class="col-md-4 text-center">
-  @foreach($dispanesers as $dispaneser)
-  <div class="col-md-4 text-center">
-    <div class="card" >
-      <i class="fas fa-gas-pump" style="font-size:80px;"></i>
-      <div class="card-body">
-        <h2 class="card-title">{{ $dispaneser->name }}</h2>
+    @foreach($dispanesers as $dispaneser)
+    <div class="col-md-4 text-center">
+      <div class="card" >
+        <i class="fas fa-gas-pump" style="font-size:80px;"></i>
+        <div class="card-body">
+          <h2 class="card-title">{{ $dispaneser->name }}</h2>
+        </div>
       </div>
     </div>
-  </div>
-  @endforeach
+    @endforeach
 </div>
 <!-- END Dispanesers Area -->
 
@@ -47,29 +46,31 @@
 
 <!-- LIVE Feed Area -->
 <div class="col-md-5 table-wrapper-scroll-y my-custom-scrollbar" id="loadTransaction">
-  <h2 class="text-center">LIVE Feed</h2>           
-  <table class="table table-bordered text-center">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Product</th>
-        <th>Amount</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-  @foreach($transactions as $transaction)
-      <tr>
-        <td>{{ $transaction->users ? $transaction->users->name : '' }} {{ $transaction->users->company->name != '' ? '( '.$transaction->users->company->name.' )' : '' }}</td>
-        <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
-        <td>{{ $transaction->money }}</td>
-        <td>{{ $transaction->created_at->format('m-d H:i:s') }}</td>
-      </tr>
-  @endforeach
-    </tbody>
-  </table>
+    <h2 class="text-center">LIVE Feed</h2>           
+    <table class="table table-bordered text-center">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Product</th>
+          <th>Amount</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+    @foreach($transactions as $transaction)
+        <tr>
+          <td>{{ $transaction->users ? $transaction->users->name : '' }} {{ $transaction->users->company->name != '' ? '( '.$transaction->users->company->name.' )' : '' }}</td>
+          <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
+          <td>{{ $transaction->money }}</td>
+          <td>{{ $transaction->created_at->format('m-d H:i:s') }}</td>
+        </tr>
+    @endforeach
+      </tbody>
+    </table>
+  </div>
+  <!-- END LIVE Feed Area -->
+  
 </div>
-<!-- END LIVE Feed Area -->
 
 @endsection
 
@@ -98,6 +99,7 @@
       $('#loadTransaction').load('{{ url('/transactions-info')}}').fadeIn('slow');
     },60000)
   });
+  
 
 </script>
 

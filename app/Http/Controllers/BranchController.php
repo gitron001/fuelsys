@@ -12,13 +12,19 @@ class BranchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $branches = Branch::paginate(15);
-        return view('/admin/branches/home',compact('branches'));
+        if($request->ajax() == false){
+            $branches = Branch::paginate(15);
+            return view('/admin/branches/home',compact('branches'));
+        } else {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $branches = Branch::orderBy($sort_by,$sort_type)->paginate(15);
+            return view('/admin/branches/table_data',compact('branches'))->render();
+        }
     }
 
-    
 
     /**
      * Show the form for creating a new resource.

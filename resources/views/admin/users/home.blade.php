@@ -20,41 +20,23 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>RFID</th>
-                  <th>Company</th>
-                  <th>One time limit</th>
-                  <th>Plates</th>
-                  <th>Vehicle</th>
-                  <th>Created At</th>
-                  <th>Updated At</th>
-                  <th>Options</th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="email">Email <span id="email_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="rfid">RFID <span id="rfid_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="company_id">Company <span id="company_id_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="one_time_plate">One time limit <span id="one_time_limit_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="plates">Plates <span id="plates_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="vehicle">Vehicle <span id="vehicle_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="text-center">Options</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($users as $user)
-                <tr>
-                    <td>{{ $user->name }}</td>
-                  	<td>{{ $user->email }}</td>
-                    <td>{{ $user->rfid }}</td>
-                    <td>{{ $user->company->name ? $user->company->name : 'No Company' }}</td>
-                    <td>{{ $user->one_time_limit }}</td>
-                    <td>{{ $user->plates }}</td>
-                    <td>{{ $user->vehicle }}</td>
-                    <td>{{ $user->created_at->diffForHumans() }}</td>
-                  	<td>{{ $user->updated_at->diffForHumans() }}</td>
-                    <td class="text-center" width="8%">
-                      <a href="{{ url('admin/users/'.$user->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
-                      <a href="{{ route('user.delete', $user->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
-                    </td>    
-                </tr>
-                @endforeach
+                  @include('admin.users.table_data')
                 </tfoot>
               </table>
-              <div class="text-center">
-                {{ $users->links() }}
-              </div>
+              @include('includes.hidden_inputs')
             </div>
             <!-- /.box-body -->
           </div>

@@ -13,10 +13,17 @@ class DispaneserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dispanesers = Dispaneser::paginate(15);
-        return view('/admin/dispanesers/home',compact('dispanesers'));
+        if($request->ajax() == false){
+            $dispanesers = Dispaneser::paginate(15);
+            return view('/admin/dispanesers/home',compact('dispanesers'));
+        } else {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $dispanesers = Dispaneser::orderBy($sort_by,$sort_type)->paginate(15);
+            return view('/admin/dispanesers/table_data',compact('dispanesers'))->render();
+        }
     }
 
     /**

@@ -30,7 +30,6 @@ class TransactionController extends Controller
         $transactions   = Transactions::orderBy('created_at', 'desc')->paginate(15);
         $users          = Users::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
-
         return view('/admin/transactions/home',compact('transactions','users','companies'));
     }
 
@@ -442,6 +441,8 @@ class TransactionController extends Controller
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
         $company    = $request->input('company');
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
 
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
            'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
@@ -460,10 +461,16 @@ class TransactionController extends Controller
         if ($request->input('fromDate') && $request->input('toDate')) {
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
-        $query->orderBy('transactions.created_at', 'DESC');
-        $transactions = $query->paginate(15);
 
-        return view('/admin/transactions/home',compact('transactions','users','companies'));
+        if($request->ajax() == false){
+            $query->orderBy('transactions.created_at', 'DESC');
+            $transactions = $query->paginate(15);
+            return view('/admin/transactions/home',compact('transactions','users','companies'));
+        } else {
+            $query->orderBy($sort_by,$sort_type);
+            $transactions = $query->paginate(15);
+            return view('/admin/transactions/table_data',compact('transactions','users','companies'))->render();
+        }
 
     }
 

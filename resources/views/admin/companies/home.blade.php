@@ -20,41 +20,23 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>{{ trans('adminlte::adminlte.companyName') }}</th>
-                  <th>Fis.Number</th>
-                  <th>Tel.Number</th>
-                  <th>Contact Person</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th>Limit Left</th>
-                  <th>Created At</th>
-                  <th>Updated At</th>
-                  <th>Options</th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="name">{{ trans('adminlte::adminlte.companyName') }} <span id="name_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="fis_number">Fis.Number <span id="fis_number_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="tel_number">Tel.Number <span id="tel_number_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="contact_person">Contact Person <span id="contact_person_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="email">Email <span id="email_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="status">Status <span id="status_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="limit_left">Limit Left <span id="limit_left_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="text-center">Options</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($companies as $company)
-                <tr>
-                  	<td>{{ $company->name }}</td>
-                  	<td>{{ $company->fis_number }}</td>
-                    <td>{{ $company->tel_number }}</td>
-                    <td>{{ $company->contact_person }}</td>
-                    <td>{{ $company->email }}</td>
-                    <td>{{ $company->status == 1 ? 'Active' : 'No active'  }}</td>
-                    <td>{{ $company->limit_left }}</td>
-                  	<td>{{ $company->created_at->diffForHumans() }}</td>
-                  	<td>{{ $company->updated_at->diffForHumans() }}</td>
-                    <td class="text-center" width="8%">
-                      <a href="{{ url('admin/companies/'.$company->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
-                      <a href="{{ route('company.delete', $company->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                @endforeach
-                </tfoot>
+                  @include('admin.companies.table_data')
+                </tbody>
               </table>
-              <div class="text-center">
-                {{ $companies->links() }}
-              </div>
+              @include('includes.hidden_inputs')
             </div>
             <!-- /.box-body -->
           </div>
