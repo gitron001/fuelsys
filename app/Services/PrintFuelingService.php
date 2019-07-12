@@ -60,7 +60,7 @@ class PrintFuelingService extends ServiceProvider
             $printer->setEmphasis(false);
             $printer->text("------------------------------------------------\n");
 
-            $total = ($transaction['lit']*($transaction['price'] / 1000));
+            $total = ($transaction['lit']*($transaction['price']));
             $totalPrice = round($total,2).' E ';
             $transaction->product->name = substr($transaction->product->name, 0, 18);
             $item = self::singleItem($transaction->product->name, $transaction['lit'] ,$transaction['price'] , $totalPrice);
@@ -109,9 +109,6 @@ class PrintFuelingService extends ServiceProvider
         $leftCols = 22;
 
         $left = str_pad($name, $leftCols) ;
-
-        $lit = $lit;
-        $price = $price/1000;
 
         $right = str_pad(' '.$lit.'     '.$price.'   ' . $total, $rightCols, ' ', STR_PAD_LEFT);
         return "$left$right\n";

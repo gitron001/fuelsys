@@ -11,6 +11,7 @@ class CreateProductGroupsTable extends Migration
      *
      * @return void
      */
+
     public function up()
     {
         Schema::create('product_groups', function (Blueprint $table) {
@@ -26,9 +27,9 @@ class CreateProductGroupsTable extends Migration
      * Reverse the migrations.
      *
      * @return void
-     */
+    */
     public function down()
     {
         Schema::dropIfExists('product_groups');
-    }
+    } 
 }

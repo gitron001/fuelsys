@@ -21,7 +21,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = Users::where('status',1)->paginate(15);
+        $users = Users::where('status','!=', 3)->paginate(20);
         return view('/admin/users/home',compact('users'));
     }
 
@@ -146,6 +146,7 @@ class UsersController extends Controller
         $user->email        = $request->input('email');
         $user->company_id   = $request->input('company_id');
         $user->plates       = $request->input('plates');
+        $user->status       = $request->input('status');
         $user->vehicle      = $request->input('vehicle');
         $user->type         = $request->input('type');
         $user->password     = Hash::make($password);

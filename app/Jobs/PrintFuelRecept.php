@@ -36,7 +36,7 @@ class PrintFuelRecept implements ShouldQueue
     public function handle()
     {
         $transaction = Transaction::where('id', $this->trans_id)->first();
-
+	
         if($transaction->users->company->name != "" && $transaction->users->company->has_receipt_nr == 1)
             Transaction::generateInvoiceNr($this->trans_id);
 
