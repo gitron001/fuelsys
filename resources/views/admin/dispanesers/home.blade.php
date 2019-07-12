@@ -20,31 +20,18 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>PFC</th>
-                  <th>Created At</th>
-                  <th>Updated At</th>
-                  <th>Options</th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="pfc_id">PFC <span id="pfc_id_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="text-center">Options</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($dispanesers as $dispaneser)
-                <tr>
-                  	<td>{{ $dispaneser->name }}</td>
-                    <td>{{ $dispaneser->pfc ? $dispaneser->pfc->name : '' }}</td>
-                  	<td>{{ $dispaneser->created_at->diffForHumans() }}</td>
-                  	<td>{{ $dispaneser->updated_at->diffForHumans() }}</td>
-                    <td class="text-center" width="8%">
-                      <a href="{{ url('admin/dispanesers/'.$dispaneser->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
-                      <a href="{{ route('dispaneser.delete', $dispaneser->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                @endforeach
-                </tfoot>
+                  @include('admin.dispanesers.table_data')
+                </tbody>
               </table>
-              <div class="text-center">
-                {{ $dispanesers->links() }}
-              </div>
+              @include('includes.hidden_inputs')
             </div>
             <!-- /.box-body -->
           </div>

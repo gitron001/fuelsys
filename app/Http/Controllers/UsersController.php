@@ -19,10 +19,22 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+<<<<<<< HEAD
         $users = Users::where('status','!=', 3)->paginate(20);
         return view('/admin/users/home',compact('users'));
+=======
+        if($request->ajax() == false){
+            $users = Users::where('status',1)->paginate(15);
+            return view('/admin/users/home',compact('users'));
+        } else {
+            $sort_by    = $request->get('sortby');
+            $sort_type  = $request->get('sorttype');
+            $users      = Users::orderBy($sort_by,$sort_type)->paginate(15);
+            return view('/admin/users/table_data',compact('users'))->render();
+        }
+>>>>>>> 44f9ebd793e5c37658d60b5971668b05030172d5
     }
 
     /**

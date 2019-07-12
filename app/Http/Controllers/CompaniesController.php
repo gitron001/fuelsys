@@ -17,11 +17,17 @@ class CompaniesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Company::where('status',1)->paginate(15);
-
-        return view('admin/companies/home',compact('companies'));
+        if($request->ajax() == false){
+            $companies = Company::where('status',1)->paginate(15);
+            return view('admin/companies/home',compact('companies'));
+        } else {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $companies = Company::orderBy($sort_by,$sort_type)->paginate(15);
+            return view('/admin/companies/table_data',compact('companies'))->render();
+        }
     }
 
     /**

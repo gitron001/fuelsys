@@ -23,12 +23,19 @@ class PaymentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $payments   = Payments::orderBy('created_at', 'desc')->paginate(15);
-        $users      = Users::pluck('name','id')->all();
-        $pfcs       = PFC::where('status', 1)->get();
-        return view('/admin/payments/home',compact('payments','users'));
+        if($request->ajax() == false){
+            $payments   = Payments::orderBy('created_at', 'desc')->paginate(15);
+            $users      = Users::pluck('name','id')->all();
+            return view('/admin/payments/home',compact('payments','users'));
+        } else {
+            $sort_by    = $request->get('sortby');
+            $sort_type  = $request->get('sorttype');
+            $users      = Users::pluck('name','id')->all();
+            $payments   = Payments::orderBy($sort_by,$sort_type)->paginate(15);
+            return view('/admin/payments/table_data',compact('payments','users'))->render();
+        }
     }
 
     /**

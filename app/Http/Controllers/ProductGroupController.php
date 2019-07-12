@@ -12,10 +12,17 @@ class ProductGroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products_group = ProductGroup::paginate(15);
-        return view('/admin/products_group/home',compact('products_group'));
+        if($request->ajax() == false){
+            $products_group = ProductGroup::paginate(15);
+            return view('/admin/products_group/home',compact('products_group'));
+        } else {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $products_group = ProductGroup::orderBy($sort_by,$sort_type)->paginate(15);
+            return view('/admin/products_group/table_data',compact('products_group'))->render();
+        }
     }
 
     /**
