@@ -62,14 +62,26 @@
       </form>
 
       <br>
-      
-      @if(Request::isMethod('get') && !Input::get('last_payment'))
-        @include('admin.reports.inc.table-get')
-      @elseif(Request::isMethod('get') && Input::get('last_payment') == 'da')
-        @include('admin.reports.inc.last_payments')
-      @else
-        @include('admin.reports.inc.basic-table')
-      @endif
+
+      <div class="box-body">
+        <table id="example2" class="table table-hover table-bordered text-center">
+          <thead>
+          <tr>
+            <th class="sorting" data-sorting_type="asc" data-column_name="user_id">User <span id="user_id_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+            <th class="sorting" data-sorting_type="asc" data-column_name="company_id">Company <span id="company_id_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+            <th class="sorting" data-sorting_type="asc" data-column_name="product_id">Product <span id="product_id_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+            <th class="sorting" data-sorting_type="asc" data-column_name="price">Price <span id="price_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+            <th class="sorting" data-sorting_type="asc" data-column_name="lit">Lit <span id="lit_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+            <th class="sorting" data-sorting_type="asc" data-column_name="money">Total <span id="money_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+            <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+          </tr>
+          </thead>
+          <tbody>
+            @include('admin.reports.table_data')
+          </tbody>
+        </table>
+        @include('includes.hidden_inputs')
+      </div>
 
     </div>
   </div>
@@ -82,162 +94,4 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@section('js')
-
-<script>
-    
-    // Show checkbox value after page load
-    $(document).ready(function(){
-      if ($('input#last_payment').is(':checked')) {
-        $('input[name="last_payment"]').val('Yes');
-      } else {
-        $('input[name="last_payment"]').val('No');
-      }
-    });
-    
-    // Change Checkbox value onclick
-    $('#last_payment').click(function(){
-      if($(this).is(':checked')){
-          $('input[name="last_payment"]').val('Yes');
-      } else {
-          $('input[name="last_payment"]').val('No');
-      }
-    });
-
-    function get(name){
-     if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-        return decodeURIComponent(name[1]);
-    }
-
-    // Start Date & End Date Filters
-    $(function () {
-        var date = new Date();
-        date.setDate(date.getDate() -1);
-        $('#datetimepicker4').datetimepicker({
-            defaultDate:date
-        });
-
-        var dateNow = new Date();
-        $('#datetimepicker5').datetimepicker({
-            defaultDate:dateNow
-        });
-    });
-
-  // Users dropdown 
-  $(document).ready(function() {
-    $('.users-dropdown').select2({
-      placeholder: "Select a user"
-    });
-  });
-
-  $(document).ready(function() {
-
-    $('[data-toggle="tooltip"]').tooltip();
-
-    var date = new Date();
-    date.setDate(date.getDate() - 1);
-
-    $('#datetimepicker4').datetimepicker('setDate', date);
-
-  });
-
-  // Hide alert message after few seconds
-  $(".alert").delay(4000).slideUp(200, function() {
-      $(this).alert('close');
-  });
-
-
-  /*$(document).ready(function(){
-    $('#search').click(function(){
-      var fromDate = $('[name=from_date]').val();
-      var toDate = $('[name=to_date]').val();
-      var user = $("#user").val();
-      var company = $("#company").val();
-
-      console.log(fromDate);
-
-      $.ajax({
-        type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company},
-        url: "{{ URL('/search')}}",
-        dataType: 'JSON',
-        success: function(data){
-          $('tbody').html(data.table_data);
-        }
-      });
-
-    });
-  });*/
-
-  $(document).ready(function(){
-    $('#exportEXCEL').click(function(){
-      var fromDate = $('#datetimepicker4').val();
-      var toDate = $('#datetimepicker5').val();
-      var user = $("#user").val();
-      var last_payment = $("#last_payment").val();
-      var company = $("#company").val();
-
-      $.ajax({
-        type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment},
-        url: "{{ URL('/export')}}",
-        dataType: "JSON",
-        success: function(response, textStatus, request){
-          var a = document.createElement("a");
-          a.href = response.file; 
-          a.download = response.name;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          }
-      });
-
-    });
-  });
-
-  $(document).ready(function(){
-    $('#exportPDF').click(function(){
-      var fromDate = $('#datetimepicker4').val();
-      var toDate = $('#datetimepicker5').val();
-      var user = $("#user").val();
-      var last_payment = $("#last_payment").val();
-      var company = $("#company").val();
-
-      $.ajax({
-        type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment},
-        url: "{{ URL('/pdf')}}",
-        dataType: "JSON",
-        success: function(response, textStatus, request){
-          var a = document.createElement("a");
-          a.href = response.file; 
-          a.download = response.name;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-        }
-      });
-
-    });
-  });
-
-  $(document).ready(function(){
-    $('#dailyReport').click(function(){
-      var company = $("#company").val();
-      var dailyReport = 1;
-
-      $.ajax({
-        type: "GET",
-        data: {company:company,dailyReport:dailyReport},
-        url: "{{ URL('/dailyReport')}}",
-        dataType: "JSON",
-        success: function(data){
-          console.log(data);
-        }
-      });
-
-    });
-  });
-</script>
-
-@endsection
+@include('includes/footer')

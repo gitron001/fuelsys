@@ -10,8 +10,9 @@
     </td>
 </tr>
 @endforeach
-<tr>
-    <td colspan=100% align="center">
-        {{ $products_group->links() }}
-    </td>
-</tr>
+
+@if($products_group->total() > 15)
+    @include('includes.pagination', ['data' => $products_group])
+@endif
+
+@include('includes.spinner')

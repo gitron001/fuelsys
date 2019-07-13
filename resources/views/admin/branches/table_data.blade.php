@@ -12,9 +12,10 @@
     </td>
 </tr>
 @endforeach
-<tr>
-    <td colspan=100% align="center">
-        {{ $branches->links() }}
-    </td>
-</tr>
+
+@if($branches->total() > 15)
+    @include('includes.pagination', ['data' => $branches])
+@endif
+
+@include('includes.spinner')
 

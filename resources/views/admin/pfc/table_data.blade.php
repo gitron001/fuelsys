@@ -29,8 +29,9 @@
     </td>
 </tr>
 @endforeach
-<tr>
-    <td colspan=100% align="center">
-        {{ $pfc->links() }}
-    </td>
-</tr>
+
+@if($pfc->total() > 15)
+    @include('includes.pagination', ['data' => $pfc])
+@endif
+
+@include('includes.spinner')

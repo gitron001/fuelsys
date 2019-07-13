@@ -21,8 +21,9 @@
     <td>{{ $transaction->created_at }}</td>
 @endforeach
 @endif
-<tr>
-    <td colspan=100% align="center">
-        {{ $transactions->links() }}
-    </td>
-</tr>
+
+@if($transactions->total() > 15)
+    @include('includes.pagination', ['data' => $transactions])
+@endif
+
+@include('includes.spinner')
