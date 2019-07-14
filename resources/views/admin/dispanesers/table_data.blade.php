@@ -10,8 +10,9 @@
     </td>
 </tr>
 @endforeach
-<tr>
-    <td colspan=100% align="center">
-        {{ $dispanesers->links() }}
-    </td>
-</tr>
+
+@if($dispanesers->total() > 15)
+    @include('includes.pagination', ['data' => $dispanesers])
+@endif
+
+@include('includes.spinner')

@@ -441,7 +441,7 @@ class TransactionController extends Controller
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
         $company    = $request->input('company');
-        $sort_by    = $request->get('sortby');
+        $sort_by    = "transactions".".".$request->get('sortby');
         $sort_type  = $request->get('sorttype');
 
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),

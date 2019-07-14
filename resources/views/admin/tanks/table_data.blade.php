@@ -12,8 +12,9 @@
     </td>                  
 </tr>
 @endforeach
-<tr>
-    <td colspan=100% align="center">
-        {{ $tanks->links() }}
-    </td>
-</tr>
+
+@if($tanks->total() > 15)
+    @include('includes.pagination', ['data' => $tanks])
+@endif
+
+@include('includes.spinner')

@@ -20,12 +20,12 @@
               <table id="example2 orders" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                    <th class="sorting" data-sorting_type="asc" data-column_name="address">Address <span id="address_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                    <th class="sorting" data-sorting_type="asc" data-column_name="city">City <span id="city_icon"></span><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></th>
-                    <th class="sorting" data-sorting_type="asc" data-column_name="status">Status <span id="status_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                    <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                    <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                    <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                    <th class="sorting" data-sorting_type="asc" data-column_name="address">Address <span id="address_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                    <th class="sorting" data-sorting_type="asc" data-column_name="city">City <span id="city_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                    <th class="sorting" data-sorting_type="asc" data-column_name="status">Status <span id="status_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                    <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                    <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                     <th class="text-center">Options</th>
                 </tr>
                 </thead>

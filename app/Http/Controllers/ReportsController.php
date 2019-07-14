@@ -99,6 +99,8 @@ class ReportsController extends Controller
         $to_date        = strtotime($request->input('toDate'));
         $user           = $request->input('user');
         $company        = $request->input('company');
+        $sort_by        = "transactions".".".$request->get('sortby');
+        $sort_type      = $request->get('sorttype');
         $last_payment   = $request->input('last_payment');
 
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
@@ -166,10 +168,19 @@ class ReportsController extends Controller
         if ($request->input('fromDate') && $request->input('toDate')) {
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
-        $query->orderBy('transactions.created_at', 'DESC');
-        $transactions = $query->paginate(15);
+        
 
-        return view('/admin/reports/home',compact('transactions','users','companies'));
+        if($request->ajax() == false){
+            $query->orderBy('transactions.created_at', 'DESC');
+            $transactions = $query->paginate(15);
+            return view('/admin/reports/home',compact('transactions','users','companies'));
+        } else {
+            $query->orderBy($sort_by,$sort_type);
+            $transactions = $query->paginate(15);
+            return view('/admin/reports/table_data',compact('transactions','users','companies'))->render();
+        }
+
+        
    }
 
 }
