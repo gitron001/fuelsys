@@ -20,15 +20,15 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="name">{{ trans('adminlte::adminlte.companyName') }} <span id="name_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="fis_number">Fis.Number <span id="fis_number_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="tel_number">Tel.Number <span id="tel_number_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="contact_person">Contact Person <span id="contact_person_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="email">Email <span id="email_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="status">Status <span id="status_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="limit_left">Limit Left <span id="limit_left_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                  <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon" style="float:right;" class="removePrevIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="name">{{ trans('adminlte::adminlte.companyName') }} <span id="name_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="fis_number">Fis.Number <span id="fis_number_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="tel_number">Tel.Number <span id="tel_number_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="contact_person">Contact Person <span id="contact_person_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="email">Email <span id="email_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="status">Status <span id="status_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="limit_left">Limit Left <span id="limit_left_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                  <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                   <th class="text-center">Options</th>
                 </tr>
                 </thead>
