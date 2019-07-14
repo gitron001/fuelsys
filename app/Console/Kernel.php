@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('card:reader 1')->appendOutputTo(storage_path() . "/logs/cron.log")
-          //       ->everyMinute()->withoutOverlapping();
+        $schedule->command('card:reader 1')->appendOutputTo(storage_path() . "/logs/cron.log")
+                 ->everyMinute()->withoutOverlapping();
     }
 
     /**
