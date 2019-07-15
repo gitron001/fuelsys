@@ -33,7 +33,11 @@ class PaymentsController extends Controller
             $sort_by    = $request->get('sortby');
             $sort_type  = $request->get('sorttype');
             $users      = Users::pluck('name','id')->all();
-            $payments   = Payments::orderBy($sort_by,$sort_type)->paginate(15);
+            $query      = $request->get('query');
+            $query      = str_replace(" ", "%", $query);
+            $payments   = Payments::where('amount','like','%'.$query.'%')
+                        ->orWhere('date','like','%'.$query.'%')
+                        ->orderBy($sort_by,$sort_type)->paginate(15);
             return view('/admin/payments/table_data',compact('payments','users'))->render();
         }
     }

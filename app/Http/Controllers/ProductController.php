@@ -22,7 +22,12 @@ class ProductController extends Controller
         } else {
             $sort_by    = $request->get('sortby');
             $sort_type  = $request->get('sorttype');
-            $products   = Products::orderBy($sort_by,$sort_type)->paginate(15);
+            $query      = $request->get('query');
+            $query      = str_replace(" ", "%", $query);
+            $products   = Products::where('name','like','%'.$query.'%')
+                        ->orWhere('price','like','%'.$query.'%')
+                        ->orderBy($sort_by,$sort_type)
+                        ->paginate(15);
             return view('/admin/products/table_data',compact('products'))->render();
         }
     }

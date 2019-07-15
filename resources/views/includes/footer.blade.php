@@ -41,12 +41,12 @@
     var user = $("#user").val();
     var company = $("#company").val();
     
-    function fetch_data(page,sort_type,sort_by){
+    function fetch_data(page,sort_type,sort_by,query){
       $('#hidePagination').hide();
       $('#spinner').show();
       $.ajax({
         data: {user: user,company:company},
-        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type,
+        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&query="+query,
         success: function(data){
           $('#spinner').hide();
           $('tbody').html('');
@@ -54,6 +54,14 @@
         }
       })
     }
+
+    $(document).on('keyup', '#search', function(){
+      var query = $('#search').val();
+      var column_name = $('#hidden_column_name').val();
+      var sort_type = $('#hidden_sort_type').val();
+      var page = $('#hidden_page').val();
+      fetch_data(page,sort_type,column_name,query);
+    });
   
     $(document).on('click', '.sorting', function() {
       
@@ -76,7 +84,8 @@
       $('#hidden_column_name').val(column_name);
       $('#hidden_sort_type').val(reverse_order);
       var page = $('#hidden_page').val();
-      fetch_data(page,reverse_order,column_name);
+      var query = $('#search').val();
+      fetch_data(page,reverse_order,column_name,query);
     });
   
     $(document).on('click','.pagination a', function(event){
@@ -85,7 +94,8 @@
       $('#hidden_page').val(page);
       var column_name = $('#hidden_column_name').val();
       var sort_type = $('#hidden_sort_type').val();
-      fetch_data(page, sort_type, column_name);
+      var query = $('#search').val();
+      fetch_data(page, sort_type, column_name,query);
     });
   
   })

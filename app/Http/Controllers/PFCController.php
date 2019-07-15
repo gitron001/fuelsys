@@ -21,7 +21,12 @@ class PFCController extends Controller
         } else {
             $sort_by    = $request->get('sortby');
             $sort_type  = $request->get('sorttype');
-            $pfc        = PFC::orderBy($sort_by,$sort_type)->paginate(15);
+            $query      = $request->get('query');
+            $query      = str_replace(" ", "%", $query);
+            $pfc        = PFC::where('name','like','%'.$query.'%')
+                        ->orWhere('ip','like','%'.$query.'%')
+                        ->orWhere('port','like','%'.$query.'%')
+                        ->orderBy($sort_by,$sort_type)->paginate(15);
             return view('/admin/pfc/table_data',compact('pfc'))->render();
         }
     }

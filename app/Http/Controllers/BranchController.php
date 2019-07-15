@@ -20,7 +20,12 @@ class BranchController extends Controller
         } else {
             $sort_by = $request->get('sortby');
             $sort_type = $request->get('sorttype');
-            $branches = Branch::orderBy($sort_by,$sort_type)->paginate(15);
+            $query      = $request->get('query');
+            $query      = str_replace(" ", "%", $query);
+            $branches = Branch::where('name','like','%'.$query.'%')
+                        ->orWhere('address','like','%'.$query.'%')
+                        ->orWhere('city','like','%'.$query.'%')
+                        ->orderBy($sort_by,$sort_type)->paginate(15);
             return view('/admin/branches/table_data',compact('branches'))->render();
         }
     }

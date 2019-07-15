@@ -8,11 +8,12 @@
 		<div class="row">
 			   <div class="box">
             <div class="box-header">
-              <div class="col-md-6"><h3 class="box-title">PFC</h3></div>
-              <div class="col-md-6">
-                <span class="pull-right">
-                  <a href="{{ url('admin/pfc/create') }}"><button type="button" class="btn btn-block btn-success">+ Create new PFC</button></a>
-                </span>
+              <div class="col-md-9"><h3 class="box-title">PFC</h3></div>
+              <div class="col-md-2">
+                <input type="text" class="form-control" name="search" id="search" placeholder="Search"/> 
+              </div>
+              <div class="col-md-1">
+                <a class="btn btn-success pull-right" href="{{ url('admin/pfc/create') }}">+ Create</a>
               </div>
             </div>
             <!-- /.box-header -->

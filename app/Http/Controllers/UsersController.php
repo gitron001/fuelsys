@@ -27,7 +27,12 @@ class UsersController extends Controller
         } else {
             $sort_by    = $request->get('sortby');
             $sort_type  = $request->get('sorttype');
-            $users      = Users::orderBy($sort_by,$sort_type)->paginate(15);
+            $query      = $request->get('query');
+            $query      = str_replace(" ", "%", $query);
+            $users      = Users::where('name','like','%'.$query.'%')
+                        ->orWhere('email','like','%'.$query.'%')
+                        ->orWhere('email','like','%'.$query.'%')
+                        ->orderBy($sort_by,$sort_type)->paginate(15);
             return view('/admin/users/table_data',compact('users'))->render();
         }
     }
