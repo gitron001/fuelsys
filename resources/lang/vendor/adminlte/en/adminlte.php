@@ -32,5 +32,6 @@ return [
     'home'                          => 'Home',
     'settings'                      => 'Settings',
     'report'                        => 'Reports',
-    'products_group'                => 'Products Group'
+    'products_group'                => 'Products Group',
+    'staff'                         => 'Staff'
 ];

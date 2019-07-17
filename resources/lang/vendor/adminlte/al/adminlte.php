@@ -31,5 +31,6 @@ return [
     'home'                          => 'Ballina',
     'settings'                      => 'Settings',
     'report'                        => 'Raportet',
-    'products_group'                => 'Grupi i produkteve'
+    'products_group'                => 'Grupi i produkteve',
+    'staff'                         => 'Staff'
 ];

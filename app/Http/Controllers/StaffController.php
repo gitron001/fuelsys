@@ -15,8 +15,8 @@ class StaffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function searchWithPagination(Request $request)
-    {
+
+    public function staff_view(Request $request){
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
@@ -46,15 +46,6 @@ class StaffController extends Controller
             $staffData[$value->user_id]['totalLit'] = $value->totalLit;
         }
         
-        /*$transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'), DB::raw('products.name as product'), DB::raw('transactions.price as product_price'))
-            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-            ->where('users.type','1')
-            ->groupBy('users.id')
-            ->groupBy('products.pfc_pr_id')
-            ->groupBy('transactions.price')
-            ->groupBy('products.name');*/
-        
         $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('transactions.price as product_price'), DB::raw('products.name as product'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
@@ -72,7 +63,7 @@ class StaffController extends Controller
         }
 
         $transactions = $transactions->get();
-        //dd($transactions);exit();
+
         $product_name = array();
         foreach ($staffData as $key => $value) {   
             foreach($transactions as $tr){
@@ -82,9 +73,8 @@ class StaffController extends Controller
                 }
             }
         }
-        //$product_name = array_unique($product_name);
-        //dd($product_name);exit();
-        //dd($staffData);exit();
+        
+
         $products = Transactions::select(DB::RAW('products.id as product_id'), 'products.name as product_name',
             DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'),'transactions.price as product_price')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
@@ -102,19 +92,7 @@ class StaffController extends Controller
         }
 
         $products = $products->get();
-        
-
-        // Pagination 
-        $currentPage = Paginator::resolveCurrentPage();
-        $col = collect($staffData);
-        $perPage = 15;
-        $currentPageItems = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
-        $staffData = new Paginator($currentPageItems, count($col), $perPage);
-        $staffData->setPath($request->url());
-        $staffData->appends($request->all());
-        // End Pagination 
-
-
-        return view('admin.staff',compact('usersFilter','staffData','products','product_name'));
+    
+        return view('admin.staff_view',compact('usersFilter','staffData','products','product_name'));
     }
 }
