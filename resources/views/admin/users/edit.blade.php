@@ -3,7 +3,7 @@
 @section('content')
 	<h1>Edit User</h1>
 
-	{!! Form::model($user,['method'=>'PATCH', 'action'=>['UsersController@update',$user->id]]) !!}
+	{!! Form::model($user,['method'=>'PATCH', 'action'=>['UsersController@update',$user->id] ,'autocomplete'=>'off']) !!}
 
 	<div class="row">
 		<div class="col-md-6">	

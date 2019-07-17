@@ -23,7 +23,7 @@ class StaffController extends Controller
 
         $usersFilter = Users::where('type','1')->pluck('name','id');
 
-        $users = Transactions::select(DB::RAW('users.id as user_id'), 'users.name as user_name',DB::raw('SUM(money) as totalMoney'))
+        $users = Transactions::select(DB::RAW('users.id as user_id'), 'users.name as user_name',DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->where('users.type','1')
             ->groupBy('users.id');
@@ -43,15 +43,25 @@ class StaffController extends Controller
             $staffData[$value->user_id]['id'] = $value->user_id;
             $staffData[$value->user_id]['user_name'] = $value->user_name;
             $staffData[$value->user_id]['totalMoney'] = $value->totalMoney;
+            $staffData[$value->user_id]['totalLit'] = $value->totalLit;
         }
         
-        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'), DB::raw('products.name as product'))
+        /*$transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'), DB::raw('products.name as product'), DB::raw('transactions.price as product_price'))
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->where('users.type','1')
             ->groupBy('users.id')
             ->groupBy('products.pfc_pr_id')
-            ->groupBy('products.name');
+            ->groupBy('transactions.price')
+            ->groupBy('products.name');*/
+        
+        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('transactions.price as product_price'), DB::raw('products.name as product'))
+            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->where('users.type','1')
+            ->groupBy('users.id')
+            ->groupBy('products.id')
+            ->groupBy('transactions.price');
 
         if ($request->input('user')) {
             $transactions = $transactions->whereIn('users.id',$user);
@@ -62,15 +72,37 @@ class StaffController extends Controller
         }
 
         $transactions = $transactions->get();
-            
-        foreach ($staffData as $key => $value) {            
+        //dd($transactions);exit();
+        $product_name = array();
+        foreach ($staffData as $key => $value) {   
             foreach($transactions as $tr){
                 if($key == $tr->user_id){
-                    $staffData[$key][$tr->product] = $tr->total;
+                    $staffData[$key][$tr->product.'_'.$tr->product_price] = [$tr->total,$tr->product_price];
+                    $product_name[$tr->product.'_'.$tr->product_price] = $tr->product; 
                 }
             }
         }
+        //$product_name = array_unique($product_name);
+        //dd($product_name);exit();
+        //dd($staffData);exit();
+        $products = Transactions::select(DB::RAW('products.id as product_id'), 'products.name as product_name',
+            DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'),'transactions.price as product_price')
+            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->where('users.type','1')
+            ->groupBy('products.id')
+            ->groupBy('transactions.price');
 
+        if ($request->input('user')) {
+            $products = $products->whereIn('users.id',$user);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
+
+        $products = $products->get();
+        
 
         // Pagination 
         $currentPage = Paginator::resolveCurrentPage();
@@ -83,6 +115,6 @@ class StaffController extends Controller
         // End Pagination 
 
 
-        return view('admin.staff',compact('usersFilter','staffData'));
+        return view('admin.staff',compact('usersFilter','staffData','products','product_name'));
     }
 }

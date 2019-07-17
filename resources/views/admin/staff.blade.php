@@ -51,20 +51,46 @@
         <thead>
         <tr>
           <th>Perdoruesi</th>
-          <th>Benzin</th>
-          <th>Nafte</th>
-          <th>Plin</th>
+          @foreach($product_name as $value)
+            <th>{{ $value }}</th>
+          @endforeach
           <th>Euro</th>
         </tr>
         </thead>
         <tbody>
         @foreach($staffData as $transaction)
         <tr>
-            <td>{{ $transaction['user_name'] }}</td>
-            <td>{{ !empty($transaction['Nafte']) ? $transaction['Nafte'] : '0' }} lit.</td>
-            <td>{{ !empty($transaction['Benzin']) ? $transaction['Benzin'] : '0' }} lit.</td>
-            <td>{{ !empty($transaction['Plin']) ? $transaction['Plin'] : '0'}} lit.</td>
-            <td>{{ $transaction['totalMoney']  }} Euro</td>
+          <td>{{ $transaction['user_name'] }}</td>
+          @foreach($product_name as $key => $value)
+          <td>
+            {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra / 
+            {{ !empty($transaction[$key][0]) ? $transaction[$key][0] *  $transaction[$key][1] : '0'}} Euro
+          </td>
+
+          @endforeach
+          <td>{{  $transaction['totalMoney']  }} Euro</td>
+        </tr>
+        @endforeach
+        </tbody>
+      </table>
+
+      <h3>Totali</h3>
+      <table id="example2" class="table table-bordered table-hover table-responsive">
+        <thead>
+        <tr>
+          <th>Produkti</th>
+          <th>Cmimi</th>
+          <th>Sasia</th>
+          <th>Totali</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($products as $product)
+        <tr>
+          <td>{{ $product['product_name'] }}</td>
+          <td>{{ $product['product_price'] }} Euro</td>
+          <td>{{ $product['lit'] }} litra</td>
+          <td>{{ $product['money'] }} Euro</td>
         </tr>
         @endforeach
         </tfoot>

@@ -3,7 +3,7 @@
 @section('content')
     <h1>Create new user</h1>
 
-    {!! Form::open(['method'=>'POST', 'action'=>['UsersController@store']]) !!}
+    {!! Form::open(['method'=>'POST', 'action'=>['UsersController@store'] ,'autocomplete'=>'off']) !!}
 
     <div class="row">
         <div class="col-md-6">
@@ -94,10 +94,10 @@
             <div class="col-md-1 text-center">
                 <button type="button" class="btn btn-default btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 {!! Form::select('product[]',['Choose Product'] + $products,null,['class'=>'form-control']); !!}
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
                 {!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
             </div>
         </div>
@@ -111,10 +111,10 @@
             <div class="col-md-1 text-center">
                 <button type="button" class="btn btn-default btn-circle" id="addBranch"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 {!! Form::select('branch[]',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
                 {!! Form::number('limit[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
             </div>
         </div>
@@ -194,12 +194,12 @@
 
         //Append another div if button(discounts) + is clicked
         $(document).on('click','#addProduct',function(){
-            $("#discounts").append('<div class="row" id="products"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="product[]" required><option value="">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" step="any" placeholder="0.01" name="discount[]" type="number"></div></div>');
+            $("#discounts").append('<div class="row" id="products"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="product[]" required><option value="">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="discount[]" type="number"></div></div>');
         });
 
         //Append another div if button(limits) + is clicked
         $(document).on('click','#addBranch',function(){
-            $("#addlimits").append('<div class="row" id="branches"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-6"><select class="form-control" name="branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-5"><input class="form-control" step="any" placeholder="0.01" name="limit[]" type="number"></div></div>');
+            $("#addlimits").append('<div class="row" id="branches"><div class="col-md-1 text-center"><button type="button" class="btn btn-default btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="limit[]" type="number"></div></div>');
         });
 
         $(document).on('click','#removeProduct',function(){
