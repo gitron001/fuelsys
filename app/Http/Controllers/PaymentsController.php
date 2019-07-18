@@ -26,8 +26,17 @@ class PaymentsController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $payments   = Payments::orderBy('created_at', 'desc')->paginate(15);
-            $users      = Users::pluck('name','id')->all();
+            $from_date      = strtotime($request->input('fromDate'));
+            $to_date        = strtotime($request->input('toDate'));
+            
+            if ($request->input('fromDate') && $request->input('toDate')) {
+                $payments   = Payments::whereBetween('date', [$from_date, $to_date])
+                            ->orderBy('date', 'desc')
+                            ->paginate(15);
+            }else{
+                $payments   = Payments::orderBy('created_at', 'desc')->paginate(15);
+            }
+            $users          = Users::pluck('name','id')->all();
             return view('/admin/payments/home',compact('payments','users'));
         } else {
             $sort_by    = $request->get('sortby');
@@ -36,7 +45,6 @@ class PaymentsController extends Controller
             $query      = $request->get('query');
             $query      = str_replace(" ", "%", $query);
             $payments   = Payments::where('amount','like','%'.$query.'%')
-                        ->orWhere('date','like','%'.$query.'%')
                         ->orderBy($sort_by,$sort_type)->paginate(15);
             return view('/admin/payments/table_data',compact('payments','users'))->render();
         }

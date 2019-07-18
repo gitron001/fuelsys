@@ -8,6 +8,9 @@
         <td>{{ $transaction->lit }}</td>
         <td>{{ $transaction->money }}</td>
         <td>{{ $transaction->created_at }}</td>
+        <td class="text-center" width="8%">
+            <a href="{{ url('admin/transactions/'.$transaction->id) }}" data-toggle="tooltip" title="Generate bill"><i class="fa fa-print"></i></a>&nbsp;
+        </td>
     </tr>
 @endforeach
 @else
@@ -19,6 +22,9 @@
     <td>{{ $transaction->lit }}</td>
     <td>{{ $transaction->money }}</td>
     <td>{{ $transaction->created_at }}</td>
+    <td class="text-center" width="8%">
+        <a href="{{ url('admin/transactions/'.$transaction->id) }}" data-toggle="tooltip" title="Generate bill"><i class="fa fa-print"></i></a>&nbsp;
+    </td>
 @endforeach
 @endif
 

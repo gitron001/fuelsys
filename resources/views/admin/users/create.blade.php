@@ -23,18 +23,18 @@
         </div>
 
         <div class="col-md-6">
-            <div class="form-group {{ $errors->has('password') ? 'has-error' :'' }}">
-                {!! Form::label('password', 'Password:'); !!}
-                {!! Form::password('password',['class'=>'form-control']); !!}
-                {!! $errors->first('password','<span class="help-block">:message</span>') !!}
-            </div>
-        </div>
-
-        <div class="col-md-6">
             <div class="form-group {{ $errors->has('email') ? 'has-error' :'' }}">
                 {!! Form::label('email', 'Email:'); !!}
                 {!! Form::text('email',null,['class'=>'form-control']); !!}
                 {!! $errors->first('email','<span class="help-block">:message</span>') !!}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group {{ $errors->has('password') ? 'has-error' :'' }}">
+                {!! Form::label('password', 'Password:'); !!}
+                {!! Form::password('password',['class'=>'form-control','autocomplete'=>'new-password']); !!}
+                {!! $errors->first('password','<span class="help-block">:message</span>') !!}
             </div>
         </div>
 
@@ -159,11 +159,12 @@
 @section('js')
 
     <script>
-
         // Check has_limit field
         $(document).on('click','#showHideLimits',function(){
             var e = document.getElementById("showHideLimits");
             var value = e.options[e.selectedIndex].value;
+
+            $('#txtpsw').val('');
 
             if(value == 1){
                 $("#starting_balance").show();

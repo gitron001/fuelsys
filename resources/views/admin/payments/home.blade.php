@@ -1,3 +1,4 @@
+<?php use Illuminate\Support\Facades\Input; ?>
 @extends('adminlte::page')
 
 @section('content')
@@ -8,8 +9,23 @@
 		<div class="row">
 			   <div class="box">
             <div class="box-header">
-              <div class="col-md-9"><h3 class="box-title">Payments</h3></div>
-              <div class="col-md-2">
+              <div class="col-md-2"><h3 class="box-title">Payments</h3></div>
+              <div class="col-md-6">
+              <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/payments') }}">
+                <div class="form-group">
+                  <label for="Start Date:">Start Date:</label>
+                  <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{Input::get("fromDate")}}">
+                </div>
+        
+                <div class="form-group">
+                  <label for="End Date:">End Date:</label>
+                  <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
+                </div>
+
+                <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i></button>
+              </form>
+              </div>
+              <div class="col-md-3">
                 <input type="text" class="form-control" name="search" id="search" placeholder="Search"/> 
               </div>
               <div class="col-md-1">

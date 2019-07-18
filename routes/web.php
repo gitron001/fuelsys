@@ -7,6 +7,8 @@ Route::get('/admin/transactions','TransactionController@searchWithPagination');
 Route::view('transactions-info','admin.transactions.transactions-info',[
 		'transactions' => App\Models\Transaction::orderBy('created_at', 'DESC')->limit(15)->get()
 	]);
+// Transactions - Genrate bill
+Route::get('/admin/transactions/{id}','TransactionController@printFunction');
 
 //Change language
 Route::get('locale/{locale}',function($locale){
@@ -63,6 +65,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/admin/pfc/command/{pfc_id}/{command_id}', ['as' => 'pfc.command', 'uses' => 'PFCController@import_data']);
 	Route::get('/search','TransactionController@search');
 	Route::get('/export','TransactionController@excel_export');
+
 	//Route::get('/admin/transactions','TransactionController@searchWithPagination');
 	Route::get('/dailyReport','TransactionController@generateDailyReport');
 

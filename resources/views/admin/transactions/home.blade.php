@@ -71,6 +71,7 @@
                 <th class="sorting" data-sorting_type="asc" data-column_name="lit">Lit <span id="lit_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="money">Total <span id="money_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th>Options</th>
               </tr>
             </thead>
             <tbody>
