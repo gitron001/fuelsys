@@ -93,6 +93,6 @@ class StaffController extends Controller
 
         $products = $products->get();
     
-        return view('admin.staff_view',compact('usersFilter','staffData','products','product_name'));
+        return view('admin.staff.staff_view',compact('usersFilter','staffData','products','product_name'));
     }
 }
