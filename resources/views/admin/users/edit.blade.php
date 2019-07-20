@@ -112,7 +112,6 @@
 		{!! Form::label('discount', 'Discounts'); !!}
 		@foreach($rfid_discounts as $rfid_discount)
 			<div class="form-group">
-
 				<div class="row" id="discount">
 					<input type="hidden" name="hidden_input_product[]" value="{{$rfid_discount->id}}">
 					<div class="col-md-1">
