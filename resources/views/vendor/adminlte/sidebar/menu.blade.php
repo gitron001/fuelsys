@@ -86,6 +86,13 @@
         </a>
     </li>
 
+    <li>
+        <a href="{{ URL('admin/staff') }}">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.staff') }}</span>
+        </a>
+    </li>
+
     <li class="header">Settings</li>
 
     <li>

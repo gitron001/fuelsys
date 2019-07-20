@@ -20,7 +20,11 @@ class ProductGroupController extends Controller
         } else {
             $sort_by = $request->get('sortby');
             $sort_type = $request->get('sorttype');
-            $products_group = ProductGroup::orderBy($sort_by,$sort_type)->paginate(15);
+            $query      = $request->get('query');
+            $query      = str_replace(" ", "%", $query);
+            $products_group = ProductGroup::where('name','like','%'.$query.'%')
+                            ->orWhere('state_code','like','%'.$query.'%')
+                            ->orderBy($sort_by,$sort_type)->paginate(15);
             return view('/admin/products_group/table_data',compact('products_group'))->render();
         }
     }

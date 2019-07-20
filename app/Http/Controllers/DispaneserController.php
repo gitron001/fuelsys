@@ -21,7 +21,10 @@ class DispaneserController extends Controller
         } else {
             $sort_by = $request->get('sortby');
             $sort_type = $request->get('sorttype');
-            $dispanesers = Dispaneser::orderBy($sort_by,$sort_type)->paginate(15);
+            $query      = $request->get('query');
+            $query      = str_replace(" ", "%", $query);
+            $dispanesers = Dispaneser::where('name','like','%'.$query.'%')
+                        ->orderBy($sort_by,$sort_type)->paginate(15);
             return view('/admin/dispanesers/table_data',compact('dispanesers'))->render();
         }
     }

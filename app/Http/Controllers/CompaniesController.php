@@ -25,7 +25,14 @@ class CompaniesController extends Controller
         } else {
             $sort_by = $request->get('sortby');
             $sort_type = $request->get('sorttype');
-            $companies = Company::orderBy($sort_by,$sort_type)->paginate(15);
+            $query      = $request->get('query');
+            $query      = str_replace(" ", "%", $query);
+            $companies = Company::where('name','like','%'.$query.'%')
+                        ->orWhere('fis_number','like','%'.$query.'%')
+                        ->orWhere('contact_person','like','%'.$query.'%')
+                        ->orWhere('tel_number','like','%'.$query.'%')
+                        ->orWhere('email','like','%'.$query.'%')
+                        ->orderBy($sort_by,$sort_type)->paginate(15);
             return view('/admin/companies/table_data',compact('companies'))->render();
         }
     }
