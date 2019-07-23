@@ -68,6 +68,18 @@ class CompaniesController extends Controller
             $limit_left = 0;
         }
 
+        // Save photo to public/company folder
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $image->move(public_path('images/company'),$fileNameToStore);
+        }else {
+            $fileNameToStore = NULL;
+        }
+
 
         $id = Company::insertGetId([
             'name'              => $request->input('name'),
@@ -81,6 +93,7 @@ class CompaniesController extends Controller
             'starting_balance'  => $request->input('starting_balance') ? : 0,
             'contact_person'    => $request->input('contact_person'),
             'city'              => $request->input('city'),
+            'images'            => $fileNameToStore,
             'country'           => $request->input('country'),
             'status'            => $request->input('status'),
             'limits'            => $request->input('limits') ? : 0,
@@ -160,6 +173,20 @@ class CompaniesController extends Controller
     public function update(Request $request, $id) {
         
         $company = Company::findOrFail($id);
+
+        // Edit photo if exist to public/company folder
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $image->move(public_path('images/company'),$fileNameToStore);
+        }
+
+        if($request->hasFile('image')){
+            $company->images = $fileNameToStore;
+        }
 
         if($company->has_limit == 1){
             $new_limit   = $request->input('limits') - $request->input('starting_balance');

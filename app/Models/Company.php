@@ -21,6 +21,7 @@ class Company extends Model
         'email',
         'address',
         'city',
+        'images',
         'country',
         'type',
         'status',

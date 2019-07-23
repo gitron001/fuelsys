@@ -51,10 +51,13 @@
 					{!! $errors->first('tel_number','<span class="help-block">:message</span>') !!}
 				</div>
 
-				<div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
-					{!! Form::label('has_limit', 'Has Limit:'); !!}
-					{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id' => 'showHide']); !!}
-					{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+				<div class="form-group">
+					{!! Form::label('photo', 'Photo:'); !!}
+						@if (isset($company) && $company->images)
+							<br>
+							<img class="img-responsive img-thumbnail" src="{{asset('/images/company/'.$company->images)}}" height="100" width="100">
+						@endif
+					{!! Form::file('image',['class'=>'form-control']); !!}
 				</div>
 
 				<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
@@ -108,12 +111,18 @@
 					{!! $errors->first('email','<span class="help-block">:message</span>') !!}
 				</div>
 
+				<div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
+					{!! Form::label('has_limit', 'Has Limit:'); !!}
+					{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id' => 'showHide']); !!}
+					{!! $errors->first('status','<span class="help-block">:message</span>') !!}
+				</div>
+
 				<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
 					{!! Form::label('starting_balance', 'Starting Balance:'); !!}
 					{!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
 					{!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
 				</div>
-
+				
 			</div>
 		</div>
 	
