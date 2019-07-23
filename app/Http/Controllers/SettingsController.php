@@ -72,6 +72,8 @@ class SettingsController extends Controller
     {
         $company = Company::findOrFail($id);
         $company->update($request->all());
+
+        return redirect('/admin/settings');
     }
 
     /**
