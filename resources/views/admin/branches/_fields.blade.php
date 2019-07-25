@@ -44,6 +44,7 @@
         </button>
 		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
 	</div>
+</div>
 @endsection
 
 @section('css')
