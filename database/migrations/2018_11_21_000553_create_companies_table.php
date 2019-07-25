@@ -25,6 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->string('email')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
+            $table->string('images')->nullable();
             $table->string('country')->nullable();
             $table->integer('status');
             $table->double('starting_balance')->nullable();

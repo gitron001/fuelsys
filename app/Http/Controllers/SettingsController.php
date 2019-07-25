@@ -71,7 +71,24 @@ class SettingsController extends Controller
     public function update(Request $request, $id)
     {
         $company = Company::findOrFail($id);
+        
+        // Edit photo if exist to public/company folder
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $image->move(public_path('images/company'),$fileNameToStore);
+        }
+
+        if($request->hasFile('image')){
+            $company->images = $fileNameToStore;
+        }
+
         $company->update($request->all());
+
+        return redirect('/admin/settings');
     }
 
     /**

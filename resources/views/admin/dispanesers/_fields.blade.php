@@ -1,8 +1,12 @@
 @extends('adminlte::page')
 
 @section('content')
-	<h1>{{!isset($dispaneser) ? 'Create new dispaneser' : 'Edit dispaneser'}}</h1>
-		
+<div class="box box-primary">
+	<div class="box-header with-border">
+		<h3 class="box-title">{{!isset($dispaneser) ? 'Create new dispaneser' : 'Edit dispaneser'}}</h3>
+	</div>
+	
+	<div class="box-body">
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
@@ -20,11 +24,16 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="form-group">
-			{!! Form::submit((!isset($dispaneser) ? 'Create new dispaneser' : 'Edit dispaneser'), ['class'=>'btn btn-block btn-success']); !!}
-		</div>
-
+	<div class="box-footer">
+		<button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Save
+        </button>
+		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
+	</div>
+		
+</div>
 @endsection
 
 @section('css')
