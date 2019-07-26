@@ -22,10 +22,19 @@
 				<div class="form-group {{ $errors->has('select') ? 'has-error' :'' }}">
 					<label for="">Company / User: </label>
 					<br>
-					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" value="company" 
-						@if (isset($payment) && $payment->company_id != 0) echo checked @endif/>Company</label>
-					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" value="user" 
-						@if (isset($payment) && $payment->user_id != 0) echo checked @endif/>User</label>
+					@if (!isset($payment))
+					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" 
+						value="company" echo checked />Company</label>
+					@endif
+					
+					@if (isset($payment))
+					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" 
+						value="company" @if (isset($payment) && $payment->company_id != 0) echo checked @endif/>Company</label>
+					@endif
+
+					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" 
+						value="user" @if (isset($payment) && $payment->user_id != 0) echo checked @endif/>User</label>
+					
 				</div>
 			</div>
 
@@ -102,13 +111,17 @@
     	$('input[type=checkbox]').on('change', function() {
 		    if($(this).is(':checked'))
 		        $checkboxValue = $(this).val();
-
+				
 		    	if($checkboxValue == 'user'){
-		    		$('#company option:first').prop('selected',true);
+					$("#company").val('0');
+					$("#company").selectpicker("refresh");
+		    		//$('#company option:first').prop('selected',true);
 		    		$("#company").hide();
 		    		$("#user").show();
 		    	}else{
-		    		$('#user option:first').prop('selected',true);
+					$("#user").val('0');
+					$("#user").selectpicker("refresh");
+		    		//$('#user option:first').prop('selected',true);
 		    		$("#company").show();
 		    		$("#user").hide();
 		    	}
