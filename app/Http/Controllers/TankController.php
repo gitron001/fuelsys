@@ -16,7 +16,7 @@ class TankController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $tanks = Tank::paginate(15);
+            $tanks = Tank::orderBy('name','ASC')->paginate(15);
             return view('/admin/tanks/home',compact('tanks'));
         } else {
             $sort_by = $request->get('sortby');

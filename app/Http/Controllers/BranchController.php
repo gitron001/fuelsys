@@ -15,7 +15,7 @@ class BranchController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $branches = Branch::paginate(15);
+            $branches = Branch::orderBy('name','ASC')->paginate(15);
             return view('/admin/branches/home',compact('branches'));
         } else {
             $sort_by = $request->get('sortby');

@@ -16,7 +16,7 @@ class PFCController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $pfc   = PFC::orderBy('created_at', 'desc')->paginate(15);
+            $pfc   = PFC::orderBy('name','ASC')->paginate(15);
             return view('/admin/pfc/home',compact('pfc'));
         } else {
             $sort_by    = $request->get('sortby');

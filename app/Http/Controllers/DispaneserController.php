@@ -16,7 +16,7 @@ class DispaneserController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $dispanesers = Dispaneser::paginate(15);
+            $dispanesers = Dispaneser::orderBy('name','ASC')->paginate(15);
             return view('/admin/dispanesers/home',compact('dispanesers'));
         } else {
             $sort_by = $request->get('sortby');

@@ -20,7 +20,7 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $companies = Company::where('status',1)->paginate(15);
+            $companies = Company::where('status',1)->orderBy('name','ASC')->paginate(15);
             return view('admin/companies/home',compact('companies'));
         } else {
             $sort_by = $request->get('sortby');

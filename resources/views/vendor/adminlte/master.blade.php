@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-select/1.13.9/dist/css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css') }}">
+
 
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ui/1.11.4/themes/smoothness/jquery-ui.css') }}">
 
@@ -70,6 +73,7 @@
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') }}"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>-->
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-select/1.13.9/dist/js/bootstrap-select.min.js') }}"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>-->
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">-->
 <script src="{{ asset('vendor/adminlte/vendor/sweetalert/dist/sweetalert.min.js') }}"></script>
@@ -82,7 +86,7 @@
 
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables with bootstrap 3 renderer -->
-    <script src="//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+    <!--<script src="//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>-->
 @endif
 
 @if(config('adminlte.plugins.chartjs'))

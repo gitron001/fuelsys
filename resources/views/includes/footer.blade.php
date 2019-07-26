@@ -243,6 +243,9 @@
   });
   
   $(document).ready(function(){
+    $(document).ready(function() {
+    $('#example').dataTable();
+  } );
     $('#dailyReport').click(function(){
       var company = $("#company").val();
       var dailyReport = 1;

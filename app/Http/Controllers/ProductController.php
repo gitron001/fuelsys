@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $products = Products::paginate(15);
+            $products = Products::orderBy('name','ASC')->paginate(15);
             return view('/admin/products/home',compact('products'));
         } else {
             $sort_by    = $request->get('sortby');

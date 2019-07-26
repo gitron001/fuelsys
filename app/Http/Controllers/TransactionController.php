@@ -442,9 +442,13 @@ class TransactionController extends Controller
         $user            = $request->input('user');
         $company         = $request->input('company');
         $sort_by_company = $request->get('sortby');
-        $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "transactions".".".$request->get('sortby'));
-        $sort_type       = $request->get('sorttype');
-
+        if($sort_by_company == 'name'){
+            $sort_by = "transactions.created_at";
+            $sort_type = "DESC";
+        }else{
+            $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "transactions".".".$request->get('sortby'));
+            $sort_type       = $request->get('sorttype');
+        }
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
            'transactions.price', 'transactions.lit','transactions.money','transactions.created_at','transactions.id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')

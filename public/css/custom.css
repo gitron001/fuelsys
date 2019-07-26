@@ -85,3 +85,14 @@
 }
 
 /* END LIVE Feed PULSE */ 
+
+/* DROPDOWN Style - Payment Form */
+
+.btn-dropdownSelectNew {
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #d2d6de;
+    background-color: #fff;
+}
+
+/* END DROPDOWN Style - Payment Form */
