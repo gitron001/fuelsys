@@ -15,7 +15,7 @@ class ProductGroupController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $products_group = ProductGroup::paginate(15);
+            $products_group = ProductGroup::orderBy('name','ASC')->paginate(15);
             return view('/admin/products_group/home',compact('products_group'));
         } else {
             $sort_by = $request->get('sortby');

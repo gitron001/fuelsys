@@ -22,7 +22,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         if($request->ajax() == false){
-            $users = Users::where('status',1)->paginate(15);
+            $users = Users::where('status',1)->orderBy('name','ASC')->paginate(15);
             return view('/admin/users/home',compact('users'));
         } else {
             $sort_by    = $request->get('sortby');

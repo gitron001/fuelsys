@@ -27,3 +27,9 @@
     </td>
 @endforeach
 @endif
+
+@if($transactions->total() > 15)
+    @include('includes.pagination', ['data' => $transactions])
+@endif
+
+@include('includes.spinner')

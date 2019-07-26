@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-select/1.13.9/dist/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap.min.css">
 
 
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ui/1.11.4/themes/smoothness/jquery-ui.css') }}">
@@ -67,8 +66,6 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-1.10.2.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-ui.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/font-awesome/js/all.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
 <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
 <!--<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/moment.js/2.13.0/moment.min.js') }}"></script>
