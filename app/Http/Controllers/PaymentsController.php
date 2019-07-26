@@ -12,9 +12,10 @@ use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
-use DateTime;
 use App\Jobs\PrintFuelRecept;
+use DateTime;
 use Config;
+use DB;
 
 class PaymentsController extends Controller
 {
@@ -32,24 +33,46 @@ class PaymentsController extends Controller
         $to_date        = strtotime($request->input('toDate'));
         $user           = $request->input('user');
         $company        = $request->input('company');
+        $sort_by_company = $request->get('sortby');
+        if($sort_by_company == 'name'){
+            $sort_by = "payments.date";
+            $sort_type = "DESC";
+        }else{
+            $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "payments".".".$request->get('sortby'));
+            $sort_type       = $request->get('sorttype');
+        }
 
-        $query          = Payments::orderBy('date', 'DESC');
+        //$query          = Payments::orderBy('date', 'DESC');
+        $query          = Payments::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'),
+           'payments.amount', 'payments.date','payments.created_at','payments.updated_at','payments.id')
+            ->leftJoin('users', 'users.id', '=', 'payments.user_id')
+            ->leftJoin('companies', 'companies.id', '=', 'payments.company_id');
 
         if ($request->input('user')) {
-            $query = $query->whereIn('user_id',$user);
+            $query = $query->whereIn('users.id',$user);
         }
 
         if ($request->input('company')) {
-            $query = $query->where('company_id',$company);
+            $query = $query->where('companies.id',$company);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
-            $query = $query->whereBetween('date',[$from_date, $to_date]);
+            $query = $query->whereBetween('payments.date',[$from_date, $to_date]);
         }
 
-        $payments = $query->paginate(15);
+        if($request->ajax() == false){
+            $query->orderBy('payments.date', 'DESC');
+            $payments = $query->paginate(15);
+            return view('/admin/payments/home',compact('payments','users','companies'));
+        } else {
+            $query->orderBy($sort_by,$sort_type);
+            $payments = $query->paginate(15);
+            return view('/admin/payments/table_data',compact('payments','users','companies'))->render();
+        }
 
-        return view('/admin/payments/home',compact('payments','users','companies'));
+        //$payments = $query->paginate(15);
+
+        //return view('/admin/payments/home',compact('payments','users','companies'));
     }
 
     /**
