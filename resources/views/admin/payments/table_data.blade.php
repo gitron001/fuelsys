@@ -13,9 +13,3 @@
     </td>
 </tr>
 @endforeach
-
-@if($payments->total() > 15)
-    @include('includes.pagination', ['data' => $payments])
-@endif
-
-@include('includes.spinner')

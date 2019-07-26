@@ -34,7 +34,7 @@
   $(".alert").delay(2000).slideUp(200, function() {
       $(this).alert('close');
   });
-
+/*
   // Sorting with pagination in tables
   $(document).ready(function(){
     var url_name = window.location.pathname;
@@ -99,7 +99,7 @@
     });
   
   })
-
+*/
 
 
   // *** TRANSACTIONS SCRIPT *** //
@@ -243,6 +243,9 @@
   });
   
   $(document).ready(function(){
+    $(document).ready(function() {
+    $('#example').dataTable();
+  } );
     $('#dailyReport').click(function(){
       var company = $("#company").val();
       var dailyReport = 1;
@@ -261,6 +264,21 @@
   });
 
   //  *** END REPORTS SCRIPT *** //
+
+  // ** TABLEDATA */
+  $(function () {
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false,
+      "pageLength"  : 15,
+      "lengthMenu": [ 10, 15, 25, 50, 75, 100 ]
+    })
+  })
+  // ** END TABLEDATA */
   
 </script>
 
