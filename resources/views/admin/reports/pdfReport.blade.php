@@ -44,7 +44,7 @@
 	        <pre>
 	        	Raporti mbi kompaninë
 			    Gjakovë, Kosovë
-			    {{ date('m/d/Y h:i:s a', strtotime('+1 hour')) }}
+			    {{ date('m/d/Y h:i:s a', strtotime("now")) }}
 			</pre>
 	    </td>
 	</tr>
@@ -62,6 +62,27 @@
 	</table>
 
 	<br/>
+
+	<table width="100%">
+		<thead style="background-color: lightgray;">
+		  <tr>
+			<th align="center">PRODUKTI</th>
+			<th align="center">SASIA</th>
+			<th align="center">TOTALI</th>
+		  </tr>
+		</thead>
+		<tbody>
+		@foreach($data as $d)
+		  <tr>
+			<td align="center">{{ $d['product_name'] }}</td>
+			<td align="center">{{ $d['lit'] }} litra</td>
+			<td align="center">{{ $d['money'] }} Euro</td>
+		  </tr>
+		@endforeach
+		</tfoot>
+		</table>
+
+	<br>
 
 	<table width="100%">
 	<thead style="background-color: lightgray;">
