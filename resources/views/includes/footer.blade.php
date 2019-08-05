@@ -40,13 +40,15 @@
     var url_name = window.location.pathname;
     var user = $("#user").val();
     var company = $("#company").val();
+    var fromDate = $('#datetimepicker4').val();
+    var toDate = $('#datetimepicker5').val();
     
     function fetch_data(page,sort_type,sort_by,query){
       $('#hidePagination').hide();
       $('#spinner').show();
       $.ajax({
         data: {user: user,company:company},
-        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&query="+query,
+        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&query="+query+"&fromDate="+fromDate+"&toDate="+toDate,
         success: function(data){
           $('#spinner').hide();
           $('tbody').html('');
@@ -60,6 +62,9 @@
       var column_name = $('#hidden_column_name').val();
       var sort_type = $('#hidden_sort_type').val();
       var page = $('#hidden_page').val();
+
+      query == '' ? page = page : page = 1;
+      
       fetch_data(page,sort_type,column_name,query);
     });
   
