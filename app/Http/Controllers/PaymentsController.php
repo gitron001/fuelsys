@@ -95,7 +95,7 @@ class PaymentsController extends Controller
         $payments->updated_at   = now()->timestamp;
         $payments->save();
 		
-		self::printFunction($id);
+		self::printFunction($payments->id);
 		
         session()->flash('info','Success');
 

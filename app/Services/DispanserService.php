@@ -105,7 +105,7 @@ class DispanserService extends ServiceProvider
             $socket = PFC::create_socket();
         }
 		
-		$products = Products::where('status', 1)->orderBy('pfc_pr_id')->groupBy('pfc_pr_id')->get();
+		$products = Products::where('status', 1)->orderBy('pfc_pr_id')->get();
 		
 		
 		$all_prices = array();
