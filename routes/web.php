@@ -4,7 +4,7 @@ Auth::routes();
 
 Route::resource('/', 'HomeController');
 Route::get('/admin/transactions','TransactionController@searchWithPagination');
-Route::view('transactions-info', 'TransactionController@info');
+Route::get('transactions-info', 'TransactionController@info');
 // Transactions - Genrate bill
 Route::get('/admin/transactions/{id}','TransactionController@printFunction');
 
