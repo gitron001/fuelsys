@@ -33,7 +33,10 @@ class Products extends Model
     }   
 
     public function product_group(){
-        return $this->belongsTo('App\Models\ProductGroup');
+        return $this->belongsTo('App\Models\ProductGroup')->withDefault([
+            'name' => '',
+            'status' => 1,
+        ]);
     }
 
     public function pfc(){
