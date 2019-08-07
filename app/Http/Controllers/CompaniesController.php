@@ -23,7 +23,7 @@ class CompaniesController extends Controller
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
 
-        $companies  = Company::where('status',1);
+        $companies  = Company::whereIn('status',array(1, 2));
         
         if($request->get('search')){
             $companies = $companies->where(function($query) use ($search){

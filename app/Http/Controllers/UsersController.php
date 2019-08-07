@@ -25,7 +25,7 @@ class UsersController extends Controller
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
 
-        $users      = Users::where('status',1);
+        $users      = Users::whereIn('status',array(1, 2));
 
         if($request->get('search')){
             $users  = $users->where(function($query) use ($search){

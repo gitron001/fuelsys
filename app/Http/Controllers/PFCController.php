@@ -19,7 +19,7 @@ class PFCController extends Controller
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
 
-        $pfc        = PFC::where('status',1);
+        $pfc        = new PFC;
 
         if($request->get('search')){
             $pfc    = $pfc->where(function($query) use ($search){

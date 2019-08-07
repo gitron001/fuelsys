@@ -19,7 +19,7 @@ class TankController extends Controller
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
 
-        $tanks      = Tank::where('status',1);
+        $tanks      = new Tank;
 
         if($request->get('search')){
             $tanks  = $tanks->where(function($query) use ($search){

@@ -18,7 +18,7 @@ class BranchController extends Controller
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
 
-        $branches = Branch::where('status',1);
+        $branches = new Branch;
 
         if($request->get('search')){
             $branches = $branches->where(function($query) use ($search){

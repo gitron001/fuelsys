@@ -13,6 +13,7 @@ class Products extends Model
         'price',
         'product_group_id',
         'vat',
+        'status',
         'pfc_id',
     ];
 

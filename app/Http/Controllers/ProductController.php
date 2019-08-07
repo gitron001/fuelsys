@@ -20,7 +20,7 @@ class ProductController extends Controller
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
 
-        $products   = Products::where('status',1);
+        $products   = new Products;
 
         if($request->get('search')){
             $products = $products->where(function($query) use ($search){
