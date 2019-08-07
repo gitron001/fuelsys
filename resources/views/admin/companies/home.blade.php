@@ -6,14 +6,16 @@
 
 	<div class="content">
 		<div class="row">
-			   <div class="box">
+			   <div class="box box-primary">
             <div class="box-header">
-              <div class="col-md-9"><h3 class="box-title">Company</h3></div>
-              <div class="col-md-2">
-                <input type="text" class="form-control" name="search" id="search" placeholder="Search"/> 
-              </div>
-              <div class="col-md-1">
-                <a class="btn btn-success pull-right" href="{{ url('admin/companies/create') }}">+ Create</a>
+              <div class="col-md-8"><h3 class="box-title">Company</h3></div>
+              <div class="col-md-4">
+
+                <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/companies') }}">
+                  @include('includes.search_filter')
+                  <a href="{{ url('admin/companies/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new company"><i class="fa fa-plus"></i> New Company</a>
+                </form>
+                
               </div>
             </div>
             <!-- /.box-header -->

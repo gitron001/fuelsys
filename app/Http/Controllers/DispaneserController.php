@@ -15,16 +15,25 @@ class DispaneserController extends Controller
      */
     public function index(Request $request)
     {
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
+        $dispanesers = new Dispaneser;
+
+        if($request->get('search')){
+            $dispanesers = $dispanesers->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+            });
+        }
+
         if($request->ajax() == false){
-            $dispanesers = Dispaneser::orderBy('name','ASC')->paginate(15);
+            $dispanesers = $dispanesers->orderBy('name','ASC')
+                            ->paginate(15);
             return view('/admin/dispanesers/home',compact('dispanesers'));
         } else {
-            $sort_by = $request->get('sortby');
-            $sort_type = $request->get('sorttype');
-            $query      = $request->get('query');
-            $query      = str_replace(" ", "%", $query);
-            $dispanesers = Dispaneser::where('name','like','%'.$query.'%')
-                        ->orderBy($sort_by,$sort_type)->paginate(15);
+            $dispanesers = $dispanesers->orderBy($sort_by,$sort_type)
+                            ->paginate(15);
             return view('/admin/dispanesers/table_data',compact('dispanesers'))->render();
         }
     }

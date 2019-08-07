@@ -5,7 +5,7 @@
 
 @include('includes/alert_info')
 
-<div class="box">
+<div class="box box-primary">
   <div class="box-header">
     <h3 class="box-title">Transactions</h3>
   </div>

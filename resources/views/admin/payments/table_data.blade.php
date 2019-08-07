@@ -2,8 +2,8 @@
 <tr>
     <td>{{ date('m/d/Y', $payment->date) }}</td>
     <td>{{ $payment->amount }}</td>
-    <td>{{ $payment->user ? $payment->user->name : 'Empty' }}</td>
-    <td>{{ $payment->company ? $payment->company->name : 'Empty' }}</td>
+    <td>{{ $payment->user_name ? $payment->user_name : ' ' }}</td>
+    <td>{{ $payment->comp_name ? $payment->comp_name : ' ' }}</td>
     <td>{{ $payment->created_at->diffForHumans() }}</td>
     <td>{{ $payment->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">

@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('rfid');
             $table->string('name');
-            $table->string('email');
-            $table->string('password');
+            $table->string('email')->nullable();
+            $table->string('password')->nullable();
             $table->integer('company_id')->default('0');
             $table->integer('one_time_limit')->default('0');
             $table->string('plates')->default('0');

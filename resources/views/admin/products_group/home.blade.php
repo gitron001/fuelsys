@@ -6,14 +6,16 @@
 
 	<div class="content">
 		<div class="row">
-			   <div class="box">
+			   <div class="box box-primary">
             <div class="box-header">
-              <div class="col-md-9"><h3 class="box-title">Product Group</h3></div>
-              <div class="col-md-2">
-                <input type="text" class="form-control" name="search" id="search" placeholder="Search"/> 
-              </div>
-              <div class="col-md-1">
-                <a class="btn btn-success pull-right" href="{{ url('admin/products_group/create') }}">+ Create</a>
+              <div class="col-md-8"><h3 class="box-title">Product Group</h3></div>
+              <div class="col-md-4">
+
+                <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/products_group') }}">
+                  @include('includes.search_filter')
+                  <a href="{{ url('admin/products_group/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new product group"><i class="fa fa-plus"></i> New Product Group</a>
+                </form>
+                
               </div>
             </div>
             <!-- /.box-header -->

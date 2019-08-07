@@ -14,17 +14,26 @@ class ProductGroupController extends Controller
      */
     public function index(Request $request)
     {
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
+        $products_group = new ProductGroup;
+
+        if($request->get('search')){
+            $products_group = $products_group->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+                $query->orWhere('state_code','like','%'.$search.'%');
+            });
+        }
+
         if($request->ajax() == false){
-            $products_group = ProductGroup::orderBy('name','ASC')->paginate(15);
+            $products_group = $products_group->orderBy('name','ASC')
+                                ->paginate(15);
             return view('/admin/products_group/home',compact('products_group'));
         } else {
-            $sort_by = $request->get('sortby');
-            $sort_type = $request->get('sorttype');
-            $query      = $request->get('query');
-            $query      = str_replace(" ", "%", $query);
-            $products_group = ProductGroup::where('name','like','%'.$query.'%')
-                            ->orWhere('state_code','like','%'.$query.'%')
-                            ->orderBy($sort_by,$sort_type)->paginate(15);
+            $products_group = $products_group->orderBy($sort_by,$sort_type)
+                                ->paginate(15);
             return view('/admin/products_group/table_data',compact('products_group'))->render();
         }
     }

@@ -18,21 +18,30 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {   
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
+        $companies  = Company::whereIn('status',array(1, 2));
+        
+        if($request->get('search')){
+            $companies = $companies->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+                $query->orWhere('fis_number','like','%'.$search.'%');
+                $query->orWhere('contact_person','like','%'.$search.'%');
+                $query->orWhere('tel_number','like','%'.$search.'%');
+                $query->orWhere('email','like','%'.$search.'%');
+            });
+        }
+
         if($request->ajax() == false){
-            $companies = Company::where('status',1)->orderBy('name','ASC')->paginate(15);
+            $companies = $companies->orderBy('name','ASC')
+                                ->paginate(15);
             return view('admin/companies/home',compact('companies'));
         } else {
-            $sort_by = $request->get('sortby');
-            $sort_type = $request->get('sorttype');
-            $query      = $request->get('query');
-            $query      = str_replace(" ", "%", $query);
-            $companies = Company::where('name','like','%'.$query.'%')
-                        ->orWhere('fis_number','like','%'.$query.'%')
-                        ->orWhere('contact_person','like','%'.$query.'%')
-                        ->orWhere('tel_number','like','%'.$query.'%')
-                        ->orWhere('email','like','%'.$query.'%')
-                        ->orderBy($sort_by,$sort_type)->paginate(15);
+            $companies = $companies->orderBy($sort_by,$sort_type)
+                                ->paginate(15);
             return view('/admin/companies/table_data',compact('companies'))->render();
         }
     }

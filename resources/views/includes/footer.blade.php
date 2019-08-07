@@ -40,13 +40,15 @@
     var url_name = window.location.pathname;
     var user = $("#user").val();
     var company = $("#company").val();
+    var fromDate = $('#datetimepicker4').val();
+    var toDate = $('#datetimepicker5').val();
     
     function fetch_data(page,sort_type,sort_by,query){
       $('#hidePagination').hide();
       $('#spinner').show();
       $.ajax({
         data: {user: user,company:company},
-        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&query="+query,
+        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+query+"&fromDate="+fromDate+"&toDate="+toDate,
         success: function(data){
           $('#spinner').hide();
           $('tbody').html('');
@@ -56,10 +58,13 @@
     }
 
     $(document).on('keyup', '#search', function(){
-      var query = $('#search').val();
+      var query = '<?php echo (isset($_GET['search']) ? $_GET['search'] : '') ?>';
       var column_name = $('#hidden_column_name').val();
       var sort_type = $('#hidden_sort_type').val();
       var page = $('#hidden_page').val();
+
+      query == '' ? page = page : page = 1;
+      
       fetch_data(page,sort_type,column_name,query);
     });
   
@@ -84,7 +89,7 @@
       $('#hidden_column_name').val(column_name);
       $('#hidden_sort_type').val(reverse_order);
       var page = $('#hidden_page').val();
-      var query = $('#search').val();
+      var query = '<?php echo (isset($_GET['search']) ? $_GET['search'] : '') ?>';
       fetch_data(page,reverse_order,column_name,query);
     });
   
@@ -94,7 +99,7 @@
       $('#hidden_page').val(page);
       var column_name = $('#hidden_column_name').val();
       var sort_type = $('#hidden_sort_type').val();
-      var query = $('#search').val();
+      var query = '<?php echo (isset($_GET['search']) ? $_GET['search'] : '') ?>';
       fetch_data(page, sort_type, column_name,query);
     });
   
@@ -243,9 +248,6 @@
   });
   
   $(document).ready(function(){
-    $(document).ready(function() {
-    $('#example').dataTable();
-  } );
     $('#dailyReport').click(function(){
       var company = $("#company").val();
       var dailyReport = 1;

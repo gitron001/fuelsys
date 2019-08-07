@@ -21,18 +21,26 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
+        $users      = Users::whereIn('status',array(1, 2));
+
+        if($request->get('search')){
+            $users  = $users->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+                $query->orWhere('email','like','%'.$search.'%');
+            });
+        }
+
         if($request->ajax() == false){
-            $users = Users::where('status',1)->orderBy('name','ASC')->paginate(15);
+            $users  = $users->orderBy('name','ASC')
+                        ->paginate(15);
             return view('/admin/users/home',compact('users'));
         } else {
-            $sort_by    = $request->get('sortby');
-            $sort_type  = $request->get('sorttype');
-            $query      = $request->get('query');
-            $query      = str_replace(" ", "%", $query);
-            $users      = Users::where('name','like','%'.$query.'%')
-                        ->orWhere('email','like','%'.$query.'%')
-                        ->orWhere('email','like','%'.$query.'%')
-                        ->orderBy($sort_by,$sort_type)->paginate(15);
+            $users  = $users->orderBy($sort_by,$sort_type)
+                        ->paginate(15);
             return view('/admin/users/table_data',compact('users'))->render();
         }
     }
@@ -161,7 +169,7 @@ class UsersController extends Controller
         $user->status       = $request->input('status');
         $user->vehicle      = $request->input('vehicle');
         $user->type         = $request->input('type');
-        $user->password     = Hash::make($password);
+        $user->password     = bcrypt($password);
         $user->updated_at   = now()->timestamp;
         $user->update();
 

@@ -15,18 +15,27 @@ class PFCController extends Controller
      */
     public function index(Request $request)
     {
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
+        $pfc        = new PFC;
+
+        if($request->get('search')){
+            $pfc    = $pfc->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+                $query->orWhere('ip','like','%'.$search.'%');
+                $query->orWhere('port','like','%'.$search.'%');
+            });
+        }
+
         if($request->ajax() == false){
-            $pfc   = PFC::orderBy('name','ASC')->paginate(15);
+            $pfc    = $pfc->orderBy('name','ASC')
+                        ->paginate(15);
             return view('/admin/pfc/home',compact('pfc'));
         } else {
-            $sort_by    = $request->get('sortby');
-            $sort_type  = $request->get('sorttype');
-            $query      = $request->get('query');
-            $query      = str_replace(" ", "%", $query);
-            $pfc        = PFC::where('name','like','%'.$query.'%')
-                        ->orWhere('ip','like','%'.$query.'%')
-                        ->orWhere('port','like','%'.$query.'%')
-                        ->orderBy($sort_by,$sort_type)->paginate(15);
+            $pfc    = $pfc->orderBy($sort_by,$sort_type)
+                        ->paginate(15);
             return view('/admin/pfc/table_data',compact('pfc'))->render();
         }
     }
