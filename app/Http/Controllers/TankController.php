@@ -15,16 +15,25 @@ class TankController extends Controller
      */
     public function index(Request $request)
     {
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
+        $tanks      = Tank::where('status',1);
+
+        if($request->get('search')){
+            $tanks  = $tanks->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+            });
+        }
+
         if($request->ajax() == false){
-            $tanks = Tank::orderBy('name','ASC')->paginate(15);
+            $tanks  = $tanks->orderBy('name','ASC')
+                        ->paginate(15);
             return view('/admin/tanks/home',compact('tanks'));
         } else {
-            $sort_by = $request->get('sortby');
-            $sort_type = $request->get('sorttype');
-            $query      = $request->get('query');
-            $query      = str_replace(" ", "%", $query);
-            $tanks      = Tank::where('name','like','%'.$query.'%')  
-                        ->orderBy($sort_by,$sort_type)->paginate(15);
+            $tanks  = $tanks->orderBy($sort_by,$sort_type)
+                        ->paginate(15);
             return view('/admin/tanks/table_data',compact('tanks'))->render();
         }
     }

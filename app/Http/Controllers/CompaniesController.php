@@ -26,11 +26,13 @@ class CompaniesController extends Controller
         $companies  = Company::where('status',1);
         
         if($request->get('search')){
-            $companies = $companies->where('name','like','%'.$search.'%')
-                        ->orWhere('fis_number','like','%'.$search.'%')
-                        ->orWhere('contact_person','like','%'.$search.'%')
-                        ->orWhere('tel_number','like','%'.$search.'%')
-                        ->orWhere('email','like','%'.$search.'%');
+            $companies = $companies->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+                $query->orWhere('fis_number','like','%'.$search.'%');
+                $query->orWhere('contact_person','like','%'.$search.'%');
+                $query->orWhere('tel_number','like','%'.$search.'%');
+                $query->orWhere('email','like','%'.$search.'%');
+            });
         }
 
         if($request->ajax() == false){

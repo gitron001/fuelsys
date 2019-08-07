@@ -5,6 +5,6 @@
         <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Search">
             <i class="fa fa-search"></i>
         </button>
-        <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i></a>
+        <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear"><i class="fa fa-trash"></i></a>
     </span>
 </div>

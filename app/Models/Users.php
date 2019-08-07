@@ -16,6 +16,7 @@ class Users extends Model
         'one_time_limit',
         'plates',
         'vehicle',
+        'status',
         'password',
         'starting_balance',
         'limits',

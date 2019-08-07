@@ -6,7 +6,7 @@
 
 	<div class="content">
 		<div class="row">
-			   <div class="box">
+			   <div class="box box-primary">
             <div class="box-header">
               <div class="col-md-8"><h3 class="box-title">Branches</h3></div>
               <div class="col-md-4">

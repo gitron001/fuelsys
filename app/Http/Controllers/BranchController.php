@@ -21,18 +21,20 @@ class BranchController extends Controller
         $branches = Branch::where('status',1);
 
         if($request->get('search')){
-            $branches = $branches->where('name','like','%'.$search.'%')
-                        ->orWhere('address','like','%'.$search.'%')
-                        ->orWhere('city','like','%'.$search.'%');
+            $branches = $branches->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+                $query->orWhere('address','like','%'.$search.'%');
+                $query->orWhere('city','like','%'.$search.'%');
+            });
         }
 
         if($request->ajax() == false){
             $branches = $branches->orderBy('name','ASC')
-                                ->paginate(15);
+                        ->paginate(15);
             return view('/admin/branches/home',compact('branches'));
         } else {
             $branches = $branches->orderBy($sort_by,$sort_type)
-                                ->paginate(15);
+                        ->paginate(15);
             return view('/admin/branches/table_data',compact('branches'))->render();
         }
     }

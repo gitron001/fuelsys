@@ -16,17 +16,25 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
+        $products   = Products::where('status',1);
+
+        if($request->get('search')){
+            $products = $products->where(function($query) use ($search){
+                $query->where('name','like','%'.$search.'%');
+                $query->orWhere('price','like','%'.$search.'%');
+            });
+        }
+
         if($request->ajax() == false){
-            $products = Products::orderBy('name','ASC')->paginate(15);
+            $products = $products->orderBy('name','ASC')
+                        ->paginate(15);
             return view('/admin/products/home',compact('products'));
         } else {
-            $sort_by    = $request->get('sortby');
-            $sort_type  = $request->get('sorttype');
-            $query      = $request->get('query');
-            $query      = str_replace(" ", "%", $query);
-            $products   = Products::where('name','like','%'.$query.'%')
-                        ->orWhere('price','like','%'.$query.'%')
-                        ->orderBy($sort_by,$sort_type)
+            $products = $products->orderBy($sort_by,$sort_type)
                         ->paginate(15);
             return view('/admin/products/table_data',compact('products'))->render();
         }
