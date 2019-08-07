@@ -117,6 +117,7 @@ class PaymentsController extends Controller
         $payments->created_at   = now()->timestamp;
         $payments->updated_at   = now()->timestamp;
         $payments->save();
+
 		
         /*$msg = "Payment Print not Succesful";
 
