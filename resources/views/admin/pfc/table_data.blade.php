@@ -6,7 +6,7 @@
     <td>{{ $p->created_at->diffForHumans() }}</td>
     <td>{{ $p->updated_at->diffForHumans() }}</td>
     <td align="center">
-        <a href="{{ route('pfc.command', [$p->id, '3']) }}" data-toggle="tooltip" title="Import Prices" onclick="return confirm('Are you sure?');">
+        <a href="{{ route('pfc.command', [$p->id, '2']) }}" data-toggle="tooltip" title="Import Prices" onclick="return confirm('Are you sure?');">
             <i class="fa fa-arrow-circle-down"></i>
         </a>
     </td>
@@ -16,7 +16,7 @@
         </a>
     </td>
     <td align="center">
-        <a href="{{ route('pfc.command', [$p->id, '2']) }}" data-toggle="tooltip" title="Import Channels" onclick="return confirm('Are you sure?');">
+        <a href="{{ route('pfc.command', [$p->id, '3']) }}" data-toggle="tooltip" title="Import Channels" onclick="return confirm('Are you sure?');">
             <i class="fa fa-arrow-circle-down"></i>
         </a>
     </td>
