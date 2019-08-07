@@ -33,6 +33,14 @@ class TransactionController extends Controller
         return view('/admin/transactions/home',compact('transactions','users','companies'));
     }
 
+
+    public function info(){
+
+        $transactions  = Transactions::orderBy('created_at', 'DESC')->limit(15)->get();
+
+        return view('admin.transactions.transactions-info',compact('transactions'));
+
+    }
     /**
      * Show the form for creating a new resource.
      *
