@@ -14,18 +14,25 @@ class BranchController extends Controller
      */
     public function index(Request $request)
     {
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
+        $branches = Branch::where('status',1);
+
+        if($request->get('search')){
+            $branches = $branches->where('name','like','%'.$search.'%')
+                        ->orWhere('address','like','%'.$search.'%')
+                        ->orWhere('city','like','%'.$search.'%');
+        }
+
         if($request->ajax() == false){
-            $branches = Branch::orderBy('name','ASC')->paginate(15);
+            $branches = $branches->orderBy('name','ASC')
+                                ->paginate(15);
             return view('/admin/branches/home',compact('branches'));
         } else {
-            $sort_by = $request->get('sortby');
-            $sort_type = $request->get('sorttype');
-            $query      = $request->get('query');
-            $query      = str_replace(" ", "%", $query);
-            $branches = Branch::where('name','like','%'.$query.'%')
-                        ->orWhere('address','like','%'.$query.'%')
-                        ->orWhere('city','like','%'.$query.'%')
-                        ->orderBy($sort_by,$sort_type)->paginate(15);
+            $branches = $branches->orderBy($sort_by,$sort_type)
+                                ->paginate(15);
             return view('/admin/branches/table_data',compact('branches'))->render();
         }
     }
