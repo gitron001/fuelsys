@@ -8,7 +8,7 @@ use App\Models\Users as Users;
 
 class Transaction extends Model
 {
-    //protected $table = 'transactions';
+    protected $table = 'transactions';
     
     protected $fillable = [
         'status', 
