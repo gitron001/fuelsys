@@ -257,7 +257,10 @@ class UsersController extends Controller
     }
 
     public function uploadExcel(){
-        return view('/admin/users/upload_excel');
+
+        $products   = Products::pluck('name','id')->all();
+
+        return view('/admin/users/upload_excel',compact('products'));
     }
 
     public function importExcel(Request $request){
@@ -270,12 +273,13 @@ class UsersController extends Controller
         $results    = Excel::load($file_name, function($reader){
             $reader->all();
         })->get()->toArray();
-        $type       = $request->input('type');
+        $type           = $request->input('type');
+        $product        = $request->input('product');
+        $discount       = $request->input('discount');
 
         
         foreach ($results as $result) {
-            DB::table('users')->insert([
-                [
+            $id = Users::insertGetId([
                 'name'              => $result['emri'],
                 'surname'           => $result['mbiemri'],
                 'residence'         => $result['vendbanimi'],
@@ -285,8 +289,15 @@ class UsersController extends Controller
                 'application_date'  => str_replace('.', '-', $result['data']),
                 'created_at'        => now()->timestamp,
                 'updated_at'        => now()->timestamp
-                ]
             ]);
+
+            $rfid_product = new RFID_Discounts();
+
+            $rfid_product->rfid_id      = $id;
+            $rfid_product->product_id   = $product;
+            $rfid_product->discount     = $discount;
+            $rfid_product->save();
+
         }
 
         session()->flash('info','Success');
