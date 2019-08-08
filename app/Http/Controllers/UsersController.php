@@ -264,30 +264,26 @@ class UsersController extends Controller
     }
 
     public function importExcel(Request $request){
-        $this->validate($request, [
-            'upload_file' => 'required|mimes:xls,xlsx'
-        ]);
 
         $file       = Input::file('upload_file');
         $file_name  = $file->getRealPath();
         $results    = Excel::load($file_name, function($reader){
             $reader->all();
         })->get()->toArray();
-        $firstValueOfArrayProduct  = array_values($request->input('product'))[0];
-        $firstValueOfArrayDiscount = array_values($request->input('discount'))[0];
         $type           = $request->input('type');
         $product        = $request->input('product');
         $discount       = $request->input('discount');
 
         
         foreach ($results as $result) {
-            $rfid = substr($result['nr.karteles'],4);
-            if(strpos($rfid, 'A')){
-                $rfid = str_replace('A',1,$rfid);
-            } else if(strpos($rfid, 'B')){
-                $rfid = str_replace('B',2,$rfid);
-            } else if(strpos($rfid, 'C')){
-                $rfid = str_replace('C',3,$rfid);
+            if(strpos($result['nr.karteles'], 'A')){
+                $rfid = str_replace('A',1,$result['nr.karteles']);
+            } else if(strpos($result['nr.karteles'], 'B')){
+                $rfid = str_replace('B',2,$result['nr.karteles']);
+            } else if(strpos($result['nr.karteles'], 'C')){
+                $rfid = str_replace('C',3,$result['nr.karteles']);
+            } else {
+                $rfid = $result['nr.karteles'];
             }
 
             $id = Users::insertGetId([
@@ -295,18 +291,17 @@ class UsersController extends Controller
                 'surname'           => $result['mbiemri'],
                 'residence'         => $result['vendbanimi'],
                 'contact_number'    => $result['nr.kontaktues'],
-                'rfid'              => $rfid,
+                'rfid'              => substr($rfid,4),
                 'type'              => $type,
                 'application_date'  => str_replace('.', '-', $result['data']),
                 'created_at'        => now()->timestamp,
                 'updated_at'        => now()->timestamp
             ]);
 
-            if($firstValueOfArrayProduct !== 0 && !empty($firstValueOfArrayDiscount)){
-                foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
-    
+            foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
+                if(!empty($product) && !empty($discount) && $discount !== 0){
                     $rfid_product = new RFID_Discounts();
-    
+
                     $rfid_product->rfid_id      = $id;
                     $rfid_product->product_id   = $product;
                     $rfid_product->discount     = $discount;

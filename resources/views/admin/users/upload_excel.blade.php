@@ -17,28 +17,27 @@
                 <label>Select User Type</label>
                 <select class="form-control" name="type" required>
                 <option value="">Select</option>
-                <option value="6">Bonus Memeber</option>
+                <option value="6">Bonus Member</option>
                 <option value="7">Bonus Klient</option>
                 <option value="8">Bonus Korporate</option>
                 </select>
             </div>
 
-            <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
-                {!! Form::label('discounts', 'Discounts:'); !!}
-
-                <div class="row">
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
-                    </div>
-                    <div class="col-md-5">
-                        {!! Form::select('product[]',['Choose Product'] + $products,null,['class'=>'form-control']); !!}
-                    </div>
-                    <div class="col-md-6">
-                        {!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
-                    </div>
+            <div class="row">
+                @foreach($products as $product_id => $product_name)
+                <div class="col-md-6">
+                    <label>Select Product</label>
+                    <select name="product[]" class="form-control">
+                            <option value="{{ $product_id }}" selected>{{ $product_name }}</option>
+                    </select>
                 </div>
-                <br>
+                <div class="col-md-6">
+                    <label>Discount</label>
+                    {!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
+                </div>
+                @endforeach
             </div>
+            <br>
 
             <div class="form-group">
             <label for="upload_file">Upload File</label>
@@ -60,16 +59,4 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@section('js')
-<script>
-
-    //Append another div if button(discounts) + is clicked
-    $(document).on('click','#addProduct',function(){
-        $("#discounts").append('<div class="row" id="products"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="product[]" required><option value="">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="discount[]" type="number" required></div></div><br>');
-    });
-
-    $(document).on('click','#removeProduct',function(){
-        $(this).closest("#products").remove();
-    });
-</script>
-@endsection
+@include('includes/footer')
