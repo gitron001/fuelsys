@@ -16,8 +16,10 @@ class CreateBonusRequest extends Migration
         Schema::create('bonus_request', function (Blueprint $table) {
             $table->bigIncrements('id');
 			$table->integer('pfc_id');
+			$table->integer('user_id');
 			$table->integer('channel_id');
-            $table->timestamps();
+            $table->integer('created_at');
+            $table->integer('updated_at');
         });
     }
 

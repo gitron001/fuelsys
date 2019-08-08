@@ -16,6 +16,7 @@ use App\Jobs\PrintFuelRecept;
 use DateTime;
 use Config;
 use DB;
+use Auth;
 
 class PaymentsController extends Controller
 {
@@ -115,6 +116,7 @@ class PaymentsController extends Controller
         $payments->user_id      = $request->input('user_id');
         $payments->company_id   = $request->input('company_id');
         $payments->created_at   = now()->timestamp;
+        $payments->created_by   = Auth::user()->id;
         $payments->updated_at   = now()->timestamp;
         $payments->save();
 
@@ -221,6 +223,7 @@ class PaymentsController extends Controller
         $payments->company_id   = $company_id;   
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $amount;
+        $payments->updated_by   = Auth::user()->id;
         $payments->updated_at   = now()->timestamp;
         $payments->update();
 

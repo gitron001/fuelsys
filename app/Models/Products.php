@@ -26,11 +26,11 @@ class Products extends Model
     }
 
     public function rfid_discount(){
-        return $this->hasMany('App\Models\RFID_Discounts');
+        return $this->hasMany('App\Models\RFID_Discounts', 'product_id', 'pfc_pr_id');
     }
 
     public function transaction_product(){
-        return $this->hasMany('App\Models\Transaction');
+        return $this->hasMany('App\Models\Transaction', 'product_id', 'pfc_pr_id');
     }   
 
     public function product_group(){

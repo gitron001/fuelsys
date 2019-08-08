@@ -29,4 +29,10 @@ class Payments extends Model
             'name' => ''
         ]);
     }
+	
+	public function creator(){
+        return $this->belongsTo('App\Models\Users')->withDefault([
+            'name' => ''
+        ]);
+    }
 }

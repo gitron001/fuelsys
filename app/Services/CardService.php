@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use App\Models\Users;
 use App\Models\Products;
 use App\Models\PFC as PfcModel;
+use App\Models\Bonus_request as Bonus;
 use DB;
 
 
@@ -65,7 +66,7 @@ class CardService extends ServiceProvider
         $channel_id = PFC::conver_to_bin($channel);
         $message = "\x1\x5\x0A" . $channel_id;
         $the_crc = PFC::crc16($message);
-
+		$time_difference = (time() - 20);
         $binarydata = pack("c*", 0x01)
             . pack("c*", 0x05)
             . pack("c*", 0x0A)
@@ -91,8 +92,18 @@ class CardService extends ServiceProvider
 	
         if($user->company->status != 1 &&  $user->company->status != 4){ return false; }
 		
-		if(in_array(array(6,7,8), $user->type)){
+		if(in_array($user->type, array(6,7,8))){			
+			Bonus::where('pfc_id', $pfc_id)->where('channel_id', $channel)->delete();
 			
+			Bonus::insert(
+				array(
+						'pfc_id'   	   =>   $pfc_id,
+						'channel_id'   =>   $channel,							
+						'user_id'      =>   $user->id,							
+						'created_at'   =>   time(),							
+						'updated_at'   =>   time()							
+				 )
+			);
 			return true;
 		}
 		
@@ -116,37 +127,16 @@ class CardService extends ServiceProvider
             }
         }
         if(count($user->discounts) == 0 && count($user->company->discounts) == 0){
-			self::activate_card($socket, $channel);
+			
+			$bonus_requst = Bonus::where('channel_id', $channel)->where('pfc_id', $pfc_id)->where('created_at', '>', $time_difference)->first();
+			if(isset($bonus_requst->user_id)){
+				$all_discounts = self::generate_discounts($bonus_requst->user_id, $response);
+				self::activate_card_discount($socket, $channel, $all_discounts);
+			}else{				
+				self::activate_card($socket, $channel);
+			}
         }else{
-            $all_discounts = array();
-            for($i = 10; $i < 15; $i++){
-                foreach($user->discounts as $discount){
-                    if(is_null($discount->product_details->price)){ continue; }
-                    if($discount->product_details->pfc_pr_id == $response[$i]){
-                        $all_discounts[$i] = (int)($discount->product_details->price - ($discount->discount*1000));
-                        break;
-                    }
-                }
-                //If there is not Discount on RFID check for Company Discount
-                if(!isset($all_discounts[$i])){
-                    foreach($user->company->discounts as $c_discount){
-                        if(is_null($c_discount->product_details->price)){ continue; }
-                        if($c_discount->product_details->pfc_pr_id == $response[$i]) {
-                            $all_discounts[$i] = (int)($c_discount->product_details->price - ($c_discount->discount*1000));
-                            break;
-                        }
-                    }
-                }
-
-                if(!isset($all_discounts[$i])){
-                    if($response[$i] == 0){
-						$all_discounts[$i] = 0000;
-					}else{
-						$products = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $response[$i])->where('status', 1)->first();
-						$all_discounts[$i] = (int)$products->price;
-					}
-                }
-            }
+            $all_discounts = self::generate_discounts($user->id, $response);
 			
             self::activate_card_discount($socket, $channel, $all_discounts);
         }
@@ -257,4 +247,41 @@ class CardService extends ServiceProvider
 
         return true;
     }
+	
+	public static function generate_discounts($user_id, $response){
+		$all_discounts = array();
+		$user	= Users::find($user_id);
+		
+		for($i = 10; $i < 15; $i++){
+			foreach($user->discounts as $discount){
+				if(is_null($discount->product_details->price)){ continue; }
+				if($discount->product_details->pfc_pr_id == $response[$i]){
+					$all_discounts[$i] = (int)($discount->product_details->price - ($discount->discount*1000));
+					break;
+				}
+			}
+			//If there is not Discount on RFID check for Company Discount
+			if(!isset($all_discounts[$i])){
+				foreach($user->company->discounts as $c_discount){
+					if(is_null($c_discount->product_details->price)){ continue; }
+					if($c_discount->product_details->pfc_pr_id == $response[$i]) {
+						$all_discounts[$i] = (int)($c_discount->product_details->price - ($c_discount->discount*1000));
+						break;
+					}
+				}
+			}
+
+			if(!isset($all_discounts[$i])){
+				if($response[$i] == 0){
+					$all_discounts[$i] = 0000;
+				}else{
+					$products = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $response[$i])->where('status', 1)->first();
+					$all_discounts[$i] = (int)$products->price;
+				}
+			}
+		}
+		
+		return $all_discounts;
+		
+	}
 }

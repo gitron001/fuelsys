@@ -35,7 +35,7 @@
 
                 <div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
                     {!! Form::label('type', 'Type:'); !!}
-                    {!! Form::select('type',['' => 'Select', 1 => 'Staff',2=> 'Company',3=> 'Administrator',4=>'Client',5=>'Manager'],null,['class'=>'form-control', 'id' => 'showHide']); !!}
+                    {!! Form::select('type',['' => 'Select', 1 => 'Staff',2=> 'Company',3=> 'Administrator',4=>'Client',5=>'Manager',6=>'Bonus Member',7=>'Bonus Klient',8=>'Bonus Korporate'],null,['class'=>'form-control', 'id' => 'showHide']); !!}
                     {!! $errors->first('type','<span class="help-block">:message</span>') !!}
                 </div>
 
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="form-group {{ $errors->has('application_date') ? 'has-error' :'' }}">
-                    {!! Form::label('application_date', 'Contact Number:'); !!}
+                    {!! Form::label('application_date', 'Application Date:'); !!}
                     {!! Form::text('application_date',null,['class'=>'form-control','autocomplete'=>'off','id'=>'datetimepicker']); !!}
                     {!! $errors->first('application_date','<span class="help-block">:message</span>') !!}
                 </div>
@@ -104,7 +104,13 @@
 
                 <div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company" style="display: none">
                     {!! Form::label('company_id', 'Company:'); !!}
-                    {!! Form::select('company_id',['Choose Company'] + $companies,null,['class'=>'form-control']); !!}
+					
+                    <select name="company_id" class="form-control">
+						<option value="">Choose Company</option>
+						@foreach($companies as $company)
+							<option value="{{ $company->id }}" <?php if($user->company_id == $company->id){ echo 'selected'; } ?>>{{ $company->name }}</option>
+						@endforeach
+					</select>
                     {!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
                 </div>
 
@@ -124,7 +130,8 @@
         </div>
 
         @if(!isset($user))
-        <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
+     
+		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
             {!! Form::label('discounts', 'Discounts:'); !!}
 
             <div class="row">
@@ -132,7 +139,12 @@
                     <button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
                 </div>
                 <div class="col-md-5">
-                    {!! Form::select('product[]',['Choose Product'] + $products,null,['class'=>'form-control']); !!}
+                    <select name="product[]" class="form-control">
+						<option value="">Choose Product</option>
+						@foreach($products as $pr)
+							<option value="{{ $pr->pfc_pr_id }}">{{ $pr->name }}</option>
+						@endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
                     {!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
@@ -140,7 +152,7 @@
             </div>
             <br>
         </div>
-
+		<!--
         <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="addlimits">
             {!! Form::label('limits', 'Limits:'); !!}
 
@@ -149,7 +161,11 @@
                     <button type="button" class="btn btn-success btn-circle" id="addBranch"><i class="glyphicon glyphicon-plus"></i></button>
                 </div>
                 <div class="col-md-5">
-                    {!! Form::select('branch[]',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
+					<select name="branch[]" class="form-control">
+						@foreach($branches as $branch)
+							<option value="{{ $branch->id }}">{{ $branch->name }}</option>
+						@endforeach
+					</select>
                 </div>
                 <div class="col-md-6">
                     {!! Form::number('limit[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
@@ -157,43 +173,41 @@
             </div>
             <br>
         </div>
-
+		-->
         @else
         <!-- *** DISCOUNT *** -->
 
+        <div class="form-group"  id="discounts">
         @if(count($rfid_discounts) > 0)
 
         {!! Form::label('discount', 'Discounts'); !!}
-        @foreach($rfid_discounts as $rfid_discount)
-            <div class="form-group">
-
-                <div class="row" id="discount">
+			@foreach($rfid_discounts as $rfid_discount)
+                <div class="row">
                     <input type="hidden" name="hidden_input_product[]" value="{{$rfid_discount->id}}">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-danger btn-circle" id="deleteDiscount"><i class="glyphicon glyphicon-minus"></i><input type="hidden" name ="deleteDiscount[]" value="{{$rfid_discount->id}}"></button>
                     </div>
                     <div class="col-md-5">
                         <select name="product[]" class="form-control">
-                            @foreach($products as $product_id => $product_name)
-                                <option value="{{ $product_id }}" {{$rfid_discount->product_id == $product_id  ? 'selected' : ''}}>{{ $product_name }}</option>
+							<option value="">Choose Product</option>
+                            @foreach($products as $pr)
+                                <option value="{{ $pr->pfc_pr_id }}" {{$rfid_discount->product_id == $pr->pfc_pr_id  ? 'selected' : ''}}>{{ $pr->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-6">
                         {!! Form::text('discount[]',$rfid_discount->discount,['class'=>'form-control','step'=>'any']); !!}
                     </div>
+					<br>
                 </div>
-
-            </div>
-        @endforeach
-
+			@endforeach           
         @endif
-
+		</div>
         <!-- *** END DISCOUNT *** -->
 
         <!-- *** NEW DISCOUNT *** -->
 
-        <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
+        <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}">
         @if(count($rfid_discounts) == 0)
             {!! Form::label('discount', 'New Discounts'); !!}
         @endif
@@ -201,12 +215,19 @@
             <div class="col-md-1">
                 <button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
+			<!--
             <div class="col-md-5">
-                {!! Form::select('new_product[]',['Choose a Product'] + $products,null,['class'=>'form-control']); !!}
+				<select name="product[]" class="form-control">
+					<option value="">Choose Product</option>
+					@foreach($products as $pr)
+						<option value="{{ $pr->pfc_pr_id }}">{{ $pr->name }}</option>
+					@endforeach
+				</select>
             </div>
             <div class="col-md-6">
                 {!! Form::number('new_discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
             </div>
+			-->
         </div>
         <br>
         </div>
@@ -214,7 +235,7 @@
         <!-- *** END NEW LIMITS *** -->
 
         <!-- *** LIMITS *** -->
-
+		<!--
         @if(count($rfid_limits) > 0)
 
         {!! Form::label('limit', 'Limit'); !!}
@@ -228,8 +249,8 @@
                     </div>
                     <div class="col-md-5">
                         <select name="branch[]" class="form-control">
-                            @foreach($branches as $branch_id => $branch_name)
-                                <option value="{{ $branch_id }}" {{$rfid_limit->branch_id == $branch_id  ? 'selected' : ''}}>{{ $branch_name }}</option>
+                            @foreach($branches as $branch)
+                                <option value="{{ $branch->id }}" {{$rfid_limit->branch_id == $branch->id  ? 'selected' : ''}}>{{ $branch->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -242,11 +263,11 @@
         @endforeach
 
         @endif
-
+		-->
         <!-- *** END LIMITS *** -->
 
         <!-- *** NEW LIMITS *** -->
-
+		<!--
         <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="addlimits">
         @if(count($rfid_limits) == 0)
             {!! Form::label('limits', 'New Limits:'); !!}
@@ -257,7 +278,11 @@
                 <button type="button" class="btn btn-success btn-circle" id="addBranch"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
             <div class="col-md-5">
-                {!! Form::select('new_branch[]',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
+				<select name="branch[]" class="form-control">
+					@foreach($branches as $branch)
+						<option value="{{ $branch->id }}" {{$rfid_limit->branch_id == $branch->id  ? 'selected' : ''}}>{{ $branch->name }}</option>
+					@endforeach
+				</select>
             </div>
             <div class="col-md-6">
                 {!! Form::number('new_limit[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
@@ -267,7 +292,7 @@
 
         </div>
         @endif
-
+		-->
         <!-- *** END NEW LIMITS *** -->
 
     </div>
@@ -328,7 +353,7 @@
 
     //Append another div if button(discounts) + is clicked
     $(document).on('click','#addProduct',function(){
-        $("#discounts").append('<div class="row" id="products"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_product[]" required><option value="">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_discount[]" type="number" required></div></div><br>');
+        $("#discounts").append('<div class="row" id="products"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="product[]" required><option value="">Choose Product</option><?php foreach($products as $pr){ ?><?php echo "<option value=".$pr->pfc_pr_id.">$pr->name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="discount[]" type="number" required></div></div><br>');
     });
 
     //Append another div if button(limits) + is clicked
