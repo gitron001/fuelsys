@@ -91,6 +91,11 @@ class CardService extends ServiceProvider
 	
         if($user->company->status != 1 &&  $user->company->status != 4){ return false; }
 		
+		if(in_array(array(6,7,8), $user->type)){
+			
+			return true;
+		}
+		
         //Call Function to check limit
         $limit = false;
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
