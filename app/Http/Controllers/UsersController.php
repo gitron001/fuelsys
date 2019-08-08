@@ -7,10 +7,12 @@ use App\Models\Users;
 use App\Models\Products;
 use App\Models\Branch;
 use App\Models\RFID_Discounts;
+use Illuminate\Support\Facades\Input;
 use App\Models\RFID_Limits;
 use App\Models\Company;
 use DB;
 use Hash;
+use Excel;
 
 class UsersController extends Controller
 {
@@ -249,6 +251,44 @@ class UsersController extends Controller
     public function destroy($id)
     {
         Users::where('id', $id)->update(['status' => 3]);
+        session()->flash('info','Success');
+
+        return redirect('/admin/users');
+    }
+
+    public function uploadExcel(){
+        return view('/admin/users/upload_excel');
+    }
+
+    public function importExcel(Request $request){
+        $this->validate($request, [
+            'upload_file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        $file       = Input::file('upload_file');
+        $file_name  = $file->getRealPath();
+        $results    = Excel::load($file_name, function($reader){
+            $reader->all();
+        })->get()->toArray();
+        $type       = $request->input('type');
+
+        
+        foreach ($results as $result) {
+            DB::table('users')->insert([
+                [
+                'name'              => $result['emri'],
+                'surname'           => $result['mbiemri'],
+                'residence'         => $result['vendbanimi'],
+                'contact_number'    => $result['nr.kontaktues'],
+                'rfid'              => $result['nr.karteles'],
+                'type'              => $type,
+                'application_date'  => str_replace('.', '-', $result['data']),
+                'created_at'        => now()->timestamp,
+                'updated_at'        => now()->timestamp
+                ]
+            ]);
+        }
+
         session()->flash('info','Success');
 
         return redirect('/admin/users');
