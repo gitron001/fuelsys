@@ -95,6 +95,9 @@ class PFCServices extends ServiceProvider
             usleep(150000);
             //Read the reply
             $input = socket_read($socket, 2048);
+			if(!$input){
+				return '-2';
+			}
             //Convert reply to array
             $response = unpack("c*", $input);
             $validation = self::validate_message($response);

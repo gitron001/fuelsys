@@ -34,7 +34,11 @@ class CardService extends ServiceProvider
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
-
+	
+		if($response == '-2'){
+			dd($response);
+		}
+		
 		if(!$response){ return false; } 
 		
         //Get all transaction by channel

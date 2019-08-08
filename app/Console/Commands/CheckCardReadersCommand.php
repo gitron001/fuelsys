@@ -55,6 +55,11 @@ class CheckCardReadersCommand extends Command
         dd();*/
 		$pfc_id = (int) $this->argument('pfc_id');
 		
+		if(Process::where('type_id', 1)->where('pfc_id', $pfc_id)->where('refresh_time', '<', (time()-30))->count() > 1){
+			Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();
+			return false;			
+		}
+		
         $check_cron = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->latest()->first();
         $now = time();
         if(isset($check_cron->refesh_time) && $check_cron->refesh_time < ($now + 30)){
@@ -80,7 +85,6 @@ class CheckCardReadersCommand extends Command
                                 'updated_at' => time()
                             ));
         while(true){
-
             $dispanser_status = Dispanser::checkForUpdates($socket, $pfc_id);
 			if(!$dispanser_status){ break; }
             CardService::check_readers($socket, $pfc_id);
