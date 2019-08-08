@@ -33,17 +33,25 @@ class DispanserService extends ServiceProvider
 		
         $length = count($response) - 4;
         $j = 1;
-        Products::where('pfc_id',$pfc_id)->delete();
+        //Products::where('pfc_id',$pfc_id)->delete();
         for($i = 4; $i <= $length; $i=$i+2){
             $price = pack('c', $response[$i+1]).pack('c', $response[$i]);
             $price = unpack('s', $price)[1];
             if($price == 0 ){  $j++; continue; }
-            $data['price'] = $price;
-            $data['pfc_id'] = $pfc_id;
-            $data['pfc_pr_id'] = $j;
-            $data['created_at'] = time();
-            $data['updated_at'] = time();
-            Products::insert($data);
+            if(Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $j)->count() > 0){
+				$product = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $j)->first();
+				$product->price = $price;
+				$product->updated_at = time();
+				$product->save();
+			}else{			
+				$data['price'] = $price;
+				$data['pfc_id'] = $pfc_id;
+				$data['pfc_pr_id'] = $j;
+				$data['created_at'] = time();
+				$data['updated_at'] = time();
+				Products::insert($data);
+			}
+           
             $j++;
         }
 
@@ -97,7 +105,7 @@ class DispanserService extends ServiceProvider
             $socket = PFC::create_socket();
         }
 		
-		$products = Products::where('status', 1)->orderBy('pfc_pr_id')->groupBy('pfc_pr_id')->get();
+		$products = Products::where('status', 1)->orderBy('pfc_pr_id')->get();
 		
 		
 		$all_prices = array();

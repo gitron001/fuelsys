@@ -118,16 +118,17 @@ class PaymentsController extends Controller
         $payments->updated_at   = now()->timestamp;
         $payments->save();
 
-        $msg = "Payment Print not Succesful";
+		
+        /*$msg = "Payment Print not Succesful";
 
         try {
-            self::printFunction($id);
+            self::printFunction($payments->id);
         } catch (Exception $e) {
            $msg = "Payment Print NOT Succesful";
         }
-
+		*/
 		
-        session()->flash('info','Success - '.$msg);
+        session()->flash('info','Success');
 
         return redirect('/admin/payments');
     }

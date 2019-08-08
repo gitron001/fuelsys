@@ -19,7 +19,7 @@ class RFID_Discounts extends Model
     }
     
     public function product_details(){
-        return $this->belongsTo('App\Models\Products', 'product_id', 'id');
+        return $this->belongsTo('App\Models\Products', 'product_id', 'pfc_pr_id');  
     }
 
     public function rfid_details(){
