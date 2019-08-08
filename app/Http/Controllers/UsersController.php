@@ -268,7 +268,7 @@ class UsersController extends Controller
 
     public function uploadExcel(){
 
-        $products   = Products::pluck('name','id')->all();
+        $products   = Products::select('name','id', 'pfc_pr_id')->where('status', 1)->get();
 
         return view('/admin/users/upload_excel',compact('products'));
     }

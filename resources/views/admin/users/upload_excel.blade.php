@@ -24,11 +24,11 @@
             </div>
 
             <div class="row">
-                @foreach($products as $product_id => $product_name)
+                @foreach($products as $pr)
                 <div class="col-md-6">
                     <label>Select Product</label>
                     <select name="product[]" class="form-control">
-                            <option value="{{ $product_id }}" selected>{{ $product_name }}</option>
+                            <option value="{{ $pr->pfc_pr_id }}" selected>{{ $pr->name }}</option>
                     </select>
                 </div>
                 <div class="col-md-6">
