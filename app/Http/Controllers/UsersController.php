@@ -78,18 +78,23 @@ class UsersController extends Controller
         $password = $request->input('password');
 
         $id = Users::insertGetId([
-            'rfid'          => $request->input('rfid'),
-            'name'          => $request->input('name'),
-            'email'         => $request->input('email'),
-            'company_id'    => $request->input('company_id') ? : 0,
-            'one_time_limit'=> $request->input('one_time_limit') ? : 0,
-            'plates'        => $request->input('plates') ? : 0,
-            'vehicle'       => $request->input('vehicle') ? : 0,
-            'type'          => $request->input('type'),
-            'password'      => Hash::make($password),
-            'status'        => 1,
-            'created_at'    => now()->timestamp,
-            'updated_at'    => now()->timestamp
+            'rfid'              => $request->input('rfid'),
+            'name'              => $request->input('name'),
+            'surname'           => $request->input('surname'),
+            'residence'         => $request->input('residence'),
+            'contact_number'    => $request->input('contact_number'),
+            'application_date'  => $request->input('application_date'),
+            'business_type'     => $request->input('business_type'),
+            'email'             => $request->input('email'),
+            'company_id'        => $request->input('company_id') ? : 0,
+            'one_time_limit'    => $request->input('one_time_limit') ? : 0,
+            'plates'            => $request->input('plates') ? : 0,
+            'vehicle'           => $request->input('vehicle') ? : 0,
+            'type'              => $request->input('type'),
+            'password'          => Hash::make($password),
+            'status'            => 1,
+            'created_at'        => now()->timestamp,
+            'updated_at'        => now()->timestamp
         ]);
 
         if($firstValueOfArrayProduct !== 0 && !empty($firstValueOfArrayDiscount)){
@@ -163,16 +168,21 @@ class UsersController extends Controller
         
         $password = $request->input('password');
 
-        $user->rfid         = $request->input('rfid');
-        $user->name         = $request->input('name');
-        $user->email        = $request->input('email');
-        $user->company_id   = $request->input('company_id');
-        $user->plates       = $request->input('plates');
-        $user->status       = $request->input('status');
-        $user->vehicle      = $request->input('vehicle');
-        $user->type         = $request->input('type');
-        $user->password     = bcrypt($password);
-        $user->updated_at   = now()->timestamp;
+        $user->rfid             = $request->input('rfid');
+        $user->name             = $request->input('name');
+        $user->surname          = $request->input('surname');
+        $user->residence        = $request->input('residence');
+        $user->contact_number   = $request->input('contact_number');
+        $user->application_date = $request->input('application_date');
+        $user->business_type    = $request->input('business_type');
+        $user->email            = $request->input('email');
+        $user->company_id       = $request->input('company_id');
+        $user->plates           = $request->input('plates');
+        $user->status           = $request->input('status');
+        $user->vehicle          = $request->input('vehicle');
+        $user->type             = $request->input('type');
+        $user->password         = bcrypt($password);
+        $user->updated_at       = now()->timestamp;
         $user->update();
 
         // DELETE Discount
