@@ -87,7 +87,7 @@ class TransactionService extends ServiceProvider
 		if(!$response){ return false; } 
 
         $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id);
-
+		
         //Clear status transaction
         $status = 2;
 
@@ -95,7 +95,9 @@ class TransactionService extends ServiceProvider
         //HERE
 
         $changed_status = self::transaction_status($channel, $status, $socket);
-
+		
+		if(!$transaction_id){ return true; } 
+		
         $recepit = new PrintFuelRecept($transaction_id);
         dispatch($recepit);
         echo 'stored';

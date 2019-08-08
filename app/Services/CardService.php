@@ -84,12 +84,13 @@ class CardService extends ServiceProvider
         //echo '<br> Card Number: '. $cardNumber;
         $user = Users::where("rfid", $cardNumber)->where('status', 1)->first();
         $card_count = Users::where("rfid", $cardNumber)->where('status', 1)->count();
-	
+		
         if($card_count == 0 ){ return false; }
-
+		
         if($user->status != 1 ){ return false; }
-        if($user->company->status != 1 ){ return false; }
-		//dd($user);
+	
+        if($user->company->status != 1 &&  $user->company->status != 4){ return false; }
+		
         //Call Function to check limit
         $limit = false;
         if(!is_null($user->company->id) && $user->company->has_limit == 1){
@@ -109,9 +110,8 @@ class CardService extends ServiceProvider
                 self::setPrepay($socket, $channel, $limit_left);
             }
         }
-		
         if(count($user->discounts) == 0 && count($user->company->discounts) == 0){
-					self::activate_card($socket, $channel);
+			self::activate_card($socket, $channel);
         }else{
             $all_discounts = array();
             for($i = 10; $i < 15; $i++){
@@ -134,8 +134,12 @@ class CardService extends ServiceProvider
                 }
 
                 if(!isset($all_discounts[$i])){
-                    $products = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $response[$i])->where('status', 1)->first();
-                    $all_discounts[$i] = (int)$products->price;
+                    if($response[$i] == 0){
+						$all_discounts[$i] = 0000;
+					}else{
+						$products = Products::where('pfc_id', $pfc_id)->where('pfc_pr_id', $response[$i])->where('status', 1)->first();
+						$all_discounts[$i] = (int)$products->price;
+					}
                 }
             }
 			

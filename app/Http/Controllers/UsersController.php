@@ -7,10 +7,12 @@ use App\Models\Users;
 use App\Models\Products;
 use App\Models\Branch;
 use App\Models\RFID_Discounts;
+use Illuminate\Support\Facades\Input;
 use App\Models\RFID_Limits;
 use App\Models\Company;
 use DB;
 use Hash;
+use Excel;
 
 class UsersController extends Controller
 {
@@ -249,6 +251,55 @@ class UsersController extends Controller
     public function destroy($id)
     {
         Users::where('id', $id)->update(['status' => 3]);
+        session()->flash('info','Success');
+
+        return redirect('/admin/users');
+    }
+
+    public function uploadExcel(){
+
+        $products   = Products::pluck('name','id')->all();
+
+        return view('/admin/users/upload_excel',compact('products'));
+    }
+
+    public function importExcel(Request $request){
+        $this->validate($request, [
+            'upload_file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        $file       = Input::file('upload_file');
+        $file_name  = $file->getRealPath();
+        $results    = Excel::load($file_name, function($reader){
+            $reader->all();
+        })->get()->toArray();
+        $type           = $request->input('type');
+        $product        = $request->input('product');
+        $discount       = $request->input('discount');
+
+        
+        foreach ($results as $result) {
+            $id = Users::insertGetId([
+                'name'              => $result['emri'],
+                'surname'           => $result['mbiemri'],
+                'residence'         => $result['vendbanimi'],
+                'contact_number'    => $result['nr.kontaktues'],
+                'rfid'              => $result['nr.karteles'],
+                'type'              => $type,
+                'application_date'  => str_replace('.', '-', $result['data']),
+                'created_at'        => now()->timestamp,
+                'updated_at'        => now()->timestamp
+            ]);
+
+            $rfid_product = new RFID_Discounts();
+
+            $rfid_product->rfid_id      = $id;
+            $rfid_product->product_id   = $product;
+            $rfid_product->discount     = $discount;
+            $rfid_product->save();
+
+        }
+
         session()->flash('info','Success');
 
         return redirect('/admin/users');

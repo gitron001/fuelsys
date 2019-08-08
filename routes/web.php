@@ -43,6 +43,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Users
 	Route::resource('/admin/users', 'UsersController');
 	Route::get('user/{id}/delete', ['as' => 'user.delete', 'uses' => 'UsersController@destroy']);
+	Route::get('/admin/uploadExcel', 'UsersController@uploadExcel');
+	Route::post('/import_excel/import', 'UsersController@importExcel');
 
 	// Payments
 	Route::resource('/admin/payments', 'PaymentsController');

@@ -90,7 +90,7 @@
             <tbody>
             @foreach($transactions as $transaction)
                 <tr class="text-center">
-                    <td>{{ $transaction->users ? $transaction->users->name : '' }} {{ $transaction->users->company->name != '' ? '( '.$transaction->users->company->name.' )' : '' }}</td>
+                    <td>{{ $transaction->users ? $transaction->users->name : '' }} {{ $transaction->users != NULL ? '( '.$transaction->users->company->name.' )' : '' }}</td>
                     <td>{{ $transaction->product ? $transaction->product->name : '' }}</td>
                     <td>{{ $transaction->money }}</td>
                     <td>{{ $transaction->created_at->format('m-d H:i:s') }}</td>

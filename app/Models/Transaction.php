@@ -65,7 +65,7 @@ class Transaction extends Model
         $tr_no = unpack('s', $tr_no)[1];
 
         $transaction->tr_no = $tr_no;
-
+		if(!isset($response[8])){ return false; }
         $transaction->sl_no = $response[8];
 
         $transaction->product_id = $response[9];
