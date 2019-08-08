@@ -273,31 +273,46 @@ class UsersController extends Controller
         $results    = Excel::load($file_name, function($reader){
             $reader->all();
         })->get()->toArray();
+        $firstValueOfArrayProduct  = array_values($request->input('product'))[0];
+        $firstValueOfArrayDiscount = array_values($request->input('discount'))[0];
         $type           = $request->input('type');
         $product        = $request->input('product');
         $discount       = $request->input('discount');
 
         
         foreach ($results as $result) {
+            $rfid = substr($result['nr.karteles'],4);
+            if(strpos($rfid, 'A')){
+                $rfid = str_replace('A',1,$rfid);
+            } else if(strpos($rfid, 'B')){
+                $rfid = str_replace('B',2,$rfid);
+            } else if(strpos($rfid, 'C')){
+                $rfid = str_replace('C',3,$rfid);
+            }
+
             $id = Users::insertGetId([
                 'name'              => $result['emri'],
                 'surname'           => $result['mbiemri'],
                 'residence'         => $result['vendbanimi'],
                 'contact_number'    => $result['nr.kontaktues'],
-                'rfid'              => $result['nr.karteles'],
+                'rfid'              => $rfid,
                 'type'              => $type,
                 'application_date'  => str_replace('.', '-', $result['data']),
                 'created_at'        => now()->timestamp,
                 'updated_at'        => now()->timestamp
             ]);
 
-            $rfid_product = new RFID_Discounts();
-
-            $rfid_product->rfid_id      = $id;
-            $rfid_product->product_id   = $product;
-            $rfid_product->discount     = $discount;
-            $rfid_product->save();
-
+            if($firstValueOfArrayProduct !== 0 && !empty($firstValueOfArrayDiscount)){
+                foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
+    
+                    $rfid_product = new RFID_Discounts();
+    
+                    $rfid_product->rfid_id      = $id;
+                    $rfid_product->product_id   = $product;
+                    $rfid_product->discount     = $discount;
+                    $rfid_product->save();
+                }
+            }
         }
 
         session()->flash('info','Success');
