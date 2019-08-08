@@ -11,6 +11,11 @@ class Users extends Model
     protected $fillable = [
         'rfid',
         'name',
+        'surname',
+        'residence',
+        'contact_number',
+        'application_date',
+        'business_type',
         'email',
         'company_id',
         'one_time_limit',

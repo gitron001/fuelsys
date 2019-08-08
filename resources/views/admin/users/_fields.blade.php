@@ -21,6 +21,12 @@
                     {!! $errors->first('name','<span class="help-block">:message</span>') !!}
                 </div>
 
+                <div class="form-group {{ $errors->has('surname') ? 'has-error' :'' }}">
+                    {!! Form::label('surname', 'Surname:'); !!}
+                    {!! Form::text('surname',null,['class'=>'form-control']); !!}
+                    {!! $errors->first('surname','<span class="help-block">:message</span>') !!}
+                </div>
+
                 <div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
                     {!! Form::label('status', 'Status:'); !!}
                     {!! Form::select('status',[1=>'Active',2=>'No Active'],null,['class'=>'form-control']); !!}
@@ -51,6 +57,12 @@
                     {!! $errors->first('plates','<span class="help-block">:message</span>') !!}
                 </div>
 
+                <div class="form-group {{ $errors->has('business_type') ? 'has-error' :'' }}">
+                    {!! Form::label('business_type', 'Business Type:'); !!}
+                    {!! Form::text('business_type',null,['class'=>'form-control']); !!}
+                    {!! $errors->first('business_type','<span class="help-block">:message</span>') !!}
+                </div>
+
             </div>
 
             <div class="col-md-6">
@@ -64,6 +76,24 @@
                     {!! Form::label('password', 'Password:'); !!}
                     {!! Form::password('password',['class'=>'form-control','autocomplete'=>'new-password']); !!}
                     {!! $errors->first('password','<span class="help-block">:message</span>') !!}
+                </div>
+
+                <div class="form-group {{ $errors->has('contact_number') ? 'has-error' :'' }}">
+                    {!! Form::label('contact_number', 'Contact Number:'); !!}
+                    {!! Form::text('contact_number',null,['class'=>'form-control']); !!}
+                    {!! $errors->first('contact_number','<span class="help-block">:message</span>') !!}
+                </div>
+
+                <div class="form-group {{ $errors->has('application_date') ? 'has-error' :'' }}">
+                    {!! Form::label('application_date', 'Contact Number:'); !!}
+                    {!! Form::text('application_date',null,['class'=>'form-control','autocomplete'=>'off','id'=>'datetimepicker']); !!}
+                    {!! $errors->first('application_date','<span class="help-block">:message</span>') !!}
+                </div>
+
+                <div class="form-group {{ $errors->has('residence') ? 'has-error' :'' }}">
+                    {!! Form::label('residence', 'Residence:'); !!}
+                    {!! Form::text('residence',null,['class'=>'form-control']); !!}
+                    {!! $errors->first('residence','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
@@ -89,6 +119,7 @@
                     {!! Form::text('vehicle',null,['class'=>'form-control']); !!}
                     {!! $errors->first('vehicle','<span class="help-block">:message</span>') !!}
                 </div>
+
             </div>
         </div>
 
@@ -257,6 +288,10 @@
 @section('js')
 
 <script>
+    var dateNow = new Date();
+      $('#datetimepicker').datepicker({
+          defaultDate:dateNow
+      });
     // Check has_limit field
     $(document).on('click','#showHideLimits',function(){
         var e = document.getElementById("showHideLimits");
