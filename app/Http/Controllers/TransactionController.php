@@ -323,7 +323,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('fromDate') && $request->input('toDate') && !$request->input('dailyReport')) {
-            $payments->whereBetween('payments.date',[$from_date, $to_dateg]);
+            $payments->whereBetween('payments.date',[$from_date, $to_date]);
         }
 
         if ($request->input('dailyReport')) {
