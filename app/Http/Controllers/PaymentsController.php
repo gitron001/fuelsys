@@ -44,10 +44,11 @@ class PaymentsController extends Controller
         }
 
         //$query          = Payments::orderBy('date', 'DESC');
-        $query          = Payments::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'),
-           'payments.amount', 'payments.date','payments.created_at','payments.updated_at','payments.id')
+        $query          = Payments::select(DB::RAW('users.name as user_name'), 'users.type as user_type', DB::RAW('companies.name as comp_name'),
+           'payments.amount', 'payments.date','payments.created_at','payments.updated_at','payments.id', 'creator.name as p_creater')
             ->leftJoin('users', 'users.id', '=', 'payments.user_id')
-            ->leftJoin('companies', 'companies.id', '=', 'payments.company_id');
+            ->leftJoin('companies', 'companies.id', '=', 'payments.company_id')
+            ->leftJoin('users as creator', 'creator.id', '=', 'payments.created_by');
 
         if ($request->input('user')) {
             $query = $query->whereIn('users.id',$user);

@@ -30,8 +30,8 @@ class Payments extends Model
         ]);
     }
 	
-	public function creator(){
-        return $this->belongsTo('App\Models\Users')->withDefault([
+	public function paymentCreator(){
+        return $this->belongsTo('App\Models\Users', 'created_by', 'id')->withDefault([
             'name' => ''
         ]);
     }

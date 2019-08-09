@@ -143,7 +143,7 @@
 		</div>
 		<br>
 	</div>
-
+	<!--
 	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="addlimits">
 		{!! Form::label('limits', 'Limits:'); !!}
 
@@ -160,6 +160,7 @@
 		</div>
 		<br>
 	</div>
+	-->
 	@else
 	<!-- *** DISCOUNT *** -->
 
@@ -216,7 +217,7 @@
 	<!-- *** END NEW LIMITS *** -->
 
 	<!-- *** LIMITS *** -->
-
+    <!--
 	@if(count($company_limits) > 0)
 
 		{!! Form::label('limit', 'Limit'); !!}
@@ -244,11 +245,11 @@
 		@endforeach
 
 	@endif
-
+	-->
 	<!-- *** END LIMITS *** -->
 
 	<!-- *** NEW LIMITS *** -->
-
+	<!--
 	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="addlimits">
 		@if(count($company_limits) == 0)
 			{!! Form::label('limits', 'New Limits:'); !!}
@@ -268,7 +269,7 @@
 		<br>
 
 	</div>
-
+	-->
 	<!-- *** END NEW LIMITS *** -->
 	@endif
 	</div>

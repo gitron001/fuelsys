@@ -3,7 +3,12 @@
     <td>{{ date('m/d/Y', $payment->date) }}</td>
     <td>{{ $payment->amount }}</td>
     <td>{{ $payment->user_name ? $payment->user_name : ' ' }}</td>
-    <td>{{ $payment->comp_name ? $payment->comp_name : ' ' }}</td>
+	@if($payment->user_type == 1)
+		<td> Staff </td>
+	@else
+		<td>{{ $payment->comp_name ? $payment->comp_name : ' ' }}</td>
+    @endif
+	<td>{{ $payment->p_creater }}</td>
     <td>{{ $payment->created_at->diffForHumans() }}</td>
     <td>{{ $payment->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">
