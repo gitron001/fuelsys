@@ -1,6 +1,6 @@
 @foreach($payments as $payment)
 <tr>
-    <td>{{ date('m/d/Y', $payment->date) }}</td>
+    <td>{{ date('m/d/Y H:i', $payment->date) }}</td>
     <td>{{ $payment->amount }}</td>
     <td>{{ $payment->user_name ? $payment->user_name : ' ' }}</td>
 	@if($payment->user_type == 1)
