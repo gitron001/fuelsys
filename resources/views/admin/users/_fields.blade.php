@@ -289,11 +289,11 @@
             </div>
         </div>
         <br>
-
+-->
         </div>
         @endif
-		-->
-        <!-- *** END NEW LIMITS *** -->
+		
+
 
     </div>
     <div class="box-footer">
