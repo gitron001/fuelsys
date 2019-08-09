@@ -141,7 +141,6 @@
 				{!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
 			</div>
 		</div>
-		<br>
 	</div>
 	<!--
 	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="addlimits">
@@ -163,55 +162,40 @@
 	-->
 	@else
 	<!-- *** DISCOUNT *** -->
-
+	{!! Form::label('discount', 'Discounts'); !!}
+    <div class="form-group"  id="discounts">
 	@if(count($company_discounts) > 0)
 
-		{!! Form::label('discount', 'Discounts'); !!}
 		@foreach($company_discounts as $company_discount)
-			<div class="form-group">
-
-				<div class="row" id="discount">
-					<input type="hidden" name="hidden_input_product[]" value="{{$company_discount->id}}">
-					<div class="col-md-1">
-						<button type="button" class="btn btn-danger btn-circle" id="deleteDiscount"><i class="glyphicon glyphicon-minus"></i><input type="hidden" name ="deleteDiscount[]" value="{{$company_discount->id}}"></button>
-					</div>
-					<div class="col-md-5">
-						<select name="product[]" class="form-control">
-							@foreach($products as $product_id => $product_name)
-								<option value="{{ $product_id }}" {{$company_discount->product_id == $product_id  ? 'selected' : ''}}>{{ $product_name }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="col-md-6">
-						{!! Form::text('discount[]',$company_discount->discount,['class'=>'form-control','step'=>'any']); !!}
-					</div>
+			<div class="row" id="discount" style="margin-top: 10px;">
+				<input type="hidden" name="hidden_input_product[]" value="{{$company_discount->id}}">
+				<div class="col-md-1">
+					<button type="button" class="btn btn-danger btn-circle" id="deleteDiscount"><i class="glyphicon glyphicon-minus"></i><input type="hidden" name ="deleteDiscount[]" value="{{$company_discount->id}}"></button>
 				</div>
-
+				<div class="col-md-5">
+					<select name="product[]" class="form-control">
+						@foreach($products as $product_id => $product_name)
+							<option value="{{ $product_id }}" {{$company_discount->product_id == $product_id  ? 'selected' : ''}}>{{ $product_name }}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="col-md-6">
+					{!! Form::text('discount[]',$company_discount->discount,['class'=>'form-control','step'=>'any']); !!}
+				</div>
 			</div>
 		@endforeach
-
 	@endif
-
+	</div>
 	<!-- *** END DISCOUNT *** -->
 
 	<!-- *** NEW DISCOUNT *** -->
 
-	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
-		@if(count($company_discounts) == 0)
-			{!! Form::label('discount', 'New Discounts'); !!}
-		@endif
+	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}">
 		<div class="row">
 			<div class="col-md-1">
-				<button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
-			</div>
-			<div class="col-md-5">
-				{!! Form::select('new_product[]',['Choose a Product'] + $products,null,['class'=>'form-control']); !!}
-			</div>
-			<div class="col-md-6">
-				{!! Form::number('new_discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
+				<button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i> Add discount</button>
 			</div>
 		</div>
-		<br>
 	</div>
 
 	<!-- *** END NEW LIMITS *** -->
@@ -232,7 +216,7 @@
 					<div class="col-md-5">
 						<select name="branch[]" class="form-control">
 							@foreach($branches as $branch_id => $branch_name)
-								<option value="{{ $branch_id }}" {{$company_limit->branch_id == $branch_id  ? 'selected' : ''}}>{{ $branch_name }}</option>
+								<option value="{{{-- $branch_id --}}}" {{{-- $company_limit->branch_id == $branch_id  ? 'selected' : '' --}}}>{{{-- $branch_name --}}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -323,7 +307,7 @@
 
         //Append another div if button(discounts) + is clicked
 		$(document).on('click','#addProduct',function(){
-			$("#discounts").append('<div class="row" id="products"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_product[]" required><option value="">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_discount[]" type="number" required></div></div><br>');
+			$("#discounts").append('<div class="row" id="products" style="margin-top: 10px;"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="product[]" required><option value="">Choose Product</option><?php foreach($products as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="discount[]" type="number" required></div></div>');
 		});
 
 		//Append another div if button(limits) + is clicked
