@@ -62,7 +62,7 @@ class CheckCardReadersCommand extends Command
 		
         $check_cron = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->latest()->first();
         $now = time();
-        if(isset($check_cron->refesh_time) && $check_cron->refesh_time < ($now + 30)){
+        if(isset($check_cron->refesh_time) && $check_cron->refesh_time < ($now + 40)){
             dd('running');
         }
         
