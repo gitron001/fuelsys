@@ -150,7 +150,6 @@
                     {!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
                 </div>
             </div>
-            <br>
         </div>
 		<!--
         <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="addlimits">
@@ -182,7 +181,7 @@
 
         {!! Form::label('discount', 'Discounts'); !!}
 			@foreach($rfid_discounts as $rfid_discount)
-                <div class="row" id="discount">
+                <div class="row" id="discount" style="margin-top: 10px;">
                     <input type="hidden" name="hidden_input_product[]" value="{{$rfid_discount->id}}">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-danger btn-circle deleteDiscount"><i class="glyphicon glyphicon-minus"></i><input type="hidden" name ="deleteDiscount[]" value="{{$rfid_discount->id}}"></button>
@@ -198,7 +197,6 @@
                     <div class="col-md-6">
                         {!! Form::text('discount[]',$rfid_discount->discount,['class'=>'form-control','step'=>'any']); !!}
                     </div>
-					<br>
                 </div>
 			@endforeach           
         @endif
@@ -348,7 +346,7 @@
 
     //Append another div if button(discounts) + is clicked
     $(document).on('click','#addProduct',function(){
-        $("#discounts").append('<div class="row" id="products"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="product[]" required><option value="">Choose Product</option><?php foreach($products as $pr){ ?><?php echo "<option value=".$pr->pfc_pr_id.">$pr->name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="discount[]" type="number" required></div></div><br>');
+        $("#discounts").append('<div class="row" id="products" style="margin-top: 10px;"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeProduct"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="product[]" required><option value="">Choose Product</option><?php foreach($products as $pr){ ?><?php echo "<option value=".$pr->pfc_pr_id.">$pr->name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="discount[]" type="number" required></div></div>');
     });
 
     //Append another div if button(limits) + is clicked
