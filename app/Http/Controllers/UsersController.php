@@ -223,9 +223,9 @@ class UsersController extends Controller
 		*/
         // ADD new Discount
 
-        if(($request->input('product')[0] != 0) && (!empty($request->input('discount')[0]))){
-            foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
+        foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
 
+            if(!empty($product) && !empty($discount) && $discount !== 0){
                 $rfid_product = new RFID_Discounts();
 
                 $rfid_product->rfid_id      = $id;
