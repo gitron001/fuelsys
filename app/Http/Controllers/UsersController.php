@@ -287,6 +287,9 @@ class UsersController extends Controller
 
         
         foreach ($results as $result) {
+			if(trim($result['nr.karteles']) == "" || trim($result['nr.karteles']) == 0){
+				continue; 
+			}
             if(strpos($result['nr.karteles'], 'A')){
                 $rfid = str_replace('A',1,$result['nr.karteles']);
             } else if(strpos($result['nr.karteles'], 'B')){
