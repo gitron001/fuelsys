@@ -37,7 +37,7 @@ class CardService extends ServiceProvider
         $response = PFC::send_message($socket, $binarydata, $message);
 	
 		if($response == '-2'){
-			dd($response);
+			dd('-2');
 		}
 		
 		if(!$response){ return false; } 
