@@ -268,8 +268,8 @@ class TransactionController extends Controller
     public static function generate_data($request){
         $from_date      = strtotime($request->input('fromDate'));
         $to_date        = strtotime($request->input('toDate'));
-		$from_payment	= strtotime(date('Y-m-d', $from_date));
-		$to_payment	    = strtotime(date('Y-m-d', $to_date));
+		//$from_payment	= strtotime(date('Y-m-d', $from_date));
+		//$to_payment	    = strtotime(date('Y-m-d', $to_date));
         $user           = $request->input('user');
         $company        = $request->input('company');
         $dailyReport    = $request->input('dailyReport');
@@ -323,11 +323,11 @@ class TransactionController extends Controller
         }
 
         if ($request->input('fromDate') && $request->input('toDate') && !$request->input('dailyReport')) {
-            $payments->whereBetween('payments.date',[$from_payment, $to_payment]);
+            $payments->whereBetween('payments.date',[$from_date, $to_dateg]);
         }
 
         if ($request->input('dailyReport')) {
-            $payments->where('payments.date', '>=', strtotime($date));
+            $payments->where('payments.date', '>=', strtotime($from_date));
         }
         
         $payments = $payments->get();
