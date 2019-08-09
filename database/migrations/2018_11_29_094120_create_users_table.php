@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('business_type')->nullable();
             $table->string('email')->nullable();
             $table->string('password')->nullable();
-            $table->integer('company_id')->nullable()->default('0');
+            $table->integer('company_id')->default('0')->nullable();
             $table->integer('one_time_limit')->default('0');
             $table->string('plates')->default('0');
             $table->string('vehicle')->default('0');

@@ -206,23 +206,23 @@ class CompaniesController extends Controller
         }
         $request->merge(['limit_left' => $limit_left]);
         $company->update($request->all());
-        /*
+        
         // DELETE Discount
-        if(empty($request->input('deleteDiscount'))){
+        //if(empty($request->input('deleteDiscount'))){
             CompanyDiscount::where('company_id',$id)->delete();
-        }else{
-            CompanyDiscount::where('company_id',$id)->whereNotIn('id',$request->input('deleteDiscount'))->delete();
-        }
+        //}else{
+            //CompanyDiscount::where('company_id',$id)->whereNotIn('id',$request->input('deleteDiscount'))->delete();
+        //}
 
         // DELETE Limit
-        if(empty($request->input('deleteLimit'))){
-            CompanyLimit::where('company_id',$id)->delete();
-        }else{
-            CompanyLimit::where('company_id',$id)->whereNotIn('id',$request->input('deleteLimit'))->delete();
-        }
+        //if(empty($request->input('deleteLimit'))){
+        //    CompanyLimit::where('company_id',$id)->delete();
+        //}else{
+        //    CompanyLimit::where('company_id',$id)->whereNotIn('id',$request->input('deleteLimit'))->delete();
+        //}
 
         // UPDATE Discount(Product - Discount)
-        if(!empty($request->input('product'))){
+        /*if(!empty($request->input('product'))){
             // Update Product Discount
             for($i=0; $i < count($request->input('product')); $i++) {
 
@@ -231,7 +231,6 @@ class CompaniesController extends Controller
                     ->update(['discount' => $request->input('discount')[$i],'product_id' => $request->input('product')[$i]]);
             }
         }
-        /*
         // UPDATE Limit(Branch - Limit)
         if(!empty($request->input('branch'))){
             // Update Branch Limit
@@ -244,15 +243,17 @@ class CompaniesController extends Controller
         }
         */
         // ADD new Discount
-        if(($request->input('new_product')[0] != 0) && (!empty($request->input('new_discount')[0]))){
-            foreach(array_combine($request->input('new_product'), $request->input('new_discount')) as $product => $discount){
+        if(($request->input('product')[0] != 0) && (!empty($request->input('discount')[0]))){
+            foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
 
-                $company_product = new CompanyDiscount();
+                if(!empty($product) && !empty($discount) && $discount !== 0){
+                    $company_product = new CompanyDiscount();
 
-                $company_product->company_id    = $id;
-                $company_product->product_id    = $product;
-                $company_product->discount      = $discount;
-                $company_product->save();
+                    $company_product->company_id    = $id;
+                    $company_product->product_id    = $product;
+                    $company_product->discount      = $discount;
+                    $company_product->save();
+                }
             }
         }
         /*

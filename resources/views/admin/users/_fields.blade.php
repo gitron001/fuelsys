@@ -175,11 +175,10 @@
 		-->
         @else
         <!-- *** DISCOUNT *** -->
-
+        {!! Form::label('discount', 'Discounts'); !!}
         <div class="form-group"  id="discounts">
         @if(count($rfid_discounts) > 0)
 
-        {!! Form::label('discount', 'Discounts'); !!}
 			@foreach($rfid_discounts as $rfid_discount)
                 <div class="row" id="discount" style="margin-top: 10px;">
                     <input type="hidden" name="hidden_input_product[]" value="{{$rfid_discount->id}}">
@@ -206,23 +205,9 @@
         <!-- *** NEW DISCOUNT *** -->
 
         <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}">
-        @if(count($rfid_discounts) == 0)
-            {!! Form::label('discount', 'New Discounts'); !!}
-        @endif
         <div class="row">
             <div class="col-md-1">
-                <button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i></button>
-            </div>
-            <div class="col-md-5">
-				<select name="product[]" class="form-control">
-					<option value="">Choose Product</option>
-					@foreach($products as $pr)
-						<option value="{{ $pr->pfc_pr_id }}">{{ $pr->name }}</option>
-					@endforeach
-				</select>
-            </div>
-            <div class="col-md-6">
-                {!! Form::number('discount[]',null,['class'=>'form-control','placeholder'=>'0.01','step'=>'any']); !!}
+                <button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i> Add discount</button>
             </div>
         </div>
         <br>
