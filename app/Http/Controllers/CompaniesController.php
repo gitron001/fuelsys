@@ -68,8 +68,8 @@ class CompaniesController extends Controller
         $firstValueOfArrayProduct  = array_values($request->input('product'))[0];
         $firstValueOfArrayDiscount = array_values($request->input('discount'))[0];
 
-        $firstValueOfArrayBranch  = array_values($request->input('branch'))[0];
-        $firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
+        //$firstValueOfArrayBranch  = array_values($request->input('branch'))[0];
+        //$firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
 
         if($request->input('has_limit') == 1){
             $limit_left = $request->input('limits') - $request->input('starting_balance');
@@ -127,7 +127,7 @@ class CompaniesController extends Controller
                 $company_product->save();
             }
         }
-
+        /*
         if($firstValueOfArrayBranch !== 0 && !empty($firstValueOfArrayLimit)){
             foreach(array_combine($request->input('branch'), $request->input('limit')) as $branch => $limit){
 
@@ -139,7 +139,7 @@ class CompaniesController extends Controller
                 $company_branch->save();
             }
         }
-
+        */
         session()->flash('info','Success');
 
         return redirect('admin/companies');
@@ -206,7 +206,7 @@ class CompaniesController extends Controller
         }
         $request->merge(['limit_left' => $limit_left]);
         $company->update($request->all());
-
+        /*
         // DELETE Discount
         if(empty($request->input('deleteDiscount'))){
             CompanyDiscount::where('company_id',$id)->delete();
@@ -231,7 +231,7 @@ class CompaniesController extends Controller
                     ->update(['discount' => $request->input('discount')[$i],'product_id' => $request->input('product')[$i]]);
             }
         }
-
+        /*
         // UPDATE Limit(Branch - Limit)
         if(!empty($request->input('branch'))){
             // Update Branch Limit
@@ -242,7 +242,7 @@ class CompaniesController extends Controller
                     ->update(['limit' => $request->input('limit')[$i],'branch_id' => $request->input('branch')[$i]]);
             }
         }
-
+        */
         // ADD new Discount
         if(($request->input('new_product')[0] != 0) && (!empty($request->input('new_discount')[0]))){
             foreach(array_combine($request->input('new_product'), $request->input('new_discount')) as $product => $discount){
@@ -255,7 +255,7 @@ class CompaniesController extends Controller
                 $company_product->save();
             }
         }
-
+        /*
         // ADD new Limit
         if(($request->input('new_branch')[0] != 0) && (!empty($request->input('new_limit')[0]))){
             foreach(array_combine($request->input('new_branch'), $request->input('new_limit')) as $branch => $limit){
@@ -268,7 +268,7 @@ class CompaniesController extends Controller
                 $company_branch->save();
             }
         }
-
+        */
         session()->flash('info','Success');
 
         return redirect('/admin/companies');
