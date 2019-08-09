@@ -108,7 +108,7 @@
                     <select name="company_id" class="form-control">
 						<option value="">Choose Company</option>
 						@foreach($companies as $company)
-							<option value="{{ $company->id }}" <?php if($user->company_id == $company->id){ echo 'selected'; } ?>>{{ $company->name }}</option>
+							<option value="{{ $company->id }}" <?php if(isset($user) && $user->company_id == $company->id){ echo 'selected'; } ?>>{{ $company->name }}</option>
 						@endforeach
 					</select>
                     {!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
