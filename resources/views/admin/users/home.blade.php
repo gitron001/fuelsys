@@ -9,11 +9,12 @@
 			   <div class="box box-primary">
             <div class="box-header">
               <div class="col-md-8"><h3 class="box-title">Users</h3></div>
-              <div class="col-md-4">
-
+				<div class="col-md-12">
+			
                 <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/users') }}">
                   @include('includes.search_filter')
-                  <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new user"><i class="fa fa-plus"></i> New User</a>
+                  <a href="{{ url('admin/uploadExcel') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Upload Excel"><i class="fa fa-upload"></i> Upload Excel</a>
+				  <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new user"><i class="fa fa-plus"></i> New User</a>
                 </form>
 
               </div>

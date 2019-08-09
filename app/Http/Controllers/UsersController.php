@@ -298,8 +298,7 @@ class UsersController extends Controller
             }
 
             $id = Users::insertGetId([
-                'name'              => $result['emri'],
-                'surname'           => $result['mbiemri'],
+                'name'              => $result['emri']. ' ' .$result['mbiemri'],
                 'residence'         => $result['vendbanimi'],
                 'contact_number'    => $result['nr.kontaktues'],
                 'rfid'              => substr($rfid,4),
