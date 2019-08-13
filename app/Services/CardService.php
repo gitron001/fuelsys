@@ -86,9 +86,9 @@ class CardService extends ServiceProvider
         $user = Users::where("rfid", $cardNumber)->where('status', 1)->first();
         $card_count = Users::where("rfid", $cardNumber)->where('status', 1)->count();
 		
-        if($card_count == 0 ){ return false; }
+        if($card_count == 0 ){ self:storeFailedAttempt($channel, $rfid, $pfc_id, 1); return false; }
 		
-        if($user->status != 1 ){ return false; }
+        if($user->status != 1 ){ self:storeFailedAttempt($channel, $rfid, $pfc_id, 2ph); return false; }
 	
         if($user->company->status != 1 &&  $user->company->status != 4){ return false; }
 		
@@ -284,4 +284,12 @@ class CardService extends ServiceProvider
 		return $all_discounts;
 		
 	}
+    /*
+     * type 1 - not found
+     * type 2 - inactive
+     */
+	public static  function storeFailedAttempt($channel, $rfid, $pfc_id, $type){
+
+
+    }
 }
