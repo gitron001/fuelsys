@@ -68,7 +68,15 @@
 				
 			</div>
 		</div>
+		<div class="col-12">
+				<div class="form-group {{ $errors->has('description') ? 'has-error' :'' }}">
+					{!! Form::label('description', 'Description:'); !!}
+					{!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!} 
+					{!! $errors->first('description','<span class="help-block">:message</span>') !!}
+				</div>
+			</div>
 	</div>
+	
 	
 	<div class="box-footer">
 		<button type="submit" class="btn btn-primary">

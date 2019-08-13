@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrator',
             'rfid' => '000000',
             'email' => 'administrator@fuelsystem.com',
-            'password' => Hash::make('administrator'),
+            'password' => bcrypt('administrator'),
             'type' => '3',
             'created_at' => now()->timestamp,
             'updated_at' => now()->timestamp,

@@ -31,6 +31,6 @@ class FaildAttempts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bonus_request');
+        Schema::dropIfExists('failed_attempts');
     }
 }

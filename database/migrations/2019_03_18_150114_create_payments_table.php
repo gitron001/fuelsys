@@ -17,10 +17,11 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->integer('date')->index();
             $table->double('amount');
-            $table->integer('user_id')->nullabel()->index();
-            $table->integer('company_id')->nullabel()->index();
+            $table->text('description')->nullable();
+            $table->integer('user_id')->nullable()->index();
+            $table->integer('company_id')->nullable()->index();
             $table->integer('created_by')->index();
-            $table->integer('edited_by')->nullabel()->index();
+            $table->integer('edited_by')->nullable()->index();
             $table->integer('created_at');
             $table->integer('updated_at');
         });
