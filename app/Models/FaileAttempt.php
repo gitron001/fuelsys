@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +12,10 @@ class FaileAttempt extends Model
         'rfid',
         'pfc_id',
         'channel_id',
+        'type',
     ];
-
+	
+	public function getDateFormat(){
+        return 'U';
+    }
 }

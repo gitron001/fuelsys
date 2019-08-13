@@ -11,6 +11,7 @@ use App\Models\Users;
 use App\Models\Products;
 use App\Models\PFC as PfcModel;
 use App\Models\Bonus_request as Bonus;
+use App\Models\FaileAttempt as FaileAttempt;
 use DB;
 
 
@@ -86,9 +87,9 @@ class CardService extends ServiceProvider
         $user = Users::where("rfid", $cardNumber)->where('status', 1)->first();
         $card_count = Users::where("rfid", $cardNumber)->where('status', 1)->count();
 		
-        if($card_count == 0 ){ self:storeFailedAttempt($channel, $rfid, $pfc_id, 1); return false; }
+        if($card_count == 0 ){ self::storeFailedAttempt($channel, $cardNumber, $pfc_id, 1); return false; }
 		
-        if($user->status != 1 ){ self:storeFailedAttempt($channel, $rfid, $pfc_id, 2ph); return false; }
+        if($user->status != 1 ){ self::storeFailedAttempt($channel, $cardNumber, $pfc_id, 2); return false; }
 	
         if($user->company->status != 1 &&  $user->company->status != 4){ return false; }
 		
@@ -290,6 +291,13 @@ class CardService extends ServiceProvider
      */
 	public static  function storeFailedAttempt($channel, $rfid, $pfc_id, $type){
 
-
+		$data = array(
+		 'channel_id' => $channel,
+		 'rfid' => $rfid,
+		 'pfc_id' => $pfc_id,
+		 'type' => $type
+		);
+		
+		FaileAttempt::firstOrCreate($data);
     }
 }

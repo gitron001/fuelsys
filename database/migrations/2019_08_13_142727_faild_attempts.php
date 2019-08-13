@@ -18,6 +18,7 @@ class FaildAttempts extends Migration
             $table->integer('pfc_id');
             $table->integer('rfid');
             $table->integer('channel_id');
+            $table->integer('type');
             $table->integer('created_at');
             $table->integer('updated_at');
         });
