@@ -139,7 +139,7 @@ class TransactionController extends Controller
         $totalAmount = 0;
         $totalPayed = 0;
 
-        $totalAmount = $balance;
+        $totalAmount = number_format($balance, 2);
         $startDate = $request->fromDate;
 
         $dataArray[] = array('PRODUKTI','SASIA','TOTALI');

@@ -46,20 +46,12 @@ class CheckCardReadersCommand extends Command
      */
     public function handle()
     {
-
-       /*$the_cart = RFID::where('rfid', 291018165)->first();
-        dd($the_cart->company->discounts);
-        foreach($the_cart->company->discounts as $c_discount){
-            echo $c_discount->product_details->price;
-        }
-        dd();*/
 		$pfc_id = (int) $this->argument('pfc_id');
 
-		$now = time();
-        $check_cron = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->where('refresh_time', '<', ($now - 40))->latest()->first();
-		$no_cron 	= Process::where('type_id', 1)->where('pfc_id', $pfc_id)->count();
-        if(!isset($check_cron->refesh_time) && $no_cron != 0){
-			Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();
+		$now = time() - 40;
+        $check_cron = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->where('refresh_time', '>', $now)->first();
+
+        if(isset($check_cron)){
 			return false;
         }
         

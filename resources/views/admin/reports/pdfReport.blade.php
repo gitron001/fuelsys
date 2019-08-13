@@ -102,7 +102,7 @@
 	    <td align="right"></td>
 	    <td align="right"></td>
 	    <td align="right"></td>
-	    <td align="right">@if($balance != 0) {{ $balance }} @else {{ 0 }}@endif</td>
+	    <td align="right">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
 	</tr>
 	<?php
 		$total = $balance;
