@@ -1,4 +1,3 @@
-<?php use Illuminate\Support\Facades\Input;?>
 @extends('adminlte::page')
 
 @section('content')
@@ -8,12 +7,12 @@
         <div class="box-body">
             <div class="form-group">
                 <label for="Start Date:">Start Date:</label>
-                <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{Input::get("fromDate")}}">
+                <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{ request()->get("fromDate") }}">
             </div>
         
             <div class="form-group">
                 <label for="End Date:">End Date:</label>
-                <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{Input::get("toDate")}}">
+                <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{ request()->get("toDate") }}">
             </div>
         
             <div class="form-group">
@@ -22,8 +21,8 @@
                 <option value="">Select a user</option>
                 @foreach($usersFilter as $id => $name)
                     <option value="{{ $id }}" 
-                    @if(!empty(Input::get("user")))
-                        @foreach(Input::get("user") as $us) 
+                    @if(!empty( request()->get("user") ))
+                        @foreach( request()->get("user") as $us) 
                         {{ $us == $id ? 'selected' : '' }} 
                         @endforeach
                     @endif > {{ $name }} </option>
