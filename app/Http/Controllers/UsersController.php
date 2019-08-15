@@ -295,7 +295,6 @@ class UsersController extends Controller
         }
         
         foreach ($results as $result) {
-            dd($result);
 			if(trim($result['nr.karteles']) == "" || trim($result['nr.karteles']) == 0){
 				continue; 
 			}
