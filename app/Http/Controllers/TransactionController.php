@@ -246,9 +246,11 @@ class TransactionController extends Controller
         $data       = self::getGeneralData($request);
 
         $date = $request->fromDate;
+        $inc_transactions = $request->input('inc_transactions');
 	
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
+        return $pdf->stream($file_name);
         
 
         /*Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
@@ -331,7 +333,6 @@ class TransactionController extends Controller
         }
         
         $payments = $payments->get();
-
         return $payments;
     }
 
@@ -398,7 +399,7 @@ class TransactionController extends Controller
 
         $paymentsOLD = $paymentsOLD->sum('amount');
         $balance = $transaction_total + $starting_balance - $paymentsOLD;
-	
+        
         return $balance;
     }
 

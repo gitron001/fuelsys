@@ -49,7 +49,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Payments
 	Route::resource('/admin/payments', 'PaymentsController');
 	Route::get('payment/{id}/delete', ['as' => 'payment.delete', 'uses' => 'PaymentsController@destroy']);
-	Route::get('/payment/generate/{id}','PaymentsController@printFunction');
+	Route::get('/payment/generate/{id}', ['as' => 'payment.generate', 'uses' => 'PaymentsController@printFunction']);
 
 	// PFC 
 	Route::resource('/admin/pfc', 'PFCController');
@@ -69,7 +69,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	//Route::get('/admin/transactions','TransactionController@searchWithPagination');
 	Route::get('/dailyReport','TransactionController@generateDailyReport');
 
-	Route::get('/pdf','TransactionController@exportPDF');
+	Route::get('/pdf','TransactionController@exportPDF')->name('generate_pdf/pdf');
 
 	// Email
 	Route::get('/sendemail','HomeController@email');
