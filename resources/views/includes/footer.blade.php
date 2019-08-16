@@ -179,11 +179,12 @@
       var toDate = $('#datetimepicker5').val();
       var user = $("#user").val();
       var last_payment = $("#last_payment").val();
+      var inc_transactions = $("#inc_transactions").val();
       var company = $("#company").val();
 
       $.ajax({
         type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment},
+        data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment,inc_transactions:inc_transactions},
         url: "{{ URL('/export')}}",
         dataType: "JSON",
         success: function(response, textStatus, request){
@@ -230,13 +231,13 @@
   //  *** REPORTS SCRIPT *** //
 
   // Show checkbox value after page load
-   $(document).ready(function(){
-      if ($('input#last_payment').is(':checked')) {
-        $('input[name="last_payment"]').val('Yes');
-      } else {
-        $('input[name="last_payment"]').val('No');
-      }
-    });
+  $(document).ready(function(){
+    if ($('input#last_payment').is(':checked')) {
+      $('input[name="last_payment"]').val('Yes');
+    } else {
+      $('input[name="last_payment"]').val('No');
+    }
+  });
     
   // Change Checkbox value onclick
   $('#last_payment').click(function(){
@@ -244,6 +245,24 @@
         $('input[name="last_payment"]').val('Yes');
     } else {
         $('input[name="last_payment"]').val('No');
+    }
+  });
+
+  // Show checkbox value after page load
+  $(document).ready(function(){
+    if ($('input#inc_transactions').is(':checked')) {
+      $('input[name="inc_transactions"]').val('Yes');
+    } else {
+      $('input[name="inc_transactions"]').val('No');
+    }
+  });
+    
+  // Change Checkbox value onclick
+  $('#inc_transactions').click(function(){
+    if($(this).is(':checked')){
+        $('input[name="inc_transactions"]').val('Yes');
+    } else {
+        $('input[name="inc_transactions"]').val('No');
     }
   });
   

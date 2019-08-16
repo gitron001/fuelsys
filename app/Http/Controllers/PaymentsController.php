@@ -114,6 +114,7 @@ class PaymentsController extends Controller
         
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
+        $payments->description  = $request->input('description');
         $payments->user_id      = $request->input('user_id');
         $payments->company_id   = $request->input('company_id');
         $payments->created_at   = now()->timestamp;
@@ -223,8 +224,9 @@ class PaymentsController extends Controller
         $payments->user_id      = $user_id;
         $payments->company_id   = $company_id;   
         $payments->date         = strtotime($request->input('date'));
+        $payments->description  = $request->input('description');
         $payments->amount       = $amount;
-        $payments->updated_by   = Auth::user()->id;
+        $payments->edited_by   = Auth::user()->id;
         $payments->updated_at   = now()->timestamp;
         $payments->update();
 
@@ -263,7 +265,6 @@ class PaymentsController extends Controller
 
     public static function printFunction($id)
     {
-		
         try {
 
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
@@ -315,6 +316,10 @@ class PaymentsController extends Controller
 
             $printer -> feed(2);
             $printer->text('Klienti: '.$client. "\n");
+            $printer->text('Krijuar nga: '.$payment->paymentCreator->name. "\n");
+            if(!empty($payment->paymentEditor->name)){
+                $printer->text('Edituar nga: '.$payment->paymentEditor->name. "\n");
+            };
             $printer->text("\n"); // blank line
 
             /*if($transaction->users->company->name){

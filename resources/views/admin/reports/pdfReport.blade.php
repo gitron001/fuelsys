@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>NESIM BAKIJA SH.P.K.</title>
+<title>{{ $company->name }}</title>
 
 <style type="text/css">
     * {
@@ -32,31 +32,31 @@
     <table width="100%" class="information">
         <tr>
             <td align="center" style="width: 50%;">
-                RAPORT - NESIM BAKIJA SH.P.K.
+                RAPORT - {{ $company->name }}
             </td>
         </tr>
     </table>
 	<br>
 	<table width="100%">
 	<tr>
-	    <td valign="top"><img src="{{ public_path().'/images/nesim-bakija.png' }}" alt="" width="150"/></td>
-	    <td align="right">
-	        <pre>
-	        	Raporti mbi kompaninë
-			    Gjakovë, Kosovë
+		<td valign="top"><img src="{{ public_path().'/images/company/'.$company->images }}" alt="" width="150"/></td>
+		<td align="right">
+	    	<pre>
+	        	Raporti mbi kompaninë {{ $company->name }} <br>
+				{{ $company->city }}, {{ $company->country }}
 			    {{ date('m/d/Y h:i:s a', strtotime("now")) }}
 			</pre>
-	    </td>
+		</td>
 	</tr>
 	<tr>
 	    <td valign="top">
-	    	<h3>NESIM BAKIJA SH.P.K</h3>
+	    	<h3>{{ $company->name }}</h3>
 	    	<p style="line-height:1.5">
-	            <span>Rruga Skënderbeu </span><br/>
-	            <span>Gjakovë, Kosovë</span><br/>
-	            <span> 044 - 457 - 961</span>
+	            <span>{{ $company->address }} </span><br/>
+	            <span>{{ $company->city }}, {{ $company->country }}</span><br/>
+	            <span> {{ $company->tel_number }}</span>
 	        </p>
-	    </td>
+		</td>
 	</tr>
 
 	</table>
@@ -97,16 +97,48 @@
 	</thead>
 	<tbody>
 	<tr>
-		<th scope="row">{{ $date }}</th>
+		<th scope="row">{{ date('Y-m-d h:i:s',strtotime($date)) }}</th>
 	    <td>Gjendja Fillestare</td>
 	    <td align="right"></td>
 	    <td align="right"></td>
 	    <td align="right"></td>
-	    <td align="right">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
+	    <td align="right" class="gray">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
 	</tr>
 	<?php
+		$totalTrans = $balance;
+		// Get sum of all transactions when we need to show only payments without transactions
+		foreach($payments as $py){
+			if($py->money == 0){
+				$fueling = 0;
+				$payment = $py->amount;
+			}else{
+				$fueling = $py->money;
+				$payment = 0;
+			}
+
+			$totalTrans = str_replace(',', '', $totalTrans);
+			$fueling = str_replace(',', '', $fueling);
+			$totalTrans = $totalTrans + $fueling;
+
+			if($py->type == 'transaction'){
+				$transaction = $totalTrans;
+			}
+		}
+
+		// Total balance 
 		$total = $balance;
 	?>
+	
+	<!-- Total Transactions row -->
+	<tr @if($inc_transactions == 'Yes') echo style="display:none;" @endif>
+		<td></td>
+		<td>Total Transactions</td>
+		<td colspan="3"></td>
+		<td align="right" class="gray"> {{ number_format($transaction, 2) }} €</td>
+	</tr>
+	<!-- END Total transactions row -->
+
+	<!-- Show all rows except TOTAL row -->
 	@foreach($payments as $py)
 		<?php
 
@@ -121,23 +153,26 @@
 		$fueling = str_replace(',', '', $fueling);
 		$payment = str_replace(',', '', $payment);
 		$total = $total + $fueling - $payment;
-
+		
 		?>
-
-	  <tr>
-	    <th scope="row">{{ $py->created_at }}</th>
-	    <td>{{ $py->type}}</td>
-	    <td align="right">{{ $py->username }}</td>
-	    <td align="right">{{ $fueling }}</td>
-	    <td align="right">{{ $payment }}</td>
-	    <td align="right">{{ number_format($total, 2) }}</td>
-	  </tr>
+		<tr @if($py->type == 'transaction' && ($inc_transactions == 'No' || !request()->has('inc_transactions'))) echo style="display:none;" @endif>
+			<th scope="row">{{ $py->created_at }}</th>
+			<td>{{ $py->type}}</td>
+			<td align="right">{{ $py->username }}</td>
+			<td align="right">{{ $fueling }}</td>
+			<td align="right">{{ $payment }}</td>
+			<td align="right">{{ number_format($total, 2) }}</td>
+		</tr>
 	@endforeach
+	<!-- END Show all rows except TOTAL row -->
+
+	<!-- Show only last row (TOTAL row) -->
 	    <tr>
 	        <td colspan="4"></td>
 	        <td align="right">Totali €</td>
 	        <td align="right" class="gray"> {{ number_format($total, 2) }} €</td>
-	    </tr>
+		</tr>
+	<!-- END Show only last row (TOTAL row) -->
 	</tfoot>
 	</table>
 
@@ -145,7 +180,7 @@
 	    <table width="100%">
 	        <tr>
 	            <td align="center" style="width: 50%;">
-	                &copy; {{ date('Y') }} - NESIM BAKIJA SH.P.K.
+	                &copy; {{ date('Y') }} - {{ $company->name }}
 	            </td>
 	        </tr>
 

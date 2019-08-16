@@ -52,7 +52,7 @@
 					<div class="form-group" id="user" @if ($payment->user_id == 0) echo style="display: none" @endif>
 				@endif
 					{!! Form::label('user_id', 'User:'); !!}
-					{!! Form::select('user_id',['Select a User'] + $users,null,['class'=>'selectpicker form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!} 
+					{!! Form::select('user_id',['' => 'Select a User'] + $users,null,['class'=>'selectpicker form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!} 
 					{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 				</div>
 
@@ -62,13 +62,21 @@
 					<div class="form-group" id="company" @if ($payment->company_id == 0) echo style="display: none" @endif>
 				@endif
 					{!! Form::label('company_id', 'Company:'); !!}
-					{!! Form::select('company_id',['Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!} 
+					{!! Form::select('company_id',['' => 'Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!} 
 					{!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
 				</div>
 				
 			</div>
 		</div>
+		<div class="col-12">
+				<div class="form-group {{ $errors->has('description') ? 'has-error' :'' }}">
+					{!! Form::label('description', 'Description:'); !!}
+					{!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!} 
+					{!! $errors->first('description','<span class="help-block">:message</span>') !!}
+				</div>
+			</div>
 	</div>
+	
 	
 	<div class="box-footer">
 		<button type="submit" class="btn btn-primary">

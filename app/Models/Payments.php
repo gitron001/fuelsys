@@ -11,6 +11,7 @@ class Payments extends Model
     protected $fillable = [
         'date', 
         'amount',
+        'description',
         'company_id',
     ];
 
@@ -32,6 +33,12 @@ class Payments extends Model
 	
 	public function paymentCreator(){
         return $this->belongsTo('App\Models\Users', 'created_by', 'id')->withDefault([
+            'name' => ''
+        ]);
+    }
+
+    public function paymentEditor(){
+        return $this->belongsTo('App\Models\Users', 'edited_by', 'id')->withDefault([
             'name' => ''
         ]);
     }
