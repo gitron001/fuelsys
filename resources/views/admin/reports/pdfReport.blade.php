@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>NESIM BAKIJA SH.P.K.</title>
+<title>{{ $company->name }}</title>
 
 <style type="text/css">
     * {
@@ -32,29 +32,29 @@
     <table width="100%" class="information">
         <tr>
             <td align="center" style="width: 50%;">
-                RAPORT - NESIM BAKIJA SH.P.K.
+                RAPORT - {{ $company->name }}
             </td>
         </tr>
     </table>
 	<br>
 	<table width="100%">
 	<tr>
-		<td valign="top"><img src="{{ public_path().'/images/nesim-bakija.png' }}" alt="" width="150"/></td>
+		<td valign="top"><img src="{{ public_path().'/images/{{ $company->images }}' }}" alt="" width="150"/></td>
 		<td align="right">
 	    	<pre>
-	        	Raporti mbi kompaninë
-			    Gjakovë, Kosovë
+	        	Raporti mbi kompaninë {{ $company->name }} <br>
+				{{ $company->city }}, {{ $company->country }}
 			    {{ date('m/d/Y h:i:s a', strtotime("now")) }}
 			</pre>
 		</td>
 	</tr>
 	<tr>
 	    <td valign="top">
-	    	<h3>NESIM BAKIJA SH.P.K</h3>
+	    	<h3>{{ $company->name }}SH.P.K</h3>
 	    	<p style="line-height:1.5">
-	            <span>Rruga Skënderbeu </span><br/>
-	            <span>Gjakovë, Kosovë</span><br/>
-	            <span> 044 - 457 - 961</span>
+	            <span>{{ $company->address }} </span><br/>
+	            <span>{{ $company->city }}, {{ $company->country }}</span><br/>
+	            <span> {{ $company->tel_number }}</span>
 	        </p>
 		</td>
 	</tr>
@@ -180,7 +180,7 @@
 	    <table width="100%">
 	        <tr>
 	            <td align="center" style="width: 50%;">
-	                &copy; {{ date('Y') }} - NESIM BAKIJA SH.P.K.
+	                &copy; {{ date('Y') }} - {{ $company->name }}
 	            </td>
 	        </tr>
 

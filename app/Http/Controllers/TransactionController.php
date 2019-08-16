@@ -244,11 +244,11 @@ class TransactionController extends Controller
         $payments   = self::generate_data($request);
         $balance    = self::generate_balance($request);
         $data       = self::getGeneralData($request);
-
+        $company    = Company::where('status', 4)->first();
         $date = $request->fromDate;
         $inc_transactions = $request->input('inc_transactions');
 	
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
         
@@ -613,10 +613,10 @@ class TransactionController extends Controller
     public function generateDailyReport(Request $request) {
         $payments   = self::generate_data($request);
         $balance    = self::generate_balance($request);
-
+        $company    = Company::where('status', 4)->first();
         $date = $request->fromDate;
 	
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date', 'company'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         
 
