@@ -248,7 +248,9 @@ class TransactionController extends Controller
         $date = $request->fromDate;
 	
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data'));
-        $file_name  = 'Transaction - '.date('Y-m-d', time());
+		$file_name  = 'Transaction - '.date('Y-m-d', time());
+        return $pdf->stream($file_name.'.pdf');
+	
         
 
         /*Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
