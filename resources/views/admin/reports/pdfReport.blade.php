@@ -106,6 +106,9 @@
 	</tr>
 	<?php
 		$totalTrans = $balance;
+		if($inc_transactions == 'Yes')	{
+			$totalTrans = $balance;
+		}
 		// Get sum of all transactions when we need to show only payments without transactions
 		foreach($payments as $py){
 			if($py->money == 0){
