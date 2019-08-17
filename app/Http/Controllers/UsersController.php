@@ -286,14 +286,13 @@ class UsersController extends Controller
         $product        = $request->input('product');
         $discount       = $request->input('discount');
        
-       if(count($results) < 1){           
+        if(count($results) < 1){           
             return redirect('/admin/users');
-       }
-
-        if(!isset($result[0]['nr.karteles'])){            
+        }
+        if(!isset($results[0]['nr.karteles'])){            
             $results = $results[0];
         }
-        
+      
         foreach ($results as $result) {
 			if(trim($result['nr.karteles']) == "" || trim($result['nr.karteles']) == 0){
 				continue; 
