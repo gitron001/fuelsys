@@ -105,7 +105,8 @@
 	    <td align="right" class="gray">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
 	</tr>
 	<?php
-		$totalTrans = $balance;
+		$totalTrans = 0;
+		$transaction = 0;
 		if($inc_transactions == 'Yes')	{
 			$totalTrans = $balance;
 		}
