@@ -41,6 +41,10 @@
         </div>
 
         <div class="form-group">
+          <input type="checkbox" name="inc_transactions"  id="inc_transactions" {{ request()->get("inc_transactions") == 'Yes' ? 'checked' : ''}}>Inc. transactions<br>
+        </div>
+
+        <div class="form-group">
           <label for="User:">Company:</label>
           <select class="form-control" id="company" name="company">
             <option value="">Choose a Company</option>
@@ -54,7 +58,7 @@
           <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i></button>
           <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i></a>
           <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportEXCEL" title="Export Excel"><i class="fas fa-file-excel"></i></button>
-          <button type="button" data-toggle="tooltip" class="btn btn-primary" id="exportPDF" title="Export PDF"><i class="fas fa-file-pdf"></i></button>
+          <a href="{{ route('generate_pdf/pdf', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'last_payment' => request()->get("last_payment")] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-primary" title="Export PDF"><i class="fas fa-file-pdf"></i></a>
           <button type="button" data-toggle="tooltip" class="btn btn-primary" id="dailyReport" title="Daily Report"><i class="far fa-envelope"></i></button>
         </div>
 

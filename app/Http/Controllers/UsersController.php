@@ -33,6 +33,7 @@ class UsersController extends Controller
             $users  = $users->where(function($query) use ($search){
                 $query->where('name','like','%'.$search.'%');
                 $query->orWhere('email','like','%'.$search.'%');
+                $query->orWhere('rfid','like','%'.$search.'%');
             });
         }
 
