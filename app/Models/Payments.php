@@ -36,4 +36,10 @@ class Payments extends Model
             'name' => ''
         ]);
     }
+
+    public function paymentEditor(){
+        return $this->belongsTo('App\Models\Users', 'edited_by', 'id')->withDefault([
+            'name' => ''
+        ]);
+    }
 }

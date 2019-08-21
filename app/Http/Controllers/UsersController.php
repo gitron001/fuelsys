@@ -33,6 +33,7 @@ class UsersController extends Controller
             $users  = $users->where(function($query) use ($search){
                 $query->where('name','like','%'.$search.'%');
                 $query->orWhere('email','like','%'.$search.'%');
+                $query->orWhere('rfid','like','%'.$search.'%');
             });
         }
 
@@ -285,8 +286,16 @@ class UsersController extends Controller
         $type           = $request->input('type');
         $product        = $request->input('product');
         $discount       = $request->input('discount');
-
-        
+       
+        if(count($results) < 1){           
+            return redirect('/admin/users');
+        }
+        if(!isset($results[0]['nr.karteles'])){            
+            $results = $results[0];
+        }
+		
+		$duplicate = array();
+		
         foreach ($results as $result) {
 			if(trim($result['nr.karteles']) == "" || trim($result['nr.karteles']) == 0){
 				continue; 
@@ -300,9 +309,15 @@ class UsersController extends Controller
             } else {
                 $rfid = $result['nr.karteles'];
             }
+			$check_existing = Users::where('rfid', $rfid)->count();
+			
+			if($check_existing > 0){
+				$duplicate[] = $result;
+				continue;
+			}
 
             $id = Users::insertGetId([
-                'name'              => $result['emri']. ' ' .$result['mbiemri'],
+                'name'              => trim($result['emri']). ' ' .trim($result['mbiemri']),
                 'residence'         => $result['vendbanimi'],
                 'contact_number'    => $result['nr.kontaktues'],
                 'rfid'              => substr($rfid,4),
@@ -323,9 +338,16 @@ class UsersController extends Controller
                 }
             }
         }
+		
+		if(count($duplicate) == 0){
+			
+			session()->flash('info','Success');
 
-        session()->flash('info','Success');
-
-        return redirect('/admin/users');
+			return redirect('/admin/users');
+		}else{
+			return view('/admin/users/duplicate',compact('duplicate'));
+		}
     }
+
+
 }

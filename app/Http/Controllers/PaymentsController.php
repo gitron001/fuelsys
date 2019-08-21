@@ -124,13 +124,13 @@ class PaymentsController extends Controller
 
 		
         /*$msg = "Payment Print not Succesful";
-
+		*/
         try {
             self::printFunction($payments->id);
         } catch (Exception $e) {
            $msg = "Payment Print NOT Succesful";
         }
-		*/
+		
 		
         session()->flash('info','Success');
 
@@ -265,7 +265,6 @@ class PaymentsController extends Controller
 
     public static function printFunction($id)
     {
-		
         try {
 
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
@@ -317,6 +316,10 @@ class PaymentsController extends Controller
 
             $printer -> feed(2);
             $printer->text('Klienti: '.$client. "\n");
+            $printer->text('Krijuar nga: '.$payment->paymentCreator->name. "\n");
+            if(!empty($payment->paymentEditor->name)){
+                $printer->text('Edituar nga: '.$payment->paymentEditor->name. "\n");
+            };
             $printer->text("\n"); // blank line
 
             /*if($transaction->users->company->name){

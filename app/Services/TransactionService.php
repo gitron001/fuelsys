@@ -66,8 +66,8 @@ class TransactionService extends ServiceProvider
      */
     public static function read_data($socket, $channel, $pfc_id) {
         $controller = Config::get('app.controller_id');
-        $controller_id =  PFC::conver_to_bin($controller);
-        $channel_id =  PFC::conver_to_bin($channel);
+        $controller_id =  pack("C*", $controller );
+        $channel_id =  pack("C*", $channel );
 
         //Generate CRC for the Transaction Message
         $message = "\x1\x6\x3".$channel_id.$controller_id;
@@ -116,9 +116,9 @@ class TransactionService extends ServiceProvider
      **/
     public static function transaction_status($channel, $status,  $socket) {
         $controller = Config::get('app.controller_id');
-        $pos_id =  PFC::conver_to_bin($controller);
-        $bin_channel = PFC::conver_to_bin($channel);
-        $status_bin = PFC::conver_to_bin($status);
+        $pos_id =  pack("C*", $controller);
+        $bin_channel = pack("C*", $channel);
+        $status_bin = pack("C*", $status);
 
         //Generate CRC for the Transaction Message
         $message = "\x1\x7\x82" .$bin_channel. $pos_id.$status_bin;
