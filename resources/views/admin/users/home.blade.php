@@ -13,8 +13,9 @@
 			
                 <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/users') }}">
                   @include('includes.search_filter')
-                  <a href="{{ url('admin/uploadExcel') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Upload Excel"><i class="fa fa-upload"></i> Upload Excel</a>
-				  <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new user"><i class="fa fa-plus"></i> New User</a>
+                  <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new user"><i class="fa fa-plus"></i> New</a>
+                  <a href="{{ url('admin/bonus_members') }}" data-toggle="tooltip" class="btn btn-primary pull-right" style="margin-left: 0.5em;" title="Bonus Card"><i class="fa fa-credit-card"></i></a>
+                  <a href="{{ url('admin/uploadExcel') }}" data-toggle="tooltip" class="btn btn-warning pull-right" style="margin-left: 0.5em;" title="Upload Excel"><i class="fa fa-upload"></i></a>
                 </form>
 
               </div>
