@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\FormSubmitted;
+
 Auth::routes();
 
 Route::resource('/', 'HomeController');
@@ -85,6 +87,22 @@ Route::group(['middleware' => 'authenticated'], function () {
 	//Route::get('/admin/staff','StaffController@searchWithPagination');
 	//Route::get('/admin/staff','StaffController@searchWithPagination');
 	Route::get('/admin/staff','StaffController@staff_view');
+
+	// Pusher
+	Route::get('/counter',function(){
+		return view('pusher_index');
+	});
+
+	Route::get('/sender',function(){
+		return view('form_page');
+	});
+
+	Route::post('/sender',function(){
+	
+		$text = request()->text;
+		// This is the post
+		event(new FormSubmitted($text));
+	});
 
 });
 

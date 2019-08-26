@@ -3,7 +3,7 @@
 @section('content')
 
 <div class='row'>
-  <div class="col-md-4">
+  <div class="col-md-6">
       <div class="box box-primary">
       <div class="box-header with-border">
           <h3 class="box-title">Dispanesers</h3>
@@ -14,7 +14,7 @@
       </div>
       
       @foreach($dispanesers as $dispaneser)
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="box-body">
 
             <ul style="list-style:none; margin:0; padding:0">
@@ -33,43 +33,8 @@
       </div>
   </div>
 
-<!-- Companies with low limit Area -->
-<div class="col-md-3 table-wrapper-scroll-y my-custom-scrollbar scrollStyle">
-  <div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title">Companies with low limit</h3>
-    </div>
-
-    <div class="box-body">
-        <div class="table-responsive">
-        <table class="table no-margin">
-            <thead>
-            <tr>
-            <th class="text-center">Company</th>
-            <th class="text-center">Limit left</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($company_low_limit as $comp_low_limit)
-                <tr class="text-center">
-                    <td>{{ $comp_low_limit->name }}</td>
-                    <td>{{ $comp_low_limit->limit_left }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-        </div>
-    </div>
-    
-    <div class="box-footer clearfix text-center">
-        <a href="/admin/companies" class="btn btn-sm btn-default btn-flat">View All Companies</a>
-    </div>
-  </div>
-</div>
-<!-- END Companies with low limit Area -->
-
 <!-- LIVE Feed Area -->
-<div class="col-md-5 table-wrapper-scroll-y my-custom-scrollbar scrollStyle" id="loadTransaction">
+<div class="col-md-6 table-wrapper-scroll-y my-custom-scrollbar scrollStyle" id="loadTransaction">
   <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">Live Feed</h3>
