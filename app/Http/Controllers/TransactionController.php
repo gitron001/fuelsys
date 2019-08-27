@@ -245,7 +245,7 @@ class TransactionController extends Controller
         $balance    = self::generate_balance($request);
         $data       = self::getGeneralData($request);
         $company    = Company::where('status', 4)->first();
-        $date = $request->fromDate;
+        $date 		= $request->fromDate;
         $inc_transactions = $request->input('inc_transactions');
 
         //dd($payments);exit();
@@ -290,7 +290,7 @@ class TransactionController extends Controller
         $date           = date('Y-m-d').' 00:00:00';
 
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
-                DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
+                DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
                 ,"users.name as username","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
