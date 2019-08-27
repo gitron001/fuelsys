@@ -374,5 +374,5 @@ class UsersController extends Controller
 
     }
 
-
+    
 }
