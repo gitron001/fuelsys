@@ -14,6 +14,8 @@ Route::get('locale/{locale}',function($locale){
 	return redirect()->back();
 });
 
+Route::get('/test/events', 'HomeController@testing_event');
+
 Route::group(['middleware' => 'authenticated'], function () {
 
 	// Companies
