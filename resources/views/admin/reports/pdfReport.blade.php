@@ -1,4 +1,4 @@
-<!doctype html>
+<!Doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -40,23 +40,42 @@
 	<table width="100%">
 	<tr>
 		<td valign="top"><img src="{{ public_path().'/images/company/'.$company->images }}" alt="" width="150"/></td>
-		<td align="right">
-	    	<pre>
-	        	Raporti mbi kompaninë {{ $company->name }} <br>
-				{{ $company->city }}, {{ $company->country }}
-			    {{ date('m/d/Y h:i:s a', strtotime("now")) }}
-			</pre>
-		</td>
 	</tr>
 	<tr>
-	    <td valign="top">
-	    	<h3>{{ $company->name }}</h3>
+
+		<td align="left">
+	    <h3>{{ $company->name }}</h3>
 	    	<p style="line-height:1.5">
-	            <span>{{ $company->address }} </span><br/>
-	            <span>{{ $company->city }}, {{ $company->country }}</span><br/>
+				<span>{{ $company->city }}, {{ $company->country }}</span><br/>
+				<span>{{ $company->email }}</span><br/>
 	            <span> {{ $company->tel_number }}</span>
 	        </p>
 		</td>
+
+		<td align="right">
+		@if(isset($company_details))
+		<h3>{{ $company_details->name }}</h3>
+	    	<p style="line-height:1.5">
+				<span>{{ $company_details->city }}, {{ $company_details->country }}</span><br/>
+				<span>{{ $company_details->email }}</span><br/>
+	            <span> {{ $company_details->tel_number }}</span>
+	        </p>
+		@endif
+		</td>
+
+		@if(isset($user_details))
+			@foreach($user_details as $u_d)
+			<td align="right">
+				<h3>{{ $u_d->name }}</h3>
+					<p style="line-height:1.5">
+					<span>{{ $u_d->residence }} </span><br/>
+					<span>{{ $u_d->email }}</span><br/>
+					<span> {{ $u_d->contact_number }}</span>
+				</p>
+			</td>
+			@endforeach
+		@endif
+
 	</tr>
 
 	</table>
@@ -87,12 +106,12 @@
 	<table width="100%">
 	<thead style="background-color: lightgray;">
 	  <tr>
-	    <th>DATA</th>
-	    <th>LLOJI</th>
-	    <th>PERSONI</th>
-	    <th>MBUSHJA</th>
-	    <th>PAGESA</th>
-	    <th>GJENDJA</th>
+	    <th align="center">DATA</th>
+	    <th align="center">LLOJI</th>
+	    <th align="center">PERSONI</th>
+	    <th align="center">MBUSHJA</th>
+	    <th align="center">PAGESA</th>
+	    <th align="center">GJENDJA</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -160,9 +179,9 @@
 		
 		?>
 		<tr @if($py->type == 'transaction' && ($inc_transactions == 'No' || !request()->has('inc_transactions'))) echo style="display:none;" @endif>
-			<th scope="row">{{ $py->created_at }}</th>
-			<td>{{ $py->type}}</td>
-			<td align="right">{{ $py->username }}</td>
+			<th scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d h:i:s', $py->date) : $py->created_at }}</th>
+			<td> {{ $py->description == NULL  ? $py->type : $py->description }} </td>
+			<td align="right">{{ ( $py->company_name !== NULL ) ? $py->username ." / ". $py->company_name : $py->username }}</td>
 			<td align="right">{{ $fueling }}</td>
 			<td align="right">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>

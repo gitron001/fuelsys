@@ -353,5 +353,30 @@ class UsersController extends Controller
 		}
     }
 
+    public function bonus_members(Request $request) {
+        $products   = Products::select('name','id', 'pfc_pr_id')->where('status', 1)->get();
 
+        return view('/admin/users/bonus_members',compact('products'));
+    }
+
+    public function updateCard(Request $request) {
+        $users          = Users::select('id')->where('type',$request->input('type'))->get();
+        $rfid_discount  = RFID_Discounts::whereIN('rfid_id',$users)->get();
+        
+        foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
+            if(!empty($product) && !empty($discount)){
+                foreach($rfid_discount as $rfid){
+                    RFID_Discounts::where('rfid_id',$rfid->rfid_id)->where('product_id',$product)->update(['discount'=> $discount]);
+                }
+            }
+            
+        }
+
+        session()->flash('info','Success');
+
+		return redirect('/admin/users');
+
+    }
+
+    
 }

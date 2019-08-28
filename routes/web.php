@@ -47,7 +47,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('user/{id}/delete', ['as' => 'user.delete', 'uses' => 'UsersController@destroy']);
 	Route::get('/admin/uploadExcel', 'UsersController@uploadExcel');
 	Route::post('/import_excel/import', 'UsersController@importExcel');
-
+	Route::get('/admin/bonus_members', 'UsersController@bonus_members');
+	Route::post('/update_card/update', 'UsersController@updateCard');
+	
 	// Payments
 	Route::resource('/admin/payments', 'PaymentsController');
 	Route::get('payment/{id}/delete', ['as' => 'payment.delete', 'uses' => 'PaymentsController@destroy']);
@@ -87,10 +89,6 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/admin/staff','StaffController@staff_view');
 
 });
-
-
-
-
 
 
 

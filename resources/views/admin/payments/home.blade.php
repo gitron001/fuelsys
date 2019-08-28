@@ -46,8 +46,8 @@
         </div>
 
         <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i> Search</button>
-        <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i> Clear filters</a>
-        <a href="{{ url('admin/payments/create') }}"><button type="button" class="btn btn-success">+ Create new payment</button></a>
+        <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i> Clear</a>
+        <a href="{{ url('admin/payments/create') }}" data-toggle="tooltip" class="btn btn-success" title="Create new payment"><i class="fa fa-plus"></i> New</a>
       </form>
 
       <br>
