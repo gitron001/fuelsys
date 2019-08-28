@@ -18,5 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/list/rfid', 'API\RfidController@index');
-
 Route::get('/list/save_rfid', 'API\RfidController@save');
+
+Route::get('/payments', 'API\PaymentsController@getAllPayments');
+Route::post('/payments/create', 'API\PaymentsController@createPayment');
