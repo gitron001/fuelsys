@@ -156,8 +156,11 @@ class UsersController extends Controller
                 'type'              => $request->input('type'),
                 'password'          => Hash::make($password),
                 'status'            => 1,
+                'remember_token'    => '',
                 'created_at'        => now()->timestamp,
-                'updated_at'        => now()->timestamp
+                'updated_at'        => now()->timestamp,
+                'product'           => $request->input('product'),
+                'discount'          => $request->input('discount'),
              ],
         ]);
 
