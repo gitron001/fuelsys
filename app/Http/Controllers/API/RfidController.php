@@ -137,7 +137,7 @@ class RfidController extends Controller
 
     public function saveRfid(Request $request){
         $rfid = $request->all();
-        dd($rfid);exit();
+
         if(Users::where('rfid', $rfid['rfid'])->exists()){
             return response()->json([
                 "message" => "This RFID(".$rfid['rfid'].") already exists!"
