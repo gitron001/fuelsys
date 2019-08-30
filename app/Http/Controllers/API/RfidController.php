@@ -134,4 +134,51 @@ class RfidController extends Controller
         }
     
     }
+
+    public function saveRfid(Request $request){
+        $rfid = $request->all();
+
+        if(Users::where('rfid', $rfid['rfid'])->exists()){
+            return response()->json([
+                "message" => "This RFID(".$rfid['rfid'].") already exists!"
+            ], 201);
+        }else {
+            Users::firstOrCreate([
+                'rfid' => $rfid['rfid']],
+                [
+                'name'              => $rfid['name'],
+                'surname'           => !empty($rfid['surname']) ? $rfid['surname'] : NULL,
+                'residence'         => !empty($rfid['residence']) ? $rfid['residence'] : NULL,
+                'contact_number'    => !empty($rfid['contact_number']) ? $rfid['contact_number'] : NULL,
+                'application_date'  => !empty($rfid['application_date']) ? $rfid['application_date'] : NULL,
+                'business_type'     => !empty($rfid['business_type']) ? $rfid['business_type'] : NULL,
+                'email'             => !empty($rfid['email']) ? $rfid['email'] : NULL,
+                'password'          => !empty($rfid['password']) ? $rfid['password'] : NULL,
+                'company_id'        => !empty($rfid['company_id']) ? $rfid['company_id'] : 0,
+                'one_time_limit'    => !empty($rfid['one_time_limit']) ? $rfid['one_time_limit'] : 0,
+                'plates'            => !empty($rfid['plates']) ? $rfid['plates'] : 0,
+                'vehicle'           => !empty($rfid['vehicle']) ? $rfid['vehicle'] : 0,
+                'status'            => !empty($rfid['status']) ? $rfid['status'] : 1,
+                'type'              => !empty($rfid['type']) ? $rfid['type'] : 1,
+                'starting_balance'  => !empty($rfid['starting_balance']) ? $rfid['starting_balance'] : 0,
+                'limits'            => !empty($rfid['limits']) ? $rfid['limits'] : 0,
+                'limit_left'        => !empty($rfid['limit_left']) ? $rfid['limit_left'] : 0,
+                'remember_token'    => $rfid['remember_token'],
+                'created_at'        => $rfid['created_at'],
+                'updated_at'        => $rfid['updated_at'],
+            ]);
+
+            if(!empty($user['discount'])) {
+                foreach($user['discount'] as $discount){
+                    RFID_Discounts::updateOrCreate([
+                        'rfid_id'       => $discount['rfid_id'],
+                        'product_id'    => $discount['product_id'],
+                        'discount'      => $discount['discount'],
+                        'created_at'    => $discount['created_at'],
+                        'updated_at'    => $discount['updated_at']
+                    ]);
+                }
+            }
+        }
+    }
 }
