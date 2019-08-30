@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->char('status');
             $table->char('locker');
             $table->integer('tr_no');
+			$table->integer('channel_id')->nullable()->index();
             $table->char('receipt_no')->nullable()->index();
             $table->char('sl_no');
             $table->integer('pfc_id');
