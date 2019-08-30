@@ -16,3 +16,5 @@ supervisord.log
 monitoring_cronjob.php
 supervisord.pid
 public/images/company
+composer.lock
+composer.json
