@@ -132,7 +132,7 @@ class UsersController extends Controller
             }
         }
         */
-        
+        /*
         $client = new \GuzzleHttp\Client(['cookies' => true,
             'headers' =>  [
                 'Authorization'          => "ABCDEFGHIJK"
@@ -163,7 +163,7 @@ class UsersController extends Controller
                 'discount'          => $request->input('discount'),
              ],
         ]);
-
+		*/
         return $response->getBody();exit();
 
         session()->flash('info','Success');

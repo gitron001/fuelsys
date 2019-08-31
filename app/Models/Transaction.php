@@ -51,7 +51,7 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\PFC');
     }
 
-    public static function insertTransactionData($response, $pfc_id){
+    public static function insertTransactionData($response, $pfc_id, $channel_id){
 
         $transaction = new Transaction();
 
@@ -110,6 +110,7 @@ class Transaction extends Model
         }
         //Query the rfid ID from the RFID table
         $transaction->user_id = $user->id;
+        $transaction->channel_id = $channel_id;
 
         $transaction->ctype = $response[34];
 
@@ -118,7 +119,7 @@ class Transaction extends Model
         $bill_no = pack('c', $response[37]).pack('c', $response[36]);
         $bill_no = unpack('s', $bill_no)[1];
         $transaction->bill_no = $bill_no;
-
+		
         $transaction->save();
 
         return $transaction->id;
