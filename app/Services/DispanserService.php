@@ -171,6 +171,7 @@ class DispanserService extends ServiceProvider
 
                 $data['name']      = 'Pump - '.$channel;
                 $data['created_at'] = time();
+                $data['channel_id'] = $channel;
                 $data['pfc_id'] = $pfc_id;
                 $data['updated_at'] = time();
                 Dispaneser::insert($data);

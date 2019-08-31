@@ -47,18 +47,12 @@ class TransactionService extends ServiceProvider
                 $status = 1;
                 $changed_status = self::transaction_status($channel, $status, $socket);
                 usleep(150000);
-                $inserted = self::read_data($socket, $channel, $pfc_id);
-                if($inserted){
+                self::read_data($socket, $channel, $pfc_id);
+                if($changed_status)
                     echo 'UPDATED';
-				}else{
-					//Unlock transaction is not inserted
-					$status = 0;
-					$changed_status = self::transaction_status($channel, $status, $socket);					
-				}
             }else if($response[$i] == 2){
-                //$channel = (($i/4));
-                //self::read_data($socket, $channel, $pfc_id);
-				continue;
+                $channel = (($i/4));
+                self::read_data($socket, $channel, $pfc_id);
             }
         }
         //LOCKED
@@ -90,18 +84,19 @@ class TransactionService extends ServiceProvider
 
         $response = PFC::send_message($socket, $binarydata);
 
-		if(!$response){ 		
-			return false;
-		} 
+		if(!$response){ return false; } 
 
         $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel);
 		
         //Clear status transaction
-        //$status = 2;
+        $status = 2;
 
-        //$changed_status = self::transaction_status($channel, $status, $socket);
+        //call job to update company balance
+        //HERE
+
+        $changed_status = self::transaction_status($channel, $status, $socket);
 		
-		if(!$transaction_id){ return false; } 
+		if(!$transaction_id){ return true; } 
 		
         $recepit = new PrintFuelRecept($transaction_id);
         dispatch($recepit);
