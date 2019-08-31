@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Event_Test;
 use Illuminate\Http\Request;
 use App\Models\Dispaneser;
 use App\Models\Company;
@@ -53,5 +54,11 @@ class HomeController extends Controller
 
         });
         
+    }
+
+    public function testing_event(){
+
+        event(new Event_Test('hello world'));
+        echo 'ok';
     }
 }
