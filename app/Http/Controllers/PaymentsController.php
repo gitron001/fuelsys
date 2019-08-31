@@ -20,6 +20,10 @@ use Auth;
 
 class PaymentsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -130,7 +134,28 @@ class PaymentsController extends Controller
         } catch (Exception $e) {
            $msg = "Payment Print NOT Succesful";
         }
-		
+
+        // Create payment with API
+        $client = new \GuzzleHttp\Client(['cookies' => true,
+            'headers' =>  [
+                'Authorization'          => "ABCDEFGHIJK"
+            ]]);
+        $url = '192.168.1.2/api/payments/create';
+        
+        $data = $payments->toArray();
+        $response = $client->request('POST', $url, [
+            'form_params' => [ 
+                'date'          => strtotime($request->input('date')),
+                'amount'        => $request->input('amount'),
+                'description'   => $request->input('description'),
+                'user_id'       => $request->input('user_id'),
+                'company_id'    => $request->input('company_id'),
+                'created_by'    => Auth::user()->id,
+                'edited_by'     => Auth::user()->id,
+                'created_at'    => now()->timestamp,
+                'updated_at'    => now()->timestamp,
+             ],
+        ]);
 		
         session()->flash('info','Success');
 

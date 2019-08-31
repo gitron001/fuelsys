@@ -180,7 +180,7 @@
 		?>
 		<tr @if($py->type == 'transaction' && ($inc_transactions == 'No' || !request()->has('inc_transactions'))) echo style="display:none;" @endif>
 			<th scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d h:i:s', $py->date) : $py->created_at }}</th>
-			<td>{{ $py->type}}</td>
+			<td> {{ $py->description == NULL  ? $py->type : $py->description }} </td>
 			<td align="right">{{ ( $py->company_name !== NULL ) ? $py->username ." / ". $py->company_name : $py->username }}</td>
 			<td align="right">{{ $fueling }}</td>
 			<td align="right">{{ $payment }}</td>
