@@ -16,6 +16,7 @@ class CreateDispanesersTable extends Migration
         Schema::create('dispanesers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('channel_id');
             $table->integer('pfc_id');
             $table->integer('created_at');
             $table->integer('updated_at');

@@ -1,6 +1,9 @@
 @extends('adminlte::page')
 
 @section('content')
+
+@include('includes/alert_info')
+
 <div class="box box-primary">
     <div class="box-header with-border">
 		<h3 class="box-title">{{!isset($user) ? 'Create new user' : 'Edit user'}}</h3>

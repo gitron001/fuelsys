@@ -86,7 +86,7 @@ class TransactionService extends ServiceProvider
 
 		if(!$response){ return false; } 
 
-        $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id);
+        $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel);
 		
         //Clear status transaction
         $status = 2;

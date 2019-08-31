@@ -130,11 +130,11 @@ class PaymentsController extends Controller
         /*$msg = "Payment Print not Succesful";
 		*/
         try {
-            self::printFunction($payments->id);
+            //self::printFunction($payments->id);
         } catch (Exception $e) {
            $msg = "Payment Print NOT Succesful";
         }
-
+		/*
         // Create payment with API
         $client = new \GuzzleHttp\Client(['cookies' => true,
             'headers' =>  [
@@ -156,7 +156,7 @@ class PaymentsController extends Controller
                 'updated_at'    => now()->timestamp,
              ],
         ]);
-		
+		*/
         session()->flash('info','Success');
 
         return redirect('/admin/payments');

@@ -51,7 +51,7 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\PFC');
     }
 
-    public static function insertTransactionData($response, $pfc_id){
+    public static function insertTransactionData($response, $pfc_id, $channel_id){
 
         $transaction = new Transaction();
 
@@ -99,7 +99,7 @@ class Transaction extends Model
         $rfid = unpack('i', $rfid)[1];
 
         $user = Users::where("rfid", $rfid)->where('status', 1)->first();
-		if(isset($user->id)){
+		/*if(isset($user->id)){
 			if(!is_null($user->company->id) && $user->company->has_limit == 1){
 				$company = Company::find( $user->company->id );
 				$company->limit_left -= $transaction->money;
@@ -108,12 +108,15 @@ class Transaction extends Model
 				$user->limit_left -= $transaction->money;
 				$user->save();
 			}
-        //Query the rfid ID from the RFID table
+
 			$transaction->user_id = $user->id;
 		}else{
 			$transaction->user_id = $rfid;
-			echo $rfid;
-		}
+			//echo $rfid;
+		}*/
+
+	$transaction->user_id = $rfid;
+        $transaction->channel_id = $channel_id;
 
         $transaction->ctype = $response[34];
 
@@ -122,7 +125,7 @@ class Transaction extends Model
         $bill_no = pack('c', $response[37]).pack('c', $response[36]);
         $bill_no = unpack('s', $bill_no)[1];
         $transaction->bill_no = $bill_no;
-
+		
         $transaction->save();
 
         return $transaction->id;

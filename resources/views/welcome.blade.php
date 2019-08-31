@@ -34,6 +34,7 @@
   </div>
 
 <!-- Companies with low limit Area -->
+@if(count($company_low_limit) != 0)
 <div class="col-md-3 table-wrapper-scroll-y my-custom-scrollbar scrollStyle">
   <div class="box box-primary">
     <div class="box-header with-border">
@@ -66,6 +67,7 @@
     </div>
   </div>
 </div>
+@endif
 <!-- END Companies with low limit Area -->
 
 <!-- LIVE Feed Area -->
@@ -73,6 +75,7 @@
   <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">Live Feed</h3>
+		<a href="/admin/transactions" class="btn btn-sm btn-default btn-flat">View All Transactions</a>
         <span class="pulse"></span>
     </div>
     
@@ -101,13 +104,11 @@
         </div>
     </div>
     
-    <div class="box-footer clearfix text-center">
-        <a href="/admin/transactions" class="btn btn-sm btn-default btn-flat">View All Transactions</a>
-    </div>
+
   </div>
 </div>
 <!-- END LIVE Feed Area -->
-  
+    
 </div>
 
 @endsection
