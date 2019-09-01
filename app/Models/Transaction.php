@@ -115,7 +115,7 @@ class Transaction extends Model
 			//echo $rfid;
 		}*/
 
-	$transaction->user_id = $rfid;
+		$transaction->user_id = $user->id;
         $transaction->channel_id = $channel_id;
 
         $transaction->ctype = $response[34];
