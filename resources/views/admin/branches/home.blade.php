@@ -13,7 +13,7 @@
 
                 <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/branches') }}">
                   @include('includes.search_filter')
-                  <a href="{{ url('admin/branches/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new branch"><i class="fa fa-plus"></i> New Branch</a>
+                  <a href="{{ url('admin/branches/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new branch"><i class="fa fa-plus"></i> New</a>
                 </form>
 
               </div>

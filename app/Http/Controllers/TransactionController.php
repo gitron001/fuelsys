@@ -200,7 +200,7 @@ class TransactionController extends Controller
                     
                     $sheet->appendRow(array(
                         $row->created_at,
-                        $row->type,
+                        $row->description == NULL  ? $row->type : $row->description,
                         $row->username ? $row->username : $row->company_id,
                         $fueling,
                         $payment,
@@ -245,10 +245,22 @@ class TransactionController extends Controller
         $balance    = self::generate_balance($request);
         $data       = self::getGeneralData($request);
         $company    = Company::where('status', 4)->first();
-        $date = $request->fromDate;
+        $date 		= $request->fromDate;
         $inc_transactions = $request->input('inc_transactions');
 
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company'));
+        //dd($payments);exit();
+
+        if(isset($request->user)){
+            $id = $request->user;
+            $user_details = Users::whereIN('id',$id)->get();
+        }
+
+        if(isset($request->company)){
+            $id = $request->company;
+            $company_details = Company::where('id',$id)->first();
+        }
+
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
         
@@ -278,9 +290,9 @@ class TransactionController extends Controller
         $date           = date('Y-m-d').' 00:00:00';
 
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
-                DB::RAW(" 0 as amount"),DB::RAW(" 0 as date")
+                DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
-                ,"users.name as username","transactions.created_at")
+                ,"users.name as username","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
@@ -307,10 +319,11 @@ class TransactionController extends Controller
         $payments = Payments::select("payments.user_id",DB::RAW(" 'payment' as type")
                 ,"payments.amount","payments.date",
                 DB::RAW(" 0 as money"),"payments.company_id"
-                ,"users.name as username","payments.created_at")
+                ,"users.name as username","payments.created_at","companies.name as company_name","payments.description")
             ->leftJoin('users', 'payments.user_id', '=', 'users.id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->union($transactions)
-            ->orderBy('created_at','ASC');
+            ->orderBy('date','ASC');
 
         if ($request->input('user') && empty($request->input('company'))) {
             $payments->whereIn('user_id',$user);

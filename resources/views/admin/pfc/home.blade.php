@@ -13,7 +13,7 @@
 
                 <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/pfc') }}">
                   @include('includes.search_filter')
-                  <a href="{{ url('admin/pfc/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new pfc"><i class="fa fa-plus"></i> New PFC</a>
+                  <a href="{{ url('admin/pfc/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new pfc"><i class="fa fa-plus"></i> New</a>
                 </form>
  
               </div>

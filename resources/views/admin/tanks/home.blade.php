@@ -13,7 +13,7 @@
 
                 <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/tanks') }}">
                   @include('includes.search_filter')
-                  <a href="{{ url('admin/tanks/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new tank"><i class="fa fa-plus"></i> New Tank</a>
+                  <a href="{{ url('admin/tanks/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new tank"><i class="fa fa-plus"></i> New</a>
                 </form>
 
               </div>

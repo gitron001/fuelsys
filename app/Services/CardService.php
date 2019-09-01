@@ -13,6 +13,7 @@ use App\Models\PFC as PfcModel;
 use App\Models\Bonus_request as Bonus;
 use App\Models\FaileAttempt as FaileAttempt;
 use DB;
+use App\Services\TransactionService;
 
 
 class CardService extends ServiceProvider
@@ -127,6 +128,7 @@ class CardService extends ServiceProvider
                 self::setPrepay($socket, $channel, $limit_left);
             }
         }
+				
         if(count($user->discounts) == 0 && count($user->company->discounts) == 0){
 			
 			$bonus_requst = Bonus::where('channel_id', $channel)->where('pfc_id', $pfc_id)->where('created_at', '>', $time_difference)->first();
