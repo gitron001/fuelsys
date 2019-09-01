@@ -3,7 +3,7 @@
 @section('content')
 
 <div class='row'>
-  <div class="col-md-4">
+  <div class="col-md-6">
       <div class="box box-primary">
       <div class="box-header with-border">
           <h3 class="box-title">Dispanesers</h3>
@@ -14,7 +14,7 @@
       </div>
       
       @foreach($dispanesers as $dispaneser)
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="box-body">
 
             <ul style="list-style:none; margin:0; padding:0">
@@ -71,7 +71,7 @@
 <!-- END Companies with low limit Area -->
 
 <!-- LIVE Feed Area -->
-<div class="col-md-5 table-wrapper-scroll-y my-custom-scrollbar scrollStyle" id="loadTransaction">
+<div class="col-md-6 table-wrapper-scroll-y my-custom-scrollbar scrollStyle" id="loadTransaction">
   <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">Live Feed</h3>

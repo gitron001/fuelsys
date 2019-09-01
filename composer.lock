@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
     "content-hash": "826c59d2e5363b6b9834872ad37c7a0a",
-=======
-    "content-hash": "ecc9280d99f91ac2dd98e60270c4d766",
->>>>>>> 39dd19b7468d2763e67c25666d6f1a9aa5c2c3de
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2270,6 +2266,9 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bf6a590d8833cb7e514cd22eb9f1beeeaa52dc9a
             "name": "pusher/pusher-php-server",
             "version": "v4.0.0",
             "source": {
@@ -2302,6 +2301,7 @@
                 "psr-4": {
                     "Pusher\\": "src/"
                 }
+<<<<<<< HEAD
 =======
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
@@ -2329,12 +2329,17 @@
                     "src/getallheaders.php"
                 ]
 >>>>>>> 39dd19b7468d2763e67c25666d6f1a9aa5c2c3de
+=======
+>>>>>>> bf6a590d8833cb7e514cd22eb9f1beeeaa52dc9a
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bf6a590d8833cb7e514cd22eb9f1beeeaa52dc9a
             "description": "Library for interacting with the Pusher REST API",
             "keywords": [
                 "events",
@@ -2350,6 +2355,7 @@
                 "trigger"
             ],
             "time": "2019-06-25T09:22:44+00:00"
+<<<<<<< HEAD
 =======
             "authors": [
                 {
@@ -2360,6 +2366,8 @@
             "description": "A polyfill for getallheaders.",
             "time": "2019-03-08T08:55:37+00:00"
 >>>>>>> 39dd19b7468d2763e67c25666d6f1a9aa5c2c3de
+=======
+>>>>>>> bf6a590d8833cb7e514cd22eb9f1beeeaa52dc9a
         },
         {
             "name": "ramsey/uuid",
