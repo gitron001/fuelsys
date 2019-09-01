@@ -126,7 +126,7 @@ class PaymentsController extends Controller
         /*$msg = "Payment Print not Succesful";
 		*/
         try {
-            self::printFunction($payments->id);
+            //self::printFunction($payments->id);
         } catch (Exception $e) {
            $msg = "Payment Print NOT Succesful";
         }
