@@ -163,8 +163,8 @@ class UsersController extends Controller
                 'discount'          => $request->input('discount'),
              ],
         ]);
-		*/
-        return $response->getBody();exit();
+		
+        return $response->getBody();exit();*/
 
         session()->flash('info','Success');
         return redirect('/admin/users');

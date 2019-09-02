@@ -168,11 +168,10 @@ class DispanserService extends ServiceProvider
         for($i = 3; $i <= $length; $i++){
             if($response[$i] == 1){
                 $channel = ($i - 3);
-
                 $data['name']      = 'Pump - '.$channel;
                 $data['created_at'] = time();
                 $data['channel_id'] = $channel;
-                $data['pfc_id'] = $pfc_id;
+                $data['pfc_id'] 	= $pfc_id;
                 $data['updated_at'] = time();
                 Dispaneser::insert($data);
             }

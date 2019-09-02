@@ -12,11 +12,12 @@ use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
-use App\Jobs\PrintFuelRecept;
 use DateTime;
 use Config;
 use DB;
 use Auth;
+use App\Jobs\PrintPayment;
+use App\Services\PrintPaymentService;
 
 class PaymentsController extends Controller
 {
@@ -126,14 +127,16 @@ class PaymentsController extends Controller
         $payments->updated_at   = now()->timestamp;
         $payments->save();
 
+		$recepit = new PrintPayment($payments->id);
+        dispatch($recepit);
 		
         /*$msg = "Payment Print not Succesful";
-		*/
+		
         try {
             //self::printFunction($payments->id);
         } catch (Exception $e) {
-           $msg = "Payment Print NOT Succesful";
-        }
+           //$msg = "Payment Print NOT Succesful";
+        }*/
 		/*
         // Create payment with API
         $client = new \GuzzleHttp\Client(['cookies' => true,
@@ -290,6 +293,12 @@ class PaymentsController extends Controller
 
     public static function printFunction($id)
     {
+		
+		$recepit = new PrintPayment($id);
+        dispatch($recepit);
+		exit;
+		PrintPaymentService::printFunction($id);
+		exit;
         try {
 
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
