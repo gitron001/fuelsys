@@ -361,10 +361,13 @@ class TransactionController extends Controller
         }
 
         $tr = Transactions::where('transactions.created_at','<',$from_date)
-            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
-
-        if ($request->input('user') & empty($request->input('company'))) {
+            ->join('users', 'transactions.user_id', '=', 'users.id');
+		
+		if ($request->filled('company')){
+			$tr->join('companies', 'companies.id', '=', 'users.company_id');
+		}
+		
+        if ($request->filled('user') & !$request->filled('company')) {
             $tr->whereIn('user_id',$user);
             $users = Users::whereIn('id',$user)->get();
 
@@ -372,14 +375,15 @@ class TransactionController extends Controller
                 $starting_balance += $user->starting_balance;
             }
         }
+		
+        if ($request->filled('company') & !$request->filled('user')) {
 
-        if ($request->input('company') & empty($request->input('user'))) {
-            $tr->where('company_id','=',$company);
+            $tr->where('users.company_id','=',$company);
             $starting_balance = Company::findorFail($company)->starting_balance;
         }
 
-        if($request->input('company') && $request->input('user')){
-            $tr->whereIn('user_id',$user)->orWhere('company_id','=',$company);
+        if($request->filled('company') && $request->filled('user')){
+            $tr->whereIn('user_id',$user)->orWhere('users.company_id','=',$company);
 
             $users = Users::whereIn('id',$user)->get();
 
@@ -390,7 +394,8 @@ class TransactionController extends Controller
             $starting_balance += Company::findorFail($company)->starting_balance;
 
         }
-		
+		//dd($request->input('company') );
+		//dd($tr->toSql());
         $transaction_total = $tr->sum('money');
 
         $paymentsOLD = Payments::where('payments.date','<',$from_payment);
@@ -405,9 +410,9 @@ class TransactionController extends Controller
 
         if($request->input('company') && $request->input('user')){
 			$user = $request->input('user');
-			$paymentsOLD->orWhere(function ($query, $user, $company) {
-				$query->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
-			});
+			//$paymentsOLD->orWhere(function ($query, $user, $company) {
+				$paymentsOLD->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
+			//});
             //$paymentsOLD->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
         }
 
