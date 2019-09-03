@@ -76,26 +76,6 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        // Get transaction ID and find transaction with that id
-        $transactions   = Transaction::where('id', '17')->first();
-        // Find user who made the transaction
-        $user_email     = Users::where('rfid',$transactions['user_id'])->first();
-
-        // If user has company find company email
-        if($user_email['company_id'] != 0){
-            $company_email  = Company::where('id',$user_email['company_id'])->first();
-        }
-
-        $job = (new SendTransactionEmail([
-                'id'            => $transactions['id'],
-                'user_email'    => isset($user_email) ? $user_email['email'] : NULL,
-                'company_email' => isset($company_email) ? $company_email['send_email'] : NULL,
-        ]));
-        
-        $job->handle();
-
-        exit();
-
         if (Users::where('rfid', $request->input('rfid'))->exists()) {
 
             session()->flash('wrong','This RFID exists!');
