@@ -398,17 +398,17 @@ class TransactionController extends Controller
 		//dd($tr->toSql());
         $transaction_total = $tr->sum('money');
 
-        $paymentsOLD = Payments::where('payments.date','<',$from_payment);
+        $paymentsOLD = Payments::where('payments.date','<',$from_date);
 		
-        if ($request->input('company') && empty($request->input('user'))) {
+        if ($request->input('company') && !$request->filled('user')) {
             $paymentsOLD->where('payments.company_id','=',$company);
         }
 
-        if ($request->input('user') && empty($request->input('company'))) {
+        if ($request->input('user') && !$request->filled('company')) {
             $paymentsOLD->whereIn('user_id',$request->input('user'));
         }
 
-        if($request->input('company') && $request->input('user')){
+        if($request->filled('company') && $request->filled('user')){
 			$user = $request->input('user');
 			//$paymentsOLD->orWhere(function ($query, $user, $company) {
 				$paymentsOLD->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
@@ -417,6 +417,7 @@ class TransactionController extends Controller
         }
 
         $paymentsOLD = $paymentsOLD->sum('amount');
+
         $balance = $transaction_total + $starting_balance - $paymentsOLD;
         
         return $balance;

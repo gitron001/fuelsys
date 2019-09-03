@@ -193,7 +193,7 @@ class UsersController extends Controller
         $user           = Users::findOrFail($id);
         $branches       = Branch::select('name','id')->get();
         $products       = Products::select('name','pfc_pr_id')->get();
-        $companies      = Company::select('name','id')->get();
+        $companies      = Company::select('name','id')->orderBy('name', 'asc')->get();
         $rfid_limits    = RFID_Limits::where('rfid_id',$id)->get();
         $rfid_discounts = RFID_Discounts::where('rfid_id',$id)->get();
 
