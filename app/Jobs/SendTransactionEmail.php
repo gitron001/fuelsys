@@ -8,6 +8,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Models\Transaction;
+use App\Mail\TransactionMail;
+use Mail;
 
 class SendTransactionEmail implements ShouldQueue
 {
@@ -20,12 +22,11 @@ class SendTransactionEmail implements ShouldQueue
      * @return void
      */
 
-    protected   $transaction_id;
+    protected $request;
 
-    public function __construct($transaction_id)
+    public function __construct($request)
     {
-        //Payment Id to print
-        $this->transaction_id  = $transaction_id;
+        $this->request = $request;
     }
 
 
@@ -36,6 +37,17 @@ class SendTransactionEmail implements ShouldQueue
      */
     public function handle()
     {
-        //Read email and send transaction with ID 
+        //Read email and send transaction with ID
+        $mailable = new TransactionMail($this->request['id']);
+        
+        // Send email to user
+        if(isset($this->request['user_email'])){
+            Mail::to($this->request['user_email'])->send($mailable);
+        }
+
+        // Send email to company
+        if(isset($this->request['company_email'])){
+            Mail::to($this->request['company_email'])->send($mailable);
+        }
     }
 }

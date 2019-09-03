@@ -84,8 +84,10 @@ return [
     |
     */
 
-    'username' =>  env('MAIL_USERNAME', 'fuelsystem.ks@gmail.com'),
-    'password' => env('MAIL_PASSWORD', 'FuelSystemnb2019'),
+    //'username' =>  env('MAIL_USERNAME', 'fuelsystem.ks@gmail.com'),
+    //'password' => env('MAIL_PASSWORD', 'FuelSystemnb2019'),
+    'username' =>  env('MAIL_USERNAME', 'orgesthaqi96@gmail.com'),
+    'password' => env('MAIL_PASSWORD', 'lmhkygqgpqremttk'),
 
     /*
     |--------------------------------------------------------------------------

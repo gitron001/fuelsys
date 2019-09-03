@@ -8,6 +8,8 @@ use App\Models\Products;
 use App\Models\Branch;
 use App\Models\RFID_Discounts;
 use Illuminate\Support\Facades\Input;
+use App\Jobs\SendTransactionEmail;
+use App\Models\Transaction;
 use App\Models\RFID_Limits;
 use App\Models\Company;
 use DB;
