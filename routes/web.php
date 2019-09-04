@@ -106,6 +106,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 		event(new FormSubmitted($text));
 	});
 
+	Route::get('/api/rfids','API\RfidController@getAllRfids');
+
 });
 
 
