@@ -37,15 +37,22 @@ class RfidController extends Controller
             $response[]         = array_merge($u,$rfid);
         }
 
-        $client = new \GuzzleHttp\Client(['cookies' => true,
-            'headers' =>  [
-                'Authorization'          => "ABCDEFGHIJK"
-            ]]);
-        $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
-        
-        $response = $client->request('POST', $url, [
-            'form_params' => $response
-        ]);
+        try {
+            $client = new \GuzzleHttp\Client(['cookies' => true,
+                'headers' =>  [
+                    'Authorization'          => "ABCDEFGHIJK"
+                ]]);
+            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
+            
+            $response = $client->request('POST', $url, [
+                'form_params' => $response
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "error" => "Failed to insert into server",
+                "message" => $e->getMessage()
+            ]);
+        }
 
         return $response->getBody();
     }

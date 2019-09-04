@@ -134,41 +134,45 @@ class UsersController extends Controller
             }
         }
         */
-        /*
-        $client = new \GuzzleHttp\Client(['cookies' => true,
+
+        try {
+            $client = new \GuzzleHttp\Client(['cookies' => true,
             'headers' =>  [
                 'Authorization'          => "ABCDEFGHIJK"
             ]]);
-        $url = '192.168.1.2/api/save/rfid';
+            $url = 'http://fuelsystem.alba-petrol.com/api/save/rfid';
+            
 
-        $response = $client->request('POST', $url, [
-            'form_params' => [ 
-                'rfid'              => $request->input('rfid'),
-                'name'              => $request->input('name'),
-                'surname'           => $request->input('surname'),
-                'residence'         => $request->input('residence'),
-                'contact_number'    => $request->input('contact_number'),
-                'application_date'  => $request->input('application_date'),
-                'business_type'     => $request->input('business_type'),
-                'email'             => $request->input('email'),
-                'company_id'        => $request->input('company_id') ? : 0,
-                'one_time_limit'    => $request->input('one_time_limit') ? : 0,
-                'plates'            => $request->input('plates') ? : 0,
-                'vehicle'           => $request->input('vehicle') ? : 0,
-                'type'              => $request->input('type'),
-                'password'          => Hash::make($password),
-                'status'            => 1,
-                'remember_token'    => '',
-                'created_at'        => now()->timestamp,
-                'updated_at'        => now()->timestamp,
-                'product'           => $request->input('product'),
-                'discount'          => $request->input('discount'),
-             ],
-        ]);
-		
-        return $response->getBody();exit();*/
+            $response = $client->request('POST', $url, [
+                'form_params' => [ 
+                    'rfid'              => $request->input('rfid'),
+                    'name'              => $request->input('name'),
+                    'surname'           => $request->input('surname'),
+                    'residence'         => $request->input('residence'),
+                    'contact_number'    => $request->input('contact_number'),
+                    'application_date'  => $request->input('application_date'),
+                    'business_type'     => $request->input('business_type'),
+                    'email'             => $request->input('email'),
+                    'company_id'        => $request->input('company_id') ? : 0,
+                    'one_time_limit'    => $request->input('one_time_limit') ? : 0,
+                    'plates'            => $request->input('plates') ? : 0,
+                    'vehicle'           => $request->input('vehicle') ? : 0,
+                    'type'              => $request->input('type'),
+                    'password'          => Hash::make($password),
+                    'status'            => 1,
+                    'remember_token'    => '',
+                    'created_at'        => now()->timestamp,
+                    'updated_at'        => now()->timestamp,
+                    'product'           => $request->input('product'),
+                    'discount'          => $request->input('discount'),
+                ],
+            ]);
+        } catch (\Exception $e) {
+            session()->flash('info','Success: [Exported: 0 ('.$e->getMessage().')]');
+            return redirect('/admin/users');
+        }
 
-        session()->flash('info','Success');
+        session()->flash('info','Success [Exported: 1]');
         return redirect('/admin/users');
         }
     }
