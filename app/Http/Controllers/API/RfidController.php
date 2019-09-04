@@ -40,7 +40,8 @@ class RfidController extends Controller
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
-                    'Authorization'          => "ABCDEFGHIJK"
+                    'Authorization'          => "ABCDEFGHIJK",
+                    'Accept'                 => "application/json"
                 ]]);
             $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
             
@@ -53,13 +54,15 @@ class RfidController extends Controller
                 "message" => $e->getMessage()
             ]);
         }
-
-        return $response->getBody();
+        
+        return view('/admin/api/response')->with('data', $response->getBody()->getContents());
     }
 
     public function createUser(Request $request) 
     {   
         $response = $request->all();
+        $new      = array();
+        $old      = array();
 
         foreach($response as $user){
             $user = Users::firstOrCreate([
@@ -87,6 +90,12 @@ class RfidController extends Controller
                 'updated_at'        => $user['updated_at'],
             ]);
 
+            if ($user->wasRecentlyCreated) {
+                $new[] = $user;
+            }else {
+                $old[] = $user;
+            }
+
             $insertedId = $user->id;
 
             if(!empty($user['discount'])) {
@@ -103,7 +112,9 @@ class RfidController extends Controller
         }
 
         return response()->json([
-            "message" => "RFID record created"
+            'response'  => 'Success',
+            'new'       => $new,
+            'old'       => $old,
         ], 201);
     
     }

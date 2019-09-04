@@ -41,6 +41,10 @@
 				<li class="list-group-item">
                   <b>Res.Number</b> <a class="pull-right">{{ $company->res_number }}</a>
 				</li>
+				<li class="list-group-item">
+				  <b>Export RFID</b> <a href="{{ url('/api/rfids') }}" class="pull-right">
+					<span class="label label-success"> EXPORT </span></a>
+				</li>
               </ul>
 
             </div>
