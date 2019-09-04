@@ -80,10 +80,12 @@ class RfidController extends Controller
                 'updated_at'        => $user['updated_at'],
             ]);
 
+            $insertedId = $user->id;
+
             if(!empty($user['discount'])) {
                 foreach($user['discount'] as $discount){
                     RFID_Discounts::firstOrCreate([
-                        'rfid_id'       => $discount['rfid_id'],
+                        'rfid_id'       => $insertedId,
                         'product_id'    => $discount['product_id'],
                         'discount'      => $discount['discount'],
                         'created_at'    => $discount['created_at'],
@@ -132,7 +134,7 @@ class RfidController extends Controller
                 'updated_at'        => $rfid['updated_at'],
             ]);
 
-            $insertedId = $user->rfid;
+            $insertedId = $user->id;
 
             if(!empty($rfid['discount'])) {
                 foreach(array_combine($rfid['product'], $rfid['discount']) as $product => $discount){
