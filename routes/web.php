@@ -8,7 +8,7 @@ Route::resource('/', 'HomeController');
 Route::get('/admin/transactions','TransactionController@searchWithPagination');
 Route::get('transactions-info', 'TransactionController@info');
 // Transactions - Genrate bill
-Route::get('/admin/transactions/{id}','TransactionController@printFunction');
+Route::get('/transaction-receipt','TransactionController@printFunction');
 
 //Change language
 Route::get('locale/{locale}',function($locale){
@@ -55,7 +55,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Payments
 	Route::resource('/admin/payments', 'PaymentsController');
 	Route::get('payment/{id}/delete', ['as' => 'payment.delete', 'uses' => 'PaymentsController@destroy']);
-	Route::get('/payment/generate/{id}', ['as' => 'payment.generate', 'uses' => 'PaymentsController@printFunction']);
+	Route::get('/payment-receipt','PaymentsController@printFunction');
 
 	// PFC 
 	Route::resource('/admin/pfc', 'PFCController');

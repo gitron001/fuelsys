@@ -646,9 +646,9 @@ class TransactionController extends Controller
         });
    }
 
-   public static function printFunction($id)
+   public static function printFunction(Request $request)
     {
-		$recepit = new PrintFuelRecept($id);
+		$recepit = new PrintFuelRecept($request->input('id'));
         dispatch($recepit);
     }
 } 

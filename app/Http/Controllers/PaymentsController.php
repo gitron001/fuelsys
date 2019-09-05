@@ -291,18 +291,17 @@ class PaymentsController extends Controller
         return redirect('/admin/payments');
     }
 
-    public static function printFunction($id)
+    public static function printFunction(Request $request)
     {
-		
-		$recepit = new PrintPayment($id);
+		$recepit = new PrintPayment($request->input('id'));
         dispatch($recepit);
 		exit;
-		PrintPaymentService::printFunction($id);
+		PrintPaymentService::printFunction($request->input('id'));
 		exit;
         try {
 
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
-            $payment        = Payments::where('id', $id)->first();
+            $payment        = Payments::where('id', $request->input('id'))->first();
             $image          = public_path().'/images/nesim-bakija.png';
             $logo           = EscposImage::load($image, false);
             $printer        = new Printer($connector);
