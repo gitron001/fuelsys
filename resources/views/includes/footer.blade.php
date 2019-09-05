@@ -1,7 +1,7 @@
 @section('js')
 
 <script>
-  // Print transaction receipt with AJAX
+  // Print transaction or Payment receipt with AJAX
   $(document).on('click', '#print_receipt', function(e) {
       e.preventDefault();
       if($(this).attr("data-transaction")){
