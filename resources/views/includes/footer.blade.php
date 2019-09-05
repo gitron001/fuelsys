@@ -16,11 +16,12 @@
         url: ($(this).attr("data-transaction")) ? "{{ URL('/transaction-receipt')}}" : "{{ URL('/payment-receipt')}}",
         dataType: 'JSON',
         beforeSend:function(){
-          swal({
-            title: 'Ju lutem prisni!',
-            icon:   'info',
-            showConfirmButton: false
-          })
+          window.swal({
+          title: "Ju lutem prisni!",
+          icon: "info",
+          text: "Fatura është duke u gjeneruar",
+          buttons:false,
+          });
         },
         success: function(data){
           swal("Sukses", "Fatura u gjenerua me sukses!", "success")
