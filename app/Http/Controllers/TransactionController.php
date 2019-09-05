@@ -650,5 +650,6 @@ class TransactionController extends Controller
     {
 		$recepit = new PrintFuelRecept($request->input('id'));
         dispatch($recepit);
+		return json_encode(array('response'=>true)); 
     }
 } 

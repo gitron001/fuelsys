@@ -93,7 +93,8 @@ class PrintPaymentService extends ServiceProvider
 
             $printer -> cut();
             $printer -> close();
-
+			
+			return true;
         } catch (Exception $e) {
             echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
         }
