@@ -62,8 +62,8 @@ class UsersController extends Controller
     public function create()
     {
         $products   = Products::select('name','pfc_pr_id')->get();
-        $branches   = Branch::select('name','id')->get();
-        $companies  = Company::select('name','id')->get();
+        $branches   = Branch::select('name','id')->orderBy('name')->get();
+        $companies  = Company::select('name','id')->orderBy('name')->get();
 
         return view('/admin/users/create',compact('products','branches','companies'));
     }

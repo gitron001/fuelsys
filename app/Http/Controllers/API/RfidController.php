@@ -46,7 +46,7 @@ class RfidController extends Controller
             $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
             
             $response = $client->request('POST', $url, [
-                'form_params' => $response
+                'json' => $response
             ]);
         } catch (\Exception $e) {
             return response()->json([

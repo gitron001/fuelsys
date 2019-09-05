@@ -37,7 +37,7 @@ class TransactionService extends ServiceProvider
         $response = PFC::send_message($socket, $binarydata);
         //print_r($response);
 		
-		if(!$response){ return false; } 
+		if(!$response && !is_array($response)){ return false; } 
 		
         $total_msg_legth = count($response);
         for($i = 4; $i <= $total_msg_legth; $i+= 4) {
