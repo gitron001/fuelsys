@@ -136,15 +136,18 @@ class UsersController extends Controller
         */
 
         try {
+            $access_token   = config('token.access_token');
             $client = new \GuzzleHttp\Client(['cookies' => true,
             'headers' =>  [
-                'Authorization'          => "ABCDEFGHIJK"
+                'Authorization'          => $access_token
             ]]);
             $url = 'http://fuelsystem.alba-petrol.com/api/save/rfid';
             
 
             $response = $client->request('POST', $url, [
                 'form_params' => [ 
+                    'branch_user_id'    => $user['id'],
+                    'branch_id'         => Session::get('branch_id'),
                     'rfid'              => $request->input('rfid'),
                     'name'              => $request->input('name'),
                     'surname'           => $request->input('surname'),
