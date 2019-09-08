@@ -61,9 +61,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $products   = Products::select('name','pfc_pr_id')->get();
-        $branches   = Branch::select('name','id')->orderBy('name')->get();
-        $companies  = Company::select('name','id')->orderBy('name')->get();
+        $products   = Products::select('name','pfc_pr_id')->where('status', 1)->get();
+        $branches   = Branch::select('name','id')->where('status', 1)->orderBy('name')->get();
+        $companies  = Company::select('name','id')->where('status', 1)->orderBy('name')->get();
 
         return view('/admin/users/create',compact('products','branches','companies'));
     }
@@ -197,9 +197,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user           = Users::findOrFail($id);
-        $branches       = Branch::select('name','id')->get();
-        $products       = Products::select('name','pfc_pr_id')->get();
-        $companies      = Company::select('name','id')->orderBy('name', 'asc')->get();
+        $products   = Products::select('name','pfc_pr_id')->where('status', 1)->get();
+        $branches   = Branch::select('name','id')->where('status', 1)->orderBy('name')->get();
+        $companies  = Company::select('name','id')->where('status', 1)->orderBy('name')->get();
         $rfid_limits    = RFID_Limits::where('rfid_id',$id)->get();
         $rfid_discounts = RFID_Discounts::where('rfid_id',$id)->get();
 
