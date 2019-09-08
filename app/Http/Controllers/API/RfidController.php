@@ -31,6 +31,7 @@ class RfidController extends Controller
     {
         $users          = Users::get()->toArray();
         $response       = array();
+        $access_token   = config('token.access_token');
 
         foreach($users as $u){
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
@@ -40,7 +41,7 @@ class RfidController extends Controller
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
-                    'Authorization'          => "ABCDEFGHIJK",
+                    'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
             $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
@@ -68,6 +69,8 @@ class RfidController extends Controller
             $user = Users::firstOrCreate([
                 'rfid' => $user['rfid']], 
                 [
+                'branch_user_id'    => $user['id'],
+                'branch_id'         => Session::get('branch_id'),
                 'name'              => $user['name'],
                 'surname'           => !empty($user['surname']) ? $user['surname'] : NULL,
                 'residence'         => !empty($user['residence']) ? $user['residence'] : NULL,
@@ -130,6 +133,8 @@ class RfidController extends Controller
             $user = Users::firstOrCreate([
                 'rfid' => $rfid['rfid']],
                 [
+                'branch_user_id'    => $user['id'],
+                'branch_id'         => Session::get('branch_id'),
                 'name'              => $rfid['name'],
                 'surname'           => !empty($rfid['surname']) ? $rfid['surname'] : NULL,
                 'residence'         => !empty($rfid['residence']) ? $rfid['residence'] : NULL,

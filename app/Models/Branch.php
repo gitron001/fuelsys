@@ -13,6 +13,7 @@ class Branch extends Model
         'address', 
         'city',
         'status',
+        'remember_token',
     ];
 
     public function getDateFormat(){
