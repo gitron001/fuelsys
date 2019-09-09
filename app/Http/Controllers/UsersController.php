@@ -35,18 +35,29 @@ class UsersController extends Controller
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
 
-        $users      = Users::whereIn('status',array(1, 2));
+        //$users      = Users::whereIn('status',array(1, 2));
+        $users      = Users::select('users.name','users.email','users.rfid','users.type','users.type','users.created_at','users.updated_at','users.id','users.company_id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
+            ->whereIn('users.status',array(1, 2));
 
         if($request->get('search')){
             $users  = $users->where(function($query) use ($search){
-                $query->where('name','like','%'.$search.'%');
-                $query->orWhere('email','like','%'.$search.'%');
-                $query->orWhere('rfid','like','%'.$search.'%');
+                $query->where('users.name','like','%'.$search.'%');
+                $query->orWhere('users.email','like','%'.$search.'%');
+                $query->orWhere('users.rfid','like','%'.$search.'%');
             });
         }
 
+        if($request->get('company')){
+            $users  = $users->where('companies.id',$request->get('company'));
+        }
+
+        if($request->get('type')){
+            $users  = $users->where('users.type',$request->get('type'));
+        }
+
         if($request->ajax() == false){
-            $users  = $users->orderBy('name','ASC')
+            $users  = $users->orderBy('users.name','ASC')
                         ->paginate(15);
             return view('/admin/users/home',compact('users','companies','types'));
         } else {
