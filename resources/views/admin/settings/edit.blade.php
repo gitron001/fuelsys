@@ -45,6 +45,10 @@
 				  <b>Export RFID</b> <a href="{{ url('/api/rfids') }}" class="pull-right">
 					<span class="label label-success"> EXPORT </span></a>
 				</li>
+				<li class="list-group-item">
+				  <b>Import RFID</b> <a href="{{ url('/api/rfids/import') }}" class="pull-right">
+					<span class="label label-warning"> IMPORT </span></a>
+				</li>
               </ul>
 
             </div>

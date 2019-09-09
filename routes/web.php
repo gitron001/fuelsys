@@ -106,8 +106,11 @@ Route::group(['middleware' => 'authenticated'], function () {
 		event(new FormSubmitted($text));
 	});
 
+	// Export RFID to Server
 	Route::get('/api/rfids','API\RfidController@getAllRfids');
 
+	// Import RFID from Server
+	Route::get('/api/rfids/import','API\RfidController@importAllRfids');
 });
 
 

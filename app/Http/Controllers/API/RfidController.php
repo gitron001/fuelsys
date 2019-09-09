@@ -27,6 +27,7 @@ class RfidController extends Controller
         return response($user_discount,201);
     }
 
+    // Insert RFID from local DB to Server (Export RFID)
     public function getAllRfids()
     {
         $users          = Users::get()->toArray();
@@ -57,6 +58,87 @@ class RfidController extends Controller
         }
         
         return view('/admin/api/response')->with('data', $response->getBody()->getContents());
+    }
+
+    // Import RFID from Server to local DB
+    public function importAllRfids(Request $request){
+
+        $access_token   = config('token.access_token');
+        $new            = array();
+        $old            = array();
+
+        try {
+            $client = new \GuzzleHttp\Client(['cookies' => true,
+                'headers' =>  [
+                    'Authorization'          => $access_token,
+                    'Accept'                 => "application/json"
+                ]]);
+
+            $request = $client->get('http://fuelsystem.alba-petrol.com/api/rfids/import');
+
+            $response = $request->getBody()->getContents();
+            $data     = json_decode($response);
+
+            foreach($data as $user){
+                $rfid = Users::firstOrCreate([
+                    'rfid' => $user->rfid], 
+                    [
+                    'branch_user_id'    => $user->id,
+                    'branch_id'         => $user->branch_id,
+                    'name'              => $user->name,
+                    'surname'           => !empty($user->surname) ? $user->surname : NULL,
+                    'residence'         => !empty($user->residence) ? $user->residence : NULL,
+                    'contact_number'    => !empty($user->contact_number) ? $user->contact_number : NULL,
+                    'application_date'  => !empty($user->application_date) ? $user->application_date : NULL,
+                    'business_type'     => !empty($user->business_type) ? $user->business_type : NULL,
+                    'email'             => !empty($user->email) ? $user->email : NULL,
+                    'password'          => !empty($user->password) ? $user->password : NULL,
+                    'company_id'        => !empty($user->company_id) ? $user->company_id : 0,
+                    'one_time_limit'    => !empty($user->one_time_limit) ? $user->one_time_limit : 0,
+                    'plates'            => !empty($user->plates) ? $user->plates : 0,
+                    'vehicle'           => !empty($user->vehicle) ? $user->vehicle : 0,
+                    'status'            => !empty($user->status) ? $user->status : 1,
+                    'type'              => !empty($user->type) ? $user->type : 1,
+                    'starting_balance'  => !empty($user->starting_balance) ? $user->starting_balance : 0,
+                    'limits'            => !empty($user->limits) ? $user->limits : 0,
+                    'limit_left'        => !empty($user->limit_left) ? $user->limit_left : 0,
+                    'remember_token'    => $user->remember_token,
+                    'created_at'        => $user->created_at,
+                    'updated_at'        => $user->updated_at,
+                ]);
+    
+                if ($rfid->wasRecentlyCreated) {
+                    
+                    RFID_Discounts::where('rfid_id',$rfid->id)->delete();
+
+                    foreach($user->discount as $discount){
+                        RFID_Discounts::insert([
+                            'rfid_id'       => $rfid->id, 
+                            'product_id'    => $discount->product_id,
+                            'discount'      => $discount->discount,
+                            'created_at'    => $discount->created_at,
+                            'updated_at'    => $discount->updated_at
+                        ]);
+                    }
+                    $new[] = $rfid;
+                }else {
+                    $old[] = $rfid;
+                }
+            }
+    
+            return response()->json([
+                'response'  => 'Success',
+                'new'       => $new,
+                'old'       => $old,
+            ], 201);
+            
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "error" => "Error!",
+                "message" => $e->getMessage()
+            ]);
+        }
     }
 
     public function createUser(Request $request) 

@@ -29,6 +29,8 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+        $companies  = Company::pluck('name','id')->all();
+        $types      = Users::pluck('name','id')->all();
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
@@ -46,11 +48,11 @@ class UsersController extends Controller
         if($request->ajax() == false){
             $users  = $users->orderBy('name','ASC')
                         ->paginate(15);
-            return view('/admin/users/home',compact('users'));
+            return view('/admin/users/home',compact('users','companies','types'));
         } else {
             $users  = $users->orderBy($sort_by,$sort_type)
                         ->paginate(15);
-            return view('/admin/users/table_data',compact('users'))->render();
+            return view('/admin/users/table_data',compact('users','companies','types'))->render();
         }
     }
 

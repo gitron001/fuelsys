@@ -585,7 +585,7 @@ class TransactionController extends Controller
     }
 
     public function searchWithPagination(Request $request) {
-        $users          = Users::pluck('name','id')->all();
+        $users          = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
 
         $from_date       = strtotime($request->input('fromDate'));
