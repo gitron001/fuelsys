@@ -36,6 +36,7 @@ class CreateUsersTable extends Migration
             $table->double('limits')->default('0');
             $table->double('limit_left')->default('0');
             $table->string('remember_token')->default('');
+            $table->integer('exported')->nullable();
             $table->integer('created_at');
             $table->integer('updated_at');
         });
