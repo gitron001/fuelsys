@@ -40,6 +40,9 @@
                       <option value="3" @if(request()->get("type") == 3) selected @endif>Administrator</option>
                       <option value="4" @if(request()->get("type") == 4) selected @endif>Client</option>
                       <option value="5" @if(request()->get("type") == 5) selected @endif>Manager</option>
+                      <option value="6" @if(request()->get("type") == 6) selected @endif>Bonus Member</option>
+                      <option value="7" @if(request()->get("type") == 7) selected @endif>Bonus Klient</option>
+                      <option value="8" @if(request()->get("type") == 8) selected @endif>Bonus Korporate</option>
                     </select>
                   </div>
                   <div class="form-group">
