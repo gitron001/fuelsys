@@ -103,6 +103,7 @@ class CompaniesController extends Controller
             'res_number'        => $request->input('res_number'),
             'tel_number'        => $request->input('tel_number'),
             'email'             => $request->input('email'),
+            'send_email'        => $request->input('send_email'),
             'address'           => $request->input('address'),
             'starting_balance'  => $request->input('starting_balance') ? : 0,
             'contact_person'    => $request->input('contact_person'),

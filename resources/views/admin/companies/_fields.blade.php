@@ -45,10 +45,22 @@
 					{!! $errors->first('res_number','<span class="help-block">:message</span>') !!}
 				</div>
 
+				<div class="form-group {{ $errors->has('send_email') ? 'has-error' :'' }}">
+					{!! Form::label('send_email', 'Company email:'); !!}
+					{!! Form::text('send_email',null,['class'=>'form-control']); !!}
+					{!! $errors->first('send_email','<span class="help-block">:message</span>') !!}
+				</div>
+
 				<div class="form-group {{ $errors->has('tel_number') ? 'has-error' :'' }}">
 					{!! Form::label('tel_number', 'Tel.Number:'); !!}
 					{!! Form::number('tel_number',null,['class'=>'form-control']); !!}
 					{!! $errors->first('tel_number','<span class="help-block">:message</span>') !!}
+				</div>
+
+				<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
+					{!! Form::label('limits', 'Limit:'); !!}
+					{!! Form::number('limits',null,['class'=>'form-control']); !!}
+					{!! $errors->first('limits','<span class="help-block">:message</span>') !!}
 				</div>
 
 				<div class="form-group">
@@ -58,12 +70,6 @@
 							<img class="img-responsive img-thumbnail" src="{{asset('/images/company/'.$company->images)}}" height="100" width="100">
 						@endif
 					{!! Form::file('image',['class'=>'form-control']); !!}
-				</div>
-
-				<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
-					{!! Form::label('limits', 'Limit:'); !!}
-					{!! Form::number('limits',null,['class'=>'form-control']); !!}
-					{!! $errors->first('limits','<span class="help-block">:message</span>') !!}
 				</div>
 				
 			</div>
