@@ -364,9 +364,10 @@ class UsersController extends Controller
             } else {
                 $rfid = $result['nr.karteles'];
             }
+			$rfid = substr($rfid,4);
 			$check_existing = Users::where('rfid', $rfid)->count();
-			
-			if($check_existing > 0){
+
+			if($check_existing != 0){
 				$duplicate[] = $result;
 				continue;
 			}
@@ -375,7 +376,7 @@ class UsersController extends Controller
                 'name'              => trim($result['emri']). ' ' .trim($result['mbiemri']),
                 'residence'         => $result['vendbanimi'],
                 'contact_number'    => $result['nr.kontaktues'],
-                'rfid'              => substr($rfid,4),
+                'rfid'              => $rfid,
                 'type'              => $type,
                 'application_date'  => str_replace('.', '-', $result['data']),
                 'created_at'        => now()->timestamp,
@@ -416,9 +417,9 @@ class UsersController extends Controller
         
         foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
             if(!empty($product) && !empty($discount)){
-                foreach($rfid_discount as $rfid){
-                    RFID_Discounts::where('rfid_id',$rfid->rfid_id)->where('product_id',$product)->update(['discount'=> $discount]);
-                }
+					RFID_Discounts::join('users as u', 'u.id', '=', 'rfid_discounts.rfid_id')
+					->where('product_id', $product)->where('u.type', $request->input('type'))
+				   ->update([ 'rfid_discounts.discount' => $discount ]);
             }
             
         }

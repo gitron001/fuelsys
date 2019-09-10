@@ -247,6 +247,7 @@ class TransactionController extends Controller
         $data       = self::getGeneralData($request);
         $company    = Company::where('status', 4)->first();
         $date 		= $request->fromDate;
+        $last_payment = $request->input('last_payment');
         $inc_transactions = $request->input('inc_transactions');
 
         //dd($payments);exit();
@@ -254,11 +255,13 @@ class TransactionController extends Controller
         if(isset($request->user)){
             $id = $request->user;
             $user_details = Users::whereIN('id',$id)->get();
+			//$payment_date = Payments::where('user_id', $id)->where('status', 1)->first()->pluck('date');
         }
 
         if(isset($request->company)){
             $id = $request->company;
             $company_details = Company::where('id',$id)->first();
+			//$payment_date = Payments::where('company_id', $id)->where('status', 1)->first()->pluck('date');
         }
 
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details'));
@@ -285,11 +288,19 @@ class TransactionController extends Controller
         $to_date        = strtotime($request->input('toDate'));
 		//$from_payment	= strtotime(date('Y-m-d', $from_date));
 		//$to_payment	    = strtotime(date('Y-m-d', $to_date));
+
+
         $user           = $request->input('user');
         $company        = $request->input('company');
         $dailyReport    = $request->input('dailyReport');
         $date           = date('Y-m-d').' 00:00:00';
-
+		
+        $last_payment    = $request->input('last_payment');
+		if($last_payment == 'Yes'){            
+            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
+			$from_date = $payments->date+1;
+        }
+		
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
@@ -355,7 +366,12 @@ class TransactionController extends Controller
 		$from_payment	    = strtotime(date('Y-m-d', $from_date));
         $user               = $request->input('user');
         $company            = $request->input('company');
+        $last_payment    = $request->input('last_payment');
         $starting_balance   = 0;
+		if($last_payment == 'Yes'){            
+            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
+			$from_date = $payments->date+1;
+        }
         if($request->input('dailyReport')){
             $from_date      = strtotime(date('Y-m-d').' 00:00:00');
         }
@@ -428,7 +444,11 @@ class TransactionController extends Controller
         $to_date    = strtotime($request->input('toDate'));
         $user       = $request->input('user');
         $company    = $request->input('company');
-
+        $last_payment    = $request->input('last_payment');
+		if($last_payment == 'Yes'){            
+            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
+			$from_date = $payments->date+1;
+        }
         $usersFilter = Users::where('type','1')->pluck('name','id');
 
         $users = Transactions::select(DB::RAW('users.id as user_id'), 'users.name as user_name',DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'))
