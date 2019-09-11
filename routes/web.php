@@ -1,7 +1,5 @@
 <?php
 
-use App\Events\FormSubmitted;
-
 Auth::routes();
 
 Route::resource('/', 'HomeController');
@@ -100,18 +98,17 @@ Route::group(['middleware' => 'authenticated'], function () {
 		return view('form_page');
 	});
 
-	Route::post('/sender',function(){
-	
-		$text = request()->text;
-		// This is the post
-		event(new FormSubmitted($text));
-	});
+	Route::post('sender','PusherController@sender');
 
-	// Export RFID to Server
+	// Export RFID to Server2
 	Route::get('/api/rfids','API\RfidController@getAllRfids');
 
 	// Import RFID from Server
 	Route::get('/api/rfids/import','API\RfidController@importAllRfids');
+
+	// Show failed attemps
+	Route::get('/failed-attempts','SettingsController@failed_attempts');
+	
 });
 
 

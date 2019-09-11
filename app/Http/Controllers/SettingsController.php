@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\FaileAttempt;
 
 class SettingsController extends Controller
 {
@@ -104,5 +105,21 @@ class SettingsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function failed_attempts(Request $request)
+    {
+        $failed_attempts = new FaileAttempt;
+
+        if($request->ajax() == false){
+            $failed_attempts = $failed_attempts->orderBy('created_at','ASC')
+                                ->paginate(15);
+            return view('/admin/failed_attempts/failed_attempts',compact('failed_attempts'));
+        } else {
+            $failed_attempts = $failed_attempts->orderBy('created_at','ASC')
+                                ->paginate(15);
+            return view('/admin/failed_attempts/table_data',compact('failed_attempts'))->render();
+        }
+
     }
 }

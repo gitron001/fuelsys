@@ -121,9 +121,9 @@ class ReportsController extends Controller
 		}
         $last_payment       = $request->input('last_payment');
 
-        if($last_payment == 'Yes'){            
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
-			$p_date = $payments->date;
+        if($last_payment == 'Yes'){           
+            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();
+            $p_date = $payments->date;
         }
 
         if(isset($p_date)){

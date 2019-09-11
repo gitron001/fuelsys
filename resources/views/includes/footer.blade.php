@@ -72,13 +72,14 @@
     var company = $("#company").val();
     var fromDate = $('#datetimepicker4').val();
     var toDate = $('#datetimepicker5').val();
+    var last_payment = $("#last_payment").attr("checked") ? 'Yes' : 'No';
     
     function fetch_data(page,sort_type,sort_by,query){
       $('#hidePagination').hide();
       $('#spinner').show();
       $.ajax({
         data: {user: user,company:company},
-        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+query+"&fromDate="+fromDate+"&toDate="+toDate,
+        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+query+"&fromDate="+fromDate+"&toDate="+toDate+"&last_payment="+last_payment,
         success: function(data){
           $('#spinner').hide();
           $('tbody').html('');
