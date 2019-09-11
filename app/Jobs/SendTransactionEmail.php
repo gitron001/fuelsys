@@ -23,10 +23,13 @@ class SendTransactionEmail implements ShouldQueue
      */
 
     protected $request;
+	
+    protected $comp_id;
 
-    public function __construct($request)
+    public function __construct($request, $comp_id)
     {
         $this->request = $request;
+        $this->comp_id = $comp_id;
     }
 
 
@@ -38,16 +41,14 @@ class SendTransactionEmail implements ShouldQueue
     public function handle()
     {
         //Read email and send transaction with ID
-        $mailable = new TransactionMail($this->request['id']);
+        $transactions  = Transaction::where('id', $this->request['id'])->first();
+        $company       = Company::where('status',4)->first();
+		
+        $mailable = new TransactionMail($transactions, $company);
         
         // Send email to user
         if(isset($this->request['user_email'])){
-            Mail::to($this->request['user_email'])->send($mailable);
-        }
-
-        // Send email to company
-        if(isset($this->request['company_email'])){
-            Mail::to($this->request['company_email'])->send($mailable);
+            Mail::to($company['user_email'])->send($mailable);
         }
     }
 }

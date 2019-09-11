@@ -8,6 +8,7 @@ Route::resource('/', 'HomeController');
 Route::get('/admin/transactions','TransactionController@searchWithPagination');
 Route::get('transactions-info', 'TransactionController@info');
 // Transactions - Genrate bill
+Route::get('/transaction-receipt','CompaniesController@print_test');
 Route::get('/transaction-receipt','TransactionController@printFunction');
 
 //Change language
