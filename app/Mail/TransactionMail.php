@@ -11,22 +11,20 @@ use App\Models\Company;
 
 class TransactionMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    //use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public $transactions;
+    public $trans_id;
 	
     public $company;
 	
-    public function __construct($transactions, $company)
+    public function __construct($trans_id)
     {
-        $this->transactions = $transactions;
-		
-        $this->company = $company;
+        $this->trans_id = $trans_id;
     }
 
     /**
@@ -36,19 +34,21 @@ class TransactionMail extends Mailable
      */
     public function build()
     {
-
+		$transactions  = Transaction::where('id', $this->trans_id)->first();
+		$company       = Company::where('status',4)->first();
+				
         return $this->view('emails.transaction')->with( [
-            'id'                    => $this->transactions['id'],
-            'product_name'          => $this->transactions->product->name,
-            'lit'                   => $this->transactions['lit'],
-            'price'                 => $this->transactions['price'],
-            'created_at'            => $this->transactions['created_at'],
-            'user_name'             => $this->transactions->users->name,
-            'company_name'          => $this->transactions->users->company->name,
-            'our_company'           => $this->company['name'],
-            'our_company_address'   => $this->company['address'],
-            'our_company_city'      => $this->company['city'],
-            'our_company_phone'     => $this->company['tel_number'],
+            'id'                    => $transactions->id,
+            'product_name'          => $transactions->product->name,
+            'lit'                   => $transactions->lit,
+            'price'                 => $transactions->price,
+            'created_at'            => $transactions->created_at,
+            'user_name'             => $transactions->users->name,
+            'company_name'          => $transactions->users->company->name,
+            'our_company'           => $company->name,
+            'our_company_address'   => $company->address,
+            'our_company_city'      => $company->city,
+            'our_company_phone'     => $company->tel_number,
         ] );
     }
 }

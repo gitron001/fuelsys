@@ -302,9 +302,8 @@ class CompaniesController extends Controller
         return redirect('/admin/companies');
     }
 	
-	public function print_test($id){
-		
-		$recepit = new SendTransactionEmail();
-        dispatch($recepit);
+	public function send_email($id){
+		$recepit = new SendTransactionEmail($id, 'idealbakija@gmail.com');
+		dispatch($recepit);
 	}
 }

@@ -31,14 +31,18 @@ return [
     'connections' => [
 
         'sync' => [
-            'driver' => 'database',
+            'driver' => 'sync',
+			'table' => 'jobs',
+            'queue' => 'default',
+            'retry_after' => 90,
         ],
 
         'database' => [
+            'connection' => 'mysql',
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            'retry_after' => 180,
         ],
 
         'beanstalkd' => [
@@ -79,7 +83,7 @@ return [
     */
 
     'failed' => [
-        'database' => env('DB_CONNECTION', 'mysql'),
+        'database' => 'mysql',
         'table' => 'failed_jobs',
     ],
 
