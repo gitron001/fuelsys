@@ -651,17 +651,27 @@ class TransactionController extends Controller
     }
 
     public function generateDailyReport(Request $request) {
-        $payments   = self::generate_data($request);
-        $balance    = self::generate_balance($request);
-        $company    = Company::where('status', 4)->first();
-        $date = $request->fromDate;
-	
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date', 'company'));
+        $payments           = self::generate_data($request);
+        $balance            = self::generate_balance($request);
+        $data               = self::getGeneralData($request);
+        $company            = Company::where('status', 4)->first();
+        $date               = $request->fromDate;
+        $inc_transactions   = $request->inc_transactions;
+
+        if(isset($request->company)){
+            $company_details = Company::where('id',$request->company)->first();
+        }
+
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         
 
-        Mail::send('emails.report',["data"=>"Raporti Ditor - Nesim Bakija"],function($m) use($pdf){
+        Mail::send('emails.report',["data"=>"Raporti Ditor - Nesim Bakija"],function($m) use($pdf,$company_details){
+            // STATIC EMAIL - TEST
             $m->to('ideal.bakija@gmail.com')->subject('Raporti Ditor - Nesim Bakija');
+            
+            // DYNAMIC EMAIL 
+            //$m->to($company_details->email)->subject('Raporti Ditor - Nesim Bakija');
             $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
         });
    }

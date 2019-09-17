@@ -178,7 +178,7 @@
 		$total = $total + $fueling - $payment;
 		
 		?>
-		<tr @if($py->type == 'transaction' && ($inc_transactions == 'No' || !request()->has('inc_transactions'))) echo style="display:none;" @endif>
+		<tr @if($py->type == 'transaction' && ($inc_transactions == 'No' || !isset($inc_transactions))) echo style="display:none;" @endif>
 			<th scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d h:i:s', $py->date) : $py->created_at }}</th>
 			<td> {{ $py->description == NULL  ? $py->type : $py->description }} </td>
 			<td align="right">{{ $py->username }}</td>
