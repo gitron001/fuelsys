@@ -9,7 +9,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Models\Transaction;
-use App\Models\Company;
 use App\Mail\TransactionMail;
 use Mail;
 
@@ -25,12 +24,10 @@ class SendTransactionEmail implements ShouldQueue
      */
 
     protected $trans_id;
-    protected $email;
 	
-    public function __construct($trans_id, $email)
+    public function __construct($trans_id)
     {
         $this->trans_id = $trans_id;
-        $this->email = $email;
     }
 
 
@@ -40,19 +37,16 @@ class SendTransactionEmail implements ShouldQueue
      * @return void
      */
     public function handle()
-    {
-		
-        //Read email and send transaction with ID
+    {	
+		$transactions  = Transaction::where('id', $this->trans_id)->first();
+		if(!is_null($transactions->users->company->id) && $transactions->users->company->send_email == 1 && $transactions->users->company->on_transaction == 1){
+			$mailable = new TransactionMail($transactions);
+			$the_email = $transactions->users->company->email;
 	
-        //$transactions  = Transaction::where('id', $this->trans_id)->first();
-		
-        //$company       = Company::where('status',4)->first();
-		
-        $mailable = new TransactionMail($this->trans_id);
-		
-        // Send email to user
-        //if(isset($transactions->users->company->email)){
-            Mail::to($this->email)->send($mailable);
+			if(trim($the_email) == ""){				
+				return true;
+			}
+			Mail::to($the_email)->send($mailable);
 			
 			if( count(Mail::failures()) > 0 ) {
 
@@ -65,6 +59,9 @@ class SendTransactionEmail implements ShouldQueue
 			} else {
 				echo "No errors, all sent successfully!";
 			}
-        //}
+		}else{
+			return true;
+		}
+		
     }
 }

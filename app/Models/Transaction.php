@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Company as Company;
 use App\Models\Users as Users;
-use App\Jobs\SendTransactionEmail;
 
 class Transaction extends Model
 {
@@ -126,11 +125,7 @@ class Transaction extends Model
 		
 		
 		if(!is_null($user->company->id)){			
-			if($user->company->send_email == 1 && $user->company->on_transaction == 1 && $user->company->send_email != ""){
-				$recepit = new SendTransactionEmail($transaction->id, $user->company->send_email);
-				dispatch($recepit);
-			}
-			
+						
 			if($user->company->has_limit == 1){
 				$company = Company::find( $user->company->id );
 				$company->limit_left -= $transaction->money;

@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Models\Transaction;
+//use App\Models\Transaction;
 use App\Models\Company;
 
 class TransactionMail extends Mailable
@@ -18,13 +18,11 @@ class TransactionMail extends Mailable
      *
      * @return void
      */
-    public $trans_id;
+    public $transactions;
 	
-    public $company;
-	
-    public function __construct($trans_id)
+    public function __construct($transactions)
     {
-        $this->trans_id = $trans_id;
+        $this->transactions = $transactions;
     }
 
     /**
@@ -34,17 +32,18 @@ class TransactionMail extends Mailable
      */
     public function build()
     {
-		$transactions  = Transaction::where('id', $this->trans_id)->first();
+		//$transactions  = Transaction::where('id', $this->trans_id)->first();
 		$company       = Company::where('status',4)->first();
-				
+		
+			
         return $this->view('emails.transaction')->with( [
-            'id'                    => $transactions->id,
-            'product_name'          => $transactions->product->name,
-            'lit'                   => $transactions->lit,
-            'price'                 => $transactions->price,
-            'created_at'            => $transactions->created_at,
-            'user_name'             => $transactions->users->name,
-            'company_name'          => $transactions->users->company->name,
+            'id'                    => $this->transactions->id,
+            'product_name'          => $this->transactions->product->name,
+            'lit'                   => $this->transactions->lit,
+            'price'                 => $this->transactions->price,
+            'created_at'            => $this->transactions->created_at,
+            'user_name'             => $this->transactions->users->name,
+            'company_name'          => $this->transactions->users->company->name,
             'our_company'           => $company->name,
             'our_company_address'   => $company->address,
             'our_company_city'      => $company->city,

@@ -8,6 +8,7 @@ use Config;
 use App\Models\Transaction;
 use App\Models\Users;
 use App\Jobs\PrintFuelRecept;
+use App\Jobs\SendTransactionEmail;
 
 class TransactionService extends ServiceProvider
 {
@@ -101,13 +102,16 @@ class TransactionService extends ServiceProvider
 
         //call job to update company balance
         //HERE
-
-        $changed_status = self::transaction_status($channel, $status, $socket);
-		
 		if(!$transaction_id){ return true; } 
 		
+        $changed_status = self::transaction_status($channel, $status, $socket);
+				
         $recepit = new PrintFuelRecept($transaction_id);
         dispatch($recepit);
+		
+		$recepit = new SendTransactionEmail($transaction_id);
+		dispatch($recepit);
+			
         echo 'stored';
         return true;
     }
