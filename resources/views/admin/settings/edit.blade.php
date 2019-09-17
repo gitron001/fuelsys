@@ -46,6 +46,10 @@
 					<span class="label label-success"> EXPORT </span></a>
 				</li>
 				<li class="list-group-item">
+				  <b>Export Transactions</b> <a href="{{ url('/api/transactions') }}" class="pull-right">
+					<span class="label label-primary"> EXPORT </span></a>
+				</li>
+				<li class="list-group-item">
 				  <b>Import RFID</b> <a href="{{ url('/api/rfids/import') }}" class="pull-right">
 					<span class="label label-warning"> IMPORT </span></a>
 				</li>

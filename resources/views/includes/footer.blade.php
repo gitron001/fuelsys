@@ -299,12 +299,13 @@
   
   $(document).ready(function(){
     $('#dailyReport').click(function(){
+      var inc_transactions = $("#inc_transactions").val();
       var company = $("#company").val();
       var dailyReport = 1;
 
       $.ajax({
         type: "GET",
-        data: {company:company,dailyReport:dailyReport},
+        data: {company:company,dailyReport:dailyReport,inc_transactions:inc_transactions},
         url: "{{ URL('/dailyReport')}}",
         dataType: "JSON",
         success: function(data){
