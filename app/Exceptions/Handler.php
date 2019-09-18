@@ -75,11 +75,11 @@ class Handler extends ExceptionHandler
                     Debug stacktrace :
                     " . $e->getTraceAsString();
             try {
-                Mail::raw($body, function ($m) {
+                /*Mail::raw($body, function ($m) {
                     $m->from('ideal.bakija@bakija.com', 'Fuel System');
 
                     $m->to('ideal.bakija@gmail.com')->subject("Fatal error");
-                });
+                });*/
             } catch (\Exception $e) {
 
             }
