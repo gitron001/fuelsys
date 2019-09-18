@@ -15,10 +15,6 @@ class TransactionsController extends Controller
         $transactions = Transaction::where('exported',0)->get();
         $access_token = config('token.access_token');
 
-        foreach($transactions as $transaction){
-            Transaction::where('id',$transaction->id)->update(['exported'=> 1]);
-        }
-
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
@@ -30,14 +26,23 @@ class TransactionsController extends Controller
             $response = $client->request('POST', $url, [
                 'json' => $transactions
             ]);
+            
+            $inserted_id = $response->getBody()->getContents();;
+            $data = json_decode($inserted_id);
+            foreach($data->inserted_transaction as $key){
+                foreach($key as $value){
+                    Transaction::where('id',$value)->update(['exported'=> 1]);
+                }
+            }
+
+            return $response->getBody();
 
         } catch (\Exception $e) {
             return response()->json([
-                "error" => "Failed to insert transaction into server",
+                "error" => "Failed to insert transaction into server / Unauthenticated",
                 "message" => $e->getMessage()
             ]);
         }
         
-        return $response->getBody()->getContents();
     }
 }
