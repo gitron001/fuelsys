@@ -294,6 +294,19 @@
 @section('js')
 
 <script>
+    $(document).ready(function(){
+        var e = document.getElementById("showHide");
+        var value = e.options[e.selectedIndex].value;
+
+        if(value == 2){
+            $("#company").show();
+            $("#one_time_limit").show();
+            $("#plates").show();
+            $("#vehicle").show();
+        }
+        
+    });
+
     var dateNow = new Date();
       $('#datetimepicker').datepicker({
           defaultDate:dateNow

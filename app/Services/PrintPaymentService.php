@@ -30,7 +30,7 @@ class PrintPaymentService extends ServiceProvider
             $image          = public_path().'/images/nesim-bakija.png';
             $logo           = EscposImage::load($image, false);
             $printer        = new Printer($connector);
-            $date           = date("F j, Y, H:i", strtotime('+1 hour'));
+            $date           = date("F j, Y, H:i", time());
 
             /* Print top logo */
             $printer -> setJustification(Printer::JUSTIFY_CENTER);
@@ -93,7 +93,8 @@ class PrintPaymentService extends ServiceProvider
 
             $printer -> cut();
             $printer -> close();
-
+			
+			return true;
         } catch (Exception $e) {
             echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
         }

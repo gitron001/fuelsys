@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => 'smtp',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => 'smtp.gmail.com',
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' =>  587,
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'fuelsystem.ks@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Fuel System'),
+        'address' => 'fuelsystem.ks@gmail.com',
+        'name' => 'Fuel System',
     ],
 
     /*
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => 'tls',
 
     /*
     |--------------------------------------------------------------------------
@@ -89,6 +89,7 @@ return [
     'username' =>  env('MAIL_USERNAME', 'orgesthaqi96@gmail.com'),
     'password' => env('MAIL_PASSWORD', 'lmhkygqgpqremttk'),
 
+
     /*
     |--------------------------------------------------------------------------
     | Sendmail System Path
@@ -102,6 +103,13 @@ return [
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
+	'stream' => [
+		'ssl' => [
+			'allow_self_signed' => true,
+			'verify_peer' => false,
+			'verify_peer_name' => false,
+		],
+	],
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings

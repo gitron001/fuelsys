@@ -96,7 +96,7 @@ class ReportsController extends Controller
     }
 
     public function searchWithPagination(Request $request) {
-        $users              = Users::pluck('name','id')->all();
+        $users              = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
         $companies          = Company::pluck('name','id')->all();
 
         $from_date          = strtotime($request->input('fromDate'));
@@ -104,15 +104,32 @@ class ReportsController extends Controller
         $user               = $request->input('user');
         $company            = $request->input('company');
         $sort_by_company = $request->get('sortby');
-        if($sort_by_company == 'name'){
+		
+		if($sort_by_company == 'name'){
             $sort_by = "transactions.created_at";
             $sort_type = "DESC";
         }else{
             $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "transactions".".".$request->get('sortby'));
             $sort_type       = $request->get('sorttype');
         }
+		
+        if(!$request->input('sorttype')){
+            $sort_type = "DESC";			
+		}
+        if(!$request->input('sortby')){
+            $sort_by = "transactions.created_at";
+		}
         $last_payment       = $request->input('last_payment');
 
+        if($last_payment == 'Yes'){           
+            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();
+            $p_date = $payments->date;
+        }
+
+        if(isset($p_date)){
+            $from_date = $p_date;
+        }
+		
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
                     ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
                     ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
@@ -129,59 +146,13 @@ class ReportsController extends Controller
         if($request->input('user') && $request->input('company')){
             $query = $query->whereIn('users.id',$user)->orWhere('companies.id',$company);
         }
-
-        if($last_payment == 'Yes'){
-            
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->limit('5')->get();
-
-            if(count($payments) != 0){
-                $p_date = $payments[0]->date;
-                $trans_query = clone $query;
-                $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
-                if($check_transactions == 0){
-                    if(!isset($payments[1]->date)){ return false; }
-                    $p_date = $payments[1]->date;
-                    unset($trans_query);
-                    $trans_query = clone $query;
-                    $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
-                }
-
-                if($check_transactions == 0){
-                    if(!isset($payments[2]->date)){ return false; }
-                    $p_date = $payments[2]->date;
-                    unset($trans_query);
-                    $trans_query = clone $query;
-                    $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
-                }
-
-                if($check_transactions == 0){
-                    if(!isset($payments[3]->date)){ return false; }
-                    $p_date = $payments[3]->date;
-                    unset($trans_query);
-                    $trans_query = clone $query;
-                    $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
-                }
-                if($check_transactions == 0){
-                    if(!isset($payments[4]->date)){ return false; }
-                    $p_date = $payments[4]->date;
-                    unset($trans_query);
-                    $trans_query = clone $query;
-                    $check_transactions = $trans_query->where('transactions.created_at','>', $p_date)->count();
-                }
-            }
-        }
-
-        if(isset($p_date)){
-            $from_date = $p_date;
-        }
-
+		
         if ($request->input('fromDate') && $request->input('toDate')) {
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
-        
 
         if($request->ajax() == false){
-            $query->orderBy('transactions.created_at', 'DESC');
+            $query->orderBy($sort_by,$sort_type);
             $transactions = $query->paginate(15);
             return view('/admin/reports/home',compact('transactions','users','companies'));
         } else {

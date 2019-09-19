@@ -1,6 +1,36 @@
 @section('js')
 
 <script>
+  // Print transaction or Payment receipt with AJAX
+  $(document).on('click', '#print_receipt', function(e) {
+      e.preventDefault();
+      if($(this).attr("data-transaction")){
+        var id = $(this).attr("data-transaction");
+      }else{
+        var id = $(this).attr("data-payment");
+      }
+
+      $.ajax({
+        type: "GET",
+        data: {id: id},
+        url: ($(this).attr("data-transaction")) ? "{{ URL('/transaction-receipt')}}" : "{{ URL('/payment-receipt')}}",
+        dataType: 'JSON',
+        beforeSend:function(){
+          window.swal({
+          title: "Ju lutem prisni!",
+          icon: "info",
+          text: "Fatura është duke u gjeneruar",
+          buttons:false,
+          });
+        },
+        success: function(data){
+          swal("Sukses", "Fatura u gjenerua me sukses!", "success")
+        },
+        error: function () {
+          swal("Gabim", "Ndodhi një gabim gjatë gjenerimit të faturës!", "error")
+        }
+      });
+    }); 
 
   // Sweet Alert confirmation before delete
   $(document).on('click', '.delete-item', function(e){
@@ -42,13 +72,14 @@
     var company = $("#company").val();
     var fromDate = $('#datetimepicker4').val();
     var toDate = $('#datetimepicker5').val();
+    var last_payment = $("#last_payment").attr("checked") ? 'Yes' : 'No';
     
     function fetch_data(page,sort_type,sort_by,query){
       $('#hidePagination').hide();
       $('#spinner').show();
       $.ajax({
         data: {user: user,company:company},
-        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+query+"&fromDate="+fromDate+"&toDate="+toDate,
+        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+query+"&fromDate="+fromDate+"&toDate="+toDate+"&last_payment="+last_payment,
         success: function(data){
           $('#spinner').hide();
           $('tbody').html('');
@@ -268,12 +299,13 @@
   
   $(document).ready(function(){
     $('#dailyReport').click(function(){
+      var inc_transactions = $("#inc_transactions").val();
       var company = $("#company").val();
       var dailyReport = 1;
 
       $.ajax({
         type: "GET",
-        data: {company:company,dailyReport:dailyReport},
+        data: {company:company,dailyReport:dailyReport,inc_transactions:inc_transactions},
         url: "{{ URL('/dailyReport')}}",
         dataType: "JSON",
         success: function(data){

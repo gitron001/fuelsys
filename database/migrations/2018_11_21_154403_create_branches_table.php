@@ -16,9 +16,10 @@ class CreateBranchesTable extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('address');
-            $table->string('city');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
             $table->integer('status');
+            $table->string('remember_token')->default('');
             $table->integer('created_at');
             $table->integer('updated_at');
         });

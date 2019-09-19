@@ -11,17 +11,20 @@ use App\Models\Company;
 
 class TransactionMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    //use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public $request;
-    public function __construct($request)
+    public $trans_id;
+	
+    public $company;
+	
+    public function __construct($trans_id)
     {
-        $this->request = $request;
+        $this->trans_id = $trans_id;
     }
 
     /**
@@ -31,21 +34,21 @@ class TransactionMail extends Mailable
      */
     public function build()
     {
-        $transactions  = Transaction::where('id', $this->request)->first();
-        $company       = Company::where('status',4)->first();
-
+		$transactions  = Transaction::where('id', $this->trans_id)->first();
+		$company       = Company::where('status',4)->first();
+				
         return $this->view('emails.transaction')->with( [
-            'id'                    => $transactions['id'],
+            'id'                    => $transactions->id,
             'product_name'          => $transactions->product->name,
-            'lit'                   => $transactions['lit'],
-            'price'                 => $transactions['price'],
-            'created_at'            => $transactions['created_at'],
+            'lit'                   => $transactions->lit,
+            'price'                 => $transactions->price,
+            'created_at'            => $transactions->created_at,
             'user_name'             => $transactions->users->name,
             'company_name'          => $transactions->users->company->name,
-            'our_company'           => $company['name'],
-            'our_company_address'   => $company['address'],
-            'our_company_city'      => $company['city'],
-            'our_company_phone'     => $company['tel_number'],
+            'our_company'           => $company->name,
+            'our_company_address'   => $company->address,
+            'our_company_city'      => $company->city,
+            'our_company_phone'     => $company->tel_number,
         ] );
     }
 }

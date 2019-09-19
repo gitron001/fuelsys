@@ -1,14 +1,13 @@
 <?php
 
-use App\Events\FormSubmitted;
-
 Auth::routes();
 
 Route::resource('/', 'HomeController');
 Route::get('/admin/transactions','TransactionController@searchWithPagination');
 Route::get('transactions-info', 'TransactionController@info');
 // Transactions - Genrate bill
-Route::get('/admin/transactions/{id}','TransactionController@printFunction');
+Route::get('/transaction-email/{id}','CompaniesController@send_email');
+Route::get('/transaction-receipt','TransactionController@printFunction');
 
 //Change language
 Route::get('locale/{locale}',function($locale){
@@ -55,7 +54,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Payments
 	Route::resource('/admin/payments', 'PaymentsController');
 	Route::get('payment/{id}/delete', ['as' => 'payment.delete', 'uses' => 'PaymentsController@destroy']);
-	Route::get('/payment/generate/{id}', ['as' => 'payment.generate', 'uses' => 'PaymentsController@printFunction']);
+	Route::get('/payment-receipt','PaymentsController@printFunction');
 
 	// PFC 
 	Route::resource('/admin/pfc', 'PFCController');
@@ -99,13 +98,20 @@ Route::group(['middleware' => 'authenticated'], function () {
 		return view('form_page');
 	});
 
-	Route::post('/sender',function(){
-	
-		$text = request()->text;
-		// This is the post
-		event(new FormSubmitted($text));
-	});
+	Route::post('sender','PusherController@sender');
 
+	// Export RFID to Server2
+	Route::get('/api/rfids','API\RfidController@getAllRfids');
+
+	// Export Transactions to Server2
+	Route::get('/api/transactions','API\TransactionsController@getAllTransactions');
+
+	// Import RFID from Server
+	Route::get('/api/rfids/import','API\RfidController@importAllRfids');
+
+	// Show failed attemps
+	Route::get('/failed-attempts','SettingsController@failed_attempts');
+	
 });
 
 
