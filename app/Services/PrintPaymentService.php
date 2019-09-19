@@ -26,15 +26,18 @@ class PrintPaymentService extends ServiceProvider
 
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
             $payment        = Payments::where('id', $id)->first();
+            $company        = Company::select('images')->where('status',4)->first();
 
-            $image          = public_path().'/images/nesim-bakija.png';
+            $image          = public_path().'/images/company'.$company->images;
             $logo           = EscposImage::load($image, false);
             $printer        = new Printer($connector);
             $date           = date("F j, Y, H:i", time());
 
             /* Print top logo */
             $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            $printer -> graphics($logo);
+            if(!empty($company->images) && file_exists( public_path().'/images/company/'.$image)){
+                $printer -> graphics($logo);
+            }
             $printer->text("\n");
 
             /* Name & Info of Company */

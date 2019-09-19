@@ -8,9 +8,6 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Users;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
-use App\Models\Transaction;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Exception\GuzzleException;
 

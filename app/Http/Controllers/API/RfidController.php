@@ -43,7 +43,7 @@ class RfidController extends Controller
     // Insert RFID from local DB to Server (Export RFID)
     public function getAllRfids()
     {
-        $users          = Users::get()->toArray();
+        $users          = Users::where('exported',0)->get()->toArray();
         $response       = array();
         $access_token   = config('token.access_token');
 
@@ -69,11 +69,17 @@ class RfidController extends Controller
                 "message" => $e->getMessage()
             ]);
         }
+
+        $online_response_data = $response->getBody()->getContents();
+        $id = json_decode($online_response_data);
+        foreach($id->new as $value){
+            Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
+        }
         
-        return view('/admin/api/response')->with('data', $response->getBody()->getContents());
+        return view('/admin/api/response')->with('data', $online_response_data);
     }
 
-    // Import RFID from Server to local DB
+    // Import RFID from Server to local DB (Import RFID)
     public function importAllRfids(Request $request){
 
         $access_token   = config('token.access_token');
@@ -91,7 +97,6 @@ class RfidController extends Controller
 
             $response = $request->getBody()->getContents();
             $data     = json_decode($response);
-
             foreach($data as $user){
                 $rfid = Users::firstOrCreate([
                     'rfid' => $user->rfid], 
@@ -107,6 +112,7 @@ class RfidController extends Controller
                     'email'             => !empty($user->email) ? $user->email : NULL,
                     'password'          => !empty($user->password) ? $user->password : NULL,
                     'company_id'        => !empty($user->company_id) ? $user->company_id : 0,
+                    'exported'          => 1,
                     'one_time_limit'    => !empty($user->one_time_limit) ? $user->one_time_limit : 0,
                     'plates'            => !empty($user->plates) ? $user->plates : 0,
                     'vehicle'           => !empty($user->vehicle) ? $user->vehicle : 0,
