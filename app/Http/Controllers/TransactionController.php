@@ -17,6 +17,7 @@ use Excel;
 use DB;
 use DateTime;
 use PDF;
+use Carbon\Carbon;
 use Mail;
 use App\Jobs\PrintFuelRecept;
 
@@ -249,8 +250,13 @@ class TransactionController extends Controller
         $date 		= $request->fromDate;
         $last_payment = $request->input('last_payment');
         $inc_transactions = $request->input('inc_transactions');
+        $company_checked = $request->input('company');
 
-        //dd($payments);exit();
+        if(!isset($inc_transactions) || $inc_transactions == 'No'){
+            $total_transactions = $payments->groupBy(function($val) {
+                return \Carbon\Carbon::parse(date('Y-m-d h:i:s', $val->date))->format('Y-m-d');
+            });
+        }
 
         if(isset($request->user)){
             $id = $request->user;
@@ -264,7 +270,7 @@ class TransactionController extends Controller
 			//$payment_date = Payments::where('company_id', $id)->where('status', 1)->first()->pluck('date');
         }
 
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
         
@@ -359,6 +365,7 @@ class TransactionController extends Controller
         
         $payments = $payments->get();
         return $payments;
+        
     }
 
     public static function generate_balance($request){
@@ -657,21 +664,19 @@ class TransactionController extends Controller
         $company            = Company::where('status', 4)->first();
         $date               = $request->fromDate;
         $inc_transactions   = $request->inc_transactions;
-
+        $company_checked    = $request->input('company');
+        
         if(isset($request->company)){
             $company_details = Company::where('id',$request->company)->first();
         }
 
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','company_checked'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         
 
-        Mail::send('emails.report',["data"=>"Raporti Ditor - Nesim Bakija"],function($m) use($pdf,$company_details){
+        Mail::send('emails.report',["data"=>"Raport Transaksionesh - Nesim Bakija"],function($m) use($pdf){
             // STATIC EMAIL - TEST
-            $m->to('ideal.bakija@gmail.com')->subject('Raporti Ditor - Nesim Bakija');
-            
-            // DYNAMIC EMAIL 
-            //$m->to($company_details->email)->subject('Raporti Ditor - Nesim Bakija');
+            $m->to('orgesthaqi96@gmail.com')->subject('Raport Transaksionesh - Nesim Bakija');
             $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
         });
    }

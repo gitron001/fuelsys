@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Branch;
 use Closure;
 use Auth;
+use Session;
 
 class RfidAuth
 {

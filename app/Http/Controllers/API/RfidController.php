@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use DB;
+use Session;
 use DateTime;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -25,6 +26,18 @@ class RfidController extends Controller
         }
 
         return response($user_discount,201);
+    }
+    
+    public function importRFID()
+    {
+        $users          = Users::get()->toArray();
+        $response       = array();
+        foreach($users as $u){
+            $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
+            $response[]         = array_merge($u,$rfid);
+        }
+        
+        return response($response,201);
     }
 
     // Insert RFID from local DB to Server (Export RFID)
@@ -146,9 +159,9 @@ class RfidController extends Controller
         $response = $request->all();
         $new      = array();
         $old      = array();
-
+        
         foreach($response as $user){
-            $user = Users::firstOrCreate([
+            $rfid = Users::firstOrCreate([
                 'rfid' => $user['rfid']], 
                 [
                 'branch_user_id'    => $user['id'],
@@ -174,25 +187,24 @@ class RfidController extends Controller
                 'created_at'        => $user['created_at'],
                 'updated_at'        => $user['updated_at'],
             ]);
+            
+            if ($rfid->wasRecentlyCreated) {
+                $new[] = $rfid;
+                
+                RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
-            if ($user->wasRecentlyCreated) {
-                $new[] = $user;
-            }else {
-                $old[] = $user;
-            }
-
-            $insertedId = $user->id;
-
-            if(!empty($user['discount'])) {
                 foreach($user['discount'] as $discount){
-                    RFID_Discounts::firstOrCreate([
-                        'rfid_id'       => $insertedId,
+                    RFID_Discounts::insert([
+                        'rfid_id'       => $rfid->id,
                         'product_id'    => $discount['product_id'],
                         'discount'      => $discount['discount'],
                         'created_at'    => $discount['created_at'],
                         'updated_at'    => $discount['updated_at']
                     ]);
                 }
+                    
+            }else {
+                $old[] = $rfid;
             }
         }
 
