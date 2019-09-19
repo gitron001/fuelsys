@@ -17,6 +17,8 @@ class Users extends Model
         'application_date',
         'business_type',
         'email',
+        'branch_user_id',
+        'branch_id',
         'company_id',
         'one_time_limit',
         'plates',

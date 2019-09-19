@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use DB;
+use Session;
 use DateTime;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -26,78 +27,54 @@ class RfidController extends Controller
 
         return response($user_discount,201);
     }
+    
+    public function importRFID()
+    {
+        $users          = Users::get()->toArray();
+        $response       = array();
+        foreach($users as $u){
+            $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
+            $response[]         = array_merge($u,$rfid);
+        }
+        
+        return response($response,201);
+    }
 
     public function getAllRfids()
     {
-        $rfids = Users::get()->toArray();
+        $users          = Users::get()->toArray();
+        $response       = array();
+
+        foreach($users as $u){
+            $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
+            $response[]         = array_merge($u,$rfid);
+        }
 
         $client = new \GuzzleHttp\Client(['cookies' => true,
             'headers' =>  [
                 'Authorization'          => "ABCDEFGHIJK"
             ]]);
-        $url = '192.168.1.2/api/rfids/create';
+        $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
         
         $response = $client->request('POST', $url, [
-            'form_params' => $rfids
+            'form_params' => $response
         ]);
 
-        return $response->getReasonPhrase();
-    }
-
-    public function createRfid(Request $request){
-        $rfids = $request->all();
-
-        foreach($rfids as $rfid){
-            Users::firstOrCreate([
-                'rfid' => $rfid['rfid']],
-                [
-                'name'              => $rfid['name'],
-                'surname'           => !empty($rfid['surname']) ? $rfid['surname'] : NULL,
-                'residence'         => !empty($rfid['residence']) ? $rfid['residence'] : NULL,
-                'contact_number'    => !empty($rfid['contact_number']) ? $rfid['contact_number'] : NULL,
-                'application_date'  => !empty($rfid['application_date']) ? $rfid['application_date'] : NULL,
-                'business_type'     => !empty($rfid['business_type']) ? $rfid['business_type'] : NULL,
-                'email'             => !empty($rfid['email']) ? $rfid['email'] : NULL,
-                'password'          => !empty($rfid['password']) ? $rfid['password'] : NULL,
-                'company_id'        => !empty($rfid['company_id']) ? $rfid['company_id'] : 0,
-                'one_time_limit'    => !empty($rfid['one_time_limit']) ? $rfid['one_time_limit'] : 0,
-                'plates'            => !empty($rfid['plates']) ? $rfid['plates'] : 0,
-                'vehicle'           => !empty($rfid['vehicle']) ? $rfid['vehicle'] : 0,
-                'status'            => !empty($rfid['status']) ? $rfid['status'] : 1,
-                'type'              => !empty($rfid['type']) ? $rfid['type'] : 1,
-                'starting_balance'  => !empty($rfid['starting_balance']) ? $rfid['starting_balance'] : 0,
-                'limits'            => !empty($rfid['limits']) ? $rfid['limits'] : 0,
-                'limit_left'        => !empty($rfid['limit_left']) ? $rfid['limit_left'] : 0,
-                'remember_token'    => $rfid['remember_token'],
-                'created_at'        => $rfid['created_at'],
-                'updated_at'        => $rfid['updated_at'],
-            ]);
-        }
-
-        return response()->json([
-            "message" => "RFID record created"
-        ], 201);
+        return $response->getBody();
     }
 
     public function createUser(Request $request) 
     {   
-        $url = '192.168.1.2/api/users';
-
-        $client = new \GuzzleHttp\Client(['cookies' => true,
-            'headers' =>  [
-                'Authorization'          => "ABCDEFGHIJK"
-            ]]);
-
-        $jar = new \GuzzleHttp\Cookie\CookieJar;
-        $res = $client->request('GET', $url, ['cookies' => $jar]);
-
-        $response = json_decode($res->getBody(),true);
+        $response = $request->all();
+        $new      = array();
+        $old      = array();
         
-
         foreach($response as $user){
-            Users::firstOrCreate([
+            $rfid = Users::firstOrCreate([
                 'rfid' => $user['rfid']], 
                 [
+                'branch_user_id'    => $user['id'],
+                'branch_id'         => Session::get('branch_id'),
                 'name'              => $user['name'],
                 'surname'           => !empty($user['surname']) ? $user['surname'] : NULL,
                 'residence'         => !empty($user['residence']) ? $user['residence'] : NULL,
@@ -119,23 +96,36 @@ class RfidController extends Controller
                 'created_at'        => $user['created_at'],
                 'updated_at'        => $user['updated_at'],
             ]);
+            
+            if ($rfid->wasRecentlyCreated) {
+                $new[] = $rfid;
+                
+                RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
-            if(!empty($user['discount'])) {
                 foreach($user['discount'] as $discount){
-                    RFID_Discounts::updateOrCreate([
-                        'rfid_id'       => $discount['rfid_id'],
+                    RFID_Discounts::insert([
+                        'rfid_id'       => $rfid->id,
                         'product_id'    => $discount['product_id'],
                         'discount'      => $discount['discount'],
                         'created_at'    => $discount['created_at'],
                         'updated_at'    => $discount['updated_at']
                     ]);
                 }
+                    
+            }else {
+                $old[] = $rfid;
             }
         }
+        
+        return response()->json([
+            'response'  => 'Success',
+            'new'       => $new,
+            'old'       => $old,
+        ], 201);
     
     }
 
-    public function saveRfid(Request $request){
+    public function saveRFID(Request $request){
         $rfid = $request->all();
 
         if(Users::where('rfid', $rfid['rfid'])->exists()){
@@ -143,9 +133,11 @@ class RfidController extends Controller
                 "message" => "This RFID(".$rfid['rfid'].") already exists!"
             ], 201);
         }else {
-            Users::firstOrCreate([
+            $user = Users::firstOrCreate([
                 'rfid' => $rfid['rfid']],
                 [
+                'branch_user_id'    => $user['id'],
+                'branch_id'         => Session::get('branch_id'),
                 'name'              => $rfid['name'],
                 'surname'           => !empty($rfid['surname']) ? $rfid['surname'] : NULL,
                 'residence'         => !empty($rfid['residence']) ? $rfid['residence'] : NULL,
@@ -168,14 +160,14 @@ class RfidController extends Controller
                 'updated_at'        => $rfid['updated_at'],
             ]);
 
-            if(!empty($user['discount'])) {
-                foreach($user['discount'] as $discount){
-                    RFID_Discounts::updateOrCreate([
-                        'rfid_id'       => $discount['rfid_id'],
-                        'product_id'    => $discount['product_id'],
-                        'discount'      => $discount['discount'],
-                        'created_at'    => $discount['created_at'],
-                        'updated_at'    => $discount['updated_at']
+            $insertedId = $user->id;
+
+            if(!empty($rfid['discount'])) {
+                foreach(array_combine($rfid['product'], $rfid['discount']) as $product => $discount){
+                    RFID_Discounts::firstOrCreate([
+                        'rfid_id'       => $insertedId,
+                        'product_id'    => $product,
+                        'discount'      => $discount,
                     ]);
                 }
             }
