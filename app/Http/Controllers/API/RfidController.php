@@ -218,7 +218,7 @@ class RfidController extends Controller
             ]);
             
             if ($rfid->wasRecentlyCreated) {
-                $new[] = $rfid;
+                $new[] = $rfid->id;
                 
                 RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
@@ -233,7 +233,7 @@ class RfidController extends Controller
                 }
                     
             }else {
-                $old[] = $rfid;
+                $old[] = $rfid->id;
             }
         }
 
