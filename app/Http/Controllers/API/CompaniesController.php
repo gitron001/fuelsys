@@ -43,6 +43,9 @@ class CompaniesController extends Controller
 
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
+        $old = $id->old;
+        print_r(implode($old));exit();
+        
         // Update new exported user 
         foreach($id->new as $value){
             Company::where('bis_number',$value->bis_number)->update(['exported'=> 1]);
