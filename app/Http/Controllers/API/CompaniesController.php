@@ -44,16 +44,17 @@ class CompaniesController extends Controller
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
         $old = $id->old;
+		dd($old);
         print_r(implode($old));exit();
         
         // Update new exported user 
         foreach($id->new as $value){
-            Company::where('bis_number',$value->bis_number)->update(['exported'=> 1]);
+            Company::where('id',$value->branch_id)->update(['exported'=> 1, 'master_id' =>$value->master_id]);
         }
 
         // Update old exported user 
         foreach($id->old as $value){
-            Company::where('bis_number',$value->bis_number)->update(['exported'=> 1]);
+            Company::where('id',$value->branch_id)->update(['exported'=> 1, 'master_id' =>$value->master_id]);
         }
     }
 
@@ -95,7 +96,7 @@ class CompaniesController extends Controller
             ]);
             
             if ($company_id->wasRecentlyCreated) {
-                $new[] = $company_id;
+                $new[] = array('master_id' => $company_id;, 'branch_id' => $data['id']);
                 
                 CompanyDiscount::where('company_id',$company_id->id)->delete();
 
@@ -110,7 +111,7 @@ class CompaniesController extends Controller
                 }
                     
             }else {
-                $old[] = $company_id;
+                $old[] = array('master_id' => $company_id;, 'branch_id' => $data['id']);
             }
         }
 

@@ -77,14 +77,20 @@ class RfidController extends Controller
         $id = json_decode($online_response_data);
         
         // Update new exported user 
+		/*
         foreach($id->new as $value){
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
-        }
+        }*/
+		$new_ids = implode(',', $id->new);
+		Users::whereIn('id',[$new_ids])->update(['exported'=> 1]);
 
+
+		$old_ids = implode(',', $id->old);
+		Users::whereIn('id',[$old_ids])->update(['exported'=> 1]);
         // Update old exported user 
-        foreach($id->old as $value){
+        /*foreach($id->old as $value){
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
-        }
+        }*/
         
         return view('/admin/api/response')->with('data', $online_response_data);
     }
@@ -156,9 +162,9 @@ class RfidController extends Controller
                             'updated_at'    => $discount->updated_at
                         ]);
                     }
-                    $new[] = $rfid;
+                    $new[] = $rfid->id;
                 }else {
-                    $old[] = $rfid;
+                    $old[] = $rfid->id;
                 }
             }
     

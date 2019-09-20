@@ -21,7 +21,7 @@ class CreateCompaniesTable extends Migration
             $table->string('contact_person')->nullable();
             $table->integer('tax_number')->nullable();
             $table->integer('res_number')->nullable();
-            $table->integer('tel_number')->nullable();
+            $table->string('tel_number')->nullable();
             $table->string('email')->nullable();
             $table->string('send_email')->nullable();
             $table->string('address')->nullable();
