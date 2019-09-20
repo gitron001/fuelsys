@@ -92,7 +92,7 @@ class RfidController extends Controller
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
         }*/
         
-        return view('/admin/api/response')->with('data', $online_response_data);
+        return view('/admin/api/response', compact('users', 'old_ids'));
     }
 
     // Import RFID from Server to local DB (Import RFID)
@@ -162,9 +162,9 @@ class RfidController extends Controller
                             'updated_at'    => $discount->updated_at
                         ]);
                     }
-                    $new[] = $rfid->id;
+                    $new[] = $rfid->branch_id;
                 }else {
-                    $old[] = $rfid->id;
+                    $old[] = $rfid->branch_id;
                 }
             }
     

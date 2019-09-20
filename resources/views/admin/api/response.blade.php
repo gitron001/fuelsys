@@ -18,15 +18,17 @@
                       <th>Mbiemri</th>
                       <th style="width: 40px">Statusi</th>
                     </tr>
-                    <?php $response = json_decode($data)?>
-                    @if(count($response->old) > 0)
-                        @foreach($response->old as $rfid)
-                            <tr>
-                            <td>{{ $rfid->rfid }}</td>
-                            <td>{{ $rfid->name }}</td>
-                            <td>{{ $rfid->surname }}</td>
-                            <td><span class="badge bg-red">Eksiston</span></td>
-                            </tr>
+					<?php $all_old_id = explode(',', $old_ids); ?>
+                    @if(count($all_old_id) > 0)
+                        @foreach($users as $rfid)
+							@if(in_array($rfid['id'], $all_old_id))
+								<tr>
+									<td>{{ $rfid['rfid'] }}</td>
+									<td>{{ $rfid['name'] }}</td>
+									<td>{{ $rfid['surname'] }}</td>
+									<td><span class="badge bg-red">Eksiston</span></td>
+								</tr>
+							@endif
                         @endforeach
                     @endif
                   </table>
