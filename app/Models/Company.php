@@ -9,7 +9,8 @@ class Company extends Model
     protected $table = 'companies';
     
     protected $fillable = [
-        'name', 
+        'name',
+        'master_id',
         'fis_number', 
         'bis_number',
         'tax_number',
