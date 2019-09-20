@@ -248,7 +248,6 @@ class TransactionController extends Controller
         $data       = self::getGeneralData($request);
         $company    = Company::where('status', 4)->first();
         $date 		= $request->fromDate;
-        $last_payment = $request->input('last_payment');
         $inc_transactions = $request->input('inc_transactions');
         $company_checked = $request->input('company');
 
@@ -303,8 +302,8 @@ class TransactionController extends Controller
 		
         $last_payment    = $request->input('last_payment');
 		if($last_payment == 'Yes'){            
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
-			$from_date = $payments->date+1;
+            //$payments =	self::last_payment_date($request); //Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
+			$from_date = self::last_payment_date($request);
         }
 		
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
@@ -376,8 +375,7 @@ class TransactionController extends Controller
         $last_payment    = $request->input('last_payment');
         $starting_balance   = 0;
 		if($last_payment == 'Yes'){            
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
-			$from_date = $payments->date+1;
+            $from_date = self::last_payment_date($request);
         }
         if($request->input('dailyReport')){
             $from_date      = strtotime(date('Y-m-d').' 00:00:00');
@@ -453,8 +451,7 @@ class TransactionController extends Controller
         $company    = $request->input('company');
         $last_payment    = $request->input('last_payment');
 		if($last_payment == 'Yes'){            
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
-			$from_date = $payments->date+1;
+            $from_date = self::last_payment_date($request);
         }
         $usersFilter = Users::where('type','1')->pluck('name','id');
 
@@ -679,7 +676,18 @@ class TransactionController extends Controller
             $m->to('orgesthaqi96@gmail.com')->subject('Raport Transaksionesh - Nesim Bakija');
             $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
         });
-   }
+    }
+
+
+	public static function last_payment_date($request){		
+		if($request->input('user')){
+			$query = Payments::where('user_id',$request->input('user') );
+		}else{
+			$query = Payments::where('company_id',$request->input('company') );
+		}		
+		$payments = $query->orderBy('date', 'desc')->first();	
+		return $payments->date+1;		
+	}
 
    public static function printFunction(Request $request)
     {

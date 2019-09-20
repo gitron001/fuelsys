@@ -14,6 +14,7 @@ class AddCompaniesEmailSettings extends Migration
     public function up()
     {
 		Schema::table('companies', function (Blueprint $table) {
+            $table->tinyInteger('printer_ip')->default(0)->after('has_receipt_nr');
             $table->tinyInteger('monthly_report')->default(0)->after('has_receipt_nr');
             $table->tinyInteger('daily_at')->default(0)->after('has_receipt_nr');
             $table->tinyInteger('on_transaction')->default(0)->after('has_receipt_nr');

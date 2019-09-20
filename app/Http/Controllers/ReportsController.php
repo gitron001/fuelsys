@@ -103,7 +103,7 @@ class ReportsController extends Controller
         $to_date            = strtotime($request->input('toDate'));
         $user               = $request->input('user');
         $company            = $request->input('company');
-        $sort_by_company = $request->get('sortby');
+        $sort_by_company 	= $request->get('sortby');
 		
 		if($sort_by_company == 'name'){
             $sort_by = "transactions.created_at";
@@ -122,12 +122,7 @@ class ReportsController extends Controller
         $last_payment       = $request->input('last_payment');
 
         if($last_payment == 'Yes'){           
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();
-            $p_date = $payments->date;
-        }
-
-        if(isset($p_date)){
-            $from_date = $p_date;
+            $from_date = self::last_payment_date($request);
         }
 		
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
@@ -164,4 +159,13 @@ class ReportsController extends Controller
         
    }
 
+	public static function last_payment_date($request){		
+		if($request->input('user')){
+			$query = Payments::where('user_id',$request->input('user') );
+		}else{
+			$query = Payments::where('company_id',$request->input('company') );
+		}		
+		$payments = $query->orderBy('date', 'desc')->first();	
+		return $payments->date+1;		
+	}
 }
