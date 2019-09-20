@@ -38,7 +38,11 @@ class SendTransactionsToServer extends Command
      */
     public function handle()
     {
-        $controller = new TransactionsController();
-        $controller->getAllTransactions();
+        if(config()->has('token.access_token')) {
+            $controller = new TransactionsController();
+            $controller->getAllTransactions();
+        }else {
+            return false;
+        }
     }
 }
