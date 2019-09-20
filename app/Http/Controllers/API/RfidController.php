@@ -162,9 +162,9 @@ class RfidController extends Controller
                             'updated_at'    => $discount->updated_at
                         ]);
                     }
-                    $new[] = $rfid->branch_id;
+                    $new[] = $rfid->branch_user_id;
                 }else {
-                    $old[] = $rfid->branch_id;
+                    $old[] = $rfid->branch_user_id;
                 }
             }
     
@@ -218,7 +218,7 @@ class RfidController extends Controller
             ]);
             
             if ($rfid->wasRecentlyCreated) {
-                $new[] = $rfid->id;
+                $new[] = $rfid->branch_user_id;
                 
                 RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
@@ -233,7 +233,7 @@ class RfidController extends Controller
                 }
                     
             }else {
-                $old[] = $rfid->id;
+                $old[] = $rfid->branch_user_id;
             }
         }
 
