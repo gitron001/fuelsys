@@ -28,9 +28,9 @@ class RfidController extends Controller
         return response($user_discount,201);
     }
     
-    public function importRFID()
+    public function importRFID(Request $request)
     {
-        $users          = Users::get()->toArray();
+        $users          = Users::where('created_at','>=',$request->created_at)->get()->toArray();
         $response       = array();
         foreach($users as $u){
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
@@ -43,7 +43,10 @@ class RfidController extends Controller
     // Insert RFID from local DB to Server (Export RFID)
     public function getAllRfids()
     {
-        $users          = Users::where('exported',0)->get()->toArray();
+        $users          = Users::where(function ($query) {
+                            $query->where('exported', NULL)
+                                ->orWhere('exported', 0);
+                        })->get()->toArray();
         $response       = array();
         $access_token   = config('token.access_token');
 
@@ -72,7 +75,14 @@ class RfidController extends Controller
 
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
+        
+        // Update new exported user 
         foreach($id->new as $value){
+            Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
+        }
+
+        // Update old exported user 
+        foreach($id->old as $value){
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
         }
         
@@ -85,6 +95,8 @@ class RfidController extends Controller
         $access_token   = config('token.access_token');
         $new            = array();
         $old            = array();
+        //$last_inserted  = Users::where('exported',1)->orderBy('created_at','DESC')->first();
+        $last_inserted  = Users::where('exported',1)->where('created_at', Users::max('created_at'))->orderBy('created_at','desc')->first();
 
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
@@ -93,10 +105,15 @@ class RfidController extends Controller
                     'Accept'                 => "application/json"
                 ]]);
 
-            $request = $client->get('http://fuelsystem.alba-petrol.com/api/rfids/import');
+            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/import';
+            
+            $response = $client->request('POST', $url, [
+                'json' => $last_inserted
+            ]);
 
-            $response = $request->getBody()->getContents();
-            $data     = json_decode($response);
+            $online_response = $response->getBody()->getContents();
+            $data            = json_decode($online_response);
+
             foreach($data as $user){
                 $rfid = Users::firstOrCreate([
                     'rfid' => $user->rfid], 

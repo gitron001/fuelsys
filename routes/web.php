@@ -100,14 +100,17 @@ Route::group(['middleware' => 'authenticated'], function () {
 
 	Route::post('sender','PusherController@sender');
 
-	// Export RFID to Server2
+	// Export RFID to Server
 	Route::get('/api/rfids','API\RfidController@getAllRfids');
-
-	// Export Transactions to Server2
-	Route::get('/api/transactions','API\TransactionsController@getAllTransactions');
 
 	// Import RFID from Server
 	Route::get('/api/rfids/import','API\RfidController@importAllRfids');
+
+	// Export Transactions to Server
+	Route::get('/api/transactions','API\TransactionsController@getAllTransactions');
+
+	// Export Companies to Server
+	Route::get('/api/companies','API\CompaniesController@exportCompanies');
 
 	// Show failed attemps
 	Route::get('/failed-attempts','SettingsController@failed_attempts');

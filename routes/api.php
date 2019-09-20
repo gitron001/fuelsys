@@ -29,5 +29,9 @@ Route::get('/payments', 'API\PaymentsController@getAllPayments');
 Route::post('/payments/create', 'API\PaymentsController@createPayment');
 
 Route::get('/rfids/import', 'API\RfidController@importRFID');
+Route::post('/rfids/import', 'API\RfidController@importRFID');
 
 Route::post('/transactions/create', 'API\TransactionsController@importTransactions');
+
+Route::get('/companies', 'API\CompaniesController@exportCompanies');
+Route::post('/companies/create', 'API\CompaniesController@createCompany');
