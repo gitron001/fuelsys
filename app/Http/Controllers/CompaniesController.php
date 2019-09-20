@@ -118,7 +118,7 @@ class CompaniesController extends Controller
             'has_limit'         => $request->input('has_limit'),
             'limit_left'        => $limit_left,
             'on_transaction'    => $request->input('on_transaction'),
-            'email_sent'        => $request->input('email_sent'),
+            'send_email'        => $request->input('send_email'),
             'daily_at'       	=> $request->input('daily_at'),
             'monthly_report'    => $request->input('monthly_report'),
             'created_at'        => now()->timestamp,
