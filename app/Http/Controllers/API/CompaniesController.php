@@ -10,14 +10,15 @@ use App\Http\Controllers\Controller;
 class CompaniesController extends Controller
 {
     public function exportCompanies(){
-        $users          = Company::where(function ($query) {
+        $company        = Company::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
                         })->get()->toArray();
+
         $response       = array();
         $access_token   = config('token.access_token');
 
-        foreach($users as $u){
+        foreach($company as $u){
         $rfid['discount']   = CompanyDiscount::where('company_id',$u['id'])->get()->toArray();
         $response[]         = array_merge($u,$rfid);
         }
@@ -42,7 +43,6 @@ class CompaniesController extends Controller
 
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
-        
         // Update new exported user 
         foreach($id->new as $value){
             Company::where('bis_number',$value->bis_number)->update(['exported'=> 1]);
