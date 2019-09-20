@@ -27,10 +27,12 @@ class PrintFuelingService extends ServiceProvider
 
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
             $transaction    = Transaction::where('id', $id)->first();
+
             $image          = public_path().'/images/nesim-bakija.png';
             $logo           = EscposImage::load($image, false);
             $printer        = new Printer($connector);
-            $date           = date("F j, Y, H:i", strtotime('+1 hour'));
+            $date           = date("F j, Y, H:i", time());
+
 
             /* Print top logo */
             $printer -> setJustification(Printer::JUSTIFY_CENTER);

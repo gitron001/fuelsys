@@ -21,7 +21,7 @@ class SendMonthlyCompanyEmail extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send Monthly email to Companies about their Transactions';
 
     /**
      * Create a new command instance.

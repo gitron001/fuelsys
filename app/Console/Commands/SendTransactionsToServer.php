@@ -19,7 +19,7 @@ class SendTransactionsToServer extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send transaction to the server';
 
     /**
      * Create a new command instance.
