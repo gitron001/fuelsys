@@ -42,6 +42,16 @@ class CompaniesController extends Controller
 
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
+        
+        // Update new exported user 
+        foreach($id->new as $value){
+            Company::where('bis_number',$value->bis_number)->update(['exported'=> 1]);
+        }
+
+        // Update old exported user 
+        foreach($id->old as $value){
+            Company::where('bis_number',$value->bis_number)->update(['exported'=> 1]);
+        }
     }
 
     public function createCompany(Request $request) 
@@ -84,11 +94,11 @@ class CompaniesController extends Controller
             if ($company_id->wasRecentlyCreated) {
                 $new[] = $company_id;
                 
-                CompanyDiscount::where('rfid_id',$company_id->id)->delete();
+                CompanyDiscount::where('company_id',$company_id->id)->delete();
 
-                foreach($user['discount'] as $discount){
+                foreach($company['discount'] as $discount){
                     CompanyDiscount::insert([
-                        'company_id'       => $company_id->id,
+                        'company_id'    => $company_id->id,
                         'product_id'    => $discount['product_id'],
                         'discount'      => $discount['discount'],
                         'created_at'    => $discount['created_at'],
