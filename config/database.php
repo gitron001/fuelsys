@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => 'db',
+            'host' => '50.87.144.199',
             'port' => '3306',
-            'database' => 'fuel_system',
-            'username' => 'root',
-            'password' => '',
+            'database' => 'idealbak_fuelsystem',
+            'username' => 'idealbak_fuelsys',
+            'password' => 'fuelsystem2019*',
             'unix_socket' => '',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
