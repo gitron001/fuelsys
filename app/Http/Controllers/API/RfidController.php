@@ -43,10 +43,14 @@ class RfidController extends Controller
     // Insert RFID from local DB to Server (Export RFID)
     public function getAllRfids()
     {
+		ini_set("memory_limit", "-1");
+		set_time_limit(0);
+		
         $users          = Users::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
-                        })->get()->toArray();
+                        })->limit(1)->toArray();
+
         $response       = array();
         $access_token   = config('token.access_token');
 
@@ -218,7 +222,7 @@ class RfidController extends Controller
             ]);
             
             if ($rfid->wasRecentlyCreated) {
-                $new[] = $rfid->branch_user_id;
+                $new[] = $user['id'];
                 
                 RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
@@ -233,7 +237,7 @@ class RfidController extends Controller
                 }
                     
             }else {
-                $old[] = $rfid->branch_user_id;
+                $old[] = $user['id'];
             }
         }
 
