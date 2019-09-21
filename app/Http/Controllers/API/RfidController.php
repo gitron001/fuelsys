@@ -49,7 +49,7 @@ class RfidController extends Controller
         $users          = Users::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
-                        })->limit(1)->toArray();
+                        })->limit(1000)->get()->toArray();
 
         $response       = array();
         $access_token   = config('token.access_token');
@@ -58,7 +58,6 @@ class RfidController extends Controller
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
             $response[]         = array_merge($u,$rfid);
         }
-
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
@@ -86,21 +85,22 @@ class RfidController extends Controller
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
         }*/
 		$new_ids = implode(',', $id->new);
-		Users::whereIn('id',[$new_ids])->update(['exported'=> 1]);
-
+		
+		Users::whereIn('id',$id->new)->update(['exported'=> 1]);
+		
 
 		$old_ids = implode(',', $id->old);
-		Users::whereIn('id',[$old_ids])->update(['exported'=> 1]);
+		Users::whereIn('id',$id->old)->update(['exported'=> 1]);
         // Update old exported user 
         /*foreach($id->old as $value){
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
         }*/
-        
+        dd($id->new);
         return view('/admin/api/response', compact('users', 'old_ids'));
     }
 
     // Import RFID from Server to local DB (Import RFID)
-    public function importAllRfids(Request $request){
+    public function importAllRfids(){
 
         $access_token   = config('token.access_token');
         $new            = array();
@@ -116,14 +116,14 @@ class RfidController extends Controller
                 ]]);
 
             $url = 'http://fuelsystem.alba-petrol.com/api/rfids/import';
-            
+			
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted
             ]);
 
             $online_response = $response->getBody()->getContents();
             $data            = json_decode($online_response);
-
+	
             foreach($data as $user){
                 $rfid = Users::firstOrCreate([
                     'rfid' => $user->rfid], 
