@@ -51,7 +51,7 @@ class TransactionsController extends Controller
 					]);
 				}
             
-            $inserted_transaction[] = $transaction;
+                $inserted_transaction[] = $data['id'];
            }
            
         }

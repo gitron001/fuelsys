@@ -30,6 +30,7 @@ class RfidController extends Controller
     
     public function importRFID(Request $request)
     {
+        dd($request->created_at);
         $users          = Users::where('created_at','>=',$request->created_at)->get()->toArray();
         $response       = array();
         foreach($users as $u){
