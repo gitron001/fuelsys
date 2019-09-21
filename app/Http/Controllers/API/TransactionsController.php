@@ -54,24 +54,21 @@ class TransactionsController extends Controller
                 $inserted_transaction[] = $data['id'];
            }
            
-        }
-        
-        $data = array();
-        foreach($inserted_transaction as $transaction){
-            $data[] = Transaction::where('id',$transaction)->pluck('branch_transaction_id');
-        }   
+        }       
        
         return response()->json([
             'response'  => 'Success',
-            'inserted_transaction' => $data,
+            'inserted_transaction' => $inserted_transaction,
         ], 201);
        
     }
     
     public function getAllTransactions() {
-        $transactions = Transaction::where('exported',0)->get();
+		
+        $transactions = Transaction::where('exported',0)->limit(20)->get();
+		
         $access_token = config('token.access_token');
-
+		
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
@@ -85,13 +82,8 @@ class TransactionsController extends Controller
             ]);
             
             $inserted_id = $response->getBody()->getContents();
-            $data = json_decode($inserted_id);
-            foreach($data->inserted_transaction as $key){
-                foreach($key as $value){
-                    Transaction::where('id',$value)->update(['exported'=> 1]);
-                }
-            }
-
+			Transaction::whereIn('id',$inserted_id->inserted_transaction)->update(['exported'=> 1]);
+			
             return $response->getBody();
 
         } catch (\Exception $e) {

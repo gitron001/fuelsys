@@ -30,7 +30,6 @@ class RfidController extends Controller
     
     public function importRFID(Request $request)
     {
-        dd($request->created_at);
         $users          = Users::where('created_at','>=',$request->created_at)->get()->toArray();
         $response       = array();
         foreach($users as $u){
@@ -96,7 +95,7 @@ class RfidController extends Controller
         /*foreach($id->old as $value){
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
         }*/
-        dd($id->new);
+		
         return view('/admin/api/response', compact('users', 'old_ids'));
     }
 
