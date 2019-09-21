@@ -17,6 +17,7 @@ use Excel;
 use DB;
 use DateTime;
 use PDF;
+use Carbon\Carbon;
 use Mail;
 use App\Jobs\PrintFuelRecept;
 
@@ -247,10 +248,14 @@ class TransactionController extends Controller
         $data       = self::getGeneralData($request);
         $company    = Company::where('status', 4)->first();
         $date 		= $request->fromDate;
-        $last_payment = $request->input('last_payment');
         $inc_transactions = $request->input('inc_transactions');
+        $company_checked = $request->input('company');
 
-        //dd($payments);exit();
+        if(!isset($inc_transactions) || $inc_transactions == 'No'){
+            $total_transactions = $payments->groupBy(function($val) {
+                return \Carbon\Carbon::parse(date('Y-m-d h:i:s', $val->date))->format('Y-m-d');
+            });
+        }
 
         if(isset($request->user)){
             $id = $request->user;
@@ -264,7 +269,7 @@ class TransactionController extends Controller
 			//$payment_date = Payments::where('company_id', $id)->where('status', 1)->first()->pluck('date');
         }
 
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
         
@@ -297,8 +302,8 @@ class TransactionController extends Controller
 		
         $last_payment    = $request->input('last_payment');
 		if($last_payment == 'Yes'){            
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
-			$from_date = $payments->date+1;
+            //$payments =	self::last_payment_date($request); //Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
+			$from_date = self::last_payment_date($request);
         }
 		
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
@@ -359,6 +364,7 @@ class TransactionController extends Controller
         
         $payments = $payments->get();
         return $payments;
+        
     }
 
     public static function generate_balance($request){
@@ -369,8 +375,7 @@ class TransactionController extends Controller
         $last_payment    = $request->input('last_payment');
         $starting_balance   = 0;
 		if($last_payment == 'Yes'){            
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
-			$from_date = $payments->date+1;
+            $from_date = self::last_payment_date($request);
         }
         if($request->input('dailyReport')){
             $from_date      = strtotime(date('Y-m-d').' 00:00:00');
@@ -446,8 +451,7 @@ class TransactionController extends Controller
         $company    = $request->input('company');
         $last_payment    = $request->input('last_payment');
 		if($last_payment == 'Yes'){            
-            $payments = Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
-			$from_date = $payments->date+1;
+            $from_date = self::last_payment_date($request);
         }
         $usersFilter = Users::where('type','1')->pluck('name','id');
 
@@ -651,20 +655,39 @@ class TransactionController extends Controller
     }
 
     public function generateDailyReport(Request $request) {
-        $payments   = self::generate_data($request);
-        $balance    = self::generate_balance($request);
-        $company    = Company::where('status', 4)->first();
-        $date = $request->fromDate;
-	
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date', 'company'));
+        $payments           = self::generate_data($request);
+        $balance            = self::generate_balance($request);
+        $data               = self::getGeneralData($request);
+        $company            = Company::where('status', 4)->first();
+        $date               = $request->fromDate;
+        $inc_transactions   = $request->inc_transactions;
+        $company_checked    = $request->input('company');
+        
+        if(isset($request->company)){
+            $company_details = Company::where('id',$request->company)->first();
+        }
+
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','company_checked'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         
 
-        Mail::send('emails.report',["data"=>"Raporti Ditor - Nesim Bakija"],function($m) use($pdf){
-            $m->to('ideal.bakija@gmail.com')->subject('Raporti Ditor - Nesim Bakija');
+        Mail::send('emails.report',["data"=>"Raport Transaksionesh - Nesim Bakija"],function($m) use($pdf){
+            // STATIC EMAIL - TEST
+            $m->to('orgesthaqi96@gmail.com')->subject('Raport Transaksionesh - Nesim Bakija');
             $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
         });
-   }
+    }
+
+
+	public static function last_payment_date($request){		
+		if($request->input('user')){
+			$query = Payments::where('user_id',$request->input('user') );
+		}else{
+			$query = Payments::where('company_id',$request->input('company') );
+		}		
+		$payments = $query->orderBy('date', 'desc')->first();	
+		return $payments->date+1;		
+	}
 
    public static function printFunction(Request $request)
     {

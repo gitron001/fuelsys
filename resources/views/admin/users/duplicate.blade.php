@@ -14,7 +14,7 @@
                 <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/users') }}">
                   @include('includes.search_filter')
                   <a href="{{ url('admin/uploadExcel') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Upload Excel"><i class="fa fa-upload"></i> Upload Excel</a>
-				  <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new user"><i class="fa fa-plus"></i> New User</a>
+				          <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new user"><i class="fa fa-plus"></i> New User</a>
                 </form>
 
               </div>
@@ -29,12 +29,12 @@
                 </tr>
                 </thead>
                 <tbody>
-				@foreach($duplicate as $d)
+                  @foreach($duplicate as $d)
                   <tr>
-					<td>{{ trim($d['emri']). ' ' .trim($d['mbiemri']) }}</td>
-					<td>{{ $d['nr.karteles'] }}</td>
-				  </tr>
-				@endforeach
+                    <td>{{ trim($d['emri']). ' ' .trim($d['mbiemri']) }}</td>
+                    <td>{{ $d['nr.karteles'] }}</td>
+                  </tr>
+                  @endforeach
                 </tfoot>
               </table>
               @include('includes.hidden_inputs')

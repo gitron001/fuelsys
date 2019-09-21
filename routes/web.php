@@ -1,13 +1,12 @@
 <?php
 
-use App\Events\FormSubmitted;
-
 Auth::routes();
 
 Route::resource('/', 'HomeController');
 Route::get('/admin/transactions','TransactionController@searchWithPagination');
 Route::get('transactions-info', 'TransactionController@info');
 // Transactions - Genrate bill
+Route::get('/transaction-email/{id}','CompaniesController@send_email');
 Route::get('/transaction-receipt','TransactionController@printFunction');
 
 //Change language
@@ -99,18 +98,23 @@ Route::group(['middleware' => 'authenticated'], function () {
 		return view('form_page');
 	});
 
-	Route::post('/sender',function(){
-	
-		$text = request()->text;
-		// This is the post
-		event(new FormSubmitted($text));
-	});
+	Route::post('sender','PusherController@sender');
 
 	// Export RFID to Server
 	Route::get('/api/rfids','API\RfidController@getAllRfids');
 
 	// Import RFID from Server
 	Route::get('/api/rfids/import','API\RfidController@importAllRfids');
+
+	// Export Transactions to Server
+	Route::get('/api/transactions','API\TransactionsController@getAllTransactions');
+
+	// Export Companies to Server
+	Route::get('/api/companies','API\CompaniesController@exportCompanies');
+
+	// Show failed attemps
+	Route::get('/failed-attempts','SettingsController@failed_attempts');
+	
 });
 
 

@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,11 +23,11 @@ class SendTransactionEmail implements ShouldQueue
      * @return void
      */
 
-    protected $request;
-
-    public function __construct($request)
+    protected $trans_id;
+	
+    public function __construct($trans_id)
     {
-        $this->request = $request;
+        $this->trans_id = $trans_id;
     }
 
 
@@ -36,18 +37,31 @@ class SendTransactionEmail implements ShouldQueue
      * @return void
      */
     public function handle()
-    {
-        //Read email and send transaction with ID
-        $mailable = new TransactionMail($this->request['id']);
-        
-        // Send email to user
-        if(isset($this->request['user_email'])){
-            Mail::to($this->request['user_email'])->send($mailable);
-        }
+    {	
+		$transactions  = Transaction::where('id', $this->trans_id)->first();
+		if(!is_null($transactions->users->company->id) && $transactions->users->company->send_email == 1 && $transactions->users->company->on_transaction == 1){
+			$mailable = new TransactionMail($transactions);
+			$the_email = $transactions->users->company->email;
+	
+			if(trim($the_email) == ""){				
+				return true;
+			}
+			Mail::to($the_email)->send($mailable);
+			
+			if( count(Mail::failures()) > 0 ) {
 
-        // Send email to company
-        if(isset($this->request['company_email'])){
-            Mail::to($this->request['company_email'])->send($mailable);
-        }
+			   echo "There was one or more failures. They were: <br />";
+
+			   foreach(Mail::failures() as $email_address) {
+				   echo " - $email_address <br />";
+				}
+
+			} else {
+				echo "No errors, all sent successfully!";
+			}
+		}else{
+			return true;
+		}
+		
     }
 }

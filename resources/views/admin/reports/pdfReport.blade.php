@@ -98,8 +98,8 @@
 			<td align="center">{{ $d['money'] }} Euro</td>
 		  </tr>
 		@endforeach
-		</tfoot>
-		</table>
+		</tbody>
+	</table>
 
 	<br>
 
@@ -116,52 +116,62 @@
 	</thead>
 	<tbody>
 	<tr>
-		<th scope="row">{{ date('Y-m-d h:i:s',strtotime($date)) }}</th>
-	    <td>Gjendja Fillestare</td>
+		<th align="center" scope="row">{{ date('Y-m-d h:i:s',strtotime($date)) }}</th>
+	    <td align="center">Gjendja Fillestare</td>
 	    <td align="right"></td>
 	    <td align="right"></td>
 	    <td align="right"></td>
 	    <td align="right" class="gray">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
 	</tr>
-	<?php
+
+	<?
+	if($inc_transactions == 'No' || !isset($inc_transactions)) {
 		$totalTrans = 0;
-		$transaction = 0;
-		if($inc_transactions == 'Yes')	{
-			$totalTrans = $balance;
-		}
-		// Get sum of all transactions when we need to show only payments without transactions
-		foreach($payments as $py){
-			if($py->money == 0){
-				$fueling = 0;
-				$payment = $py->amount;
-			}else{
-				$fueling = $py->money;
-				$payment = 0;
-			}
-
-			$totalTrans = str_replace(',', '', $totalTrans);
-			$fueling = str_replace(',', '', $fueling);
-			$totalTrans = $totalTrans + $fueling;
-
-			if($py->type == 'transaction'){
-				$transaction = $totalTrans;
-			}
-		}
-
-		// Total balance 
-		$total = $balance;
-	?>
-	
-	<!-- Total Transactions row -->
-	<tr @if($inc_transactions == 'Yes') echo style="display:none;" @endif>
-		<td></td>
-		<td>Total Transactions</td>
-		<td colspan="3"></td>
-		<td align="right" class="gray"> {{ number_format($transaction, 2) }} €</td>
-	</tr>
+		$total_transaction = 0;
+		
+		foreach($total_transactions as $date => $transaction){ 
+			$transaction_sum = 0; 
+			$payment_sum = 0;
+		
+			foreach ($transaction as $tr) {
+				if($tr->money == 0){
+					$fueling = 0;
+					$payment = $tr->amount;
+				}else{
+					$fueling = $tr->money;
+					$payment = 0;
+				}
+				$transaction_sum += $tr->money;
+				$payment_sum += $tr->amount;
+				$totalTrans = str_replace(',', '', $totalTrans);
+				$fueling = str_replace(',', '', $fueling);
+				$payment = str_replace(',', '', $payment);
+				$totalTrans = $totalTrans + $fueling - $payment; 
+			
+			if($tr->type == 'payment') { ?>
+		<tr>
+			<th align="center">{{ $date }}</th>	
+			<td align="center">{{ !empty($tr->description) ? 'Pagese ('.$tr->description.')' : 'Pagese' }}</td>
+			<td align="center">@if(isset($company_checked)) {{ $tr->company_name }}  @else {{ $tr->username }} @endif</td>
+			<td align="center">{{ number_format($tr->money, 2) }} €</td>
+			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
+			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
+		</tr>
+		<? } } ?>
+		<tr @if($tr->type == 'payment') echo style="display:none;" @endif>
+			<th align="center">{{ $date }}</th>	
+			<td align="center">{{ $tr->type == 'payment' ? 'Pagese - '.$tr->description.'' : 'Transaksion' }}</td>
+			<td align="center">@if(isset($company_checked)) {{ $tr->company_name }}  @else {{ $tr->username }} @endif</td>
+			<td align="center">{{ number_format($transaction_sum, 2) }} €</td>
+			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
+			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
+		</tr>
+	<? } } ?>
 	<!-- END Total transactions row -->
 
+
 	<!-- Show all rows except TOTAL row -->
+	<? $total = $balance; ?>
 	@foreach($payments as $py)
 		<?php
 
@@ -178,12 +188,12 @@
 		$total = $total + $fueling - $payment;
 		
 		?>
-		<tr @if($py->type == 'transaction' && ($inc_transactions == 'No' || !request()->has('inc_transactions'))) echo style="display:none;" @endif>
-			<th scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d h:i:s', $py->date) : $py->created_at }}</th>
-			<td> {{ $py->description == NULL  ? $py->type : $py->description }} </td>
-			<td align="right">{{ $py->username }}</td>
-			<td align="right">{{ $fueling }}</td>
-			<td align="right">{{ $payment }}</td>
+		<tr @if(!isset($inc_transactions) || $inc_transactions == 'No' ) echo style="display:none;" @endif>
+			<th align="center" scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d h:i:s', $py->date) : $py->created_at }}</th>
+			<td align="center"> {{ $py->description == NULL  ? $py->type : $py->description }} </td>
+			<td align="center">@if(isset($company_checked)) {{ $py->company_name }}  @else {{ $py->username }} @endif</td>
+			<td align="center">{{ $fueling }}</td>
+			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>
 		</tr>
 	@endforeach

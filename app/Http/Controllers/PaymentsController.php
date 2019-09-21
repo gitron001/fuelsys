@@ -90,7 +90,8 @@ class PaymentsController extends Controller
     public function create()
     {
         $companies  = Company::pluck('name','id')->all();
-        $users      = Users::pluck('name','id')->all();
+        $users      = Users::where('company_id', 0)->whereNotIn('type', array(6,7,8))->pluck('name','id')->all();
+
 
         return view('/admin/payments/create',compact('companies','users'));
     }
@@ -186,7 +187,7 @@ class PaymentsController extends Controller
     {
         $payment    = Payments::findOrFail($id);
         $companies  = Company::pluck('name','id')->all();
-        $users      = Users::pluck('name','id')->all();
+        $users      = Users::where('company_id', 0)->whereNotIn('type', array(6,7,8))->pluck('name','id')->all();
         return view('/admin/payments/edit',compact('payment','companies','users'));
     }
 
