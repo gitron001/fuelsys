@@ -54,7 +54,7 @@ class TransactionsController extends Controller
                 $inserted_transaction[] = $data['id'];
            }
            
-        }       
+        } 
        
         return response()->json([
             'response'  => 'Success',
@@ -65,7 +65,7 @@ class TransactionsController extends Controller
     
     public function getAllTransactions() {
 		
-        $transactions = Transaction::where('exported',0)->limit(20)->get();
+        $transactions = Transaction::where('exported',0)->limit(1500)->get();
 		
         $access_token = config('token.access_token');
 		
@@ -81,9 +81,16 @@ class TransactionsController extends Controller
                 'json' => $transactions
             ]);
             
-            $inserted_id = $response->getBody()->getContents();
-			Transaction::whereIn('id',$inserted_id->inserted_transaction)->update(['exported'=> 1]);
+            $inserted_id = json_decode($response->getBody()->getContents());
+            /*$data = json_decode($inserted_id);
+            foreach($data->inserted_transaction as $key){
+                foreach($key as $value){
+                    Transaction::where('id',$value)->update(['exported'=> 1]);
+                }
+            }*/
 			
+			Transaction::whereIn('id',$inserted_id->inserted_transaction)->update(['exported'=> 1]);
+			dd($inserted_id->inserted_transaction);
             return $response->getBody();
 
         } catch (\Exception $e) {
