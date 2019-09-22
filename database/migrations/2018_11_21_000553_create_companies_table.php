@@ -21,7 +21,7 @@ class CreateCompaniesTable extends Migration
             $table->string('contact_person')->nullable();
             $table->integer('tax_number')->nullable();
             $table->integer('res_number')->nullable();
-            $table->integer('tel_number')->nullable();
+            $table->string('tel_number')->nullable();
             $table->string('email')->nullable();
             $table->string('send_email')->nullable();
             $table->string('address')->nullable();
@@ -35,6 +35,10 @@ class CreateCompaniesTable extends Migration
             $table->tinyInteger('has_limit')->default(0);
             $table->tinyInteger('has_receipt')->default(0);
             $table->tinyInteger('has_receipt_nr')->default(0);
+            $table->tinyInteger('send_email')->default(0);
+            $table->tinyInteger('on_transaction')->default(0);
+            $table->tinyInteger('daily_at')->default(0);
+            $table->tinyInteger('monthly_report')->default(0);
             $table->integer('created_at');
             $table->integer('updated_at');
         });

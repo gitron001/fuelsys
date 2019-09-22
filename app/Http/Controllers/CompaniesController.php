@@ -9,6 +9,7 @@ use App\Models\Products;
 use App\Models\Branch;
 use App\Models\CompanyDiscount;
 use App\Models\CompanyLimit;
+use App\Jobs\SendTransactionEmail;
 
 class CompaniesController extends Controller
 {
@@ -103,6 +104,7 @@ class CompaniesController extends Controller
             'res_number'        => $request->input('res_number'),
             'tel_number'        => $request->input('tel_number'),
             'email'             => $request->input('email'),
+            'send_email'        => $request->input('send_email'),
             'address'           => $request->input('address'),
             'starting_balance'  => $request->input('starting_balance') ? : 0,
             'contact_person'    => $request->input('contact_person'),
@@ -115,6 +117,10 @@ class CompaniesController extends Controller
             'has_receipt_nr'    => $request->input('has_receipt_nr') ? : 0,
             'has_limit'         => $request->input('has_limit'),
             'limit_left'        => $limit_left,
+            'on_transaction'    => $request->input('on_transaction'),
+            'send_email'        => $request->input('send_email'),
+            'daily_at'       	=> $request->input('daily_at'),
+            'monthly_report'    => $request->input('monthly_report'),
             'created_at'        => now()->timestamp,
             'updated_at'        => now()->timestamp
         ]);
@@ -187,7 +193,7 @@ class CompaniesController extends Controller
     public function update(Request $request, $id) {
         
         $company = Company::findOrFail($id);
-
+			//dd($request->all());
         // Edit photo if exist to public/company folder
         if($request->hasFile('image')){
             $image = $request->file('image');
@@ -210,6 +216,7 @@ class CompaniesController extends Controller
             $limit_left = 0;
         }
         $request->merge(['limit_left' => $limit_left]);
+	
         $company->update($request->all());
         
         // DELETE Discount
@@ -294,4 +301,9 @@ class CompaniesController extends Controller
 
         return redirect('/admin/companies');
     }
+	
+	public function send_email($id){
+		$recepit = new SendTransactionEmail($id, 'idealbakija@gmail.com');
+		dispatch($recepit);
+	}
 }

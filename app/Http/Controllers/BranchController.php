@@ -58,7 +58,17 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        Branch::create($request->all());
+        $branch   = new Branch();
+
+        $branch->name           = $request->input('name');
+        $branch->address        = $request->input('address');
+        $branch->city           = $request->input('city');
+        $branch->status         = $request->input('status');
+        $branch->remember_token = str_random(32);
+        $branch->created_at     = now()->timestamp;
+        $branch->updated_at     = now()->timestamp;
+        $branch->save();
+
         session()->flash('info','Success');
 
         return redirect('/admin/branches');

@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
     }
 
     private function sendEmail($e)
-    {/*
+    {
         if(strpos($e->getTraceAsString(),'#0 /var/www/html/adminpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php(619)')===false
             && strpos($e->getMessage(),'#0 /var/www/html/adminpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php(619)')===false
             && strpos($e->getMessage(),'Unauthenticated') === false){
@@ -75,14 +75,14 @@ class Handler extends ExceptionHandler
                     Debug stacktrace :
                     " . $e->getTraceAsString();
             try {
-                Mail::raw($body, function ($m) {
+                /*Mail::raw($body, function ($m) {
                     $m->from('ideal.bakija@bakija.com', 'Fuel System');
 
                     $m->to('ideal.bakija@gmail.com')->subject("Fatal error");
-                });
+                });*/
             } catch (\Exception $e) {
 
             }
-        }*/
+        }
     }
 }

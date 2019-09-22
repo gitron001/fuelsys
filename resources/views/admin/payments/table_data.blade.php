@@ -13,7 +13,7 @@
     <td>{{ $payment->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">
         <a href="{{ url('admin/payments/'.$payment->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
-        <a href="{{ route('payment.generate', $payment->id) }}" data-toggle="tooltip" title="Generate bill"><i class="fa fa-print"></i></a>&nbsp;
+        <a href="#" data-payment="{{ $payment->id }}" data-toggle="tooltip" title="Generate bill" id="print_receipt"><i class="fa fa-print"></i></a>&nbsp;
         <a href="{{ route('payment.delete', $payment->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
     </td>
 </tr>

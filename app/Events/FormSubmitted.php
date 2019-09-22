@@ -13,9 +13,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class FormSubmitted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-   
+
     public $text;
-    
+
     /**
      * Create a new event instance.
      *

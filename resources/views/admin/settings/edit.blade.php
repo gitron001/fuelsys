@@ -41,6 +41,26 @@
 				<li class="list-group-item">
                   <b>Res.Number</b> <a class="pull-right">{{ $company->res_number }}</a>
 				</li>
+				<li class="list-group-item">
+				  <b>Export RFID</b> <a href="{{ url('/api/rfids') }}" class="pull-right">
+					<span class="label label-success"> EXPORT </span></a>
+				</li>
+				<li class="list-group-item">
+				  <b>Export Transactions</b> <a href="{{ url('/api/transactions') }}" class="pull-right">
+					<span class="label label-primary"> EXPORT </span></a>
+				</li>
+				<li class="list-group-item">
+				  <b>Export Companies</b> <a href="{{ url('/api/companies') }}" class="pull-right">
+					<span class="label label-default"> EXPORT </span></a>
+				</li>
+				<li class="list-group-item">
+				  <b>Import RFID</b> <a href="{{ url('/api/rfids/import') }}" class="pull-right">
+					<span class="label label-warning"> IMPORT </span></a>
+				</li>
+				<li class="list-group-item">
+				  <b>Failed Attempts</b> <a href="{{ url('/failed-attempts') }}" class="pull-right">
+					<span class="label label-danger"> VIEW </span></a>
+				</li>
               </ul>
 
             </div>

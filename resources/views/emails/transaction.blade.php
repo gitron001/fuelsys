@@ -103,7 +103,7 @@
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
-                <td colspan="3">
+                <td colspan="4">
                     <table>
                         <tr>
                             <td class="title" style="text-align: left;">
@@ -111,8 +111,7 @@
                             </td>
                             
                             <td style="text-align: right;">
-                                Invoice #{{ $id }} <br>
-                                Created: {{ $created_at }} <br>
+                                Data: {{ $created_at }} <br>
                             </td>
                         </tr>
                     </table>
@@ -120,7 +119,7 @@
             </tr>
             
             <tr class="information">
-                <td colspan="3">
+                <td colspan="4">
                     <table>
                         <tr>
                             <td style="text-align: left;">
@@ -150,6 +149,9 @@
                 <td style="text-align: right;">
                     Çmimi
                 </td>
+				 <td style="text-align: right;">
+                    Totali
+                </td>
             </tr>
             
             <tr class="item">
@@ -164,14 +166,8 @@
                 <td style="text-align: right;">
                     {{ $price }}€ 
                 </td>
-            </tr>
-            
-            <tr class="total">
-                <td></td>
-                <td></td>
-                
-                <td style="text-align: end;">
-                   Totali: {{ $lit * $price }}€
+				<td style="text-align: end;">
+                   Totali: {{ number_format($lit * $price, 2) }}€
                 </td>
             </tr>
         </table>

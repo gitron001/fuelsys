@@ -9,7 +9,8 @@ class Company extends Model
     protected $table = 'companies';
     
     protected $fillable = [
-        'name', 
+        'name',
+        'master_id',
         'fis_number', 
         'bis_number',
         'tax_number',
@@ -22,6 +23,7 @@ class Company extends Model
         'address',
         'city',
         'images',
+        'send_email',
         'country',
         'type',
         'status',
@@ -30,6 +32,9 @@ class Company extends Model
         'has_limit',
         'has_receipt',
         'has_receipt_nr',
+        'monthly_report',
+        'daily_at',
+        'on_transaction',
     ];
 
     public function getDateFormat(){

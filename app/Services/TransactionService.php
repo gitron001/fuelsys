@@ -8,6 +8,7 @@ use Config;
 use App\Models\Transaction;
 use App\Models\Users;
 use App\Jobs\PrintFuelRecept;
+use App\Jobs\SendTransactionEmail;
 
 class TransactionService extends ServiceProvider
 {
@@ -37,7 +38,15 @@ class TransactionService extends ServiceProvider
         $response = PFC::send_message($socket, $binarydata);
         //print_r($response);
 		
-		if(!$response){ return false; } 
+		if(!$response)
+		{ 
+			return false; 
+		}elseif(!is_array($response)) 
+		{
+			echo 'empty response';
+			print_r($response);
+			return false; 
+		}
 		
         $total_msg_legth = count($response);
         for($i = 4; $i <= $total_msg_legth; $i+= 4) {
@@ -93,13 +102,16 @@ class TransactionService extends ServiceProvider
 
         //call job to update company balance
         //HERE
-
-        $changed_status = self::transaction_status($channel, $status, $socket);
-		
 		if(!$transaction_id){ return true; } 
 		
+        $changed_status = self::transaction_status($channel, $status, $socket);
+				
         $recepit = new PrintFuelRecept($transaction_id);
         dispatch($recepit);
+		
+		$recepit = new SendTransactionEmail($transaction_id);
+		dispatch($recepit);
+			
         echo 'stored';
         return true;
     }
