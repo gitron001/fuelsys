@@ -198,10 +198,9 @@ class DispanserService extends ServiceProvider
         }				
 
         $stopCommand = Process::where('type_id', 5)->where('pfc_id', $pfc_id)->count();
-        if($stopCommand != 0){          
-            $proccess = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->first();
-		    $proccess->refresh_time = time();
-            $proccess->save();			
+        if($stopCommand != 0){    
+            Process::where('type_id', 5)->where('pfc_id', $pfc_id)->delete();	
+            Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();	
 			socket_close($socket);
 			return false;
         }
