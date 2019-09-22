@@ -99,17 +99,23 @@ class Transaction extends Model
         $rfid = unpack('i', $rfid)[1];
 
         $user = Users::where("rfid", $rfid)->where('status', 1)->first();
+		/*if(isset($user->id)){
+			if(!is_null($user->company->id) && $user->company->has_limit == 1){
+				$company = Company::find( $user->company->id );
+				$company->limit_left -= $transaction->money;
+				$company->save();
+			}elseif($user->has_limit == 1){
+				$user->limit_left -= $transaction->money;
+				$user->save();
+			}
 
-        if(!is_null($user->company->id) && $user->company->has_limit == 1){
-            $company = Company::find( $user->company->id );
-            $company->limit_left -= $transaction->money;
-            $company->save();
-        }elseif($user->has_limit == 1){
-            $user->limit_left -= $transaction->money;
-            $user->save();
-        }
-        //Query the rfid ID from the RFID table
-        $transaction->user_id = $user->id;
+			$transaction->user_id = $user->id;
+		}else{
+			$transaction->user_id = $rfid;
+			//echo $rfid;
+		}*/
+
+		$transaction->user_id = $user->id;
         $transaction->channel_id = $channel_id;
 
         $transaction->ctype = $response[34];

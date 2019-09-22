@@ -133,13 +133,13 @@ class CardService extends ServiceProvider
 			
 			$bonus_requst = Bonus::where('channel_id', $channel)->where('pfc_id', $pfc_id)->where('created_at', '>', $time_difference)->first();
 			if(isset($bonus_requst->user_id)){
-				$all_discounts = self::generate_discounts($bonus_requst->user_id, $response);
+				$all_discounts = self::generate_discounts($bonus_requst->user_id, $response, $pfc_id);
 				self::activate_card_discount($socket, $channel, $all_discounts);
 			}else{				
 				self::activate_card($socket, $channel);
 			}
         }else{
-            $all_discounts = self::generate_discounts($user->id, $response);
+            $all_discounts = self::generate_discounts($user->id, $response, $pfc_id);
 			
             self::activate_card_discount($socket, $channel, $all_discounts);
         }
@@ -251,7 +251,7 @@ class CardService extends ServiceProvider
         return true;
     }
 	
-	public static function generate_discounts($user_id, $response){
+	public static function generate_discounts($user_id, $response, $pfc_id){
 		$all_discounts = array();
 		$user	= Users::find($user_id);
 		

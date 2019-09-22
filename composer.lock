@@ -4,29 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "826c59d2e5363b6b9834872ad37c7a0a",
-=======
-    "content-hash": "ecc9280d99f91ac2dd98e60270c4d766",
->>>>>>> 39dd19b7468d2763e67c25666d6f1a9aa5c2c3de
+    "content-hash": "45610466053dac790faad754cd24993d",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
-            "version": "v0.8.4",
+            "version": "v0.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-dompdf.git",
-                "reference": "3fd817065e1c820b1ddace8b2bf65ca45088df4f"
+                "reference": "7393732b2f3a3ee357974cbb0c46c9b65b84dad1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/3fd817065e1c820b1ddace8b2bf65ca45088df4f",
-                "reference": "3fd817065e1c820b1ddace8b2bf65ca45088df4f",
+                "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/7393732b2f3a3ee357974cbb0c46c9b65b84dad1",
+                "reference": "7393732b2f3a3ee357974cbb0c46c9b65b84dad1",
                 "shasum": ""
             },
             "require": {
                 "dompdf/dompdf": "^0.8",
-                "illuminate/support": "5.5.x|5.6.x|5.7.x|5.8.x",
+                "illuminate/support": "^5.5|^6",
                 "php": ">=7"
             },
             "type": "library",
@@ -64,7 +60,7 @@
                 "laravel",
                 "pdf"
             ],
-            "time": "2019-02-26T18:07:43+00:00"
+            "time": "2019-08-23T14:30:33+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -841,6 +837,7 @@
         },
         {
             "name": "jeroennoten/laravel-adminlte",
+<<<<<<< HEAD
             "version": "v1.27.0",
             "source": {
                 "type": "git",
@@ -851,6 +848,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/bea607deee2fa1f2f228aa77d1257c5a9cd12e07",
                 "reference": "bea607deee2fa1f2f228aa77d1257c5a9cd12e07",
+=======
+            "version": "v1.27.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeroennoten/Laravel-AdminLTE.git",
+                "reference": "879132b6029eab47c432ecd235323b532e54f83c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/879132b6029eab47c432ecd235323b532e54f83c",
+                "reference": "879132b6029eab47c432ecd235323b532e54f83c",
+>>>>>>> a8d667d1638ed6c9b08583534b4af45456e4608c
                 "shasum": ""
             },
             "require": {
@@ -890,7 +899,11 @@
                 "administrator",
                 "laravel"
             ],
+<<<<<<< HEAD
             "time": "2019-08-27T08:30:03+00:00"
+=======
+            "time": "2019-08-29T10:14:18+00:00"
+>>>>>>> a8d667d1638ed6c9b08583534b4af45456e4608c
         },
         {
             "name": "kylekatarnls/update-helper",
@@ -939,16 +952,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.8.33",
+            "version": "v5.8.34",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "58b81842cbdcfbbd8302790ac0f98119ea1c56e5"
+                "reference": "c3a870b96c7afe5174f486af74768ccfddeec77b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/58b81842cbdcfbbd8302790ac0f98119ea1c56e5",
-                "reference": "58b81842cbdcfbbd8302790ac0f98119ea1c56e5",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/c3a870b96c7afe5174f486af74768ccfddeec77b",
+                "reference": "c3a870b96c7afe5174f486af74768ccfddeec77b",
                 "shasum": ""
             },
             "require": {
@@ -1082,7 +1095,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-08-20T15:45:17+00:00"
+            "time": "2019-08-27T14:35:59+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1573,16 +1586,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.2.3",
+            "version": "v4.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "e612609022e935f3d0337c1295176505b41188c8"
+                "reference": "97e59c7a16464196a8b9c77c47df68e4a39a45c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/e612609022e935f3d0337c1295176505b41188c8",
-                "reference": "e612609022e935f3d0337c1295176505b41188c8",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/97e59c7a16464196a8b9c77c47df68e4a39a45c4",
+                "reference": "97e59c7a16464196a8b9c77c47df68e4a39a45c4",
                 "shasum": ""
             },
             "require": {
@@ -1620,7 +1633,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2019-08-12T20:17:41+00:00"
+            "time": "2019-09-01T07:51:21+00:00"
         },
         {
             "name": "opis/closure",
@@ -2269,7 +2282,6 @@
             "time": "2018-10-13T15:16:03+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "pusher/pusher-php-server",
             "version": "v4.0.0",
             "source": {
@@ -2302,7 +2314,28 @@
                 "psr-4": {
                     "Pusher\\": "src/"
                 }
-=======
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Library for interacting with the Pusher REST API",
+            "keywords": [
+                "events",
+                "messaging",
+                "php-pusher-server",
+                "publish",
+                "push",
+                "pusher",
+                "real time",
+                "real-time",
+                "realtime",
+                "rest",
+                "trigger"
+            ],
+            "time": "2019-06-25T09:22:44+00:00"
+        },
+        {
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
             "source": {
@@ -2328,29 +2361,11 @@
                 "files": [
                     "src/getallheaders.php"
                 ]
->>>>>>> 39dd19b7468d2763e67c25666d6f1a9aa5c2c3de
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-<<<<<<< HEAD
-            "description": "Library for interacting with the Pusher REST API",
-            "keywords": [
-                "events",
-                "messaging",
-                "php-pusher-server",
-                "publish",
-                "push",
-                "pusher",
-                "real time",
-                "real-time",
-                "realtime",
-                "rest",
-                "trigger"
-            ],
-            "time": "2019-06-25T09:22:44+00:00"
-=======
             "authors": [
                 {
                     "name": "Ralph Khattar",
@@ -2359,7 +2374,6 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2019-03-08T08:55:37+00:00"
->>>>>>> 39dd19b7468d2763e67c25666d6f1a9aa5c2c3de
         },
         {
             "name": "ramsey/uuid",
@@ -4016,16 +4030,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v3.4.0",
+            "version": "v3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "5084b23845c24dbff8ac6c204290c341e4776c92"
+                "reference": "95cb0fa6c025f7f0db7fc60f81e9fb231eb2d222"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/5084b23845c24dbff8ac6c204290c341e4776c92",
-                "reference": "5084b23845c24dbff8ac6c204290c341e4776c92",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/95cb0fa6c025f7f0db7fc60f81e9fb231eb2d222",
+                "reference": "95cb0fa6c025f7f0db7fc60f81e9fb231eb2d222",
                 "shasum": ""
             },
             "require": {
@@ -4039,7 +4053,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "3.5-dev"
                 }
             },
             "autoload": {
@@ -4053,9 +4067,14 @@
             ],
             "authors": [
                 {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com",
+                    "homepage": "https://gjcampbell.co.uk/"
+                },
+                {
                     "name": "Vance Lucas",
                     "email": "vance@vancelucas.com",
-                    "homepage": "http://www.vancelucas.com"
+                    "homepage": "https://vancelucas.com/"
                 }
             ],
             "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
@@ -4064,7 +4083,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2019-06-15T22:40:20+00:00"
+            "time": "2019-08-27T17:00:38+00:00"
         }
     ],
     "packages-dev": [
@@ -5161,8 +5180,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
@@ -5773,8 +5792,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",

@@ -49,7 +49,7 @@ class HomeController extends Controller
             $message->to('orgesthaqi96@gmail.com');
 
 
-            //Add a subject
+            //Add a subjectz
             $message->subject("Hello from Scotch");
 
         });

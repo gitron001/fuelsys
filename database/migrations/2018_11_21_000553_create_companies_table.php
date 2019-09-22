@@ -23,6 +23,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('res_number')->nullable();
             $table->integer('tel_number')->nullable();
             $table->string('email')->nullable();
+            $table->string('send_email')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('images')->nullable();
