@@ -121,7 +121,11 @@ class Transaction extends Model
         $bill_no = unpack('s', $bill_no)[1];
         $transaction->bill_no = $bill_no;
 		
-        $transaction->save();
+        $saved = $transaction->save();
+		
+		if(!$saved){
+			return false;
+		}
 		
 		
 		if(!is_null($user->company->id)){			
