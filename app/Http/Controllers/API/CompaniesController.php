@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Session;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\CompanyDiscount;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 class CompaniesController extends Controller
 {
+    // The local function that makes requests to Server
     public function exportCompanies(){
         $company        = Company::where(function ($query) {
                             $query->where('exported', NULL)
@@ -18,9 +20,9 @@ class CompaniesController extends Controller
         $response       = array();
         $access_token   = config('token.access_token');
 
-        foreach($company as $u){
-        $rfid['discount']   = CompanyDiscount::where('company_id',$u['id'])->get()->toArray();
-        $response[]         = array_merge($u,$rfid);
+        foreach($company as $comp){
+            $rfid['discount']   = CompanyDiscount::where('company_id',$comp['id'])->get()->toArray();
+            $response[]         = array_merge($comp,$rfid);
         }
 
         try {
@@ -43,21 +45,23 @@ class CompaniesController extends Controller
 
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
-        $old = $id->old;
-		dd($old);
-        print_r(implode($old));exit();
         
         // Update new exported user 
         foreach($id->new as $value){
-            Company::where('id',$value->branch_id)->update(['exported'=> 1, 'master_id' =>$value->master_id]);
+            Company::where('id',$value->branch_id)->update(['exported'=> 1, 'master_id' => $value->master_id->id]);
         }
 
         // Update old exported user 
         foreach($id->old as $value){
-            Company::where('id',$value->branch_id)->update(['exported'=> 1, 'master_id' =>$value->master_id]);
+            Company::where('id',$value->branch_id)->update(['exported'=> 1, 'master_id' => $value->master_id->id]);
         }
+
+        return response()->json([
+            'response'  => 'Success',
+        ], 201);
     }
 
+    // Server function
     public function createCompany(Request $request) 
     {   
         $response = $request->all();
@@ -68,7 +72,6 @@ class CompaniesController extends Controller
             $company_id = Company::firstOrCreate([
                 'bis_number' => $company['bis_number']], 
                 [
-                'master_id'         => $company['id'],
                 'name'              => $company['name'],
                 'fis_number'        => !empty($company['fis_number']) ? $company['fis_number'] : NULL,
                 'contact_person'    => !empty($company['contact_person']) ? $company['contact_person'] : NULL,
@@ -96,7 +99,7 @@ class CompaniesController extends Controller
             ]);
             
             if ($company_id->wasRecentlyCreated) {
-                $new[] = array('master_id' => $company_id;, 'branch_id' => $data['id']);
+                $new[] = array('master_id' => $company_id, 'branch_id' => $company['id']);
                 
                 CompanyDiscount::where('company_id',$company_id->id)->delete();
 
@@ -111,7 +114,7 @@ class CompaniesController extends Controller
                 }
                     
             }else {
-                $old[] = array('master_id' => $company_id;, 'branch_id' => $data['id']);
+                $old[] = array('master_id' => $company_id, 'branch_id' => $company['id']);
             }
         }
 

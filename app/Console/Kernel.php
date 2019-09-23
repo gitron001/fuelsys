@@ -40,12 +40,12 @@ class Kernel extends ConsoleKernel
                  //->everyFifteenMinutes();
 
         // Export RFID to server
-        $schedule->command('export:rfid')
-                 ->everyFifteenMinutes();
+        //$schedule->command('export:rfid')
+        //         ->everyFifteenMinutes();
 
         // Import RFID from server
-        $schedule->command('import:rfid')
-                 ->everyFifteenMinutes();
+        //$schedule->command('import:rfid')
+        //         ->everyFifteenMinutes();
     }
 
     /**

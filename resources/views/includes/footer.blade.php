@@ -70,6 +70,8 @@
     var url_name = window.location.pathname;
     var user = $("#user").val();
     var company = $("#company").val();
+    var type = $("#type").val();
+    var branch = $("#branch").val();
     var fromDate = $('#datetimepicker4').val();
     var toDate = $('#datetimepicker5').val();
     var last_payment = $("#last_payment").attr("checked") ? 'Yes' : 'No';
@@ -79,7 +81,7 @@
       $('#spinner').show();
       $.ajax({
         data: {user: user,company:company},
-        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+query+"&fromDate="+fromDate+"&toDate="+toDate+"&last_payment="+last_payment,
+        url: url_name+"?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+query+"&fromDate="+fromDate+"&toDate="+toDate+"&last_payment="+last_payment+"&type="+type+"&branch="+branch,
         success: function(data){
           $('#spinner').hide();
           $('tbody').html('');
