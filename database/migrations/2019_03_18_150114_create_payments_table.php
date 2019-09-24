@@ -17,6 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->integer('date')->index();
             $table->double('amount');
+            $table->integer('type')->nullable();
             $table->text('description')->nullable();
             $table->integer('user_id')->nullable()->index();
             $table->integer('company_id')->nullable()->index();
