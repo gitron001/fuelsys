@@ -29,4 +29,8 @@ class PFC extends Model
     public function transactions(){
         return $this->hasMany('App\Models\Transaction');
     }
+	
+	public function stopped(){
+        return $this->hasOne('App\Models\RunninProcessModel', 'pfc_id')->wherePivot('type', 5);
+    }
 }

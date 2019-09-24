@@ -32,7 +32,7 @@ class PFCController extends Controller
                 $query->orWhere('port','like','%'.$search.'%');
             });
         }
-
+		
         if($request->ajax() == false){
             $pfc    = $pfc->orderBy('name','ASC')
                         ->paginate(15);

@@ -60,7 +60,7 @@ class CheckCardReadersCommand extends Command
         try {
             $socket = PFC::create_socket($pfc);
         } catch (Exception $e) {
-                dd( "Couldn't connect to socket " . $e -> getMessage() . "\n");
+            dd( "Couldn't connect to socket " . $e -> getMessage() . "\n");
         }
 		Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();
 			
@@ -75,7 +75,7 @@ class CheckCardReadersCommand extends Command
                             ));
         while(true){
             $dispanser_status = Dispanser::checkForUpdates($socket, $pfc_id);
-			if(!$dispanser_status){ break; }
+			if(!$dispanser_status){ continue; }
             CardService::check_readers($socket, $pfc_id);
             usleep(150000);
             TransactionService::read($socket, $pfc_id);

@@ -12,11 +12,12 @@ use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
-use App\Jobs\PrintFuelRecept;
 use DateTime;
 use Config;
 use DB;
 use Auth;
+use App\Jobs\PrintPayment;
+use App\Services\PrintPaymentService;
 
 class PaymentsController extends Controller
 {
@@ -89,7 +90,8 @@ class PaymentsController extends Controller
     public function create()
     {
         $companies  = Company::pluck('name','id')->all();
-        $users      = Users::pluck('name','id')->all();
+        $users      = Users::where('company_id', 0)->whereNotIn('type', array(6,7,8))->pluck('name','id')->all();
+
 
         return view('/admin/payments/create',compact('companies','users'));
     }
@@ -126,14 +128,16 @@ class PaymentsController extends Controller
         $payments->updated_at   = now()->timestamp;
         $payments->save();
 
+		$recepit = new PrintPayment($payments->id);
+        dispatch($recepit);
 		
         /*$msg = "Payment Print not Succesful";
-		*/
+		
         try {
             //self::printFunction($payments->id);
         } catch (Exception $e) {
-           $msg = "Payment Print NOT Succesful";
-        }
+           //$msg = "Payment Print NOT Succesful";
+        }*/
 		/*
         // Create payment with API
         $client = new \GuzzleHttp\Client(['cookies' => true,
@@ -183,7 +187,7 @@ class PaymentsController extends Controller
     {
         $payment    = Payments::findOrFail($id);
         $companies  = Company::pluck('name','id')->all();
-        $users      = Users::pluck('name','id')->all();
+        $users      = Users::where('company_id', 0)->whereNotIn('type', array(6,7,8))->pluck('name','id')->all();
         return view('/admin/payments/edit',compact('payment','companies','users'));
     }
 
@@ -288,87 +292,9 @@ class PaymentsController extends Controller
         return redirect('/admin/payments');
     }
 
-    public static function printFunction($id)
+    public static function printFunction(Request $request)
     {
-        try {
-
-            $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
-            $payment        = Payments::where('id', $id)->first();
-            $image          = public_path().'/images/nesim-bakija.png';
-            $logo           = EscposImage::load($image, false);
-            $printer        = new Printer($connector);
-            $date           = date("F j, Y, H:i", strtotime('+1 hour'));
-
-            /* Print top logo */
-            $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            $printer -> graphics($logo);
-            $printer->text("\n");
-
-            /* Name & Info of Company */
-            $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-            $printer->setEmphasis(true);
-            $printer->text("Nesim Bakija SH.P.K.\n");
-            $printer->setEmphasis(false);
-            $printer->selectPrintMode();
-            $printer->text("\n");
-            $printer->text("Rruga Skënderbeu, Gjakovë, Kosovë\n"); // blank line
-            $printer->text("NRB. 810235722\n");
-            /*if($transaction->receipt_no != 0){
-                $printer->text("Fat. NR. $transaction->receipt_no\n");
-            }*/
-            $printer->text("________________________________________________\n");
-            $printer -> feed(2);
-
-
-            $printer->setLineSpacing(32);
-            $printer->setJustification(Printer::JUSTIFY_LEFT);
-
-            $printer->text("DATA                PAGESA      TOTALI  \n");
-            $printer->setEmphasis(false);
-            $printer->text("------------------------------------------------\n");
-
-            $total = $payment['amount'];
-            //$totalPrice = round($total,2).' E ';
-            $client = ($payment->user->name == 0) ? $payment->company->name : $payment->user->name;
-		
-			//$transaction->product->name = substr($transaction->product->name, 0, 18);
-            $limit_left = ($payment->user->name == 0) ? $payment->company->limit_left : $payment->user->limit_left;
-			$item = self::singleItem(date('d M Y', $payment->date), $payment['amount'], $limit_left);
-
-            $printer->textRaw($item);
-
-            $printer->text("------------------------------------------------\n");
-
-            $printer -> feed(2);
-            $printer->text('Klienti: '.$client. "\n");
-            $printer->text('Krijuar nga: '.$payment->paymentCreator->name. "\n");
-            if(!empty($payment->paymentEditor->name)){
-                $printer->text('Edituar nga: '.$payment->paymentEditor->name. "\n");
-            };
-            $printer->text("\n"); // blank line
-
-            /*if($transaction->users->company->name){
-                $printer->text('Kompania: '.$transaction->users->company->name. "\n");
-                $printer->text("\n");
-                $printer->text('Makina: '.$transaction->users->vehicle. "\n");
-                $printer->text("\n");
-                $printer->text('Tabelat: '.$transaction->users->plates. "\n");
-                $printer->text("\n");
-            }*/
-
-            /* Footer */
-            $printer -> feed(2);
-            $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            $printer -> text("Ju faleminderit / Thank You\n");
-            $printer -> feed(2);
-            $printer -> text($date . "\n");
-
-            $printer -> cut();
-            $printer -> close();
-
-        } catch (Exception $e) {
-            echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
-        }
+		PrintPaymentService::printFunction($request->input('id'));
     }
 	
 

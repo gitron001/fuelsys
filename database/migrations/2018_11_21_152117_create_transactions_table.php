@@ -29,10 +29,14 @@ class CreateTransactionsTable extends Migration
             $table->double('money');
             $table->longText('dis_tot');
             $table->longText('pfc_tot');
+            $table->integer('exported')->default(0);
+            $table->integer('branch_id')->default(0);
+            $table->integer('branch_transaction_id')->default(0);
             $table->char('tr_status')->nullable();
             $table->integer('user_id')->nullable()->index();
             $table->char('ctype')->nullable();
             $table->char('method')->nullable();
+            $table->integer('type')->nullable();
             $table->integer('bill_no')->nullable();
             $table->integer('created_at');
             $table->integer('updated_at');

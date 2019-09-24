@@ -168,11 +168,10 @@ class DispanserService extends ServiceProvider
         for($i = 3; $i <= $length; $i++){
             if($response[$i] == 1){
                 $channel = ($i - 3);
-
                 $data['name']      = 'Pump - '.$channel;
                 $data['created_at'] = time();
                 $data['channel_id'] = $channel;
-                $data['pfc_id'] = $pfc_id;
+                $data['pfc_id'] 	= $pfc_id;
                 $data['updated_at'] = time();
                 Dispaneser::insert($data);
             }
@@ -199,12 +198,17 @@ class DispanserService extends ServiceProvider
         }				
 
         $stopCommand = Process::where('type_id', 5)->where('pfc_id', $pfc_id)->count();
-        if($stopCommand != 0){
-            Process::where('type_id', 5)->where('pfc_id', $pfc_id)->delete();            
-			Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();
+        if($stopCommand != 0){    
+            Process::where('type_id', 5)->where('pfc_id', $pfc_id)->delete();	
+            Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();	
+			socket_close($socket);
 			return false;
         }
-		
+        $stopCommand = Process::where('type_id', 6)->where('pfc_id', $pfc_id)->count();		
+        if($stopCommand != 0){
+            Process::where('type_id', 5)->where('pfc_id', $pfc_id)->delete();	  	
+            Process::where('type_id', 6)->where('pfc_id', $pfc_id)->delete();	
+		}
 		return true;
     }
 

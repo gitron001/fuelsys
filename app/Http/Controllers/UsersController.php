@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Users;
-use App\Models\Products;
-use App\Models\Branch;
-use App\Models\RFID_Discounts;
-use Illuminate\Support\Facades\Input;
-use App\Models\RFID_Limits;
-use App\Models\Company;
 use DB;
 use Hash;
 use Excel;
+use App\Models\Users;
+use App\Models\Branch;
+use App\Models\Company;
+use App\Models\Products;
+use App\Models\RFID_Limits;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use App\Models\RFID_Discounts;
+use App\Jobs\SendTransactionEmail;
+use Illuminate\Support\Facades\Input;
 
 class UsersController extends Controller
 {
@@ -27,28 +29,47 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+        $companies  = Company::pluck('name','id')->all();
+        $types      = Users::pluck('name','id')->all();
+        $branches   = Branch::orderBy('name','ASC')->pluck('name','id');
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
-
-        $users      = Users::whereIn('status',array(1, 2));
+        
+        //$users      = Users::whereIn('status',array(1, 2));
+        $users      = Users::select('users.name','users.email','users.rfid','users.type','users.type','users.created_at','users.updated_at','users.id','users.company_id','users.branch_user_id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
+            ->leftJoin('branches', 'branches.id', '=', 'users.branch_id')
+            ->whereIn('users.status',array(1, 2));
 
         if($request->get('search')){
             $users  = $users->where(function($query) use ($search){
-                $query->where('name','like','%'.$search.'%');
-                $query->orWhere('email','like','%'.$search.'%');
-                $query->orWhere('rfid','like','%'.$search.'%');
+                $query->where('users.name','like','%'.$search.'%');
+                $query->orWhere('users.email','like','%'.$search.'%');
+                $query->orWhere('users.rfid','like','%'.$search.'%');
             });
         }
 
+        if($request->get('company')){
+            $users  = $users->whereIn('companies.id',$request->get('company'));
+        }
+
+        if($request->get('type')){
+            $users  = $users->where('users.type',$request->get('type'));
+        }
+
+        if($request->get('branch')){
+            $users  = $users->where('branches.id',$request->get('branch'));
+        }
+
         if($request->ajax() == false){
-            $users  = $users->orderBy('name','ASC')
+            $users  = $users->orderBy('users.name','ASC')
                         ->paginate(15);
-            return view('/admin/users/home',compact('users'));
+            return view('/admin/users/home',compact('users','companies','types','branches'));
         } else {
             $users  = $users->orderBy($sort_by,$sort_type)
                         ->paginate(15);
-            return view('/admin/users/table_data',compact('users'))->render();
+            return view('/admin/users/table_data',compact('users','companies','types','branches'))->render();
         }
     }
 
@@ -59,9 +80,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $products   = Products::select('name','pfc_pr_id')->get();
-        $branches   = Branch::select('name','id')->get();
-        $companies  = Company::select('name','id')->get();
+        $products   = Products::select('name','pfc_pr_id')->where('status', 1)->get();
+        $branches   = Branch::select('name','id')->where('status', 1)->orderBy('name')->get();
+        $companies  = Company::select('name','id')->where('status', 1)->orderBy('name')->get();
 
         return view('/admin/users/create',compact('products','branches','companies'));
     }
@@ -132,41 +153,48 @@ class UsersController extends Controller
             }
         }
         */
-        /*
-        $client = new \GuzzleHttp\Client(['cookies' => true,
+
+        try {
+            $access_token   = config('token.access_token');
+            $client = new \GuzzleHttp\Client(['cookies' => true,
             'headers' =>  [
-                'Authorization'          => "ABCDEFGHIJK"
+                'Authorization'          => $access_token
             ]]);
-        $url = '192.168.1.2/api/save/rfid';
+            $url = 'http://fuelsystem.alba-petrol.com/api/save/rfid';
+            
 
-        $response = $client->request('POST', $url, [
-            'form_params' => [ 
-                'rfid'              => $request->input('rfid'),
-                'name'              => $request->input('name'),
-                'surname'           => $request->input('surname'),
-                'residence'         => $request->input('residence'),
-                'contact_number'    => $request->input('contact_number'),
-                'application_date'  => $request->input('application_date'),
-                'business_type'     => $request->input('business_type'),
-                'email'             => $request->input('email'),
-                'company_id'        => $request->input('company_id') ? : 0,
-                'one_time_limit'    => $request->input('one_time_limit') ? : 0,
-                'plates'            => $request->input('plates') ? : 0,
-                'vehicle'           => $request->input('vehicle') ? : 0,
-                'type'              => $request->input('type'),
-                'password'          => Hash::make($password),
-                'status'            => 1,
-                'remember_token'    => '',
-                'created_at'        => now()->timestamp,
-                'updated_at'        => now()->timestamp,
-                'product'           => $request->input('product'),
-                'discount'          => $request->input('discount'),
-             ],
-        ]);
-		*/
-        return $response->getBody();exit();
+            $response = $client->request('POST', $url, [
+                'form_params' => [ 
+                    'branch_user_id'    => $user['id'],
+                    'branch_id'         => Session::get('branch_id'),
+                    'rfid'              => $request->input('rfid'),
+                    'name'              => $request->input('name'),
+                    'surname'           => $request->input('surname'),
+                    'residence'         => $request->input('residence'),
+                    'contact_number'    => $request->input('contact_number'),
+                    'application_date'  => $request->input('application_date'),
+                    'business_type'     => $request->input('business_type'),
+                    'email'             => $request->input('email'),
+                    'company_id'        => $request->input('company_id') ? : 0,
+                    'one_time_limit'    => $request->input('one_time_limit') ? : 0,
+                    'plates'            => $request->input('plates') ? : 0,
+                    'vehicle'           => $request->input('vehicle') ? : 0,
+                    'type'              => $request->input('type'),
+                    'password'          => Hash::make($password),
+                    'status'            => 1,
+                    'remember_token'    => '',
+                    'created_at'        => now()->timestamp,
+                    'updated_at'        => now()->timestamp,
+                    'product'           => $request->input('product'),
+                    'discount'          => $request->input('discount'),
+                ],
+            ]);
+        } catch (\Exception $e) {
+            session()->flash('info','Success: [Exported: 0 ('.$e->getMessage().')]');
+            return redirect('/admin/users');
+        }
 
-        session()->flash('info','Success');
+        session()->flash('info','Success [Exported: 1]');
         return redirect('/admin/users');
         }
     }
@@ -191,9 +219,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user           = Users::findOrFail($id);
-        $branches       = Branch::select('name','id')->get();
-        $products       = Products::select('name','pfc_pr_id')->get();
-        $companies      = Company::select('name','id')->get();
+        $products   = Products::select('name','pfc_pr_id')->where('status', 1)->get();
+        $branches   = Branch::select('name','id')->where('status', 1)->orderBy('name')->get();
+        $companies  = Company::select('name','id')->where('status', 1)->orderBy('name')->get();
         $rfid_limits    = RFID_Limits::where('rfid_id',$id)->get();
         $rfid_discounts = RFID_Discounts::where('rfid_id',$id)->get();
 
@@ -307,7 +335,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        Users::where('id', $id)->update(['status' => 3]);
+        Users::where('id', $id)->update(['rfid' => 0, 'status' => 3]);
         session()->flash('info','Success');
 
         return redirect('/admin/users');
@@ -353,9 +381,10 @@ class UsersController extends Controller
             } else {
                 $rfid = $result['nr.karteles'];
             }
+			$rfid = substr($rfid,4);
 			$check_existing = Users::where('rfid', $rfid)->count();
-			
-			if($check_existing > 0){
+
+			if($check_existing != 0){
 				$duplicate[] = $result;
 				continue;
 			}
@@ -364,7 +393,7 @@ class UsersController extends Controller
                 'name'              => trim($result['emri']). ' ' .trim($result['mbiemri']),
                 'residence'         => $result['vendbanimi'],
                 'contact_number'    => $result['nr.kontaktues'],
-                'rfid'              => substr($rfid,4),
+                'rfid'              => $rfid,
                 'type'              => $type,
                 'application_date'  => str_replace('.', '-', $result['data']),
                 'created_at'        => now()->timestamp,
@@ -405,9 +434,9 @@ class UsersController extends Controller
         
         foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
             if(!empty($product) && !empty($discount)){
-                foreach($rfid_discount as $rfid){
-                    RFID_Discounts::where('rfid_id',$rfid->rfid_id)->where('product_id',$product)->update(['discount'=> $discount]);
-                }
+					RFID_Discounts::join('users as u', 'u.id', '=', 'rfid_discounts.rfid_id')
+					->where('product_id', $product)->where('u.type', $request->input('type'))
+				   ->update([ 'rfid_discounts.discount' => $discount ]);
             }
             
         }

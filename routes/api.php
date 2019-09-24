@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/rfids', 'API\RfidController@getAllRfids');
-Route::post('/rfids/create', 'API\RfidController@createRfid');
+Route::post('/rfids/create', 'API\RfidController@createUser');
 
 Route::post('/save/rfid', 'API\RfidController@saveRFID');
 
@@ -28,3 +28,10 @@ Route::get('/users/create', 'API\RfidController@createUser');
 Route::get('/payments', 'API\PaymentsController@getAllPayments');
 Route::post('/payments/create', 'API\PaymentsController@createPayment');
 
+Route::get('/rfids/import', 'API\RfidController@importAllRfids');
+Route::post('/rfids/import_server', 'API\RfidController@importRFID');
+
+Route::post('/transactions/create', 'API\TransactionsController@importTransactions');
+
+Route::get('/companies', 'API\CompaniesController@exportCompanies');
+Route::post('/companies/create', 'API\CompaniesController@createCompany');

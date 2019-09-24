@@ -8,18 +8,67 @@
 		<div class="row">
 			   <div class="box box-primary">
             <div class="box-header">
-              <div class="col-md-8"><h3 class="box-title">Users</h3></div>
-				<div class="col-md-12">
+              <h3 class="box-title">Users</h3>
+            </div>
+            <div class="box-body">
 			
-                <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/users') }}">
-                  @include('includes.search_filter')
-                  <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new user"><i class="fa fa-plus"></i> New</a>
-                  <a href="{{ url('admin/bonus_members') }}" data-toggle="tooltip" class="btn btn-primary pull-right" style="margin-left: 0.5em;" title="Bonus Card"><i class="fa fa-credit-card"></i></a>
-                  <a href="{{ url('admin/uploadExcel') }}" data-toggle="tooltip" class="btn btn-warning pull-right" style="margin-left: 0.5em;" title="Upload Excel"><i class="fa fa-upload"></i></a>
+                <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/users') }}">
+                  <div class="form-group">
+                    <label for="User:">Name:</label>
+                    <input type="text" class="form-control" name="search" placeholder="Search" 
+                        value="{{ !empty(request()->get('search')) ? request()->get('search') : '' }}"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="User:">Company:</label>
+                    <select class="users-dropdown form-control" name="company[]" multiple="multiple" id="company">
+                      @foreach($companies as $id => $name)
+                          <option value="{{ $id }}" 
+                          @if(!empty( request()->get("company") ))
+                            @foreach( request()->get("company") as $us) 
+                              {{ $us == $id ? 'selected' : '' }} 
+                            @endforeach
+                          @endif > {{ $name }} </option>
+                        @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="User:">Type:</label>
+                    <select class="form-control" id="type" name="type">
+                      <option value="">Select type</option>
+                      <option value="1" @if(request()->get("type") == 1) selected @endif>Staff</option>
+                      <option value="2" @if(request()->get("type") == 2) selected @endif>Company</option>
+                      <option value="3" @if(request()->get("type") == 3) selected @endif>Administrator</option>
+                      <option value="4" @if(request()->get("type") == 4) selected @endif>Client</option>
+                      <option value="5" @if(request()->get("type") == 5) selected @endif>Manager</option>
+                      <option value="6" @if(request()->get("type") == 6) selected @endif>Bonus Member</option>
+                      <option value="7" @if(request()->get("type") == 7) selected @endif>Bonus Klient</option>
+                      <option value="8" @if(request()->get("type") == 8) selected @endif>Bonus Korporate</option>
+                    </select>
+                  </div>
+                  @if(!empty($branches))
+                  <div class="form-group">
+                    <label for="User:">Branch:</label>
+                    <select class="form-control" id="branch" name="branch">
+                      <option value="">Select branch</option>
+                      @foreach($branches as $id => $name)
+                        <option value="{{ $id }}" @if(request()->get("branch") == $id) selected @endif>{{ $name }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  @endif
+                  <div class="form-group">
+                    <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Search">
+                      <i class="fa fa-search"></i>
+                    </button>
+                    <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear"><i class="fa fa-trash"></i></a>
+                    <a href="{{ url('admin/bonus_members') }}" data-toggle="tooltip" class="btn btn-info" style="margin-left: 1em;" title="Bonus Card"><i class="fa fa-credit-card"></i></a>
+                    <a href="{{ url('admin/uploadExcel') }}" data-toggle="tooltip" class="btn btn-warning" title="Upload Excel"><i class="fa fa-upload"></i></a>
+                    <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success" style="margin-left: 0.5em;" title="Create new user"><i class="fa fa-plus"></i> New</a>
+                  </div>
                 </form>
 
               </div>
-            </div>
+
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover">
