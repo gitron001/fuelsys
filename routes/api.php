@@ -28,8 +28,8 @@ Route::get('/users/create', 'API\RfidController@createUser');
 Route::get('/payments', 'API\PaymentsController@getAllPayments');
 Route::post('/payments/create', 'API\PaymentsController@createPayment');
 
-Route::get('/rfids/import', 'API\RfidController@importRFID');
-Route::post('/rfids/import', 'API\RfidController@importRFID');
+Route::get('/rfids/import', 'API\RfidController@importAllRfids');
+Route::post('/rfids/import_server', 'API\RfidController@importRFID');
 
 Route::post('/transactions/create', 'API\TransactionsController@importTransactions');
 

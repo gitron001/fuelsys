@@ -30,7 +30,7 @@ class RfidController extends Controller
     
     public function importRFID(Request $request)
     {
-        $users          = Users::where('created_at','>=',$request->created_at)->get()->toArray();
+        $users          = Users::where('created_at','>=',$request->created_at)->limit(1000)->get()->toArray();
         $response       = array();
         foreach($users as $u){
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
@@ -102,11 +102,17 @@ class RfidController extends Controller
     // Import RFID from Server to local DB (Import RFID)
     public function importAllRfids(){
 
+        ini_set("memory_limit", "-1");
+		set_time_limit(0);
+
         $access_token   = config('token.access_token');
         $new            = array();
         $old            = array();
         //$last_inserted  = Users::where('exported',1)->orderBy('created_at','DESC')->first();
-        $last_inserted  = Users::where('exported',1)->where('created_at', Users::max('created_at'))->orderBy('created_at','desc')->first();
+        $last_inserted  = Users::where('exported',1)
+                            ->where('created_at', Users::max('created_at'))
+                            ->orderBy('created_at','desc')
+                            ->first();
 
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
@@ -115,7 +121,7 @@ class RfidController extends Controller
                     'Accept'                 => "application/json"
                 ]]);
 
-            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/import';
+            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/import_server';
 			
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted
@@ -149,7 +155,7 @@ class RfidController extends Controller
                     'limits'            => !empty($user->limits) ? $user->limits : 0,
                     'limit_left'        => !empty($user->limit_left) ? $user->limit_left : 0,
                     'remember_token'    => $user->remember_token,
-                    'created_at'        => $user->created_at,
+                    'created_at'        => now()->timestamp,
                     'updated_at'        => $user->updated_at,
                 ]);
     
