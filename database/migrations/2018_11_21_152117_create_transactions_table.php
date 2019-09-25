@@ -36,6 +36,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('user_id')->nullable()->index();
             $table->char('ctype')->nullable();
             $table->char('method')->nullable();
+            $table->integer('type')->nullable();
             $table->integer('bill_no')->nullable();
             $table->integer('created_at');
             $table->integer('updated_at');

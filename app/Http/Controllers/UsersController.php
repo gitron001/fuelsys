@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Users;
-use App\Models\Products;
-use App\Models\Branch;
-use App\Models\RFID_Discounts;
-use Illuminate\Support\Facades\Input;
-use App\Jobs\SendTransactionEmail;
-use App\Models\Transaction;
-use App\Models\RFID_Limits;
-use App\Models\Company;
 use DB;
 use Hash;
 use Excel;
+use App\Models\Users;
+use App\Models\Branch;
+use App\Models\Company;
+use App\Models\Products;
+use App\Models\RFID_Limits;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use App\Models\RFID_Discounts;
+use App\Jobs\SendTransactionEmail;
+use Illuminate\Support\Facades\Input;
 
 class UsersController extends Controller
 {
@@ -31,28 +31,45 @@ class UsersController extends Controller
     {
         $companies  = Company::pluck('name','id')->all();
         $types      = Users::pluck('name','id')->all();
+        $branches   = Branch::orderBy('name','ASC')->pluck('name','id');
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
-
-        $users      = Users::whereIn('status',array(1, 2));
+        
+        //$users      = Users::whereIn('status',array(1, 2));
+        $users      = Users::select('users.name','users.email','users.rfid','users.type','users.type','users.created_at','users.updated_at','users.id','users.company_id','users.branch_user_id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
+            ->leftJoin('branches', 'branches.id', '=', 'users.branch_id')
+            ->whereIn('users.status',array(1, 2));
 
         if($request->get('search')){
             $users  = $users->where(function($query) use ($search){
-                $query->where('name','like','%'.$search.'%');
-                $query->orWhere('email','like','%'.$search.'%');
-                $query->orWhere('rfid','like','%'.$search.'%');
+                $query->where('users.name','like','%'.$search.'%');
+                $query->orWhere('users.email','like','%'.$search.'%');
+                $query->orWhere('users.rfid','like','%'.$search.'%');
             });
         }
 
+        if($request->get('company')){
+            $users  = $users->whereIn('companies.id',$request->get('company'));
+        }
+
+        if($request->get('type')){
+            $users  = $users->where('users.type',$request->get('type'));
+        }
+
+        if($request->get('branch')){
+            $users  = $users->where('branches.id',$request->get('branch'));
+        }
+
         if($request->ajax() == false){
-            $users  = $users->orderBy('name','ASC')
+            $users  = $users->orderBy('users.name','ASC')
                         ->paginate(15);
-            return view('/admin/users/home',compact('users','companies','types'));
+            return view('/admin/users/home',compact('users','companies','types','branches'));
         } else {
             $users  = $users->orderBy($sort_by,$sort_type)
                         ->paginate(15);
-            return view('/admin/users/table_data',compact('users','companies','types'))->render();
+            return view('/admin/users/table_data',compact('users','companies','types','branches'))->render();
         }
     }
 

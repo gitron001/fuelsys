@@ -29,15 +29,15 @@ class Kernel extends ConsoleKernel
         
         // Send daily email to companies
         $schedule->command('send:dailyEmail')
-                 ->hourly();
+              ->hourly();
 
         // Send monthly email to companies
         $schedule->command('send:monthlyEmail')
                  ->monthly();
         
         // Send transactions to server
-        $schedule->command('send:transactions')
-                 ->everyFifteenMinutes();
+        //$schedule->command('send:transactions')
+                 //->everyFifteenMinutes();
 
         // Export RFID to server
         //$schedule->command('export:rfid')

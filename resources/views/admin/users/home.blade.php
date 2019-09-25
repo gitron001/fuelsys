@@ -33,7 +33,7 @@
                   </div>
                   <div class="form-group">
                     <label for="User:">Type:</label>
-                    <select class="form-control" id="exampleFormControlSelect1" name="type">
+                    <select class="form-control" id="type" name="type">
                       <option value="">Select type</option>
                       <option value="1" @if(request()->get("type") == 1) selected @endif>Staff</option>
                       <option value="2" @if(request()->get("type") == 2) selected @endif>Company</option>
@@ -45,6 +45,17 @@
                       <option value="8" @if(request()->get("type") == 8) selected @endif>Bonus Korporate</option>
                     </select>
                   </div>
+                  @if(!empty($branches))
+                  <div class="form-group">
+                    <label for="User:">Branch:</label>
+                    <select class="form-control" id="branch" name="branch">
+                      <option value="">Select branch</option>
+                      @foreach($branches as $id => $name)
+                        <option value="{{ $id }}" @if(request()->get("branch") == $id) selected @endif>{{ $name }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  @endif
                   <div class="form-group">
                     <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Search">
                       <i class="fa fa-search"></i>

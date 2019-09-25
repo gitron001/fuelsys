@@ -30,7 +30,7 @@ class RfidController extends Controller
     
     public function importRFID(Request $request)
     {
-        $users          = Users::where('created_at','>=',$request->created_at)->get()->toArray();
+        $users          = Users::where('created_at','>=',$request->created_at)->limit(1000)->get()->toArray();
         $response       = array();
         foreach($users as $u){
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
@@ -43,10 +43,14 @@ class RfidController extends Controller
     // Insert RFID from local DB to Server (Export RFID)
     public function getAllRfids()
     {
+		ini_set("memory_limit", "-1");
+		set_time_limit(0);
+		
         $users          = Users::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
-                        })->get()->toArray();
+                        })->limit(1000)->get()->toArray();
+
         $response       = array();
         $access_token   = config('token.access_token');
 
@@ -54,7 +58,6 @@ class RfidController extends Controller
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
             $response[]         = array_merge($u,$rfid);
         }
-
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
@@ -82,27 +85,34 @@ class RfidController extends Controller
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
         }*/
 		$new_ids = implode(',', $id->new);
-		Users::whereIn('id',[$new_ids])->update(['exported'=> 1]);
-
+		
+		Users::whereIn('id',$id->new)->update(['exported'=> 1]);
+		
 
 		$old_ids = implode(',', $id->old);
-		Users::whereIn('id',[$old_ids])->update(['exported'=> 1]);
+		Users::whereIn('id',$id->old)->update(['exported'=> 1]);
         // Update old exported user 
         /*foreach($id->old as $value){
             Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
         }*/
-        
+		
         return view('/admin/api/response', compact('users', 'old_ids'));
     }
 
     // Import RFID from Server to local DB (Import RFID)
-    public function importAllRfids(Request $request){
+    public function importAllRfids(){
+
+        ini_set("memory_limit", "-1");
+		set_time_limit(0);
 
         $access_token   = config('token.access_token');
         $new            = array();
         $old            = array();
         //$last_inserted  = Users::where('exported',1)->orderBy('created_at','DESC')->first();
-        $last_inserted  = Users::where('exported',1)->where('created_at', Users::max('created_at'))->orderBy('created_at','desc')->first();
+        $last_inserted  = Users::where('exported',1)
+                            ->where('created_at', Users::max('created_at'))
+                            ->orderBy('created_at','desc')
+                            ->first();
 
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
@@ -111,15 +121,15 @@ class RfidController extends Controller
                     'Accept'                 => "application/json"
                 ]]);
 
-            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/import';
-            
+            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/import_server';
+			
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted
             ]);
 
             $online_response = $response->getBody()->getContents();
             $data            = json_decode($online_response);
-
+	
             foreach($data as $user){
                 $rfid = Users::firstOrCreate([
                     'rfid' => $user->rfid], 
@@ -145,7 +155,7 @@ class RfidController extends Controller
                     'limits'            => !empty($user->limits) ? $user->limits : 0,
                     'limit_left'        => !empty($user->limit_left) ? $user->limit_left : 0,
                     'remember_token'    => $user->remember_token,
-                    'created_at'        => $user->created_at,
+                    'created_at'        => now()->timestamp,
                     'updated_at'        => $user->updated_at,
                 ]);
     
@@ -218,7 +228,7 @@ class RfidController extends Controller
             ]);
             
             if ($rfid->wasRecentlyCreated) {
-                $new[] = $rfid->branch_user_id;
+                $new[] = $user['id'];
                 
                 RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
@@ -233,7 +243,7 @@ class RfidController extends Controller
                 }
                     
             }else {
-                $old[] = $rfid->branch_user_id;
+                $old[] = $user['id'];
             }
         }
 
