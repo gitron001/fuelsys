@@ -48,8 +48,8 @@ class Kernel extends ConsoleKernel
         //         ->everyFifteenMinutes();
 
         // Export Payments to server
-        $schedule->command('export:payments')
-                   ->everyFifteenMinutes();
+        //$schedule->command('export:payments')
+        //           ->everyFifteenMinutes();
     }
 
     /**
