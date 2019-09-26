@@ -64,12 +64,12 @@ class PaymentsController extends Controller
 				if(!$payments){
 					$payments   = Payments::insertGetId([
 						'date'        => $data['date'],
-						'amount'      => $data['amount'],
-						'description' => $data['description'],
+                        'amount'      => $data['amount'],
+						'description' => !empty($data['description']) ? $data['description'] : NULL,
 						'user_id'     => $user_id->id,
 						'company_id'  => $data['company_id'],
 						'created_by'  => $created_by->id,
-						'edited_by'   => $edited_by->id,
+						'edited_by'   => !empty($edited_by->id) ? $edited_by->id : NULL,
 						'created_at'  => now()->timestamp,
                         'updated_at'  => now()->timestamp,
                         'branch_id'   => Session::get('branch_id'),
