@@ -19,12 +19,12 @@ class CreateCompaniesTable extends Migration
             $table->integer('bis_number')->index();
             $table->integer('fis_number')->nullable();
             $table->string('contact_person')->nullable();
+            $table->string('main_url')->nullable();
             $table->integer('printer_ip')->nullable();
             $table->integer('tax_number')->nullable();
             $table->integer('res_number')->nullable();
             $table->string('tel_number')->nullable();
             $table->string('email')->nullable();
-            $table->string('send_email')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('images')->nullable();
