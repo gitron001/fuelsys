@@ -149,6 +149,11 @@ class Transaction extends Model
 
     public static function generateInvoiceNr($tran_id){
         //get last record
+		$transactoin = Transaction::find($tran_id);
+		if($transactoin->receipt_no != NULL){
+			return true;
+		}
+		
         $record = Transaction::where('receipt_no','!=', '')->where('receipt_no','!=', 0)->latest()->first();
         if(isset($record->receipt_no)){
             $expNum = explode('-', $record->receipt_no);
@@ -165,7 +170,7 @@ class Transaction extends Model
             $nextInvoiceNumber = $expNum[0].'-'. str_pad($expNum[1], 5, '0', STR_PAD_LEFT);
         }
 
-        $transactoin = Transaction::find($tran_id);
+        
         $transactoin->receipt_no = $nextInvoiceNumber;
         $transactoin->save();
 

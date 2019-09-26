@@ -152,7 +152,7 @@
 		<tr>
 			<th align="center">{{ $date }}</th>	
 			<td align="center">{{ !empty($tr->description) ? 'Pagese ('.$tr->description.')' : 'Pagese' }}</td>
-			<td align="center">@if(isset($company_checked)) {{ $tr->company_name }}  @else {{ $tr->username }} @endif</td>
+			<td align="center">{{ $tr->username }}</td>
 			<td align="center">{{ number_format($tr->money, 2) }} €</td>
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
@@ -161,7 +161,7 @@
 		<tr @if($tr->type == 'payment') echo style="display:none;" @endif>
 			<th align="center">{{ $date }}</th>	
 			<td align="center">{{ $tr->type == 'payment' ? 'Pagese - '.$tr->description.'' : 'Transaksion' }}</td>
-			<td align="center">@if(isset($company_checked)) {{ $tr->company_name }}  @else {{ $tr->username }} @endif</td>
+			<td align="center">{{ $tr->username }}</td>
 			<td align="center">{{ number_format($transaction_sum, 2) }} €</td>
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
@@ -191,7 +191,7 @@
 		<tr @if(!isset($inc_transactions) || $inc_transactions == 'No' ) echo style="display:none;" @endif>
 			<th align="center" scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d h:i:s', $py->date) : $py->created_at }}</th>
 			<td align="center"> {{ $py->description == NULL  ? $py->type : $py->description }} </td>
-			<td align="center">@if(isset($company_checked)) {{ $py->company_name }}  @else {{ $py->username }} @endif</td>
+			<td align="center">{{ $py->username }}</td>
 			<td align="center">{{ $fueling }}</td>
 			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>

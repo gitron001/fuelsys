@@ -27,6 +27,12 @@ class PrintPaymentService extends ServiceProvider
             $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
             $payment        = Payments::where('id', $id)->first();
 
+            $company    	= Company::where('status',4)->first();
+			
+			if($company->printer_id == "" || $company->printer_id == NULL){
+				return true;
+			}
+
             $image          = public_path().'/images/nesim-bakija.png';
             $logo           = EscposImage::load($image, false);
             $printer        = new Printer($connector);
