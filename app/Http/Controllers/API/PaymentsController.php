@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use App\Models\Payments;
+use Session;
 use App\Models\Users;
+use GuzzleHttp\Client;
+use App\Models\Payments;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Exception\GuzzleException;
 
 class PaymentsController extends Controller
 {
