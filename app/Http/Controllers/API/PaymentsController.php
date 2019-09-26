@@ -68,23 +68,24 @@ class PaymentsController extends Controller
 						'description' => $data['description'],
 						'user_id'     => $user_id->id,
 						'company_id'  => $data['company_id'],
-						'created_by'  => $created_by,
-						'edited_by'   => $edited_by,
+						'created_by'  => $created_by->id,
+						'edited_by'   => $edited_by->id,
 						'created_at'  => now()->timestamp,
                         'updated_at'  => now()->timestamp,
                         'branch_id'   => Session::get('branch_id'),
 						'branch_payment_id' => $data['id'],
-					]);
+                    ]);
+                    
+                    $inserted_payment[] = $data['id'];
 				}
-            
-                $inserted_paymnet[] = $data['id'];
            }
+        
+        }
 
         return response()->json([
             'response'  => 'Success',
-            'inserted_paymnet' => $inserted_paymnet,
+            'inserted_payment' => $inserted_payment,
         ], 201);
-
-        }  
+          
     }
 }
