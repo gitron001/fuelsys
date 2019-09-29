@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
                  ->everyMinute();
         
         // Send daily email to companies
-        $schedule->command('send:dailyEmail')
+        $schedule->command('send:daily')
               ->hourly();
 
         // Send monthly email to companies

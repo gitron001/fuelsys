@@ -55,6 +55,11 @@ class CheckCardReadersCommand extends Command
 			return false;
         }
         
+        $check_cron = Process::where('type_id', 5)->where('pfc_id', $pfc_id)->first();
+		if(isset($check_cron)){
+			return false;
+        }
+		
         $pfc    = PfcModel::find($pfc_id);
 	
         try {

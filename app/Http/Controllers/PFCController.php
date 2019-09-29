@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PFC;
 use App\Models\RunninProcessModel as Process;
+use Artisan;
 
 class PFCController extends Controller
 {
@@ -116,15 +117,21 @@ class PFCController extends Controller
      */
     public function import_data($pfc_id, $type = null)
     {
-        Process::insert(array('start_time'=> time(),
-            'refresh_time' => time(),
-            'faild_attempt'=> 0,
-            'class_name'=>'',
-            'pfc_id' =>$pfc_id,
-            'type_id' =>$type,
-            'created_at' => time(),
-            'updated_at' => time()
-        ));
+		if($type == 6){
+			$type = 1;	
+			Artisan::call('card:reader');
+		}
+		
+		Process::insert(array('start_time'=> time(),
+			'refresh_time' => time(),
+			'faild_attempt'=> 0,
+			'class_name'=>'',
+			'pfc_id' =>$pfc_id,
+			'type_id' =>$type,
+			'created_at' => time(),
+			'updated_at' => time()
+		));
+		
         return redirect('/admin/pfc');
     }
     /**
