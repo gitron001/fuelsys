@@ -2,35 +2,90 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
+use Session;
+use App\Models\Users;
+use GuzzleHttp\Client;
 use App\Models\Payments;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Exception\GuzzleException;
 
 class PaymentsController extends Controller
 {
     public function getAllPayments(){
-        $payments = Payments::all();
 
-        return response($payments,201);
+        $access_token = config('token.access_token');
+        $payments = Payments::where(function ($query) {
+            $query->where('exported', 0)
+                  ->orWhere('exported', NULL);
+        })->where(function ($query) {
+            $query->where('company_id', 0)
+                  ->orWhere('company_id',NULL);
+        })->get();
+
+        try {
+            $client = new \GuzzleHttp\Client(['cookies' => true,
+                'headers' =>  [
+                    'Authorization'          => $access_token,
+                    'Accept'                 => "application/json"
+                ]]);
+            $url = 'http://fuelsystem.alba-petrol.com/api/payments/create';
+            
+            $response = $client->request('POST', $url, [
+                'json' => $payments
+            ]);
+            
+            $inserted_id = json_decode($response->getBody()->getContents());
+			
+			Payments::whereIn('id',$inserted_id->inserted_payment)->update(['exported'=> 1]);
+			
+            return $response->getBody();
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "error" => "Failed to insert payment into server / Unauthenticated",
+                "message" => $e->getMessage()
+            ]);
+        }
     }
 
     public function createPayment(Request $request){
-        $payment = new Payments;
+        $response = $request->all();
+        $inserted_payment = array();
+       
+        foreach($response as $data) {
 
-        $payment->date          = $request->date;
-        $payment->amount        = $request->amount;
-        $payment->description   = $request->description;
-        $payment->user_id       = $request->user_id;
-        $payment->company_id    = $request->company_id;
-        $payment->created_by    = $request->created_by;
-        $payment->edited_by     = $request->edited_by;
-        $payment->created_at    = $request->created_at;
-        $payment->updated_at    = $request->updated_at;
-        $payment->save();
+            $user_id = Users::select('id')->where('branch_id',Session::get('branch_id'))->where('branch_user_id',$data['user_id'])->first();
+            $created_by = Users::select('id')->where('branch_id',Session::get('branch_id'))->where('branch_user_id',$data['created_by'])->first();
+            $edited_by = Users::select('id')->where('branch_id',Session::get('branch_id'))->where('branch_user_id',$data['edited_by'])->first();
+            $payments = Payments::where('branch_payment_id', $data['id'])->where('branch_id', Session::get('branch_id'))->first();
+
+            if($user_id) {
+				if(!$payments){
+					$payments   = Payments::insertGetId([
+						'date'        => $data['date'],
+                        'amount'      => $data['amount'],
+						'description' => !empty($data['description']) ? $data['description'] : NULL,
+						'user_id'     => $user_id->id,
+						'company_id'  => $data['company_id'],
+						'created_by'  => $created_by->id,
+						'edited_by'   => !empty($edited_by->id) ? $edited_by->id : NULL,
+						'created_at'  => now()->timestamp,
+                        'updated_at'  => now()->timestamp,
+                        'branch_id'   => Session::get('branch_id'),
+						'branch_payment_id' => $data['id'],
+                    ]);
+                    
+                    $inserted_payment[] = $data['id'];
+				}
+           }
+        
+        }
 
         return response()->json([
-            "message" => "Payment record created"
+            'response'  => 'Success',
+            'inserted_payment' => $inserted_payment,
         ], 201);
-
+          
     }
 }

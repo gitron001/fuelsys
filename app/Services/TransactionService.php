@@ -64,7 +64,7 @@ class TransactionService extends ServiceProvider
                 self::read_data($socket, $channel, $pfc_id, $response[$i]);
             }else if($response[$i] == 5){
                 $channel = (($i/4));
-                self::read_data($socket, $channel, $pfc_id, $response[$i]);
+                //self::read_data($socket, $channel, $pfc_id, $response[$i]);
             }
         }
         //LOCKED
@@ -107,8 +107,10 @@ class TransactionService extends ServiceProvider
         //HERE
 		if(!$transaction_id){ return true; } 
 		
-        $changed_status = self::transaction_status($channel, $status, $socket);
-				
+		if($type == 1 || $type == 2){
+			$changed_status = self::transaction_status($channel, $status, $socket);
+		}
+		
         $recepit = new PrintFuelRecept($transaction_id);
         dispatch($recepit);
 		

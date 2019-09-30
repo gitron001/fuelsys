@@ -119,7 +119,7 @@ class PFCController extends Controller
     {
 		if($type == 6){
 			$type = 1;	
-			Artisan::call('card:reader');
+			//Artisan::call('card:reader');
 		}
 		
 		Process::insert(array('start_time'=> time(),

@@ -385,6 +385,33 @@ class UsersController extends Controller
 			$check_existing = Users::where('rfid', $rfid)->count();
 
 			if($check_existing != 0){
+                $user = Users::where('rfid', $rfid)->first();
+                $user->update([
+                    'name'              => trim($result['emri']). ' ' .trim($result['mbiemri']),
+                    'residence'         => $result['vendbanimi'],
+                    'contact_number'    => $result['nr.kontaktues'],
+                    'rfid'              => $rfid,
+                    'type'              => $type,
+                    'application_date'  => str_replace('.', '-', $result['data']),
+                    'updated_at'        => now()->timestamp
+                ]);
+
+                $id = $user->id;
+
+                foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
+                    if(!empty($product) && !empty($discount) && $discount !== 0){
+                        
+                        RFID_Discounts::where('rfid_id', $id)->where('product_id',$product)->delete();
+
+                        $rfid_product = new RFID_Discounts();
+
+                        $rfid_product->rfid_id      = $id;
+                        $rfid_product->product_id   = $product;
+                        $rfid_product->discount     = $discount;
+                        $rfid_product->save();
+                    }
+                }
+
 				$duplicate[] = $result;
 				continue;
 			}

@@ -662,18 +662,19 @@ class TransactionController extends Controller
         $date               = $request->fromDate;
         $inc_transactions   = $request->inc_transactions;
         $company_checked    = $request->input('company');
-        
+   
         if(isset($request->company)){
-            $company_details = Company::where('id',$request->company)->first();
+            $company_details = Company::find($request->company);
+		
         }
 
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','company_checked'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         
-
-        Mail::send('emails.report',["data"=>"Raport Transaksionesh - Nesim Bakija"],function($m) use($pdf){
+		
+        Mail::send('emails.report',["data"=>"Raport Transaksionesh - Nesim Bakija"],function($m) use($pdf, $company_details){
             // STATIC EMAIL - TEST
-            $m->to('orgesthaqi96@gmail.com')->subject('Raport Transaksionesh - Nesim Bakija');
+            $m->to($company_details->email)->subject('Raport Transaksionesh - Nesim Bakija');
             $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
         });
     }
@@ -689,7 +690,7 @@ class TransactionController extends Controller
 		return $payments->date+1;		
 	}
 
-   public static function printFunction(Request $request)
+    public static function printFunction(Request $request)
     {
 		$recepit = new PrintFuelRecept($request->input('id'));
         dispatch($recepit);

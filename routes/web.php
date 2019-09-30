@@ -112,6 +112,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Export Companies to Server
 	Route::get('/api/companies','API\CompaniesController@exportCompanies');
 
+	// Export Payments to Server
+	Route::get('/api/payments','API\PaymentsController@getAllPayments');
+
 	// Show failed attemps
 	Route::get('/failed-attempts','SettingsController@failed_attempts');
 	

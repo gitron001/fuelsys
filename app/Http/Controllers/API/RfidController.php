@@ -155,7 +155,7 @@ class RfidController extends Controller
                     'limits'            => !empty($user->limits) ? $user->limits : 0,
                     'limit_left'        => !empty($user->limit_left) ? $user->limit_left : 0,
                     'remember_token'    => $user->remember_token,
-                    'created_at'        => now()->timestamp,
+                    'created_at'        => $user->created_at,
                     'updated_at'        => $user->updated_at,
                 ]);
     
@@ -223,7 +223,7 @@ class RfidController extends Controller
                 'limits'            => !empty($user['limits']) ? $user['limits'] : 0,
                 'limit_left'        => !empty($user['limit_left']) ? $user['limit_left'] : 0,
                 'remember_token'    => $user['remember_token'],
-                'created_at'        => $user['created_at'],
+                'created_at'        => now()->timestamp,
                 'updated_at'        => $user['updated_at'],
             ]);
             
