@@ -40,7 +40,7 @@ class RfidController extends Controller
         return response($response,201);
     }
 
-    // Insert RFID from local DB to Server (Export RFID)
+    // Insert RFID(without company) from local DB to Server (Export RFID) 
     public function getAllRfids()
     {
 		ini_set("memory_limit", "-1");
@@ -49,7 +49,7 @@ class RfidController extends Controller
         $users          = Users::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
-                        })->limit(1000)->get()->toArray();
+                        })->where('company_id',0)->limit(1000)->get();
 
         $response       = array();
         $access_token   = config('token.access_token');
@@ -58,6 +58,7 @@ class RfidController extends Controller
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
             $response[]         = array_merge($u,$rfid);
         }
+
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
@@ -80,22 +81,77 @@ class RfidController extends Controller
         $id = json_decode($online_response_data);
         
         // Update new exported user 
-		/*
-        foreach($id->new as $value){
-            Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
-        }*/
 		$new_ids = implode(',', $id->new);
-		
 		Users::whereIn('id',$id->new)->update(['exported'=> 1]);
 		
-
-		$old_ids = implode(',', $id->old);
-		Users::whereIn('id',$id->old)->update(['exported'=> 1]);
         // Update old exported user 
-        /*foreach($id->old as $value){
-            Users::where('id',$value->branch_user_id)->update(['exported'=> 1]);
-        }*/
+		$old_ids = implode(',', $id->old);
+        Users::whereIn('id',$id->old)->update(['exported'=> 1]);
+        
+        return view('/admin/api/response', compact('users', 'old_ids'));
+    }
+
+    // Insert RFID(with company) from local DB to Server (Export RFID)
+    public function convertCompanyIdToMasterId(){
+
+        ini_set("memory_limit", "-1");
+		set_time_limit(0);
 		
+        $users_info     = Users::where(function ($query) {
+                            $query->where('exported', NULL)
+                                ->orWhere('exported', 0);
+                        })->where('company_id','!=',0)->limit(1000)->get();
+        
+        // Convert CompanyId to MasterId
+        foreach($users_info as $key => $value){
+            if($value->company->master_id == NULL){
+                unset($users_info[$key]);
+            }
+            
+            if($value->company_id != NULL || $value->company_id != 0){
+                $value->company_id = $value->company->master_id;
+                unset($value['company']);
+            }
+        }
+
+        $users          = $users_info->toArray();
+        $response       = array();
+        $access_token   = config('token.access_token');
+
+        foreach($users as $u){
+            $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
+            $response[]         = array_merge($u,$rfid);
+        }
+
+        try {
+            $client = new \GuzzleHttp\Client(['cookies' => true,
+                'headers' =>  [
+                    'Authorization'          => $access_token,
+                    'Accept'                 => "application/json"
+                ]]);
+            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
+            
+            $response = $client->request('POST', $url, [
+                'json' => $response
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "error" => "Failed to insert into server",
+                "message" => $e->getMessage()
+            ]);
+        }
+
+        $online_response_data = $response->getBody()->getContents();
+        $id = json_decode($online_response_data);
+        
+        // Update new exported user 
+		$new_ids = implode(',', $id->new);
+		Users::whereIn('id',$id->new)->update(['exported'=> 1]);
+		
+        // Update old exported user 
+		$old_ids = implode(',', $id->old);
+        Users::whereIn('id',$id->old)->update(['exported'=> 1]);
+        
         return view('/admin/api/response', compact('users', 'old_ids'));
     }
 

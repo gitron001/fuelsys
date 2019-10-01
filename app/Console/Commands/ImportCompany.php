@@ -3,16 +3,16 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\API\PaymentsController;
+use App\Http\Controllers\API\CompaniesController;
 
-class ExportPayments extends Command
+class ImportCompany extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'export:payments';
+    protected $signature = 'import:company';
 
     /**
      * The console command description.
@@ -39,13 +39,8 @@ class ExportPayments extends Command
     public function handle()
     {
         if(config()->has('token.access_token')) {
-            // Import payments from Server
-            $import = new PaymentsController();
-            $import->getServerPayments();
-
-            // Export payments to Server
-            $export = new PaymentsController();
-            $export->getAllPayments();
+            $controller = new CompaniesController();
+            $controller->getCompanyFromServer();
         }else {
             return false;
         }
