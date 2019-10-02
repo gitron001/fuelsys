@@ -49,7 +49,7 @@ class RfidController extends Controller
         $users          = Users::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
-                        })->where('company_id',0)->limit(1000)->get();
+                        })->where('company_id',0)->limit(1000)->get()->toArray();
 
         $response       = array();
         $access_token   = config('token.access_token');
