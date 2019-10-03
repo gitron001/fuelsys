@@ -125,7 +125,9 @@ class PaymentsController extends Controller
         $payments->description  = $request->input('description');
         $payments->user_id      = $request->input('user_id');
         $payments->company_id   = $request->input('company_id');
-        $payments->branch_id    = $request->input('branch');
+		if($request->input('branch')){
+			$payments->branch_id    = $request->input('branch');
+		}
         $payments->type         = $request->input('type');
         $payments->created_at   = now()->timestamp;
         $payments->created_by   = Auth::user()->id;
