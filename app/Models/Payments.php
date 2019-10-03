@@ -13,6 +13,8 @@ class Payments extends Model
         'amount',
         'description',
         'company_id',
+        'type',
+        'branch_id',
     ];
 
     public function getDateFormat(){

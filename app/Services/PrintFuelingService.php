@@ -33,7 +33,7 @@ class PrintFuelingService extends ServiceProvider
             $printer        = new Printer($connector);
             $date           = date("F j, Y, H:i", time());
 
-
+			
             /* Print top logo */
             $printer -> setJustification(Printer::JUSTIFY_CENTER);
             $printer -> graphics($logo);

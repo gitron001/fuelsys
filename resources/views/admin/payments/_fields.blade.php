@@ -19,6 +19,16 @@
 					{!! $errors->first('date','<span class="help-block">:message</span>') !!}
 				</div>
 
+				<div class="form-group">
+					<label for="Branch:">Branch:</label>
+					<select class="form-control" id="branch" name="branch">
+						<option value="">Choose a Branch</option>
+						@foreach($branches as $id => $name)
+							<option value="{{ $id }}" {{ ( request()->get("branch") == $id ? "selected":"") }}>{{ $name }}</option>
+						@endforeach	
+					</select> 
+        		</div>
+
 				<div class="form-group {{ $errors->has('select') ? 'has-error' :'' }}">
 					<label for="">Company / User: </label>
 					<br>
@@ -30,12 +40,12 @@
 					@if (isset($payment))
 					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" 
 						value="company" @if (isset($payment) && $payment->company_id != 0) echo checked @endif/>Company</label>
-					@endif
-
+					@endif	
 					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" 
 						value="user" @if (isset($payment) && $payment->user_id != 0) echo checked @endif/>User</label>
 					
 				</div>
+
 			</div>
 
 			<div class="col-md-6">
@@ -45,6 +55,15 @@
 					{!! Form::number('amount',null,['class'=>'form-control','step'=>'any']); !!} 
 					{!! $errors->first('amount','<span class="help-block">:message</span>') !!}
 				</div>
+
+				<div class="form-group">
+					<label for="type">Type:</label>
+					<select class="form-control" id="type" name="type">
+						<option value="">Choose a type</option>
+						<option value="1">Pagese</option>
+						<option value="2">Hyrje</option>
+					</select> 
+        		</div>
 		
 				@if(!isset($payment))
 					<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}" id="user" style="display: none">
@@ -65,7 +84,7 @@
 					{!! Form::select('company_id',['' => 'Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!} 
 					{!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
 				</div>
-				
+			
 			</div>
 		</div>
 		<div class="col-12">

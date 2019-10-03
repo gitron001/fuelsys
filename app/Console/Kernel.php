@@ -28,16 +28,17 @@ class Kernel extends ConsoleKernel
                  ->everyMinute();
         
         // Send daily email to companies
-        $schedule->command('send:dailyEmail')
-              ->hourly();
+        //$schedule->command('send:dailyEmail')
+        //      ->hourly();
 
         // Send monthly email to companies
-        $schedule->command('send:monthlyEmail')
-                 ->monthly();
+        //$schedule->command('send:monthlyEmail')
+        //         ->monthly();
         
         // Send transactions to server
         $schedule->command('send:transactions')
                  ->everyFifteenMinutes();
+
 
         // Export RFID to server
         $schedule->command('export:rfid')
@@ -46,6 +47,31 @@ class Kernel extends ConsoleKernel
         // Import RFID from server
         $schedule->command('import:rfid')
                  ->everyFifteenMinutes();
+
+        // Export RFID without company to server
+        //$schedule->command('export:rfid')
+        //         ->everyFifteenMinutes();
+    
+        // Export RFID with company to server
+        //$schedule->command('rfid:withcompany')
+        //         ->everyFifteenMinutes();
+
+        // Import RFID from server
+        //$schedule->command('import:rfid')
+        //         ->everyFifteenMinutes();
+
+        // Export Payments to server
+        //$schedule->command('export:payments')
+        //           ->everyFifteenMinutes();
+
+        // Import Company from Server to local DB
+        //$schedule->command('import:company')
+        //           ->everyFifteenMinutes();
+
+        // Export Company from local DB to Server
+        //$schedule->command('export:company')
+        //           ->everyFifteenMinutes();
+
     }
 
     /**

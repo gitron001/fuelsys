@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('rfid')->nullable();
+            $table->bigInteger('rfid')->nullable();
             $table->integer('branch_id')->nullable();
             $table->integer('branch_user_id')->nullable();
             $table->string('name');
@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('contact_number')->nullable();
             $table->string('application_date')->nullable();
             $table->string('business_type')->nullable();
+            $table->string('printer_ip')->nullable();
             $table->string('email')->nullable();
             $table->string('password')->nullable();
             $table->integer('company_id')->default('0')->nullable();

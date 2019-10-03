@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Payments;
 use App\Models\Company;
+use App\Models\Branch;
 use App\Models\Users;
 use App\Models\PFC;
 use App\Models\Transaction;
@@ -32,7 +33,7 @@ class PaymentsController extends Controller
      */
     public function index(Request $request)
     {
-        $users          = Users::pluck('name','id')->all();
+        $users          = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->all();
 
         $from_date      = strtotime($request->input('fromDate'));
@@ -90,10 +91,11 @@ class PaymentsController extends Controller
     public function create()
     {
         $companies  = Company::pluck('name','id')->all();
+        $branches   = Branch::orderBy('name','ASC')->pluck('name','id')->all();
         $users      = Users::where('company_id', 0)->whereNotIn('type', array(6,7,8))->pluck('name','id')->all();
 
 
-        return view('/admin/payments/create',compact('companies','users'));
+        return view('/admin/payments/create',compact('companies','users','branches'));
     }
 
     /**
@@ -123,6 +125,8 @@ class PaymentsController extends Controller
         $payments->description  = $request->input('description');
         $payments->user_id      = $request->input('user_id');
         $payments->company_id   = $request->input('company_id');
+        $payments->branch_id    = $request->input('branch');
+        $payments->type         = $request->input('type');
         $payments->created_at   = now()->timestamp;
         $payments->created_by   = Auth::user()->id;
         $payments->updated_at   = now()->timestamp;

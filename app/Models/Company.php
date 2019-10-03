@@ -20,6 +20,7 @@ class Company extends Model
         'tel_number',
         'contact_person',
         'email',
+        'exported',
         'address',
         'city',
         'images',

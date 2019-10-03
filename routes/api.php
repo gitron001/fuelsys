@@ -35,3 +35,9 @@ Route::post('/transactions/create', 'API\TransactionsController@importTransactio
 
 Route::get('/companies', 'API\CompaniesController@exportCompanies');
 Route::post('/companies/create', 'API\CompaniesController@createCompany');
+Route::post('/company/import', 'API\CompaniesController@importCompanyFromServer');
+
+Route::get('/payments', 'API\PaymentsController@getAllPayments');
+Route::post('/payments/create', 'API\PaymentsController@createPayment');
+
+Route::post('/payments/export_server', 'API\PaymentsController@sendServerPayments');
