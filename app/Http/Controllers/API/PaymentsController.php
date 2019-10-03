@@ -73,6 +73,7 @@ class PaymentsController extends Controller
 						'user_id'     => $user_id->id,
                         'company_id'  => $data['company_id'],
                         'type'        => $data['type'],
+                        'exported'    => 1,
 						'created_by'  => $created_by->id,
 						'edited_by'   => !empty($edited_by->id) ? $edited_by->id : NULL,
 						'created_at'  => now()->timestamp,
@@ -130,19 +131,24 @@ class PaymentsController extends Controller
         $data            = json_decode($online_response);
 
         foreach($data as $payment){
-            Payments::insert([
-                'date'        => $payment->date,
-                'amount'      => $payment->amount,
-                'description' => !empty($payment->description) ? $payment->description : NULL,
-                'user_id'     => $payment->user_id,
-                'company_id'  => $payment->company_id,
-                'type'        => $payment->type,
-                'created_by'  => $payment->id,
-                'edited_by'   => !empty($payment->edited_by) ? $payment->edited_by : NULL,
-                'created_at'  => now()->timestamp,
-                'updated_at'  => now()->timestamp,
-                'branch_id'   => $payment->branch_id,
-            ]);
+
+            Payments::firstOrCreate([
+                'id' => $payment->branch_payment_id], 
+                [
+                'date'              => $payment->date,
+                'amount'            => $payment->amount,
+                'description'       => !empty($payment->description) ? $payment->description : NULL,
+                'user_id'           => $payment->user_id,
+                'company_id'        => $payment->company_id,
+                'type'              => $payment->type,
+                'exported'          => 1,
+                'created_by'        => $payment->id,
+                'edited_by'         => !empty($payment->edited_by) ? $payment->edited_by : NULL,
+                'created_at'        => now()->timestamp,
+                'updated_at'        => now()->timestamp,
+                'branch_id'         => $payment->branch_id,
+                'branch_payment_id' => $payment->branch_payment_id,
+                ]);
         }
 
         return response()->json([
