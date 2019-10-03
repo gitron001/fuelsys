@@ -65,6 +65,9 @@ class TransactionsController extends Controller
     
     public function getAllTransactions() {
 		
+		ini_set("memory_limit", "-1");
+		set_time_limit(0);
+		
         $transactions = Transaction::where('exported',0)->limit(1500)->get();
 		
         $access_token = config('token.access_token');

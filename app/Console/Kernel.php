@@ -36,16 +36,16 @@ class Kernel extends ConsoleKernel
                  ->monthly();
         
         // Send transactions to server
-        //$schedule->command('send:transactions')
-                 //->everyFifteenMinutes();
+        $schedule->command('send:transactions')
+                 ->everyFifteenMinutes();
 
         // Export RFID to server
-        //$schedule->command('export:rfid')
-        //         ->everyFifteenMinutes();
+        $schedule->command('export:rfid')
+                 ->everyFifteenMinutes();
 
         // Import RFID from server
-        //$schedule->command('import:rfid')
-        //         ->everyFifteenMinutes();
+        $schedule->command('import:rfid')
+                 ->everyFifteenMinutes();
     }
 
     /**
