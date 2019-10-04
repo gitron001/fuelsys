@@ -45,7 +45,7 @@
                       <option value="8" @if(request()->get("type") == 8) selected @endif>Bonus Korporate</option>
                     </select>
                   </div>
-                  @if(!empty($branches))
+                  @if(count($branches) > 0)
                   <div class="form-group">
                     <label for="User:">Branch:</label>
                     <select class="form-control" id="branch" name="branch">
