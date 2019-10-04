@@ -162,6 +162,7 @@ class PaymentsController extends Controller
 
         $payments = Payments::where('created_at','>=',$request->created_at)
                             ->where('branch_id',Session::get('branch_id'))
+                            ->where('exported','!=',1)
                             ->get();
         
         return response($payments,201);
