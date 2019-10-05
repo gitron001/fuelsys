@@ -13,23 +13,23 @@
       <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/payments') }}">
         <div class="form-group">
           <label for="Start Date:">Start Date:</label>
-          <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{ request()->get("fromDate")}}">
+          <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{ request()->get('fromDate')}}">
         </div>
 
         <div class="form-group">
           <label for="End Date:">End Date:</label>
-          <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{ request()->get("toDate")}}">
+          <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{ request()->get('toDate')}}">
         </div>
 
         <div class="form-group">
-          <label for="User:">User:</label>
           <select class="users-dropdown form-control" name="user[]" multiple="multiple" id="user">
             @foreach($users as $id => $name)
                 <option value="{{ $id }}" 
                 @if(!empty( request()->get("user")))
                   @foreach( request()->get("user") as $us) 
                     {{ $us == $id ? 'selected' : '' }} 
-                  @endforeach
+                  @endforeach          <label for="User:">User:</label>
+
                 @endif > {{ $name }} </option>
               @endforeach
           </select>

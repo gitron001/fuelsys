@@ -257,7 +257,7 @@ class CardService extends ServiceProvider
 		
 		for($i = 10; $i < 15; $i++){
 			foreach($user->discounts as $discount){
-				if(is_null($discount->product_details->price)){ continue; }
+				if(!isset($discount->product_details->price) || is_null($discount->product_details->price)){ continue; }
 				if($discount->product_details->pfc_pr_id == $response[$i]){
 					$all_discounts[$i] = (int)($discount->product_details->price - ($discount->discount*1000));
 					break;

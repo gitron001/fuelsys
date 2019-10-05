@@ -12,6 +12,9 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class PaymentsController extends Controller
 {
+    /*****  EXPORT FUNCTIONS *****/
+
+    // Local call to Server (Export Payments from local DB to Server)
     public function getAllPayments(){
 
         $access_token = config('token.access_token');
@@ -49,6 +52,7 @@ class PaymentsController extends Controller
         }
     }
 
+    // Server response (Export Payments from local DB to Server)
     public function createPayment(Request $request){
         $response = $request->all();
         $inserted_payment = array();
@@ -67,7 +71,9 @@ class PaymentsController extends Controller
                         'amount'      => $data['amount'],
 						'description' => !empty($data['description']) ? $data['description'] : NULL,
 						'user_id'     => $user_id->id,
-						'company_id'  => $data['company_id'],
+                        'company_id'  => $data['company_id'],
+                        'type'        => $data['type'],
+                        'exported'    => 1,
 						'created_by'  => $created_by->id,
 						'edited_by'   => !empty($edited_by->id) ? $edited_by->id : NULL,
 						'created_at'  => now()->timestamp,
@@ -88,4 +94,79 @@ class PaymentsController extends Controller
         ], 201);
           
     }
+    /***  END EXPORT FUNCTIONS ***/
+
+    /*****  IMPORT FUNCTIONS *****/
+
+    // Local call to Server (Import Payments from Server to local DB)
+    public function getServerPayments(){
+        $access_token = config('token.access_token');
+
+        $last_inserted  = Payments::where('exported',1)
+                            ->where('created_at', Payments::max('created_at'))
+                            ->orderBy('created_at','desc')
+                            ->first();
+        
+        try {
+            $client = new \GuzzleHttp\Client(['cookies' => true,
+                'headers' =>  [
+                    'Authorization'          => $access_token,
+                    'Accept'                 => "application/json"
+                ]]);
+
+            $url = 'http://fuelsystem.alba-petrol.com/api/payments/export_server';
+			
+            $response = $client->request('POST', $url, [
+                'json' => $last_inserted
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "error" => "Error!",
+                "message" => $e->getMessage()
+            ]);
+        }
+
+        $online_response = $response->getBody()->getContents();
+        $data            = json_decode($online_response);
+
+        foreach($data as $payment){
+
+            Payments::firstOrCreate([
+                'id' => $payment->branch_payment_id], 
+                [
+                'date'              => $payment->date,
+                'amount'            => $payment->amount,
+                'description'       => !empty($payment->description) ? $payment->description : NULL,
+                'user_id'           => $payment->user_id,
+                'company_id'        => $payment->company_id,
+                'type'              => $payment->type,
+                'exported'          => 1,
+                'created_by'        => $payment->id,
+                'edited_by'         => !empty($payment->edited_by) ? $payment->edited_by : NULL,
+                'created_at'        => now()->timestamp,
+                'updated_at'        => now()->timestamp,
+                'branch_id'         => $payment->branch_id,
+                'branch_payment_id' => $payment->branch_payment_id,
+                ]);
+        }
+
+        return response()->json([
+            'response'  => 'Success',
+        ], 201);
+    }
+
+    // Server response (Import Payments from Server to local DB)
+    public function sendServerPayments(Request $request){
+        $response = $request->all();
+
+        $payments = Payments::where('created_at','>=',$request->created_at)
+                            ->where('branch_id',Session::get('branch_id'))
+                            ->where('exported','!=',1)
+                            ->get();
+        
+        return response($payments,201);
+    }
+
+    /***  END IMPORT FUNCTIONS ***/
 }
