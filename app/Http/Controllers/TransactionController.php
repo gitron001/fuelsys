@@ -309,7 +309,7 @@ class TransactionController extends Controller
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
-                ,"users.name as username","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
+                ,"users.name as username", "users.plates","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
 
@@ -336,7 +336,7 @@ class TransactionController extends Controller
         $payments = Payments::select("payments.user_id",DB::RAW(" 'payment' as type")
                 ,"payments.amount","payments.date",
                 DB::RAW(" 0 as money"),"payments.company_id"
-                ,"users.name as username","payments.created_at","companies.name as company_name","payments.description")
+                ,"users.name as username", DB::RAW(" '' as plates"), "payments.created_at","companies.name as company_name","payments.description")
             ->leftJoin('users', 'payments.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->union($transactions)
