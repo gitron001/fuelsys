@@ -30,7 +30,7 @@
           swal("Gabim", "Ndodhi një gabim gjatë gjenerimit të faturës!", "error")
         }
       });
-    }); 
+    });
 
   // Sweet Alert confirmation before delete
   $(document).on('click', '.delete-item', function(e){
@@ -56,7 +56,7 @@
   });
 
   $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip(); 
+    $('[data-toggle="tooltip"]').tooltip();
   });
 
 
@@ -71,11 +71,11 @@
     var user = $("#user").val();
     var company = $("#company").val();
     var type = $("#type").val();
-    var branch = $("#branch").val();
+    var branch = $("#branch").val() ? $("#branch").val() : '';
     var fromDate = $('#datetimepicker4').val();
     var toDate = $('#datetimepicker5').val();
     var last_payment = $("#last_payment").attr("checked") ? 'Yes' : 'No';
-    
+
     function fetch_data(page,sort_type,sort_by,query){
       $('#hidePagination').hide();
       $('#spinner').show();
@@ -97,12 +97,12 @@
       var page = $('#hidden_page').val();
 
       query == '' ? page = page : page = 1;
-      
+
       fetch_data(page,sort_type,column_name,query);
     });
-  
+
     $(document).on('click', '.sorting', function() {
-      
+
       // Set this icon as default for all other items that aren't selected
       $('.removePrevIcon').html('<span class="glyphicon glyphicon glyphicon glyphicon-sort"></span>');
 
@@ -125,7 +125,7 @@
       var query = '<?php echo (isset($_GET['search']) ? $_GET['search'] : '') ?>';
       fetch_data(page,reverse_order,column_name,query);
     });
-  
+
     $(document).on('click','.pagination a', function(event){
       event.preventDefault();
       var page = $(this).attr('href').split('page=')[1];
@@ -135,7 +135,7 @@
       var query = '<?php echo (isset($_GET['search']) ? $_GET['search'] : '') ?>';
       fetch_data(page, sort_type, column_name,query);
     });
-  
+
   })
 
 
@@ -160,7 +160,7 @@
       });
   });
 
-  // Users dropdown 
+  // Users dropdown
   $(document).ready(function() {
     $('.users-dropdown').select2({
       placeholder: "Select a user"
@@ -222,7 +222,7 @@
         dataType: "JSON",
         success: function(response, textStatus, request){
           var a = document.createElement("a");
-          a.href = response.file; 
+          a.href = response.file;
           a.download = response.name;
           document.body.appendChild(a);
           a.click();
@@ -248,7 +248,7 @@
         dataType: "JSON",
         success: function(response, textStatus, request){
           var a = document.createElement("a");
-          a.href = response.file; 
+          a.href = response.file;
           a.download = response.name;
           document.body.appendChild(a);
           a.click();
@@ -260,7 +260,7 @@
   });
   // *** END TRANSACTIONS SCRIPT *** //
 
-  
+
   //  *** REPORTS SCRIPT *** //
 
   // Show checkbox value after page load
@@ -271,7 +271,7 @@
       $('input[name="last_payment"]').val('No');
     }
   });
-    
+
   // Change Checkbox value onclick
   $('#last_payment').click(function(){
     if($(this).is(':checked')){
@@ -289,7 +289,7 @@
       $('input[name="inc_transactions"]').val('No');
     }
   });
-    
+
   // Change Checkbox value onclick
   $('#inc_transactions').click(function(){
     if($(this).is(':checked')){
@@ -298,7 +298,7 @@
         $('input[name="inc_transactions"]').val('No');
     }
   });
-  
+
   $(document).ready(function(){
     $('#dailyReport').click(function(){
       var inc_transactions = $("#inc_transactions").val();
@@ -319,7 +319,7 @@
   });
 
   //  *** END REPORTS SCRIPT *** //
-  
+
 </script>
 
 @endsection
