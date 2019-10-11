@@ -1,5 +1,6 @@
 @foreach($products_group as $product_group)
 <tr>
+    <td><input type="checkbox" name="chkbox" class="checkitem" value="{{ $product_group->id }}"></td>
     <td>{{ $product_group->name }}</td>
     <td>{{ $product_group->state_code }}</td>
     <td>{{ $product_group->created_at->diffForHumans() }}</td>

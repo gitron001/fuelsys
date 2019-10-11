@@ -22,14 +22,14 @@
         </div>
 
         <div class="form-group">
+        <label for="User:">User:</label>
           <select class="users-dropdown form-control" name="user[]" multiple="multiple" id="user">
             @foreach($users as $id => $name)
-                <option value="{{ $id }}" 
+                <option value="{{ $id }}"
                 @if(!empty( request()->get("user")))
-                  @foreach( request()->get("user") as $us) 
-                    {{ $us == $id ? 'selected' : '' }} 
-                  @endforeach          <label for="User:">User:</label>
-
+                  @foreach( request()->get("user") as $us)
+                    {{ $us == $id ? 'selected' : '' }}
+                  @endforeach
                 @endif > {{ $name }} </option>
               @endforeach
           </select>
@@ -42,11 +42,11 @@
               @foreach($companies as $id => $name)
                 <option value="{{ $id }}" {{ (request()->get("company") == $id ? "selected":"") }}>{{ $name }}</option>
               @endforeach
-          </select> 
+          </select>
         </div>
 
         <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i> Search</button>
-        <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i> Clear</a>
+        <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="Delete all selected payments"><i class="fa fa-trash"></i> Delete</a>
         <a href="{{ url('admin/payments/create') }}" data-toggle="tooltip" class="btn btn-success" title="Create new payment"><i class="fa fa-plus"></i> New</a>
       </form>
 
@@ -56,14 +56,15 @@
         <div class="col-sm-12">
           <table id="example2" class="table table-bordered table-hover text-center">
             <thead>
-              <th class="sorting" data-sorting_type="asc" data-column_name="date">Date <span id="date_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-              <th class="sorting" data-sorting_type="asc" data-column_name="amount">Amount <span id="amount_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-              <th class="sorting" data-sorting_type="asc" data-column_name="user_id">User <span id="user_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-              <th class="sorting" data-sorting_type="asc" data-column_name="company_id">Company <span id="company_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-			  <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created By <span id="created_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-              <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-              <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-              <th class="text-center">Options</th>
+                <th style="text-align:center;"><input type="checkbox" id="checkall"></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="date">Date <span id="date_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="amount">Amount <span id="amount_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="user_id">User <span id="user_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="company_id">Company <span id="company_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+			    <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created By <span id="created_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span id="updated_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="text-center">Options</th>
             </thead>
             <tbody>
               @include('admin.payments.table_data')
@@ -74,7 +75,7 @@
       </div>
     </div>
   </div>
-</div>                
+</div>
 @endsection
 
 @section('css')

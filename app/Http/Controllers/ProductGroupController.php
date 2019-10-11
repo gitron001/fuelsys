@@ -100,7 +100,7 @@ class ProductGroupController extends Controller
     {
         $product_group = ProductGroup::findOrFail($id);
         $product_group->update($request->all());
-        
+
         session()->flash('info','Success');
 
         return redirect('/admin/products_group');
@@ -119,5 +119,14 @@ class ProductGroupController extends Controller
         session()->flash('info','Success');
 
         return redirect('/admin/products_group');
+    }
+
+    public function delete_all(Request $request)
+    {
+        $product_group_id_array = $request->input('id');
+        $product_group = ProductGroup::whereIn('id',$product_group_id_array);
+        if($product_group->delete()){
+            echo "Data deleted";
+        }
     }
 }

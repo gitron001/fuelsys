@@ -35,7 +35,7 @@ class UsersController extends Controller
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
-        
+
         //$users      = Users::whereIn('status',array(1, 2));
         $users      = Users::select('users.name','users.email','users.rfid','users.type','users.type','users.created_at','users.updated_at','users.id','users.company_id','users.branch_user_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
@@ -161,10 +161,10 @@ class UsersController extends Controller
                 'Authorization'          => $access_token
             ]]);
             $url = 'http://fuelsystem.alba-petrol.com/api/save/rfid';
-            
+
 
             $response = $client->request('POST', $url, [
-                'form_params' => [ 
+                'form_params' => [
                     'branch_user_id'    => $user['id'],
                     'branch_id'         => Session::get('branch_id'),
                     'rfid'              => $request->input('rfid'),
@@ -236,9 +236,9 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $user = Users::findOrFail($id);
-        
+
         $password = $request->input('password');
 
         $user->rfid             = $request->input('rfid');
@@ -271,11 +271,11 @@ class UsersController extends Controller
         }else{
             RFID_Limits::where('rfid_id',$id)->whereNotIn('id',$request->input('deleteLimit'))->delete();
         }
-		
+
         // UPDATE Discount(Product - Discount)
         if(!empty($request->input('product'))){
-            // Update Product Discount 
-            for($i=0; $i < count($request->input('product')); $i++) { 
+            // Update Product Discount
+            for($i=0; $i < count($request->input('product')); $i++) {
 
                 RFID_Discounts::where('rfid_id', $id)
                     ->where('id',$request->input('hidden_input_product')[$i])
@@ -286,7 +286,7 @@ class UsersController extends Controller
         // UPDATE Limit(Branch - Limit)
         if(!empty($request->input('branch'))){
             // Update Branch Limit
-            for($i=0; $i < count($request->input('branch')); $i++) { 
+            for($i=0; $i < count($request->input('branch')); $i++) {
 
                 RFID_Limits::where('rfid_id', $id)
                     ->where('id',$request->input('hidden_input_branch')[$i])
@@ -341,6 +341,15 @@ class UsersController extends Controller
         return redirect('/admin/users');
     }
 
+    public function delete_all(Request $request)
+    {
+        $user_id_array = $request->input('id');
+        $user = Users::whereIn('id',$user_id_array);
+        if($user->update(['rfid' => 0, 'status' => 3])){
+            echo "Data deleted";
+        }
+    }
+
     public function uploadExcel(){
 
         $products   = Products::select('name','id', 'pfc_pr_id')->where('status', 1)->get();
@@ -358,19 +367,19 @@ class UsersController extends Controller
         $type           = $request->input('type');
         $product        = $request->input('product');
         $discount       = $request->input('discount');
-       
-        if(count($results) < 1){           
+
+        if(count($results) < 1){
             return redirect('/admin/users');
         }
-        if(!isset($results[0]['nr.karteles'])){            
+        if(!isset($results[0]['nr.karteles'])){
             $results = $results[0];
         }
-		
+
 		$duplicate = array();
-		
+
         foreach ($results as $result) {
 			if(trim($result['nr.karteles']) == "" || trim($result['nr.karteles']) == 0){
-				continue; 
+				continue;
 			}
             if(strpos($result['nr.karteles'], 'A')){
                 $rfid = str_replace('A',1,$result['nr.karteles']);
@@ -400,7 +409,7 @@ class UsersController extends Controller
 
                 foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
                     if(!empty($product) && !empty($discount) && $discount !== 0){
-                        
+
                         RFID_Discounts::where('rfid_id', $id)->where('product_id',$product)->delete();
 
                         $rfid_product = new RFID_Discounts();
@@ -438,9 +447,9 @@ class UsersController extends Controller
                 }
             }
         }
-		
+
 		if(count($duplicate) == 0){
-			
+
 			session()->flash('info','Success');
 
 			return redirect('/admin/users');
@@ -458,14 +467,14 @@ class UsersController extends Controller
     public function updateCard(Request $request) {
         $users          = Users::select('id')->where('type',$request->input('type'))->get();
         $rfid_discount  = RFID_Discounts::whereIN('rfid_id',$users)->get();
-        
+
         foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
             if(!empty($product) && !empty($discount)){
 					RFID_Discounts::join('users as u', 'u.id', '=', 'rfid_discounts.rfid_id')
 					->where('product_id', $product)->where('u.type', $request->input('type'))
 				   ->update([ 'rfid_discounts.discount' => $discount ]);
             }
-            
+
         }
 
         session()->flash('info','Success');
@@ -474,5 +483,5 @@ class UsersController extends Controller
 
     }
 
-    
+
 }

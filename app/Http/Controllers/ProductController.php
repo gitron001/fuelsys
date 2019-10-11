@@ -125,4 +125,13 @@ class ProductController extends Controller
 
         return redirect('/admin/products');
     }
+
+    public function delete_all(Request $request)
+    {
+        $product_id_array = $request->input('id');
+        $product = Products::whereIn('id',$product_id_array);
+        if($product->delete()){
+            echo "Data deleted";
+        }
+    }
 }

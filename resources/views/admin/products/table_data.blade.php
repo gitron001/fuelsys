@@ -1,5 +1,6 @@
 @foreach($products as $product)
 <tr>
+    <td><input type="checkbox" name="chkbox" class="checkitem" value="{{ $product->id }}"></td>
     <td>{{ $product->name }}</td>
     <td>{{ $product->price }}</td>
     <td>{{ $product->product_group->name }}</td>

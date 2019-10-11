@@ -121,4 +121,13 @@ class DispaneserController extends Controller
 
         return redirect('/admin/dispanesers');
     }
+
+    public function delete_all(Request $request)
+    {
+        $dispaneser_id_array = $request->input('id');
+        $dispaneser = Dispaneser::whereIn('id',$dispaneser_id_array);
+        if($dispaneser->delete()){
+            echo "Data deleted";
+        }
+    }
 }

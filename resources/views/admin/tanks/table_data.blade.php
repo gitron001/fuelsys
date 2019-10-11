@@ -1,5 +1,6 @@
 @foreach($tanks as $tank)
 <tr>
+    <td><input type="checkbox" name="chkbox" class="checkitem" value="{{ $tank->id }}"></td>
     <td>{{ $tank->name }}</td>
     <td>{{ $tank->product->name }}</td>
     <td>{{ $tank->capacity }}</td>
@@ -9,7 +10,7 @@
     <td class="text-center" width="8%">
         <a href="{{ url('admin/tanks/'.$tank->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
         <a href="{{ route('tank.delete', $tank->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
-    </td>                  
+    </td>
 </tr>
 @endforeach
 

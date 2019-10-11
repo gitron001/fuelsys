@@ -32,7 +32,7 @@ class PFCController extends Controller
                 $query->orWhere('port','like','%'.$search.'%');
             });
         }
-		
+
         if($request->ajax() == false){
             $pfc    = $pfc->orderBy('name','ASC')
                         ->paginate(15);
@@ -140,5 +140,14 @@ class PFCController extends Controller
         session()->flash('info','Success');
 
         return redirect('/admin/pfc');
+    }
+
+    public function delete_all(Request $request)
+    {
+        $pfc_id_array = $request->input('id');
+        $pfc = PFC::whereIn('id',$pfc_id_array);
+        if($pfc->delete()){
+            echo "Data deleted";
+        }
     }
 }

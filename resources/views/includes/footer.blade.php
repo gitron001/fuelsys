@@ -320,6 +320,73 @@
 
   //  *** END REPORTS SCRIPT *** //
 
+  // ***  SELECT ALL CHECKBOX *** //
+
+    $('#checkall').change(function(){
+      $('.checkitem').prop("checked",$(this).prop("checked"))
+    })
+
+    $(document).on('click','#delsel', function(){
+        var link = $(this).attr('href');
+
+        var url = window.location.pathname +"-delete-all";
+        var id = [];
+        $('.checkitem:checked').each(function(){
+            id.push($(this).val());
+        });
+        if(id.length > 0){
+            swal({
+                title: "A jeni të sigurt?",
+                text: "Nëse të dhënat fshihen nuk do të mund te kthehen prap!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                $.ajax({
+                url: url,
+                type: "GET",
+                data: {id:id},
+                beforeSend:function(){
+                    window.swal({
+                    title: "Ju lutem prisni!",
+                    icon: "info",
+                    text: "Të dhënat janë duke u fshirë",
+                    buttons:false,
+                    });
+                },
+                success: function(data){
+                    window.swal({
+                    title: "Sukses",
+                    icon: "success",
+                    text: "Te dhënat u fshin me sukses!",
+                    buttons:false,
+                    });
+                    window.location.reload();
+                },
+                error: function () {
+                    swal("Gabim", "Ndodhi një gabim gjatë fshirjës së të dhënave!", "error")
+                }
+            });
+            } else {
+                swal("Kërkesa për fshirjen e të dhënave është anuluar.");
+            }
+            });
+
+            return false;
+        }else{
+            window.swal({
+                title: "Gabim",
+                icon: "error",
+                text: "Ju lutem zgjidhni të pakten një checkbox për ta fshirë!",
+                showConfirmButton:false,
+            });
+        }
+    });
+
+  // ***  END SELECT ALL CHECKBOX *** //
+
 </script>
 
 @endsection

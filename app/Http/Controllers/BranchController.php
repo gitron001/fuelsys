@@ -127,4 +127,13 @@ class BranchController extends Controller
 
         return redirect('/admin/branches');
     }
+
+    public function delete_all(Request $request)
+    {
+        $branch_id_array = $request->input('id');
+        $branch = Branch::whereIn('id',$branch_id_array);
+        if($branch->delete()){
+            echo "Data deleted";
+        }
+    }
 }
