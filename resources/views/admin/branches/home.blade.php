@@ -24,7 +24,7 @@
               <table id="example2 orders" class="table table-bordered table-hover text-center">
                 <thead>
                 <tr>
-                    <th style="text-align:center;"><input type="checkbox" id="checkall"></th>
+                    <th style="text-align:center;"><input type="checkbox" id="checkall" class="checkbox-select-all"></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="address">Address <span id="address_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="city">City <span id="city_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>

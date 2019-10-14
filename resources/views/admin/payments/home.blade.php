@@ -56,7 +56,7 @@
         <div class="col-sm-12">
           <table id="example2" class="table table-bordered table-hover text-center">
             <thead>
-                <th style="text-align:center;"><input type="checkbox" id="checkall"></th>
+                <th style="text-align:center;"><input type="checkbox" id="checkall" class="checkbox-select-all"></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="date">Date <span id="date_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="amount">Amount <span id="amount_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="user_id">User <span id="user_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>

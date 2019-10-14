@@ -26,10 +26,10 @@
           <label for="User:">User:</label>
           <select class="users-dropdown form-control" name="user[]" multiple="multiple" id="user">
             @foreach($users as $id => $name)
-                <option value="{{ $id }}" 
+                <option value="{{ $id }}"
                 @if(!empty( request()->get("user") ))
-                  @foreach( request()->get("user") as $us) 
-                    {{ $us == $id ? 'selected' : '' }} 
+                  @foreach( request()->get("user") as $us)
+                    {{ $us == $id ? 'selected' : '' }}
                   @endforeach
                 @endif > {{ $name }} </option>
               @endforeach
@@ -43,7 +43,7 @@
               @foreach($companies as $id => $name)
                 <option value="{{ $id }}" {{ ( request()->get("company") == $id ? "selected":"") }}>{{ $name }}</option>
               @endforeach
-          </select> 
+          </select>
         </div>
 
         <div class="form-group">

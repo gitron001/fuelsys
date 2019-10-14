@@ -43,7 +43,7 @@
 
 /* END Table with scrollbar */
 
-/* LIVE Feed PULSE */ 
+/* LIVE Feed PULSE */
 .pulse {
     display: block;
     width: 15px;
@@ -84,7 +84,7 @@
 }
 }
 
-/* END LIVE Feed PULSE */ 
+/* END LIVE Feed PULSE */
 
 /* DROPDOWN Style - Payment Form */
 
@@ -96,3 +96,46 @@
 }
 
 /* END DROPDOWN Style - Payment Form */
+
+/* SELECT ALL SECTION CHECKBOX */
+.checkbox-select-all
+{
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     appearance: none;
+     display: inline-block;
+     position: relative;
+     border-style: solid;
+     border-color: rgba(0, 0, 0, 0.54);
+     color: #fff;
+     height: 15px;
+     width: 15px;
+     cursor: pointer;
+     outline: none;
+}
+.checkbox-select-all
+{
+     border-radius: 3px;
+}
+.checkbox-select-all:checked::before
+{
+     position: absolute;
+     font: 11px/1 'Open Sans', sans-serif;
+     left: 2px;
+     top: -1px;
+     content: '\02143';
+     transform: rotate(40deg);
+}
+.checkbox-select-all:hover
+{
+     background-color: #f2f2f2;
+     border-radius: 3px;
+}
+.checkbox-select-all:checked
+{
+     background-color: #3c8dbc;
+     border-color: #3c8dbc;
+     border-radius: 3px;
+}
+
+/* END SELECT ALL SECTION CHECKBOX */

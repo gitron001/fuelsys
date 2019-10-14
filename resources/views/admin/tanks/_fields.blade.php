@@ -1,11 +1,14 @@
 @extends('adminlte::page')
 
 @section('content')
+
+@include('includes/alert_info')
+
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">{{ !isset($tank) ? 'Create new tank' : 'Edit tank'}}</h3>
 	</div>
-	
+
 	<div class="box-body">
 		<div class="row">
 			<div class="col-md-6">
@@ -37,7 +40,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="box-footer">
 		<button type="submit" class="btn btn-primary">
 			<i class="fas fa-save"></i> Save

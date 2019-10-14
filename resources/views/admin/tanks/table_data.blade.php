@@ -1,6 +1,6 @@
 @foreach($tanks as $tank)
 <tr>
-    <td><input type="checkbox" name="chkbox" class="checkitem" value="{{ $tank->id }}"></td>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $tank->id }}"></td>
     <td>{{ $tank->name }}</td>
     <td>{{ $tank->product->name }}</td>
     <td>{{ $tank->capacity }}</td>

@@ -62,10 +62,10 @@ class PFCController extends Controller
      */
     public function store(Request $request)
     {
-        PFC::create($request->all());
+        $pfc = PFC::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/pfc');
+        return redirect('admin/pfc/' . $pfc->id . '/edit');
     }
 
     /**
@@ -104,7 +104,7 @@ class PFCController extends Controller
         $pfc->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/pfc');
+        return redirect()->back();
     }
 
     /**

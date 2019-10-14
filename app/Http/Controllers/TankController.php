@@ -61,11 +61,11 @@ class TankController extends Controller
      */
     public function store(Request $request)
     {
-        Tank::create($request->all());
+        $tank = Tank::create($request->all());
 
         session()->flash('info','Success');
 
-        return redirect('/admin/tanks');
+        return redirect('admin/tanks/' . $tank->id . '/edit');
     }
 
     /**
@@ -108,7 +108,7 @@ class TankController extends Controller
 
         session()->flash('info','Success');
 
-        return redirect('/admin/tanks');
+        return redirect()->back();
     }
 
     /**

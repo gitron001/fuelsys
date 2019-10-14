@@ -70,8 +70,8 @@ class BranchController extends Controller
         $branch->save();
 
         session()->flash('info','Success');
+        return redirect('admin/branches/' . $branch->id . '/edit');
 
-        return redirect('/admin/branches');
     }
 
     /**
@@ -110,7 +110,7 @@ class BranchController extends Controller
         $branch->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/branches');
+        return redirect()->back();
     }
 
     /**

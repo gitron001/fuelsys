@@ -191,11 +191,11 @@ class UsersController extends Controller
             ]);
         } catch (\Exception $e) {
             session()->flash('info','Success: [Exported: 0 ('.$e->getMessage().')]');
-            return redirect('/admin/users');
+            return redirect('admin/users/' . $id . '/edit');
         }
 
         session()->flash('info','Success [Exported: 1]');
-        return redirect('/admin/users');
+        return redirect('admin/users/' . $id . '/edit');
         }
     }
 
@@ -324,7 +324,7 @@ class UsersController extends Controller
         */
         session()->flash('info','Success');
 
-        return redirect('/admin/users');
+        return redirect()->back();
     }
 
     /**

@@ -169,7 +169,7 @@ class PaymentsController extends Controller
 		*/
         session()->flash('info','Success');
 
-        return redirect('/admin/payments');
+        return redirect('admin/payments/' . $payments->id . '/edit');
     }
 
     /**
@@ -268,9 +268,7 @@ class PaymentsController extends Controller
 
         session()->flash('info','Success');
 
-        return redirect('/admin/payments');
-
-
+        return redirect()->back();
 
     }
 

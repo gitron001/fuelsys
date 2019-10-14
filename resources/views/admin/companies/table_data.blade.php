@@ -1,6 +1,6 @@
 @foreach($companies as $company)
 <tr>
-    <td><input type="checkbox" name="chkbox" class="checkitem" value="{{ $company->id }}"></td>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $company->id }}"></td>
     <td>{{ $company->name }}</td>
     <td>{{ $company->fis_number }}</td>
     <td>{{ $company->tel_number }}</td>

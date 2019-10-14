@@ -107,7 +107,7 @@
 
                 <div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company" style="display: none">
                     {!! Form::label('company_id', 'Company:'); !!}
-					
+
                     <select name="company_id" class="form-control">
 						<option value="">Choose Company</option>
 						@foreach($companies as $company)
@@ -133,7 +133,7 @@
         </div>
 
         @if(!isset($user))
-     
+
 		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
             {!! Form::label('discounts', 'Discounts:'); !!}
 
@@ -200,7 +200,7 @@
                         {!! Form::text('discount[]',$rfid_discount->discount,['class'=>'form-control','step'=>'any']); !!}
                     </div>
                 </div>
-			@endforeach           
+			@endforeach
         @endif
 		</div>
         <!-- *** END DISCOUNT *** -->
@@ -276,7 +276,7 @@
 -->
         </div>
         @endif
-		
+
     <div class="box-footer">
 		<button type="submit" class="btn btn-primary">
 			<i class="fas fa-save"></i> Save
@@ -304,7 +304,7 @@
             $("#plates").show();
             $("#vehicle").show();
         }
-        
+
     });
 
     var dateNow = new Date();

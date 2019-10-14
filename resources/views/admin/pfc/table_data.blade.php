@@ -1,6 +1,6 @@
 @foreach($pfc as $p)
 <tr>
-    <td><input type="checkbox" name="chkbox" class="checkitem" value="{{ $p->id }}"></td>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $p->id }}"></td>
     <td>{{ $p->name }}</td>
     <td>{{ $p->ip }}</td>
     <td>{{ $p->port }}</td>

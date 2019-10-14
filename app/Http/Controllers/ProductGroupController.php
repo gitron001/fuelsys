@@ -60,10 +60,10 @@ class ProductGroupController extends Controller
      */
     public function store(Request $request)
     {
-        ProductGroup::create($request->all());
+        $products_group = ProductGroup::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/products_group');
+        return redirect('admin/products_group/' . $products_group->id . '/edit');
     }
 
     /**
@@ -103,7 +103,7 @@ class ProductGroupController extends Controller
 
         session()->flash('info','Success');
 
-        return redirect('/admin/products_group');
+        return redirect()->back();
     }
 
     /**

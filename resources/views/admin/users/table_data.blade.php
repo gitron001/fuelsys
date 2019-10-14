@@ -1,6 +1,6 @@
 @foreach($users as $user)
 <tr>
-    <td><input type="checkbox" name="chkbox" class="checkitem" value="{{ $user->id }}"></td>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $user->id }}"></td>
     <td>{{ $user->name }}</td>
     <td>{{ $user->email }}</td>
     <td>{{ $user->rfid }}</td>

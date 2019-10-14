@@ -24,7 +24,7 @@
               <table id="example2" class="table table-bordered table-hover text-center">
                 <thead>
                 <tr>
-                    <th style="text-align:center;"><input type="checkbox" id="checkall"></th>
+                    <th style="text-align:center;"><input type="checkbox" id="checkall" class="checkbox-select-all"></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="state_code">State Code <span id="state_code_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span id="created_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>

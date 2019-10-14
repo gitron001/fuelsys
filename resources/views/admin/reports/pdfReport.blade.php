@@ -126,13 +126,14 @@
 
 	<?
 	if($inc_transactions == 'No' || !isset($inc_transactions)) {
-		$totalTrans = 0;
+		$totalTrans = $balance;
 		$total_transaction = 0;
-		
-		foreach($total_transactions as $date => $transaction){ 
-			$transaction_sum = 0; 
-			$payment_sum = 0;
-		
+
+		foreach($total_transactions as $date => $transaction){
+			$transaction_sum = 0;
+            $payment_sum = 0;
+            $tt = 0;
+
 			foreach ($transaction as $tr) {
 				if($tr->money == 0){
 					$fueling = 0;
@@ -142,30 +143,30 @@
 					$payment = 0;
 				}
 				$transaction_sum += $tr->money;
-				$payment_sum += $tr->amount;
+                $payment_sum += $tr->amount;
+                $details = $tr->description;
 				$totalTrans = str_replace(',', '', $totalTrans);
 				$fueling = str_replace(',', '', $fueling);
 				$payment = str_replace(',', '', $payment);
-				$totalTrans = $totalTrans + $fueling - $payment; 
-			
-			if($tr->type == 'payment') { ?>
-		<tr>
-			<th align="center">{{ $date }}</th>	
-			<td align="center">{{ !empty($tr->description) ? 'Pagese ('.$tr->description.')' : 'Pagese' }}</td>
-			<td align="center">{{ $tr->username }}</td>
-			<td align="center">{{ number_format($tr->money, 2) }} €</td>
-			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
-			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
-		</tr>
-		<? } } ?>
-		<tr @if($tr->type == 'payment') echo style="display:none;" @endif>
-			<th align="center">{{ $date }}</th>	
-			<td align="center">{{ $tr->type == 'payment' ? 'Pagese - '.$tr->description.'' : 'Transaksion' }}</td>
-			<td align="center">{{ $tr->username }}</td>
-			<td align="center">{{ number_format($transaction_sum, 2) }} €</td>
-			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
-			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
-		</tr>
+                $totalTrans = $totalTrans + $fueling - $payment;
+
+            } ?>
+            <tr @if($transaction_sum == 0) echo style="display:none;" @endif>
+                <th align="center">{{ $date }}</th>
+                <td align="center"> Transaksion </td>
+                <td align="center"></td>
+                <td align="center">{{ number_format($transaction_sum, 2) }} €</td>
+                <td align="center"> 0.00  € </td>
+                <td align="right" class="gray"> {{ number_format($totalTrans + $payment_sum, 2) }} €</td>
+            </tr>
+            <tr @if($payment_sum == 0) echo style="display:none;" @endif>
+                <th align="center">{{ $date }}</th>
+            <td align="center"> Pagese </td>
+                <td align="center"></td>
+                <td align="center"> 0.00  €</td>
+                <td align="center"> {{ number_format($payment_sum, 2) }} € </td>
+                <td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
+            </tr>
 	<? } } ?>
 	<!-- END Total transactions row -->
 
@@ -186,7 +187,7 @@
 		$fueling = str_replace(',', '', $fueling);
 		$payment = str_replace(',', '', $payment);
 		$total = $total + $fueling - $payment;
-		
+
 		?>
 		<tr @if(!isset($inc_transactions) || $inc_transactions == 'No' ) echo style="display:none;" @endif>
 			<th align="center" scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d h:i:s', $py->date) : $py->created_at }}</th>

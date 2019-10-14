@@ -61,10 +61,10 @@ class DispaneserController extends Controller
      */
     public function store(Request $request)
     {
-        Dispaneser::create($request->all());
+        $dispaneser = Dispaneser::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/dispanesers');
+        return redirect('admin/dispanesers/' . $dispaneser->id . '/edit');
     }
 
     /**
@@ -104,7 +104,7 @@ class DispaneserController extends Controller
         $dispaneser->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/dispanesers');
+        return redirect()->back();
     }
 
     /**
