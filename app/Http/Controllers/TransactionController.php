@@ -53,7 +53,7 @@ class TransactionController extends Controller
         $products    = Products::pluck('name','id')->all();
         $dispanesers = Dispaneser::pluck('name','id')->all();
         $pfc         = PFC::pluck('name','id')->all();
-        
+
         return view('/admin/transactions/create',compact('users','dispanesers','products','pfc'));
     }
 
@@ -125,7 +125,7 @@ class TransactionController extends Controller
 
         return redirect('/admin/transactions');
     }
-    
+
     public function read() {
         TransactionService::read();
     }
@@ -153,9 +153,9 @@ class TransactionController extends Controller
             );
         }
 
-        
+
         $file_name  = 'Transactions - '.date('Y-m-d h-i', strtotime("now"));
-           
+
         $myFile = Excel::create($file_name, function($excel) use( $transactions,$totalAmount,$startDate,$dataArray )
         {
             $excel->sheet('Transactions', function($sheet) use( $transactions,$totalAmount,$startDate )
@@ -185,7 +185,7 @@ class TransactionController extends Controller
                 $sheet->cell('F2', function($cell) use( $totalAmount ){
                         $cell->setValue($totalAmount);
                 });
-                
+
                 foreach ($transactions as $row)
                 {
                     if($row->money == 0){
@@ -193,13 +193,13 @@ class TransactionController extends Controller
                         $payment = $row->amount;
                     }else{
                         $fueling = $row->money;
-                        $payment = 0;                  
+                        $payment = 0;
                     }
                     $total = str_replace(',', '', $total);
                     $fueling = str_replace(',', '', $fueling);
                     $payment = str_replace(',', '', $payment);
                     $total = $total + $fueling - $payment;
-                    
+
                     $sheet->appendRow(array(
                         $row->created_at,
                         $row->description == NULL  ? $row->type : $row->description,
@@ -233,13 +233,13 @@ class TransactionController extends Controller
             $m->attach($myFile->store("xls",false,true)['full']);
         });*/
 
-        $myFile = $myFile->string('xlsx'); 
+        $myFile = $myFile->string('xlsx');
         $response =  array(
-           'name' => $file_name, 
+           'name' => $file_name,
            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
         );
 
-        return response()->json($response);       
+        return response()->json($response);
     }
 
     public static function exportPDF(Request $request){
@@ -272,7 +272,7 @@ class TransactionController extends Controller
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
-        
+
 
         /*Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
             $m->to('orgesthaqi96@gmail.com')->subject('Raporti Mujor - Nesim Bakija');
@@ -281,7 +281,7 @@ class TransactionController extends Controller
 
         $myFile = $pdf->download($file_name.'.pdf');
         $response =  array(
-           'name' => $file_name, 
+           'name' => $file_name,
            'file' => "data:application/pdf;base64,".base64_encode($myFile)
         );
 
@@ -299,13 +299,13 @@ class TransactionController extends Controller
         $company        = $request->input('company');
         $dailyReport    = $request->input('dailyReport');
         $date           = date('Y-m-d').' 00:00:00';
-		
+
         $last_payment    = $request->input('last_payment');
-		if($last_payment == 'Yes'){            
-            //$payments =	self::last_payment_date($request); //Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();	
+		if($last_payment == 'Yes'){
+            //$payments =	self::last_payment_date($request); //Payments::where('user_id',$user )->orWhere('company_id',$company)->orderBy('date', 'desc')->first();
 			$from_date = self::last_payment_date($request);
         }
-		
+
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
@@ -361,10 +361,10 @@ class TransactionController extends Controller
         if ($request->input('dailyReport')) {
             $payments->where('payments.date', '>=', strtotime($from_date));
         }
-        
+
         $payments = $payments->get();
         return $payments;
-        
+
     }
 
     public static function generate_balance($request){
@@ -374,7 +374,7 @@ class TransactionController extends Controller
         $company            = $request->input('company');
         $last_payment    = $request->input('last_payment');
         $starting_balance   = 0;
-		if($last_payment == 'Yes'){            
+		if($last_payment == 'Yes'){
             $from_date = self::last_payment_date($request);
         }
         if($request->input('dailyReport')){
@@ -383,11 +383,11 @@ class TransactionController extends Controller
 
         $tr = Transactions::where('transactions.created_at','<',$from_date)
             ->join('users', 'transactions.user_id', '=', 'users.id');
-		
+
 		if ($request->filled('company')){
 			$tr->join('companies', 'companies.id', '=', 'users.company_id');
 		}
-		
+
         if ($request->filled('user') & !$request->filled('company')) {
             $tr->whereIn('user_id',$user);
             $users = Users::whereIn('id',$user)->get();
@@ -396,7 +396,7 @@ class TransactionController extends Controller
                 $starting_balance += $user->starting_balance;
             }
         }
-		
+
         if ($request->filled('company') & !$request->filled('user')) {
 
             $tr->where('users.company_id','=',$company);
@@ -420,7 +420,7 @@ class TransactionController extends Controller
         $transaction_total = $tr->sum('money');
 
         $paymentsOLD = Payments::where('payments.date','<',$from_date);
-		
+
         if ($request->input('company') && !$request->filled('user')) {
             $paymentsOLD->where('payments.company_id','=',$company);
         }
@@ -440,7 +440,7 @@ class TransactionController extends Controller
         $paymentsOLD = $paymentsOLD->sum('amount');
 
         $balance = $transaction_total + $starting_balance - $paymentsOLD;
-        
+
         return $balance;
     }
 
@@ -450,7 +450,7 @@ class TransactionController extends Controller
         $user       = $request->input('user');
         $company    = $request->input('company');
         $last_payment    = $request->input('last_payment');
-		if($last_payment == 'Yes'){            
+		if($last_payment == 'Yes'){
             $from_date = self::last_payment_date($request);
         }
         $usersFilter = Users::where('type','1')->pluck('name','id');
@@ -486,7 +486,7 @@ class TransactionController extends Controller
             $staffData[$value->user_id]['totalMoney'] = $value->totalMoney;
             $staffData[$value->user_id]['totalLit'] = $value->totalLit;
         }
-        
+
         $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'), DB::raw('products.name as product'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
@@ -514,15 +514,15 @@ class TransactionController extends Controller
         $transactions = $transactions->get();
 
         $product_name = array();
-        foreach ($staffData as $key => $value) {   
+        foreach ($staffData as $key => $value) {
             foreach($transactions as $tr){
                 if($key == $tr->user_id){
                     $staffData[$key][$tr->product] = [$tr->total];
-                    $product_name[$tr->product] = $tr->product; 
+                    $product_name[$tr->product] = $tr->product;
                 }
             }
         }
-        
+
 
         $products = Transactions::select(DB::RAW('products.id as product_id'), 'products.name as product_name',
             DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'))
@@ -531,7 +531,7 @@ class TransactionController extends Controller
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->where('users.type','1')
             ->groupBy('products.id');
-        
+
         if ($request->input('user') && empty($request->input('company'))) {
             $products = $products->whereIn('user_id',$user);
         }
@@ -609,8 +609,8 @@ class TransactionController extends Controller
     }
 
     public function searchWithPagination(Request $request) {
-        $users          = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
-        $companies      = Company::pluck('name','id')->all();
+        $users          = Users::where('status',1)->whereIn('type',[1,2,3,4,5])->orderBy('name','asc')->pluck('name','id')->all();
+        $companies      = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_date       = strtotime($request->input('fromDate'));
         $to_date         = strtotime($request->input('toDate'));
@@ -662,14 +662,14 @@ class TransactionController extends Controller
         $date               = $request->fromDate;
         $inc_transactions   = $request->inc_transactions;
         $company_checked    = $request->input('company');
-        
+
         if(isset($request->company)){
             $company_details = Company::where('id',$request->company)->first();
         }
 
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','company_checked'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
-        
+
 
         Mail::send('emails.report',["data"=>"Raport Transaksionesh - Nesim Bakija"],function($m) use($pdf){
             // STATIC EMAIL - TEST
@@ -679,20 +679,20 @@ class TransactionController extends Controller
     }
 
 
-	public static function last_payment_date($request){		
+	public static function last_payment_date($request){
 		if($request->input('user')){
 			$query = Payments::where('user_id',$request->input('user') );
 		}else{
 			$query = Payments::where('company_id',$request->input('company') );
-		}		
-		$payments = $query->orderBy('date', 'desc')->first();	
-		return $payments->date+1;		
+		}
+		$payments = $query->orderBy('date', 'desc')->first();
+		return $payments->date+1;
 	}
 
    public static function printFunction(Request $request)
     {
 		$recepit = new PrintFuelRecept($request->input('id'));
         dispatch($recepit);
-		return json_encode(array('response'=>true)); 
+		return json_encode(array('response'=>true));
     }
-} 
+}

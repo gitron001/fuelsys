@@ -21,15 +21,15 @@
           <label for="End Date:">End Date:</label>
           <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{ request()->get("toDate") }}">
         </div>
-        
+
         <div class="form-group">
           <label for="User:">User:</label>
           <select class="users-dropdown form-control" name="user[]" multiple="multiple" id="user">
             @foreach($users as $id => $name)
-                <option value="{{ $id }}" 
+                <option value="{{ $id }}"
                 @if(!empty( request()->get("user") ))
-                  @foreach( request()->get("user") as $us) 
-                    {{ $us == $id ? 'selected' : '' }} 
+                  @foreach( request()->get("user") as $us)
+                    {{ $us == $id ? 'selected' : '' }}
                   @endforeach
                 @endif > {{ $name }} </option>
               @endforeach
@@ -46,12 +46,12 @@
 
         <div class="form-group">
           <label for="User:">Company:</label>
-          <select class="form-control" id="company" name="company">
+          <select class="selectpicker form-control" id="company" name="company" data-live-search="true" data-style="btn-dropdownSelectNew">
             <option value="">Choose a Company</option>
               @foreach($companies as $id => $name)
                 <option value="{{ $id }}" {{ ( request()->get("company") == $id ? "selected":"") }}>{{ $name }}</option>
               @endforeach
-          </select> 
+          </select>
         </div>
 
         <div class="form-group">

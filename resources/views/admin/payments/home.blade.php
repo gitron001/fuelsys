@@ -37,7 +37,7 @@
 
         <div class="form-group">
           <label for="User:">Company:</label>
-          <select class="form-control" id="company" name="company">
+          <select class="selectpicker form-control" id="company" name="company" data-live-search="true" data-style="btn-dropdownSelectNew">
             <option value="">Choose a Company</option>
               @foreach($companies as $id => $name)
                 <option value="{{ $id }}" {{ (request()->get("company") == $id ? "selected":"") }}>{{ $name }}</option>

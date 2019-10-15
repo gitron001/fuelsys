@@ -1,9 +1,3 @@
-@extends('adminlte::page')
-
-@section('content')
-
-@include('includes/alert_info')
-
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">{{!isset($payment) ? 'Create new payment' : 'Edit payment'}}</h3>
@@ -40,12 +34,9 @@
 				</div>
 
 				<div class="form-group">
-					<label for="type">Type:</label>
-					<select class="form-control" id="type" name="type">
-						<option value="">Choose a type</option>
-						<option value="1">Pagese</option>
-						<option value="2">Hyrje</option>
-					</select>
+                    {!! Form::label('type', 'Type:'); !!}
+					{!! Form::select('type',[''=>'Choose type','1'=>'Pagese','2'=>'Hyrje'],null,['class'=>'form-control']); !!}
+					{!! $errors->first('type','<span class="help-block">:message</span>') !!}
         		</div>
 
 
@@ -81,13 +72,9 @@
 
 				@if(count($branches) > 0)
 				<div class="form-group">
-					<label for="Branch:">Branch:</label>
-					<select class="form-control" id="branch" name="branch">
-						<option value="">Choose a Branch</option>
-						@foreach($branches as $id => $name)
-							<option value="{{ $id }}" {{ ( request()->get("branch") == $id ? "selected":"") }}>{{ $name }}</option>
-						@endforeach
-					</select>
+                    {!! Form::label('branch_id', 'Branch:'); !!}
+					{!! Form::select('branch_id',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
+					{!! $errors->first('branch_id','<span class="help-block">:message</span>') !!}
 				</div>
 				@endif
 
@@ -111,52 +98,3 @@
 	</div>
 
 </div>
-@endsection
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@endsection
-
-@section('js')
-
-<script>
-
-	$(function() {
-		$(".datepicker" ).datepicker();
-	});
-
-	$('#datetimepickerF').datetimepicker();
-
-	$(document).ready(function() {
-
-		var date = new Date();
-		$('#datetimepicker').datetimepicker({
-            defaultDate:date
-        });
-
-		$(document).on('change', ".check_class", function () {
-			$(".check_class").prop("checked", false);
-			$(this).prop("checked", true);
-		});
-	});
-
-	$(document).ready(function() {
-    	$('input[type=checkbox]').on('click', function() {
-		    if($(this).is(':checked'))
-		        $checkboxValue = $(this).val();
-
-		    	if($checkboxValue == 'user'){
-					$("#companyDropdown").val('0').trigger('change');
-		    		$("#company").hide();
-		    		$("#user").show();
-		    	}else{
-					$("#userDropdown").val('0').trigger('change');
-		    		$("#company").show();
-		    		$("#user").hide();
-		    	}
-		});
-	});
-
-</script>
-
-@endsection

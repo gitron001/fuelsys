@@ -33,8 +33,8 @@ class PaymentsController extends Controller
      */
     public function index(Request $request)
     {
-        $users          = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
-        $companies      = Company::pluck('name','id')->all();
+        $users          = Users::where('status',1)->whereIn('type',[1,2,3,4,5])->orderBy('name','asc')->pluck('name','id')->all();
+        $companies      = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_date      = strtotime($request->input('fromDate'));
         $to_date        = strtotime($request->input('toDate'));
@@ -125,8 +125,8 @@ class PaymentsController extends Controller
         $payments->description  = $request->input('description');
         $payments->user_id      = $request->input('user_id');
         $payments->company_id   = $request->input('company_id');
-		if($request->input('branch')){
-			$payments->branch_id    = $request->input('branch');
+		if($request->input('branch_id')){
+			$payments->branch_id    = $request->input('branch_id');
 		}
         $payments->type         = $request->input('type');
         $payments->created_at   = now()->timestamp;
@@ -192,7 +192,7 @@ class PaymentsController extends Controller
     public function edit($id)
     {
         $payment    = Payments::findOrFail($id);
-        $companies  = Company::pluck('name','id')->all();
+        $companies  = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
         $branches   = Branch::orderBy('name','ASC')->pluck('name','id')->all();
         $users      = Users::where('company_id', 0)->whereNotIn('type', array(6,7,8))->pluck('name','id')->all();
         return view('/admin/payments/edit',compact('payment','companies','users', 'branches'));
@@ -206,7 +206,6 @@ class PaymentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-
         $payments = Payments::findOrFail($id);
 
         if($request->input('checkbox') == 'user'){
@@ -262,6 +261,8 @@ class PaymentsController extends Controller
         $payments->date         = strtotime($request->input('date'));
         $payments->description  = $request->input('description');
         $payments->amount       = $amount;
+        $payments->type         = $request->input('type');
+        $payments->branch_id    = $request->input('branch_id');
         $payments->edited_by   = Auth::user()->id;
         $payments->updated_at   = now()->timestamp;
         $payments->update();

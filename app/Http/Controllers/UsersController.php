@@ -29,7 +29,7 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $companies  = Company::pluck('name','id')->all();
+        $companies  = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
         $types      = Users::pluck('name','id')->all();
         $branches   = Branch::orderBy('name','ASC')->pluck('name','id');
         $sort_by    = $request->get('sortby');
@@ -82,7 +82,7 @@ class UsersController extends Controller
     {
         $products   = Products::select('name','pfc_pr_id')->where('status', 1)->get();
         $branches   = Branch::select('name','id')->where('status', 1)->orderBy('name')->get();
-        $companies  = Company::select('name','id')->where('status', 1)->orderBy('name')->get();
+        $companies  = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         return view('/admin/users/create',compact('products','branches','companies'));
     }
@@ -165,7 +165,7 @@ class UsersController extends Controller
 
             $response = $client->request('POST', $url, [
                 'form_params' => [
-                    'branch_user_id'    => $user['id'],
+                    'branch_user_id'    => $id,
                     'branch_id'         => Session::get('branch_id'),
                     'rfid'              => $request->input('rfid'),
                     'name'              => $request->input('name'),
@@ -221,7 +221,7 @@ class UsersController extends Controller
         $user           = Users::findOrFail($id);
         $products   = Products::select('name','pfc_pr_id')->where('status', 1)->get();
         $branches   = Branch::select('name','id')->where('status', 1)->orderBy('name')->get();
-        $companies  = Company::select('name','id')->where('status', 1)->orderBy('name')->get();
+        $companies  = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
         $rfid_limits    = RFID_Limits::where('rfid_id',$id)->get();
         $rfid_discounts = RFID_Discounts::where('rfid_id',$id)->get();
 

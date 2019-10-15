@@ -1,9 +1,3 @@
-@extends('adminlte::page')
-
-@section('content')
-
-@include('includes/alert_info')
-
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">{{ !isset($tank) ? 'Create new tank' : 'Edit tank'}}</h3>
@@ -49,8 +43,3 @@
 	</div>
 
 </div>
-@endsection
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@endsection

@@ -97,14 +97,14 @@ class ReportsController extends Controller
 
     public function searchWithPagination(Request $request) {
         $users              = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
-        $companies          = Company::pluck('name','id')->all();
+        $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_date          = strtotime($request->input('fromDate'));
         $to_date            = strtotime($request->input('toDate'));
         $user               = $request->input('user');
         $company            = $request->input('company');
         $sort_by_company 	= $request->get('sortby');
-		
+
 		if($sort_by_company == 'name'){
             $sort_by = "transactions.created_at";
             $sort_type = "DESC";
@@ -112,19 +112,19 @@ class ReportsController extends Controller
             $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "transactions".".".$request->get('sortby'));
             $sort_type       = $request->get('sorttype');
         }
-		
+
         if(!$request->input('sorttype')){
-            $sort_type = "DESC";			
+            $sort_type = "DESC";
 		}
         if(!$request->input('sortby')){
             $sort_by = "transactions.created_at";
 		}
         $last_payment       = $request->input('last_payment');
 
-        if($last_payment == 'Yes'){           
+        if($last_payment == 'Yes'){
             $from_date = self::last_payment_date($request);
         }
-		
+
         $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
                     ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
                     ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
@@ -141,7 +141,7 @@ class ReportsController extends Controller
         if($request->input('user') && $request->input('company')){
             $query = $query->whereIn('users.id',$user)->orWhere('companies.id',$company);
         }
-		
+
         if ($request->input('fromDate') && $request->input('toDate')) {
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
@@ -156,16 +156,16 @@ class ReportsController extends Controller
             return view('/admin/reports/table_data',compact('transactions','users','companies'))->render();
         }
 
-        
+
    }
 
-	public static function last_payment_date($request){		
+	public static function last_payment_date($request){
 		if($request->input('user')){
 			$query = Payments::where('user_id',$request->input('user') );
 		}else{
 			$query = Payments::where('company_id',$request->input('company') );
-		}		
-		$payments = $query->orderBy('date', 'desc')->first();	
-		return $payments->date+1;		
+		}
+		$payments = $query->orderBy('date', 'desc')->first();
+		return $payments->date+1;
 	}
 }

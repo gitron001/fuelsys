@@ -69,18 +69,17 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-1.10.2.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-ui.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/font-awesome/js/all.js') }}"></script>
-<!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
-<!--<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/moment.js/2.13.0/moment.min.js') }}"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>-->
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') }}"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>-->
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-select/1.13.9/dist/js/bootstrap-select.min.js') }}"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>-->
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">-->
 <script src="{{ asset('vendor/adminlte/vendor/sweetalert/dist/sweetalert.min.js') }}"></script>
-<!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
+<script>
+// Hide alert message after few seconds (We use this script for the alert message that shows after we create or update fields)
+    $(".alert").delay(4500).slideUp(200, function() {
+      $(this).alert('close');
+    });
+</script>
 
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->

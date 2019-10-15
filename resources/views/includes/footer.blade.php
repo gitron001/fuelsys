@@ -59,12 +59,6 @@
     $('[data-toggle="tooltip"]').tooltip();
   });
 
-
-  // Hide alert message after few seconds
-  $(".alert").delay(4500).slideUp(200, function() {
-      $(this).alert('close');
-  });
-
   // Sorting with pagination in tables
   $(document).ready(function(){
     var url_name = window.location.pathname;
