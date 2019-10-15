@@ -29,7 +29,6 @@ class StaffController extends Controller
 			$to_date    = strtotime($request->input('toDate'));
 		}
 
-		
         $user       = $request->input('user');
 
 		$companies 	= Transactions::select('companies.name as c_name',DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'))
@@ -40,8 +39,8 @@ class StaffController extends Controller
             ->groupBy('products.pfc_pr_id');
 
         $companies = $companies->whereBetween('transactions.created_at',[$from_date, $to_date]);
-		
-		$companies 	 = $companies->get();		
+
+        $companies 	 = $companies->get();
 
         $usersFilter = Users::where('type','1')->pluck('name','id');
 
@@ -66,7 +65,7 @@ class StaffController extends Controller
             $staffData[$value->user_id]['totalMoney'] = $value->totalMoney;
             $staffData[$value->user_id]['totalLit'] = $value->totalLit;
         }
-        
+
         $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('transactions.price as product_price'), DB::raw('products.name as product'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
@@ -86,22 +85,21 @@ class StaffController extends Controller
         $transactions = $transactions->get();
 
         $product_name = array();
-        foreach ($staffData as $key => $value) {   
+        foreach ($staffData as $key => $value) {
             foreach($transactions as $tr){
                 if($key == $tr->user_id){
                     $staffData[$key][$tr->product.'_'.$tr->product_price] = [$tr->total,$tr->product_price];
-                    $product_name[$tr->product.'_'.$tr->product_price] = $tr->product; 
+                    $product_name[$tr->product.'_'.$tr->product_price] = $tr->product;
                 }
             }
         }
-        
 
-        $products = Transactions::select(DB::RAW('products.id as product_id'), 'products.name as product_name',
-            DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'),'transactions.price as product_price')
+        $products 	= Transactions::select(DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'),'transactions.price as product_price')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->leftJoin('companies', 'users.company_id', '=', 'companies.id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-            ->where('users.type','1')
-            ->groupBy('products.id')
+            ->groupBy('products.name')
+            ->groupBy('products.pfc_pr_id')
             ->groupBy('transactions.price');
 
         if ($request->input('user')) {
@@ -109,9 +107,9 @@ class StaffController extends Controller
         }
 
         $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        
+
         $products = $products->get();
-    
+
         return view('admin.staff.staff_view',compact('usersFilter','staffData','products','product_name','companies'));
     }
 }

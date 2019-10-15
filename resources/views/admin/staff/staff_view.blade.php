@@ -9,27 +9,27 @@
                 <label for="Start Date:">Start Date:</label>
                 <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{ request()->get("fromDate") }}">
             </div>
-        
+
             <div class="form-group">
                 <label for="End Date:">End Date:</label>
                 <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{ request()->get("toDate") }}">
             </div>
-        
+
             <div class="form-group">
                 <label for="User:">Staff:</label>
                 <select class="users-dropdown form-control" name="user[]" multiple="multiple">
                 <option value="">Select a user</option>
                 @foreach($usersFilter as $id => $name)
-                    <option value="{{ $id }}" 
+                    <option value="{{ $id }}"
                     @if(!empty( request()->get("user") ))
-                        @foreach( request()->get("user") as $us) 
-                        {{ $us == $id ? 'selected' : '' }} 
+                        @foreach( request()->get("user") as $us)
+                        {{ $us == $id ? 'selected' : '' }}
                         @endforeach
                     @endif > {{ $name }} </option>
                     @endforeach
                 </select>
             </div>
-        
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
                 <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i> Clear filters </a>
@@ -38,13 +38,13 @@
     </form>
     <br>
 </div>
-<!-- END box box-primary --> 
+<!-- END box box-primary -->
 
 <!-- START products table -->
 <div class="box box-primary">
     <div class="box-header">
-        <i class="fa fa-list-alt" aria-hidden="true"></i>
-        <h3 class="box-title">TOTAL</h3>
+        <i class="fa fa-calculator" aria-hidden="true"></i>
+        <h3 class="box-title">Total</h3>
     </div>
     <div class="box-body">
         <table class="table table-bordered table-hover table-responsive text-center">
@@ -59,10 +59,10 @@
             <tbody>
             @foreach($products as $product)
             <tr>
-                <td>{{ $product['product_name'] }}</td>
+                <td>{{ $product['p_name'] }}</td>
                 <td>{{ $product['product_price'] }} Euro</td>
-                <td>{{ $product['lit'] }} litra</td>
-                <td>{{ $product['money'] }} Euro</td>
+                <td>{{ $product['totalLit'] }} litra</td>
+                <td>{{ $product['totalMoney'] }} Euro</td>
             </tr>
             @endforeach
             </tbody>
@@ -75,7 +75,7 @@
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-user" aria-hidden="true"></i>
-        <h3 class="box-title">STAFF</h3>
+        <h3 class="box-title">Staff</h3>
     </div>
     <div class="box-body">
         <table class="table table-bordered table-hover table-responsive text-center">
@@ -94,7 +94,7 @@
                     <td>{{ $transaction['user_name'] }}</td>
                         @foreach($product_name as $key => $value)
                             <td>
-                            {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra / 
+                            {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
                             {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
                             </td>
                         @endforeach
@@ -110,7 +110,7 @@
 @if(count($companies) != 0)
 <div class="box box-primary">
     <div class="box-header">
-        <i class="fa fa-user" aria-hidden="true"></i>
+        <i class="fa fa-building" aria-hidden="true"></i>
         <h3 class="box-title">Companies</h3>
     </div>
     <div class="box-body">
