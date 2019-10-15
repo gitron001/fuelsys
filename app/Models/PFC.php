@@ -31,6 +31,6 @@ class PFC extends Model
     }
 	
 	public function stopped(){
-        return $this->hasOne('App\Models\RunninProcessModel', 'pfc_id')->wherePivot('type', 5);
+        return $this->hasOne('App\Models\RunninProcessModel', 'pfc_id', 'id')->where('type_id', 5);
     }
 }

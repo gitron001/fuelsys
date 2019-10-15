@@ -56,12 +56,15 @@ class TransactionService extends ServiceProvider
                 $status = 1;
                 $changed_status = self::transaction_status($channel, $status, $socket);
                 usleep(150000);
-                self::read_data($socket, $channel, $pfc_id);
+                self::read_data($socket, $channel, $pfc_id, $response[$i]);
                 if($changed_status)
                     echo 'UPDATED';
             }else if($response[$i] == 2){
                 $channel = (($i/4));
-                self::read_data($socket, $channel, $pfc_id);
+                self::read_data($socket, $channel, $pfc_id, $response[$i]);
+            }else if($response[$i] == 5){
+                $channel = (($i/4));
+                //self::read_data($socket, $channel, $pfc_id, $response[$i]);
             }
         }
         //LOCKED
@@ -73,7 +76,7 @@ class TransactionService extends ServiceProvider
      *
      *
      */
-    public static function read_data($socket, $channel, $pfc_id) {
+    public static function read_data($socket, $channel, $pfc_id, $type) {
         $controller = Config::get('app.controller_id');
         $controller_id =  pack("C*", $controller );
         $channel_id =  pack("C*", $channel );
@@ -95,7 +98,7 @@ class TransactionService extends ServiceProvider
 
 		if(!$response){ return false; } 
 
-        $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel);
+        $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel, $type);
 		
         //Clear status transaction
         $status = 2;
@@ -104,8 +107,10 @@ class TransactionService extends ServiceProvider
         //HERE
 		if(!$transaction_id){ return true; } 
 		
-        $changed_status = self::transaction_status($channel, $status, $socket);
-				
+		if($type == 1 || $type == 2){
+			$changed_status = self::transaction_status($channel, $status, $socket);
+		}
+		
         $recepit = new PrintFuelRecept($transaction_id);
         dispatch($recepit);
 		

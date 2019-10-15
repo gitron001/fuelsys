@@ -21,10 +21,17 @@
             <i class="fa fa-arrow-circle-down"></i>
         </a>
     </td>
+	
     <td class="text-center" width="8%">
-        <a href="{{ route('pfc.command', [$p->id, '5']) }}" data-toggle="tooltip" title="Restart PFC" onclick="return confirm('Are you sure?');">
-            <i class="fas fa-sync-alt"></i>
-        </a>
+		@if(is_null($p->stopped))
+			<a href="{{ route('pfc.command', [$p->id, '5']) }}" data-toggle="tooltip" title="Stop PFC" onclick="return confirm('Are you sure?');">				
+				<i class="fas fa-stop"></i>
+			</a>
+		@else	
+			<a href="{{ route('pfc.command', [$p->id, '6']) }}" data-toggle="tooltip" title="Start PFC" onclick="return confirm('Are you sure?');">
+				<i class="fas fa-play"></i>
+			</a>		
+		@endif
         <a href="{{ url('admin/pfc/'.$p->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
         <a href="{{ route('pfc.delete', $p->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
     </td>

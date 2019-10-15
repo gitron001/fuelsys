@@ -40,43 +40,7 @@
 </div>
 <!-- END box box-primary --> 
 
-<!-- START first table -->
-<div class="box box-primary">
-    <div class="box-header">
-        <i class="fa fa-user" aria-hidden="true"></i>
-        <h3 class="box-title">STAFF</h3>
-    </div>
-    <div class="box-body">
-        <table class="table table-bordered table-hover table-responsive text-center">
-            <thead>
-                <tr>
-                    <th>Perdoruesi</th>
-                    @foreach($product_name as $value)
-                        <th>{{ $value }}</th>
-                    @endforeach
-                    <th>Euro</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($staffData as $transaction)
-                <tr>
-                    <td>{{ $transaction['user_name'] }}</td>
-                        @foreach($product_name as $key => $value)
-                            <td>
-                            {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra / 
-                            {{ !empty($transaction[$key][0]) ? $transaction[$key][0] *  $transaction[$key][1] : '0'}} Euro
-                            </td>
-                        @endforeach
-                    <td>{{  $transaction['totalMoney']  }} Euro</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-<!-- END first table -->
-
-<!-- START second table -->
+<!-- START products table -->
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-list-alt" aria-hidden="true"></i>
@@ -105,8 +69,78 @@
         </table>
     </div>
 </div>
+<!-- END products table -->
+
+<!-- START staff table -->
+<div class="box box-primary">
+    <div class="box-header">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <h3 class="box-title">STAFF</h3>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered table-hover table-responsive text-center">
+            <thead>
+                <tr>
+                    <th>Perdoruesi</th>
+                    @foreach($product_name as $value)
+                        <th>{{ $value }}</th>
+                    @endforeach
+                    <th>Euro</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($staffData as $transaction)
+                <tr>
+                    <td>{{ $transaction['user_name'] }}</td>
+                        @foreach($product_name as $key => $value)
+                            <td>
+                            {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra / 
+                            {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
+                            </td>
+                        @endforeach
+                    <td>{{  $transaction['totalMoney']  }} Euro</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END staff table -->
+<!-- START companies table -->
+@if(count($companies) != 0)
+<div class="box box-primary">
+    <div class="box-header">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <h3 class="box-title">Companies</h3>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered table-hover table-responsive text-center">
+            <thead>
+                <tr>
+                    <th>Kompania</th>
+                    <th>Produkti</th>
+                    <th>Litrat</th>
+                    <th>Euro</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($companies as $c)
+                <tr>
+                    <td>{{ $c->c_name }}</td>
+                    <td>{{ $c->p_name }}</td>
+                    <td>{{ $c->totalLit }} Lit</td>
+                    <td>{{ $c->totalMoney }} Euro</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END companies table -->
+@endif
+
+
 @endsection
-<!-- END second table -->
 
 
 
