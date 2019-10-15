@@ -126,13 +126,14 @@
 
 	<?
 	if($inc_transactions == 'No' || !isset($inc_transactions)) {
-		$totalTrans = 0;
+		$totalTrans = $balance;
 		$total_transaction = 0;
-		
-		foreach($total_transactions as $date => $transaction){ 
-			$transaction_sum = 0; 
-			$payment_sum = 0;
-		
+
+		foreach($total_transactions as $date => $transaction){
+			$transaction_sum = 0;
+            $payment_sum = 0;
+            $tt = 0;
+
 			foreach ($transaction as $tr) {
 				if($tr->money == 0){
 					$fueling = 0;
@@ -142,7 +143,8 @@
 					$payment = 0;
 				}
 				$transaction_sum += $tr->money;
-				$payment_sum += $tr->amount;
+                $payment_sum += $tr->amount;
+                $details = $tr->description;
 				$totalTrans = str_replace(',', '', $totalTrans);
 				$fueling = str_replace(',', '', $fueling);
 				$payment = str_replace(',', '', $payment);
@@ -186,7 +188,7 @@
 		$fueling = str_replace(',', '', $fueling);
 		$payment = str_replace(',', '', $payment);
 		$total = $total + $fueling - $payment;
-		
+
 		?>
 		<tr @if(!isset($inc_transactions) || $inc_transactions == 'No' ) echo style="display:none;" @endif>
 			<th align="center" scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d H:i', $py->date) : $py->created_at }}</th>

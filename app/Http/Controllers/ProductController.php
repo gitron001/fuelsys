@@ -64,10 +64,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Products::create($request->all());
+        $product = Products::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/products');
+        return redirect('admin/products/' . $product->id . '/edit');
     }
 
     /**
@@ -108,7 +108,7 @@ class ProductController extends Controller
         $product->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/products');
+        return redirect()->back();
     }
 
     /**
@@ -124,5 +124,14 @@ class ProductController extends Controller
         session()->flash('info','Success');
 
         return redirect('/admin/products');
+    }
+
+    public function delete_all(Request $request)
+    {
+        $product_id_array = $request->input('id');
+        $product = Products::whereIn('id',$product_id_array);
+        if($product->delete()){
+            echo "Data deleted";
+        }
     }
 }

@@ -33,8 +33,7 @@ class PFCController extends Controller
                 $query->orWhere('port','like','%'.$search.'%');
             });
         }
-	
-		
+
         if($request->ajax() == false){
             $pfc    = $pfc->orderBy('name','ASC')
                         ->paginate(15);
@@ -65,10 +64,10 @@ class PFCController extends Controller
      */
     public function store(Request $request)
     {
-        PFC::create($request->all());
+        $pfc = PFC::create($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/pfc');
+        return redirect('admin/pfc/' . $pfc->id . '/edit');
     }
 
     /**
@@ -107,7 +106,7 @@ class PFCController extends Controller
         $pfc->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/pfc');
+        return redirect()->back();
     }
 
     /**
@@ -150,5 +149,14 @@ class PFCController extends Controller
         session()->flash('info','Success');
 
         return redirect('/admin/pfc');
+    }
+
+    public function delete_all(Request $request)
+    {
+        $pfc_id_array = $request->input('id');
+        $pfc = PFC::whereIn('id',$pfc_id_array);
+        if($pfc->delete()){
+            echo "Data deleted";
+        }
     }
 }

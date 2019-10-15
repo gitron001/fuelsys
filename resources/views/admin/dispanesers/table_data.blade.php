@@ -1,5 +1,6 @@
 @foreach($dispanesers as $dispaneser)
 <tr>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $dispaneser->id }}"></td>
     <td>{{ $dispaneser->name }}</td>
     <td>{{ $dispaneser->pfc ? $dispaneser->pfc->name : '' }}</td>
     <td>{{ $dispaneser->created_at->diffForHumans() }}</td>

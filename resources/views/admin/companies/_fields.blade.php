@@ -1,11 +1,14 @@
 @extends('adminlte::page')
 
 @section('content')
+
+@include('includes/alert_info')
+
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">{{!isset($company) ? 'Create new company' : 'Edit company'}}</h3>
 	</div>
-	
+
 	<div class="box-body">
 		<div class="row">
 			<div class="col-md-6">
@@ -26,7 +29,7 @@
 					{!! Form::number('bis_number',null,['class'=>'form-control']); !!}
 					{!! $errors->first('bis_number','<span class="help-block">:message</span>') !!}
 				</div>
-			
+
 				<div class="form-group {{ $errors->has('contact_person') ? 'has-error' :'' }}">
 					{!! Form::label('contact_person', 'Contact Person:'); !!}
 					{!! Form::text('contact_person',null,['class'=>'form-control']); !!}
@@ -44,37 +47,37 @@
 					{!! Form::number('res_number',null,['class'=>'form-control']); !!}
 					{!! $errors->first('res_number','<span class="help-block">:message</span>') !!}
 				</div>
-				
+
 				<div class="form-group {{ $errors->has('tel_number') ? 'has-error' :'' }}">
 					{!! Form::label('tel_number', 'Tel.Number:'); !!}
 					{!! Form::number('tel_number',null,['class'=>'form-control']); !!}
 					{!! $errors->first('tel_number','<span class="help-block">:message</span>') !!}
 				</div>
-				
+
 				<div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
 					{!! Form::label('limits', 'Limit:'); !!}
 					{!! Form::number('limits',null,['class'=>'form-control']); !!}
 					{!! $errors->first('limits','<span class="help-block">:message</span>') !!}
 				</div>
-				
+
 				<div class="form-group {{ $errors->has('email') ? 'has-error' :'' }}">
 					{!! Form::label('email', 'Email:'); !!}
 					{!! Form::text('email',null,['class'=>'form-control']); !!}
 					{!! $errors->first('email','<span class="help-block">:message</span>') !!}
 				</div>
-				
+
 				<div class="form-group email_settings {{ $errors->has('on_transaction') ? 'has-error' :'' }}">
 					{!! Form::label('on_transaction', 'On Transaction:'); !!}
 					{!! Form::select('on_transaction',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('on_transaction','<span class="help-block">:message</span>') !!}
 				</div>
-				
+
 				<div class="form-group email_settings {{ $errors->has('monthly_report') ? 'has-error' :'' }}">
 					{!! Form::label('monthly_report', 'Monthly Report:'); !!}
 					{!! Form::select('monthly_report',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('monthly_report','<span class="help-block">:message</span>') !!}
-				</div>	
-				
+				</div>
+
 				<div class="form-group">
 					{!! Form::label('photo', 'Photo:'); !!}
 						@if (isset($company) && $company->images)
@@ -83,7 +86,7 @@
 						@endif
 					{!! Form::file('image',['class'=>'form-control']); !!}
 				</div>
-				
+
 			</div>
 
 			<div class="col-md-6">
@@ -127,14 +130,14 @@
 					{!! Form::label('has_limit', 'Has Limit:'); !!}
 					{!! Form::select('has_limit',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id' => 'showHide']); !!}
 					{!! $errors->first('status','<span class="help-block">:message</span>') !!}
-				</div>	
-				
+				</div>
+
 				<div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
 					{!! Form::label('starting_balance', 'Starting Balance:'); !!}
 					{!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
 					{!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
-				</div>	
-				
+				</div>
+
 				<div class="form-group {{ $errors->has('send_email') ? 'has-error' :'' }}">
 					{!! Form::label('send_email', 'Send email:'); !!}
 					{!! Form::select('send_email',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id' => 'showHideEmail']); !!}
@@ -146,11 +149,11 @@
 					{!! Form::select('daily_at',[0=>'NO', 24=>'00:00',1=>'01:00',2=>'02:00',3=>'03:00',4=>'04:00',5=>'05:00',6=>'06:00',7=>'07:00',8=>'08:00',9=>'09:00',10=>'10:00',11=>'11:00',12=>'12:00',13=>'13:00'
 					,14=>'14:00',15=>'15:00',16=>'16:00',17=>'17:00',18=>'18:00',19=>'19:00',20=>'20:00',21=>'21:00',22=>'22:00',23=>'23:00'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('daily_at','<span class="help-block">:message</span>') !!}
-				</div>	
-				
+				</div>
+
 			</div>
 		</div>
-	
+
 	@if(!isset($company))
 	<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
 		{!! Form::label('discounts', 'Discounts:'); !!}
@@ -292,7 +295,7 @@
 		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
 	</div>
 
-	
+
 </div>
 
 @endsection
@@ -335,7 +338,7 @@
                 $("#has_limits").hide();
             }
         });
-		
+
         $(document).on('click','#showHideEmail',function(){
             var value = $('#showHideEmail option:selected').val();
 
@@ -354,11 +357,11 @@
 		$(document).on('click','#addBranch',function(){
 			$("#addlimits").append('<div class="row" id="branches"><div class="col-md-1"><button type="button" class="btn btn-danger btn-circle" id="removeBranch"><i class="glyphicon glyphicon-minus"></i></button></div><div class="col-md-5"><select class="form-control" name="new_branch[]" required><option value="">Choose Branch</option><?php foreach($branches as $id => $name){ ?><?php echo "<option value=".$id.">$name</option>" ?><?php } ?></select></div><div class="col-md-6"><input class="form-control" step="any" placeholder="0.01" name="new_limit[]" type="number" required></div></div><br>');
 		});
-		
+
 		$(document).on('click','#deleteDiscount',function(){
             $(this).closest("#discount").remove();
 		});
-		
+
 		$(document).on('click','#deleteLimit',function(){
             $(this).closest("#limit").remove();
         });

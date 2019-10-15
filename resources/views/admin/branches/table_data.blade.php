@@ -1,5 +1,6 @@
 @foreach($branches as $branch)
 <tr>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $branch->id }}"></td>
     <td>{{ $branch->name }}</td>
     <td>{{ $branch->address }}</td>
     <td>{{ $branch->city }}</td>

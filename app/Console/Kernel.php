@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('card:reader 1')->appendOutputTo(storage_path() . "/logs/cron.log")
                  ->everyMinute();
-        
+
         // Send daily email to companies
 
         $schedule->command('send:daily')
@@ -35,28 +35,27 @@ class Kernel extends ConsoleKernel
         //$schedule->command('send:dailyEmail')
         //      ->hourly();
 
-
         //Send monthly email to companies
         $schedule->command('send:monthlyEmail')
                  ->monthly();
         
         // Send transactions to server
-        $schedule->command('send:transactions')
-                 ->everyFifteenMinutes();
+        //$schedule->command('send:transactions')
+        //         ->everyFifteenMinutes();
 
 
         // Export RFID to server
-        $schedule->command('export:rfid')
-                 ->everyFifteenMinutes();
+        //$schedule->command('export:rfid')
+        //         ->everyFifteenMinutes();
 
         // Import RFID from server
-        $schedule->command('import:rfid')
-                 ->everyFifteenMinutes();
+        //$schedule->command('import:rfid')
+        //         ->everyFifteenMinutes();
 
         // Export RFID without company to server
         //$schedule->command('export:rfid')
         //         ->everyFifteenMinutes();
-    
+
         // Export RFID with company to server
         //$schedule->command('rfid:withcompany')
         //         ->everyFifteenMinutes();

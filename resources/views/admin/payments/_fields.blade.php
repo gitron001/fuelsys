@@ -1,6 +1,9 @@
 @extends('adminlte::page')
 
 @section('content')
+
+@include('includes/alert_info')
+
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">{{!isset($payment) ? 'Create new payment' : 'Edit payment'}}</h3>
@@ -15,7 +18,7 @@
 						{!! Form::text('date',null,['class'=>'form-control','autocomplete'=>'off','id' => 'datetimepicker']); !!}
 					@else
 						<input type="text" id="datetimepickerF" value="{{ date('m/d/Y H:i:s', $payment->date) }}" name="date" class="form-control" autocomplete="off">
-					@endif 
+					@endif
 					{!! $errors->first('date','<span class="help-block">:message</span>') !!}
 				</div>
 
@@ -23,17 +26,17 @@
 					<label for="">Company / User: </label>
 					<br>
 					@if (!isset($payment))
-					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" 
+					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox"
 						value="company" echo checked />Company</label>
 					@endif
-					
+
 					@if (isset($payment))
-					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" 
+					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox"
 						value="company" @if (isset($payment) && $payment->company_id != 0) echo checked @endif/>Company</label>
-					@endif	
-					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox" 
+					@endif
+					<label class="checkbox-inline"><input type="checkbox" class="check_class" name="checkbox"
 						value="user" @if (isset($payment) && $payment->user_id != 0) echo checked @endif/>User</label>
-					
+
 				</div>
 
 				<div class="form-group">
@@ -42,7 +45,7 @@
 						<option value="">Choose a type</option>
 						<option value="1">Pagese</option>
 						<option value="2">Hyrje</option>
-					</select> 
+					</select>
         		</div>
 
 
@@ -52,17 +55,17 @@
 
 				<div class="form-group {{ $errors->has('amount') ? 'has-error' :'' }}">
 					{!! Form::label('amount', 'Amount:'); !!}
-					{!! Form::number('amount',null,['class'=>'form-control','step'=>'any']); !!} 
+					{!! Form::number('amount',null,['class'=>'form-control','step'=>'any']); !!}
 					{!! $errors->first('amount','<span class="help-block">:message</span>') !!}
 				</div>
-				
+
 				@if(!isset($payment))
 					<div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company">
 				@else
 					<div class="form-group" id="company" @if ($payment->company_id == 0) echo style="display: none" @endif>
 				@endif
 					{!! Form::label('company_id', 'Company:'); !!}
-					{!! Form::select('company_id',['' => 'Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!} 
+					{!! Form::select('company_id',['' => 'Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
 					{!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
 				</div>
 
@@ -72,7 +75,7 @@
 					<div class="form-group" id="user" @if ($payment->user_id == 0) echo style="display: none" @endif>
 				@endif
 					{!! Form::label('user_id', 'User:'); !!}
-					{!! Form::select('user_id',['' => 'Select a User'] + $users,null,['class'=>'selectpicker form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!} 
+					{!! Form::select('user_id',['' => 'Select a User'] + $users,null,['class'=>'selectpicker form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
 					{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 				</div>
 
@@ -83,23 +86,23 @@
 						<option value="">Choose a Branch</option>
 						@foreach($branches as $id => $name)
 							<option value="{{ $id }}" {{ ( request()->get("branch") == $id ? "selected":"") }}>{{ $name }}</option>
-						@endforeach	
-					</select> 
+						@endforeach
+					</select>
 				</div>
 				@endif
-			
+
 			</div>
 		</div>
 		<div class="col-12">
 				<div class="form-group {{ $errors->has('description') ? 'has-error' :'' }}">
 					{!! Form::label('description', 'Description:'); !!}
-					{!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!} 
+					{!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!}
 					{!! $errors->first('description','<span class="help-block">:message</span>') !!}
 				</div>
 			</div>
 	</div>
-	
-	
+
+
 	<div class="box-footer">
 		<button type="submit" class="btn btn-primary">
             <i class="fas fa-save"></i> Save

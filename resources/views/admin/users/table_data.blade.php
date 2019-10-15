@@ -1,5 +1,6 @@
 @foreach($users as $user)
 <tr>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $user->id }}"></td>
     <td>{{ $user->name }}</td>
     <td>{{ $user->email }}</td>
     <td>{{ $user->rfid }}</td>
@@ -12,7 +13,7 @@
     <td class="text-center" width="8%">
         <a href="{{ url('admin/users/'.$user->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
         <a href="{{ route('user.delete', $user->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
-    </td>    
+    </td>
 </tr>
 @endforeach
 

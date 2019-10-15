@@ -119,7 +119,7 @@ class PaymentsController extends Controller
             $company->limit_left += $request->input('amount');
             $company->save();
         }
-        
+
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
         $payments->description  = $request->input('description');
@@ -136,9 +136,9 @@ class PaymentsController extends Controller
 
 		$recepit = new PrintPayment($payments->id);
         dispatch($recepit);
-		
+
         /*$msg = "Payment Print not Succesful";
-		
+
         try {
             //self::printFunction($payments->id);
         } catch (Exception $e) {
@@ -151,10 +151,10 @@ class PaymentsController extends Controller
                 'Authorization'          => "ABCDEFGHIJK"
             ]]);
         $url = '192.168.1.2/api/payments/create';
-        
+
         $data = $payments->toArray();
         $response = $client->request('POST', $url, [
-            'form_params' => [ 
+            'form_params' => [
                 'date'          => strtotime($request->input('date')),
                 'amount'        => $request->input('amount'),
                 'description'   => $request->input('description'),
@@ -169,7 +169,7 @@ class PaymentsController extends Controller
 		*/
         session()->flash('info','Success');
 
-        return redirect('/admin/payments');
+        return redirect('admin/payments/' . $payments->id . '/edit');
     }
 
     /**
@@ -214,7 +214,7 @@ class PaymentsController extends Controller
             $company_id   = 0;
         }else{
             $user_id      = 0;
-            $company_id   = $request->input('company_id');   
+            $company_id   = $request->input('company_id');
         }
         $amount  = $request->input('amount');
         if($payments->amount != $amount && $payments->user_id == $user_id && $request->input('checkbox')== 'user'){
@@ -238,7 +238,7 @@ class PaymentsController extends Controller
 
             if($user_id != 0){
                 $new_user = Users::find($request->input('user_id'));
-                $new_user->limit_left += $request->input('amount'); 
+                $new_user->limit_left += $request->input('amount');
                 $new_user->save();
             }
         }
@@ -252,13 +252,13 @@ class PaymentsController extends Controller
 
             if($company_id != 0){
                 $new_company = Company::find($request->input('company_id'));
-                $new_company->limit_left += $request->input('amount'); 
+                $new_company->limit_left += $request->input('amount');
                 $new_company->save();
             }
         }
 
         $payments->user_id      = $user_id;
-        $payments->company_id   = $company_id;   
+        $payments->company_id   = $company_id;
         $payments->date         = strtotime($request->input('date'));
         $payments->description  = $request->input('description');
         $payments->amount       = $amount;
@@ -268,10 +268,8 @@ class PaymentsController extends Controller
 
         session()->flash('info','Success');
 
-        return redirect('/admin/payments');
+        return redirect()->back();
 
-
-        
     }
 
     /**
@@ -299,11 +297,35 @@ class PaymentsController extends Controller
         return redirect('/admin/payments');
     }
 
+    public function delete_all(Request $request)
+    {
+        $payment_id_array = $request->input('id');
+
+        foreach($payment_id_array as $payment_id) {
+
+            $payment = Payments::findOrFail($payment_id);
+
+            if($payment->user_id != 0){
+                $user = Users::find($payment->user_id);
+                $user->limit_left -=  $payment->amount;
+                $user->save();
+            }elseif($payment->company_id != 0){
+                $company = Company::find($payment->company_id);
+                $company->limit_left -= $payment->amount;
+                $company->save();
+            }
+            if($payment->delete()){
+                echo "Data deleted";
+            }
+        }
+
+    }
+
     public static function printFunction(Request $request)
     {
 		PrintPaymentService::printFunction($request->input('id'));
     }
-	
+
 
     /**
      * Bootstrap services.
@@ -320,7 +342,7 @@ class PaymentsController extends Controller
 
         $right = str_pad(' '.$lit.'     '.$price.'   ' . $limit_left, $rightCols, ' ', STR_PAD_LEFT);
         return "$left$right\n";
-    }	
+    }
 }
 
 

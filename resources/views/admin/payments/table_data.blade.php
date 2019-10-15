@@ -1,5 +1,6 @@
 @foreach($payments as $payment)
 <tr>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $payment->id }}"></td>
     <td>{{ date('m/d/Y H:i', $payment->date) }}</td>
     <td>{{ $payment->amount }}</td>
     <td>{{ $payment->user_name ? $payment->user_name : ' ' }}</td>

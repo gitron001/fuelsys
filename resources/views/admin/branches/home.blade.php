@@ -14,15 +14,17 @@
                 <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/branches') }}">
                   @include('includes.search_filter')
                   <a href="{{ url('admin/branches/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new branch"><i class="fa fa-plus"></i> New</a>
+                  <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="Delete all selected branches"><i class="fa fa-trash"></i> Delete</a>
                 </form>
 
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-div">
-              <table id="example2 orders" class="table table-bordered table-hover">
+              <table id="example2 orders" class="table table-bordered table-hover text-center">
                 <thead>
                 <tr>
+                    <th style="text-align:center;"><input type="checkbox" id="checkall" class="checkbox-select-all"></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="name">Name <span id="name_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="address">Address <span id="address_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                     <th class="sorting" data-sorting_type="asc" data-column_name="city">City <span id="city_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
@@ -36,6 +38,7 @@
                   @include('admin.branches.table_data')
                 </tbody>
               </table>
+
               @include('includes.hidden_inputs')
             </div>
             <!-- /.box-body -->

@@ -61,11 +61,11 @@ class TankController extends Controller
      */
     public function store(Request $request)
     {
-        Tank::create($request->all());
+        $tank = Tank::create($request->all());
 
         session()->flash('info','Success');
 
-        return redirect('/admin/tanks');
+        return redirect('admin/tanks/' . $tank->id . '/edit');
     }
 
     /**
@@ -89,7 +89,7 @@ class TankController extends Controller
     {
         $tank = Tank::findOrFail($id);
         $products = Products::pluck('name','id')->all();
-        
+
         return view('/admin/tanks/edit',compact('tank','products'));
     }
 
@@ -108,7 +108,7 @@ class TankController extends Controller
 
         session()->flash('info','Success');
 
-        return redirect('/admin/tanks');
+        return redirect()->back();
     }
 
     /**
@@ -124,5 +124,14 @@ class TankController extends Controller
         session()->flash('info','Success');
 
         return redirect('/admin/tanks');
+    }
+
+    public function delete_all(Request $request)
+    {
+        $tank_id_array = $request->input('id');
+        $tank = Tank::whereIn('id',$tank_id_array);
+        if($tank->delete()){
+            echo "Data deleted";
+        }
     }
 }

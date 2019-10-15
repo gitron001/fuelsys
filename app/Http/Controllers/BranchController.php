@@ -70,8 +70,8 @@ class BranchController extends Controller
         $branch->save();
 
         session()->flash('info','Success');
+        return redirect('admin/branches/' . $branch->id . '/edit');
 
-        return redirect('/admin/branches');
     }
 
     /**
@@ -110,7 +110,7 @@ class BranchController extends Controller
         $branch->update($request->all());
         session()->flash('info','Success');
 
-        return redirect('/admin/branches');
+        return redirect()->back();
     }
 
     /**
@@ -126,5 +126,14 @@ class BranchController extends Controller
         session()->flash('info','Success');
 
         return redirect('/admin/branches');
+    }
+
+    public function delete_all(Request $request)
+    {
+        $branch_id_array = $request->input('id');
+        $branch = Branch::whereIn('id',$branch_id_array);
+        if($branch->delete()){
+            echo "Data deleted";
+        }
     }
 }

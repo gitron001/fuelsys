@@ -24,13 +24,13 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {   
+    {
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
 
         $companies  = Company::whereIn('status',array(1, 2));
-        
+
         if($request->get('search')){
             $companies = $companies->where(function($query) use ($search){
                 $query->where('name','like','%'.$search.'%');
@@ -153,7 +153,7 @@ class CompaniesController extends Controller
         */
         session()->flash('info','Success');
 
-        return redirect('admin/companies');
+        return redirect('admin/companies/' . $id . '/edit');
     }
 
     /**
@@ -191,7 +191,7 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        
+
         $company = Company::findOrFail($id);
 			//dd($request->all());
         // Edit photo if exist to public/company folder
@@ -216,9 +216,9 @@ class CompaniesController extends Controller
             $limit_left = 0;
         }
         $request->merge(['limit_left' => $limit_left]);
-	
+
         $company->update($request->all());
-        
+
         // DELETE Discount
         //if(empty($request->input('deleteDiscount'))){
             CompanyDiscount::where('company_id',$id)->delete();
@@ -284,7 +284,7 @@ class CompaniesController extends Controller
         */
         session()->flash('info','Success');
 
-        return redirect('/admin/companies');
+        return redirect()->back();
     }
 
     /**
@@ -301,9 +301,18 @@ class CompaniesController extends Controller
 
         return redirect('/admin/companies');
     }
-	
+
 	public function send_email($id){
 		$recepit = new SendTransactionEmail($id, 'idealbakija@gmail.com');
 		dispatch($recepit);
-	}
+    }
+
+    public function delete_all(Request $request)
+    {
+        $company_id_array = $request->input('id');
+        $company = Company::whereIn('id',$company_id_array);
+        if($company->update(['status' => 3])){
+            echo "Data deleted";
+        }
+    }
 }

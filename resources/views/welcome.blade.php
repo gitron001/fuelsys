@@ -7,12 +7,12 @@
       <div class="box box-primary">
       <div class="box-header with-border">
           <h3 class="box-title">Dispanesers</h3>
-  
+
           <div class="box-tools pull-right">
           <span class="label label-primary">Total: {{count($dispanesers)}}</span>
           </div>
       </div>
-      
+
       @foreach($dispanesers as $dispaneser)
       <div class="col-md-3">
         <div class="box-body">
@@ -27,9 +27,9 @@
         </div>
       </div>
       @endforeach
-  
+
       <div class="box-footer"></div>
-  
+
       </div>
   </div>
 
@@ -61,7 +61,7 @@
         </table>
         </div>
     </div>
-    
+
     <div class="box-footer clearfix text-center">
         <a href="/admin/companies" class="btn btn-sm btn-default btn-flat">View All Companies</a>
     </div>
@@ -75,10 +75,9 @@
   <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">Live Feed</h3>
-		<a href="/admin/transactions" class="btn btn-sm btn-default btn-flat">View All Transactions</a>
         <span class="pulse"></span>
     </div>
-    
+
     <div class="box-body">
         <div class="table-responsive">
         <table class="table no-margin">
@@ -102,13 +101,17 @@
             </tbody>
         </table>
         </div>
+
+        <div class="box-footer clearfix text-center">
+            <a href="/admin/transactions" class="btn btn-sm btn-default btn-flat">View All Transactions</a>
+        </div>
     </div>
-    
+
 
   </div>
 </div>
 <!-- END LIVE Feed Area -->
-    
+
 </div>
 
 @endsection
@@ -126,7 +129,7 @@
       $('#loadTransaction').load('{{ url('/transactions-info')}}').fadeIn('slow');
     },60000)
   });
-  
+
 
 </script>
 
