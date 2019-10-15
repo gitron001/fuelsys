@@ -50,6 +50,10 @@ class CardService extends ServiceProvider
             if($response[$i] == 2){
                 $channel = ($i - 3);
                 self::check_card($socket, $channel, $pfc_id);
+            }elseif($response[$i] == 4){
+                $channel = ($i - 3);
+				echo 'activete';
+                self::activate_card($socket, $channel, 4);
             }
         }
         //print_r($response);
@@ -128,8 +132,12 @@ class CardService extends ServiceProvider
                 self::setPrepay($socket, $channel, $limit_left);
             }
         }
-				
-        if(count($user->discounts) == 0 && count($user->company->discounts) == 0){
+		
+		//unblock
+		//
+		//self::activate_card($socket, $channel, 4);	
+        echo 'ACTIVATE';
+		if(count($user->discounts) == 0 && count($user->company->discounts) == 0){
 			
 			$bonus_requst = Bonus::where('channel_id', $channel)->where('pfc_id', $pfc_id)->where('created_at', '>', $time_difference)->first();
 			if(isset($bonus_requst->user_id)){
@@ -139,6 +147,8 @@ class CardService extends ServiceProvider
 				self::activate_card($socket, $channel);
 			}
         }else{
+			//self::activate_card($socket, $channel, 4);
+			
             $all_discounts = self::generate_discounts($user->id, $response, $pfc_id);
 			
             self::activate_card_discount($socket, $channel, $all_discounts);

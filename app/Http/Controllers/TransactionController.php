@@ -253,7 +253,7 @@ class TransactionController extends Controller
 
         if(!isset($inc_transactions) || $inc_transactions == 'No'){
             $total_transactions = $payments->groupBy(function($val) {
-                return \Carbon\Carbon::parse(date('Y-m-d h:i:s', $val->date))->format('Y-m-d');
+                return \Carbon\Carbon::parse(date('Y-m-d H:i', $val->date))->format('Y-m-d');
             });
         }
 
@@ -306,7 +306,7 @@ class TransactionController extends Controller
 			$from_date = self::last_payment_date($request);
         }
 		
-        $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'transaction' as type"),
+        $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'T' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money",DB::RAW(" 0 as company")
                 ,"users.name as username", "users.plates","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
@@ -333,7 +333,7 @@ class TransactionController extends Controller
             $transactions->where('transactions.created_at', '>=', strtotime($date));
         }
 
-        $payments = Payments::select("payments.user_id",DB::RAW(" 'payment' as type")
+        $payments = Payments::select("payments.user_id",DB::RAW(" 'P' as type")
                 ,"payments.amount","payments.date",
                 DB::RAW(" 0 as money"),"payments.company_id"
                 ,"users.name as username", DB::RAW(" '' as plates"), "payments.created_at","companies.name as company_name","payments.description")
@@ -432,7 +432,7 @@ class TransactionController extends Controller
         if($request->filled('company') && $request->filled('user')){
 			$user = $request->input('user');
 			//$paymentsOLD->orWhere(function ($query, $user, $company) {
-				$paymentsOLD->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
+				$paymentsOLD->whereIn('user_id',$user)->where('payments.company_id','=',$company);
 			//});
             //$paymentsOLD->whereIn('user_id',$user)->orWhere('payments.company_id','=',$company);
         }
@@ -662,12 +662,15 @@ class TransactionController extends Controller
         $date               = $request->fromDate;
         $inc_transactions   = $request->inc_transactions;
         $company_checked    = $request->input('company');
-   
+
         if(isset($request->company)){
             $company_details = Company::find($request->company);
 		
         }
-
+			
+		if(count($payments) == 0){
+			return false;
+		}
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','company_checked'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         

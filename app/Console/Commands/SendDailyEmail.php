@@ -40,26 +40,25 @@ class SendDailyEmail extends Command
      */
     public function handle()
     {
-		$hour 		= date('H');
-        $companies  = Company::select('id','email','daily_at')->where('send_email',1)->where('daily_at',$hour)->get();
-        $dateBegin  = strtotime("first day of last month");  
-        $dateEnd    = strtotime("last day of last month");
-        $first_day  = date('Y-m-01', $dateBegin);
-        $last_day   = date('Y-m-t', $dateEnd);
-	
-        foreach($companies as $company){
+		$hour 			= date('H');
+        //$companies  	= Company::where('id', 2)->get();
+        $companies  	= Company::select('id','email','daily_at')->where('send_email',1)->where('daily_at',$hour)->get();
+        $current_time   = date('H');
+        $from_date      = date('Y-m-d H:00:00', strtotime('- 1 day', strtotime(date("Y-m-d $hour:00:00"))));
+        $to_date        = date("Y-m-d $hour:00:00");
         
+        foreach($companies as $company){
             $data = [
                 'company'  => $company->id,
-                'fromDate' => $first_day,
-                'toDate'   => $last_day,
+                'fromDate' => $from_date,
+                'toDate'   => $to_date,
                 'inc_transactions' => 'Yes',
+                //'dailyReport' => 1,
             ];
 
             $request = new Request($data);
             $controller = new TransactionController();
             $controller->generateDailyReport($request);
-
         }
     }
 }

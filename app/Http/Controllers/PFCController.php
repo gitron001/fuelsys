@@ -33,6 +33,7 @@ class PFCController extends Controller
                 $query->orWhere('port','like','%'.$search.'%');
             });
         }
+	
 		
         if($request->ajax() == false){
             $pfc    = $pfc->orderBy('name','ASC')
@@ -41,6 +42,7 @@ class PFCController extends Controller
         } else {
             $pfc    = $pfc->orderBy($sort_by,$sort_type)
                         ->paginate(15);
+
             return view('/admin/pfc/table_data',compact('pfc'))->render();
         }
     }
@@ -119,7 +121,8 @@ class PFCController extends Controller
     {
 		if($type == 6){
 			$type = 1;	
-			//Artisan::call('card:reader');
+			Process::where('pfc_id', $pfc_id)->where('type_id', 5)->delete();
+			Artisan::call('card:reader '.$pfc_id);
 		}
 		
 		Process::insert(array('start_time'=> time(),

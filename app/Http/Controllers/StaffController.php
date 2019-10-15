@@ -21,9 +21,27 @@ class StaffController extends Controller
      */
 
     public function staff_view(Request $request){
-        $from_date  = strtotime($request->input('fromDate'));
-        $to_date    = strtotime($request->input('toDate'));
+		if(!$request->input('fromDate')){
+			$from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
+			$to_date =  strtotime(date('d-m-Y H:i', time()));
+		}else{
+			$from_date  = strtotime($request->input('fromDate'));
+			$to_date    = strtotime($request->input('toDate'));
+		}
+
+		
         $user       = $request->input('user');
+
+		$companies 	= Transactions::select('companies.name as c_name',DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'))
+            ->join('users', 'users.id', '=', 'transactions.user_id')
+            ->join('companies', 'users.company_id', '=', 'companies.id')
+            ->join('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->groupBy('companies.id')
+            ->groupBy('products.pfc_pr_id');
+
+        $companies = $companies->whereBetween('transactions.created_at',[$from_date, $to_date]);
+		
+		$companies 	 = $companies->get();		
 
         $usersFilter = Users::where('type','1')->pluck('name','id');
 
@@ -36,9 +54,8 @@ class StaffController extends Controller
             $users = $users->whereIn('users.id',$user);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
-            $users = $users->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        }
+        $users = $users->whereBetween('transactions.created_at',[$from_date, $to_date]);
+
 
         $users = $users->get();
 
@@ -91,12 +108,10 @@ class StaffController extends Controller
             $products = $products->whereIn('users.id',$user);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
-            $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        }
-
+        $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        
         $products = $products->get();
     
-        return view('admin.staff.staff_view',compact('usersFilter','staffData','products','product_name'));
+        return view('admin.staff.staff_view',compact('usersFilter','staffData','products','product_name','companies'));
     }
 }
