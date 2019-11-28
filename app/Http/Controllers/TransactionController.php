@@ -179,7 +179,7 @@ class TransactionController extends Controller
                 });
 
                 $sheet->cell('B2', function($cell) use( $totalAmount ){
-                        $cell->setValue('GJENDJA FILLESTARE');
+                        $cell->setValue('GJENDJA');
                 });
 
                 $sheet->cell('F2', function($cell) use( $totalAmount ){
@@ -195,15 +195,21 @@ class TransactionController extends Controller
                         $fueling = $row->money;
                         $payment = 0;
                     }
-                    $total = str_replace(',', '', $total);
+                    $total 	 = str_replace(',', '', $total);
                     $fueling = str_replace(',', '', $fueling);
                     $payment = str_replace(',', '', $payment);
-                    $total = $total + $fueling - $payment;
-
+                    $total	 = $total + $fueling - $payment;
+					$user  	 = $row->username ? $row->username : $row->company_id;
+					
+					if($row->plates != "" && $row->plates != 0){
+						$user = $row->plates;
+					}
+					
+					
                     $sheet->appendRow(array(
                         $row->created_at,
                         $row->description == NULL  ? $row->type : $row->description,
-                        $row->username ? $row->username : $row->company_id,
+                        $user,
                         $fueling,
                         $payment,
                         $total,
