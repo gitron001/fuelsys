@@ -32,19 +32,33 @@ class StaffController extends Controller
 
         $user       = $request->input('user');
 
-		$companies 	= Transactions::select('companies.name as c_name',DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'))
+        $companyData = [];
+		$companies 	= Transactions::select('companies.name as c_name','companies.id as c_id',DB::raw('SUM(money) as money'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'),DB::raw('products.name as product'),DB::raw('AVG(transactions.price) as product_price'))
             ->join('users', 'users.id', '=', 'transactions.user_id')
             ->join('companies', 'users.company_id', '=', 'companies.id')
             ->join('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->groupBy('companies.id')
-            ->groupBy('products.pfc_pr_id');
+            ->groupBy('products.id');
 
         $companies = $companies->whereBetween('transactions.created_at',[$from_date, $to_date]);
 
         $companies 	 = $companies->get();
 
+        $product_name_company = array();
+            foreach($companies as $tr){
+                    if(!isset($companyData[$tr->c_id])){
+                        $companyData[$tr->c_id] = array();
+                        $companyData[$tr->c_id]['totalMoney'] = 0;
+                    }
+					$companyData[$tr->c_id]['c_name'] = $tr->c_name;
+					$companyData[$tr->c_id][$tr->product] = [$tr->totalLit,$tr->product_price];
+					$companyData[$tr->c_id]['totalMoney'] += $tr->money;
+                    $product_name_company[$tr->product] = $tr->product;
+            }
+
+
         $usersFilter = Users::where('type','1')->pluck('name','id');
-		
+
 		$staffData = [];
         $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('AVG(transactions.price) as product_price'), DB::raw('products.name as product'), DB::raw('users.name as user_name'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
@@ -63,11 +77,11 @@ class StaffController extends Controller
         $transactions = $transactions->get();
 
         $product_name = array();
-            foreach($transactions as $tr){                  
+            foreach($transactions as $tr){
 					if(!isset($staffData[$tr->user_id])){
 						$staffData[$tr->user_id] = array();
 						$staffData[$tr->user_id]['totalMoney'] = 0;
-					}				
+					}
 					$staffData[$tr->user_id]['user_name'] = $tr->user_name;
 					//$staffData[$tr->user_id][$tr->product.'_'.$tr->product_price] = [$tr->total,$tr->product_price];
 					$staffData[$tr->user_id][$tr->product] = [$tr->total,$tr->product_price];
@@ -76,22 +90,21 @@ class StaffController extends Controller
                     //$product_name[$tr->product.'_'.$tr->product_price] = $tr->product;
             }
 
-
         $products 	= Transactions::select(DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::raw('count(transactions.id) as transNR'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('max(transactions.price) as product_price'))
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->groupBy('products.pfc_pr_id');
             //->groupBy('transactions.price');
 
 		$totalizer_totals = TransactionController::getGeneralDataTotalizers($request);
-		
+
         if ($request->input('user')) {
             $products = $products->whereIn('transactions.id',$user);
         }
-		
+
         $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
 
         $products = $products->get();
 
-        return view('admin.staff.staff_view',compact('usersFilter','staffData','products','product_name','companies', 'totalizer_totals'));
+        return view('admin.staff.staff_view',compact('usersFilter','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company'));
     }
 }

@@ -72,7 +72,7 @@
 			<?php if(isset($totalizer_sales[$product['product_id']])){
 					$totalizer_sales[$product['product_id']] += $product['lit'];
 				  }else{
-					$totalizer_sales[$product['product_id']] = $product['lit'];						  
+					$totalizer_sales[$product['product_id']] = $product['lit'];
 				  }
 			?>
             @endforeach
@@ -118,7 +118,8 @@
 			<tr>
 				<td colspan="2"></td>
 				<td> <b>TOTAL:</b> </td>
-				<td> <b>{{ $total_sales }}</b> </td>
+                <td> <b>{{ $total_sales }}</b> </td>
+                <td colspan="2"></td>
 			</tr>
             </tbody>
         </table>
@@ -154,14 +155,14 @@
                             {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
                             {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
                             </td>
-							<?php 
+							<?php
 							    if(isset($transaction[$key])){
 								  if(isset($product_totals[$key])){
 									$product_totals[$key]['lit'] += $transaction[$key][0];
 									$product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
 								  }else{
-									$product_totals[$key]['lit'] = $transaction[$key][0];						  
-									$product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];						  
+									$product_totals[$key]['lit'] = $transaction[$key][0];
+									$product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
 								  }
 								}
 							?>
@@ -182,8 +183,9 @@
     </div>
 </div>
 <!-- END staff table -->
-<!-- START companies table -->
+
 @if(count($companies) != 0)
+<!-- START company table -->
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-building" aria-hidden="true"></i>
@@ -194,26 +196,45 @@
             <thead>
                 <tr>
                     <th>Kompania</th>
-                    <th>Produkti</th>
-                    <th>Litrat</th>
+                    @foreach($product_name_company as $value)
+                        <th>{{ $value }}</th>
+                    @endforeach
                     <th>Euro</th>
                 </tr>
             </thead>
             <tbody>
-				<?php $companies_total = 0; ?>
-                @foreach($companies as $c)
+				<?php $total_company = 0; ?>
+				<?php $product_totals = array(); ?>
+                @foreach($companyData as $transaction)
                 <tr>
-                    <td>{{ $c->c_name }}</td>
-                    <td>{{ $c->p_name }}</td>
-                    <td>{{ $c->totalLit }} Lit</td>
-                    <td>{{ $c->totalMoney }} Euro</td>
-					<?php $companies_total += $c->totalMoney; ?>
+                    <td>{{ $transaction['c_name'] }}</td>
+                        @foreach($product_name as $key => $value)
+                            <td>
+                            {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
+                            {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
+                            </td>
+							<?php
+							    if(isset($transaction[$key])){
+								  if(isset($product_totals[$key])){
+									$product_totals[$key]['lit'] += $transaction[$key][0];
+									$product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
+								  }else{
+									$product_totals[$key]['lit'] = $transaction[$key][0];
+									$product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
+								  }
+								}
+							?>
+                        @endforeach
+                    <td>{{  $transaction['totalMoney']  }} Euro</td>
+					<?php $total_company += $transaction['totalMoney']; ?>
                 </tr>
                 @endforeach
 				<tr>
-					<td colspan="2"></td>
 					<td> <b>TOTAL:</b> </td>
-					<td> <b>{{ $companies_total }}</b> </td>
+                        @foreach($product_name_company as $key => $value)
+							<td> {{ $product_totals[$key]['lit'] }} Lit / {{ number_format($product_totals[$key]['money'], 2, '.', '') }} Euro</td>
+						@endforeach
+					<td> <b>{{ $total_company }}</b> </td>
 				</tr>
             </tbody>
         </table>
@@ -221,7 +242,6 @@
 </div>
 <!-- END companies table -->
 @endif
-
 
 @endsection
 
