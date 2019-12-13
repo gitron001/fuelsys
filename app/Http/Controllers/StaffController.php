@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use App\Models\Transaction as Transactions;
+use App\Http\Controllers\TransactionController as TransactionController;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use DB;
 
@@ -43,73 +44,54 @@ class StaffController extends Controller
         $companies 	 = $companies->get();
 
         $usersFilter = Users::where('type','1')->pluck('name','id');
-
-        $users = Transactions::select(DB::RAW('users.id as user_id'), 'users.name as user_name',DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'))
-            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-            ->where('users.type','1')
-            ->groupBy('users.id');
-
-        if ($request->input('user')) {
-            $users = $users->whereIn('users.id',$user);
-        }
-
-        $users = $users->whereBetween('transactions.created_at',[$from_date, $to_date]);
-
-
-        $users = $users->get();
-
-        $staffData = [];
-        foreach($users as $value) {
-            $staffData[$value->user_id]['id'] = $value->user_id;
-            $staffData[$value->user_id]['user_name'] = $value->user_name;
-            $staffData[$value->user_id]['totalMoney'] = $value->totalMoney;
-            $staffData[$value->user_id]['totalLit'] = $value->totalLit;
-        }
-
-        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('transactions.price as product_price'), DB::raw('products.name as product'))
+		
+		$staffData = [];
+        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('AVG(transactions.price) as product_price'), DB::raw('products.name as product'), DB::raw('users.name as user_name'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-            ->where('users.type','1')
+            ->whereIn('users.type',['1', '3', '4'])
             ->groupBy('users.id')
-            ->groupBy('products.id')
-            ->groupBy('transactions.price');
+            ->groupBy('products.id');
+            //->groupBy('transactions.price')
 
         if ($request->input('user')) {
             $transactions = $transactions->whereIn('users.id',$user);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
-            $transactions = $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        }
+        $transactions = $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
 
         $transactions = $transactions->get();
 
         $product_name = array();
-        foreach ($staffData as $key => $value) {
-            foreach($transactions as $tr){
-                if($key == $tr->user_id){
-                    $staffData[$key][$tr->product.'_'.$tr->product_price] = [$tr->total,$tr->product_price];
-                    $product_name[$tr->product.'_'.$tr->product_price] = $tr->product;
-                }
+            foreach($transactions as $tr){                  
+					if(!isset($staffData[$tr->user_id])){
+						$staffData[$tr->user_id] = array();
+						$staffData[$tr->user_id]['totalMoney'] = 0;
+					}				
+					$staffData[$tr->user_id]['user_name'] = $tr->user_name;
+					//$staffData[$tr->user_id][$tr->product.'_'.$tr->product_price] = [$tr->total,$tr->product_price];
+					$staffData[$tr->user_id][$tr->product] = [$tr->total,$tr->product_price];
+					$staffData[$tr->user_id]['totalMoney'] += $tr->money;
+                    $product_name[$tr->product] = $tr->product;
+                    //$product_name[$tr->product.'_'.$tr->product_price] = $tr->product;
             }
-        }
 
-        $products 	= Transactions::select(DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'),'transactions.price as product_price')
-            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-            ->leftJoin('companies', 'users.company_id', '=', 'companies.id')
+
+        $products 	= Transactions::select(DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::raw('count(transactions.id) as transNR'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('max(transactions.price) as product_price'))
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-            ->groupBy('products.name')
-            ->groupBy('products.pfc_pr_id')
-            ->groupBy('transactions.price');
+            ->groupBy('products.pfc_pr_id');
+            //->groupBy('transactions.price');
 
+		$totalizer_totals = TransactionController::getGeneralDataTotalizers($request);
+		
         if ($request->input('user')) {
-            $products = $products->whereIn('users.id',$user);
+            $products = $products->whereIn('transactions.id',$user);
         }
-
+		
         $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
 
         $products = $products->get();
 
-        return view('admin.staff.staff_view',compact('usersFilter','staffData','products','product_name','companies'));
+        return view('admin.staff.staff_view',compact('usersFilter','staffData','products','product_name','companies', 'totalizer_totals'));
     }
 }

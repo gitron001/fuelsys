@@ -47,7 +47,7 @@ class ReportsController extends Controller
         $user       = $request->input('user');
         $company    = $request->input('company');
 
-        $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
+        $query = Transactions::select(DB::RAW('users.name as user_name'), 'users.type', DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
            'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
@@ -125,7 +125,7 @@ class ReportsController extends Controller
             $from_date = self::last_payment_date($request);
         }
 
-        $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
+        $query = Transactions::select(DB::RAW('users.name as user_name'), 'users.type', DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
                     ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
                     ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
                     ->leftJoin('companies', 'companies.id', '=', 'users.company_id');

@@ -32,7 +32,7 @@
     <table width="100%" class="information">
         <tr>
             <td align="center" style="width: 50%;">
-                RAPORT - {{ $company->name }}
+                RAPORT - {{ $company->name }}   &nbsp;&nbsp; &nbsp;| &nbsp;&nbsp;  {{ date('d-m-Y H:i:s', time()) }}
             </td>
         </tr>
     </table>
@@ -115,6 +115,7 @@
 	  </tr>
 	</thead>
 	<tbody>
+	@if(!$exc_balance)
 	<tr>
 		<th align="center" scope="row">{{ date('Y-m-d H:i',strtotime($date)) }}</th>
 	    <td align="center">Gjendja</td>
@@ -123,8 +124,9 @@
 	    <td align="right"></td>
 	    <td align="right" class="gray">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
 	</tr>
-
+	@endif
 	<?
+	$total = 0;
 	if($inc_transactions == 'No' || !isset($inc_transactions)) {
 		$totalTrans = $balance;
 		$total_transaction = 0;
@@ -149,12 +151,12 @@
 				$fueling = str_replace(',', '', $fueling);
 				$payment = str_replace(',', '', $payment);
 				$totalTrans = $totalTrans + $fueling - $payment; 
-			
+				$total		= $totalTrans;
 			if($tr->type == 'payment') { ?>
 		<tr>
 			<th align="center">{{ $date }}</th>	
 			<td align="center">{{ !empty($tr->description) ? 'P ('.$tr->description.')' : 'P' }}</td>
-			<td align="center">{{ $tr->username }}  @if(trim($tr->plates) != "" && $tr->plates != 0) - {{ $tr->plates }} @endif</td>
+			<td align="center">@if(trim($tr->plates) != "" && $tr->plates != 0) {{ $tr->plates }} @else {{ $tr->username }} @endif</td>
 			<td align="center">{{ number_format($tr->money, 2) }} €</td>
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
@@ -163,12 +165,12 @@
 		<tr @if($tr->type == 'payment') echo style="display:none;" @endif>
 			<th align="center">{{ $date }}</th>	
 			<td align="center">{{ $tr->type == 'payment' ? 'P - '.$tr->description.'' : 'T' }}</td>
-			<td align="center">{{ $tr->username }} @if(trim($tr->plates) != "" && $tr->plates != 0) - {{ $tr->plates }} @endif</td>
+			<td align="center">@if(trim($tr->plates) != "" && $tr->plates != 0) {{ $tr->plates }}  @else {{ $tr->username }} @endif</td>
 			<td align="center">{{ number_format($transaction_sum, 2) }} €</td>
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
 		</tr>
-	<? } } ?>
+	<? } }else{ ?>
 	<!-- END Total transactions row -->
 
 
@@ -190,18 +192,23 @@
 		$total = $total + $fueling - $payment;
 
 		?>
-		<tr @if(!isset($inc_transactions) || $inc_transactions == 'No' ) echo style="display:none;" @endif>
+		<tr>
 			<th align="center" scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d H:i', $py->date) : $py->created_at }}</th>
 			<td align="center" @if($py->type == "P") style="background-color:grey" @endif > {{ $py->description == NULL  ? $py->type : $py->description }} </td>
-			<td align="center">{{ $py->username }} @if(trim($py->plates) != "" && $py->plates != 0) - {{ $py->plates }} @endif</td>
-			<td align="center">{{ $fueling }}</td>
+			<td align="center">@if(trim($py->plates) != "" && $py->plates != 0) {{ $py->plates }} @else {{ $py->username }} @endif</td>
+			<td align="center">{{ number_format($py->lit, 2) }} L | {{ $py->price }} | {{ number_format($fueling, 2) }} €</td>
 			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>
 		</tr>
 	@endforeach
 	<!-- END Show all rows except TOTAL row -->
-
+	<?php } ?>
 	<!-- Show only last row (TOTAL row) -->
+		<tr>
+	        <td colspan="4"></td>
+	        <td align="right">Sub Totali €</td>
+	        <td align="right" class="gray"> {{ number_format($total - $balance, 2) }} €</td>
+		</tr>
 	    <tr>
 	        <td colspan="4"></td>
 	        <td align="right">Totali €</td>

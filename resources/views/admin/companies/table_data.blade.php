@@ -7,7 +7,7 @@
     <td>{{ $company->contact_person }}</td>
     <td>{{ $company->email }}</td>
     <td>{{ $company->status == 1 ? 'Active' : 'No active'  }}</td>
-    <td>{{ $company->limit_left }}</td>
+    <td>{{ $company->has_limit == 2 ? $company->limit_left : 'N/A' }}</td>
     <td>{{ $company->created_at->diffForHumans() }}</td>
     <td>{{ $company->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">

@@ -74,15 +74,15 @@ class Transaction extends Model
 
         $price = pack('c', $response[12]).pack('c', $response[11]);
         $price = unpack('s', $price)[1];
-        $transaction->price = number_format(($price/1000),2);
+        $transaction->price = number_format(($price/1000),2, '.', '');
 
         $lit = pack('c', $response[16]).pack('c', $response[15]).pack('c', $response[14]).pack('c', $response[13]);
         $lit = unpack('i', $lit)[1];
-        $transaction->lit = number_format(($lit/100),2);
+        $transaction->lit = number_format(($lit/100),2, '.', '');
 
         $money = pack('c', $response[20]).pack('c', $response[19]).pack('c', $response[18]).pack('c', $response[17]);
         $money = unpack('i', $money)[1];
-        $transaction->money = number_format(($money/100),2);
+        $transaction->money = number_format(($money/100),2, '.', '');
 
         $dis_tot = pack('c', $response[24]).pack('c', $response[23]).pack('c', $response[22]).pack('c', $response[21]);
         $dis_tot = unpack('i', $dis_tot)[1];

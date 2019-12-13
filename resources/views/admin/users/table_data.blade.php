@@ -4,8 +4,14 @@
     <td>{{ $user->name }}</td>
     <td>{{ $user->email }}</td>
     <td>{{ $user->rfid }}</td>
-    <td>{{ $user->company->name ? $user->company->name : 'No Company' }}</td>
-    <td>{{ $user->one_time_limit }}</td>
+	<td>
+	@if($user->type == 1)
+		 Staff 
+	@else
+		{{ $user->company->name ? $user->company->name : 'No Company' }}
+    @endif
+	</td>
+	<td>{{ $user->one_time_limit }}</td>
     <td>{{ $user->plates }}</td>
     <td>{{ $user->vehicle }}</td>
     <td>{{ $user->created_at->diffForHumans() }}</td>

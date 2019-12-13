@@ -41,7 +41,10 @@
         </div>
 
         <div class="form-group">
-          <input type="checkbox" name="inc_transactions"  id="inc_transactions" {{ request()->get("inc_transactions") == 'Yes' ? 'checked' : ''}}>Inc. transactions<br>
+          <input type="checkbox" name="inc_transactions"  id="inc_transactions" {{ request()->get("inc_transactions") == 'Yes' ? 'checked' : ''}}>Inc. Trans<br>
+        </div>
+        <div class="form-group">
+          <input type="checkbox" name="exc_balance"  id="exc_balance" {{ request()->get("exc_balance") ? 'checked' : ''}}>Exc. Balance<br>
         </div>
 
         <div class="form-group">
@@ -58,7 +61,7 @@
           <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i></button>
           <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-warning" title="Clear All Filters"><i class="fa fa-trash"></i></a>
           <button type="button" data-toggle="tooltip" class="btn btn-success" id="exportEXCEL" title="Export Excel"><i class="fas fa-file-excel"></i></button>
-          <a href="{{ route('generate_pdf/pdf', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'last_payment' => request()->get("last_payment"),'inc_transactions' => request()->get("inc_transactions")] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i class="fas fa-file-pdf"></i></a>
+          <a href="{{ route('generate_pdf/pdf', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'last_payment' => request()->get("last_payment"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance")] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i class="fas fa-file-pdf"></i></a>
           <button type="button" data-toggle="tooltip" class="btn btn-info" id="dailyReport" title="Daily Report"><i class="far fa-envelope"></i></button>
         </div>
 

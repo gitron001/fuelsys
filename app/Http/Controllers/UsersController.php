@@ -140,62 +140,55 @@ class UsersController extends Controller
                 $rfid_product->save();
             }
         }
-		/*
-        if($firstValueOfArrayBranch !== 0 && !empty($firstValueOfArrayLimit)){
-            foreach(array_combine($request->input('branch'), $request->input('limit')) as $branch => $limit){
-
-                $rfid_branch = new RFID_Limits();
-
-                $rfid_branch->rfid_id      = $id;
-                $rfid_branch->branch_id    = $branch;
-                $rfid_branch->limit        = $limit;
-                $rfid_branch->save();
-            }
-        }
-        */
-
-        try {
-            $access_token   = config('token.access_token');
-            $client = new \GuzzleHttp\Client(['cookies' => true,
-            'headers' =>  [
-                'Authorization'          => $access_token
-            ]]);
-            $url = 'http://fuelsystem.alba-petrol.com/api/save/rfid';
+		$exported = 0;
+		$access_token   = config('token.access_token');
+		if($access_token != ""){
+			try {
+				
+						$client = new \GuzzleHttp\Client(['cookies' => true,
+						'headers' =>  [
+							'Authorization'          => $access_token
+						]]);
+						$url = 'http://fuelsystem.alba-petrol.com/api/save/rfid';
 
 
-            $response = $client->request('POST', $url, [
-                'form_params' => [
-                    'branch_user_id'    => $id,
-                    'branch_id'         => Session::get('branch_id'),
-                    'rfid'              => $request->input('rfid'),
-                    'name'              => $request->input('name'),
-                    'surname'           => $request->input('surname'),
-                    'residence'         => $request->input('residence'),
-                    'contact_number'    => $request->input('contact_number'),
-                    'application_date'  => $request->input('application_date'),
-                    'business_type'     => $request->input('business_type'),
-                    'email'             => $request->input('email'),
-                    'company_id'        => $request->input('company_id') ? : 0,
-                    'one_time_limit'    => $request->input('one_time_limit') ? : 0,
-                    'plates'            => $request->input('plates') ? : 0,
-                    'vehicle'           => $request->input('vehicle') ? : 0,
-                    'type'              => $request->input('type'),
-                    'password'          => Hash::make($password),
-                    'status'            => 1,
-                    'remember_token'    => '',
-                    'created_at'        => now()->timestamp,
-                    'updated_at'        => now()->timestamp,
-                    'product'           => $request->input('product'),
-                    'discount'          => $request->input('discount'),
-                ],
-            ]);
-        } catch (\Exception $e) {
-            session()->flash('info','Success: [Exported: 0 ('.$e->getMessage().')]');
-            return redirect('admin/users/' . $id . '/edit');
-        }
-
-        session()->flash('info','Success [Exported: 1]');
-        return redirect('admin/users/' . $id . '/edit');
+						$response = $client->request('POST', $url, [
+							'form_params' => [
+								'branch_user_id'    => $id,
+								'branch_id'         => Session::get('branch_id'),
+								'rfid'              => $request->input('rfid'),
+								'name'              => $request->input('name'),
+								'surname'           => $request->input('surname'),
+								'residence'         => $request->input('residence'),
+								'contact_number'    => $request->input('contact_number'),
+								'application_date'  => $request->input('application_date'),
+								'business_type'     => $request->input('business_type'),
+								'email'             => $request->input('email'),
+								'company_id'        => $request->input('company_id') ? : 0,
+								'one_time_limit'    => $request->input('one_time_limit') ? : 0,
+								'plates'            => $request->input('plates') ? : 0,
+								'vehicle'           => $request->input('vehicle') ? : 0,
+								'type'              => $request->input('type'),
+								'password'          => Hash::make($password),
+								'status'            => 1,
+								'remember_token'    => '',
+								'created_at'        => now()->timestamp,
+								'updated_at'        => now()->timestamp,
+								'product'           => $request->input('product'),
+								'discount'          => $request->input('discount'),
+							],
+						]);
+					} catch (\Exception $e) {
+						session()->flash('info','Success: [Exported: 0 ('.$e->getMessage().')]');
+						return redirect('admin/users/' . $id . '/edit');
+					}
+			}
+			if($exported  == 0){
+				session()->flash('info','Success');
+			}else{
+				session()->flash('info','Success [Exported: 1]');		
+			}
+			return redirect('admin/users/' . $id . '/edit');	
         }
     }
 
@@ -259,41 +252,8 @@ class UsersController extends Controller
         $user->update();
 
         // DELETE Discount
-        //if(empty($request->input('deleteDiscount'))){
-            RFID_Discounts::where('rfid_id',$id)->delete();
-        //}else{
-            //RFID_Discounts::where('rfid_id',$id)->whereNotIn('id',$request->input('deleteDiscount'))->delete();
-        //}
-		/*
-        // DELETE Limit
-        if(empty($request->input('deleteLimit'))){
-            RFID_Limits::where('rfid_id',$id)->delete();
-        }else{
-            RFID_Limits::where('rfid_id',$id)->whereNotIn('id',$request->input('deleteLimit'))->delete();
-        }
+        RFID_Discounts::where('rfid_id',$id)->delete();
 
-        // UPDATE Discount(Product - Discount)
-        if(!empty($request->input('product'))){
-            // Update Product Discount
-            for($i=0; $i < count($request->input('product')); $i++) {
-
-                RFID_Discounts::where('rfid_id', $id)
-                    ->where('id',$request->input('hidden_input_product')[$i])
-                    ->update(['discount' => $request->input('discount')[$i],'product_id' => $request->input('product')[$i]]);
-            }
-        }*/
-		/*
-        // UPDATE Limit(Branch - Limit)
-        if(!empty($request->input('branch'))){
-            // Update Branch Limit
-            for($i=0; $i < count($request->input('branch')); $i++) {
-
-                RFID_Limits::where('rfid_id', $id)
-                    ->where('id',$request->input('hidden_input_branch')[$i])
-                    ->update(['limit' => $request->input('limit')[$i],'branch_id' => $request->input('branch')[$i]]);
-            }
-        }
-		*/
         // ADD new Discount
         if(($request->input('product')[0] != 0) && (!empty($request->input('discount')[0]))){
             foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
@@ -308,20 +268,6 @@ class UsersController extends Controller
                 }
             }
         }
-		/*
-        // ADD new Limit
-        if(($request->input('new_branch')[0] != 0) && (!empty($request->input('new_limit')[0]))){
-            foreach(array_combine($request->input('new_branch'), $request->input('new_limit')) as $branch => $limit){
-
-                $rfid_branch = new RFID_Limits();
-
-                $rfid_branch->rfid_id      = $id;
-                $rfid_branch->branch_id    = $branch;
-                $rfid_branch->limit        = $limit;
-                $rfid_branch->save();
-            }
-        }
-        */
         session()->flash('info','Success');
 
         return redirect()->back();

@@ -53,6 +53,7 @@ class SendDailyEmail extends Command
                 'fromDate' => $from_date,
                 'toDate'   => $to_date,
                 'inc_transactions' => 'Yes',
+                'exc_balance' => 'Yes',
                 //'dailyReport' => 1,
             ];
 
