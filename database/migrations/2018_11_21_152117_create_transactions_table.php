@@ -30,6 +30,9 @@ class CreateTransactionsTable extends Migration
             $table->double('money');
             $table->longText('dis_tot');
             $table->longText('pfc_tot');
+            $table->double('lit_tot')->default(0)
+            $table->longText('dis_tot_last')->nullable();
+            $table->longText('pfc_tot_last')->nullable();
             $table->integer('exported')->default(0);
             $table->integer('branch_id')->default(0);
             $table->integer('branch_transaction_id')->default(0);

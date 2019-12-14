@@ -496,8 +496,13 @@ class TransactionController extends Controller
     }
 	
 	public static function getGeneralDataTotalizers(Request $request){
-        $from_date  = strtotime($request->input('fromDate'));
-        $to_date    = strtotime($request->input('toDate'));
+        if(!$request->input('fromDate')){
+			$from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
+			$to_date =  strtotime(date('d-m-Y H:i', time()));
+		}else{
+			$from_date  = strtotime($request->input('fromDate'));
+			$to_date    = strtotime($request->input('toDate'));
+		}
         $user       = $request->input('user');
         $company    = $request->input('company');
         $last_payment    = $request->input('last_payment');
@@ -525,9 +530,9 @@ class TransactionController extends Controller
             $products = $products->whereIn('user_id',$user)->where('companies.id','=',$company);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
+        //if ($from_date && $request->input('toDate')) {
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        }
+        //}
 		
         $products = $products->get();
 	
@@ -551,9 +556,9 @@ class TransactionController extends Controller
             $min_totalizers = $min_totalizers->whereIn('user_id',$user)->where('companies.id','=',$company);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
+        //if ($request->input('fromDate') && $request->input('toDate')) {
             $min_totalizers = $min_totalizers->where('transactions.created_at', '<', $from_date);
-        }
+        //}
 		
         $min_totalizers = $min_totalizers->get();
 		foreach($products as $p){
