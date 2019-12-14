@@ -99,7 +99,6 @@
                     <th>Sasia</th>
                     <th>Sasia Me Numra</th>
                     <th>Ndryshimi</th>
-                    <th>Totali</th>
                 </tr>
             </thead>
             <tbody>
@@ -111,16 +110,8 @@
                 <td>{{ $product['totalLit'] }} litra</td>
                 <td>{{ $totalizer_sales[$product['product_id']] }} litra</td>
                 <td>{{ number_format($totalizer_sales[$product['product_id']], 2, '.', '') - number_format($product['totalLit'], 2, '.', '')  }} litra</td>
-                <td>{{ number_format($product['totalMoney'], 2, '.', '') }} Euro</td>
             </tr>
-			<?php $total_sales += $product['totalMoney']; ?>
             @endforeach
-			<tr>
-				<td colspan="2"></td>
-				<td> <b>TOTAL:</b> </td>
-                <td> <b>{{ $total_sales }}</b> </td>
-                <td colspan="2"></td>
-			</tr>
             </tbody>
         </table>
     </div>
