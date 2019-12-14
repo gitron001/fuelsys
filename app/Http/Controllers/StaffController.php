@@ -27,21 +27,31 @@ class StaffController extends Controller
 
         $staffData          = self::show_staff_info($request)['staffData'];
         $product_name       = self::show_staff_info($request)['product_name'];
-        array_unshift($product_name , 'Perdoruesi');
-        array_push($product_name,'Euro');
+        array_unshift($product_name , 'Perdoruesi'); // Append "Perdoruesi" in the beginning of the array
+        array_push($product_name,'Euro'); // Append "Euro" in the end of the array
 
         $companyData            = self::show_companies_info($request)['companyData'];
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
-        array_unshift($product_name_company , 'Kompania');
-        array_push($product_name_company,'Euro');
+        array_unshift($product_name_company , 'Kompania'); // Append "Kompania" in the beginning of the array
+        array_push($product_name_company,'Euro'); // Append "Euro" in the end of the array
 
 
         $file_name  = 'Staff_View_Excel - '.date('Y-m-d h-i', strtotime("now"));
 
         $myFile = Excel::create($file_name, function($excel) use( $products,$totalizer_totals,$staffData,$product_name,$companyData,$product_name_company )
         {
+            $excel->getDefaultStyle()
+                    ->getAlignment()
+                    ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            // Total SECTION
             $excel->sheet('Total', function($sheet) use( $products,$totalizer_totals )
             {
+
+                $sheet->cell('A1:E1', function ($cells) {
+                    $cells->setFontWeight('bold');
+                });
+
                 $sheet->appendRow(array(
                     'Produkti',
                     'Cmimi',
@@ -71,38 +81,124 @@ class StaffController extends Controller
 
             });
 
+            // Staff SECTION
             $excel->sheet('Staff', function($sheet) use( $staffData,$product_name )
             {
+                $sheet->cell('A1:E1', function ($cells) {
+                    $cells->setFontWeight('bold');
+                });
 
+                // Header of Excel File
                 $sheet->appendRow(
                     $product_name
                 );
 
+                $i = 0;
                 $total_staff = 0;
                 $product_totals = array();
+                $final_data_array = array(); // Main array
+                $product_name = array_slice($product_name, 1, -1); // Remove the first(Perdoruesi) and last(Euro) item of the array
                 foreach ($staffData as $transaction) {
-                    $sheet->appendRow(array(
-                        $transaction['user_name'],
-                    ));
+                    // PERDORUESI row
+                    $final_data_array[][$i] =  $transaction['user_name'];
+
+                    // Euro Diesel , Euro Super , Propan-Butan rows
+                    foreach($product_name as $key => $value){
+                        $lit = !empty($transaction[$key]) ? $transaction[$key][0] ." litra / " : '0 litra / ';
+                        $euro = !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2). " Euro" : '0 Euro';
+                        $final_data_array[$i][] = $lit . $euro ;
+
+                        if(isset($transaction[$key])){
+                            if(isset($product_totals[$key])){
+                            $product_totals[$key]['lit'] += $transaction[$key][0];
+                            $product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
+                            }else{
+                            $product_totals[$key]['lit'] = $transaction[$key][0];
+                            $product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
+                            }
+                        }
+                    }
+
+                    // EURO row
+                    $final_data_array[$i][] = number_format($transaction['totalMoney'],2)." Euro";
+                    $total_staff += $transaction['totalMoney'];
+                    $i++;
                 }
 
+                // Append last row of table (TOTAL)
+                $total_data = array("TOTAL");
+                foreach($product_name as $key => $value){
+                    $total_data[] = $product_totals[$key]['lit'] ." Lit / " . number_format($product_totals[$key]['money'], 2, '.', '') ." Euro";
+                }
+                $total_data[] = number_format($total_staff,2). " Euro";
+
+                // Append last row(TOTAL) of table to main array of data
+                $final_data_array[] = $total_data;
+
+                // Print Excel file
+                foreach ($final_data_array as $fd) {
+                    $sheet->appendRow($fd);
+                }
             });
 
+            // Companies SECTION
             $excel->sheet('Companies', function($sheet) use( $companyData,$product_name_company )
             {
+                $sheet->cell('A1:E1', function ($cells) {
+                    $cells->setFontWeight('bold');
+                });
 
+                // Header of Excel File
                 $sheet->appendRow(
                     $product_name_company
                 );
 
-                $total_company = 0;
+                $i = 0;
+                $total_staff = 0;
                 $product_totals = array();
+                $final_data_array = array(); // Main array
+                $product_name_company = array_slice($product_name_company, 1, -1); // Remove the first(Perdoruesi) and last(Euro) item of the array
                 foreach ($companyData as $transaction) {
-                    $sheet->appendRow(array(
-                        $transaction['company_name'],
-                    ));
+                    // PERDORUESI row
+                    $final_data_array[][$i] =  $transaction['company_name'];
+
+                    // Euro Diesel , Euro Super , Propan-Butan rows
+                    foreach($product_name_company as $key => $value){
+                        $lit = !empty($transaction[$key]) ? $transaction[$key][0] ." litra / " : '0 litra / ';
+                        $euro = !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2). " Euro" : '0 Euro';
+                        $final_data_array[$i][] = $lit . $euro ;
+
+                        if(isset($transaction[$key])){
+                            if(isset($product_totals[$key])){
+                            $product_totals[$key]['lit'] += $transaction[$key][0];
+                            $product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
+                            }else{
+                            $product_totals[$key]['lit'] = $transaction[$key][0];
+                            $product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
+                            }
+                        }
+                    }
+
+                    // EURO row
+                    $final_data_array[$i][] = number_format($transaction['totalMoney'],2)." Euro";
+                    $total_staff += $transaction['totalMoney'];
+                    $i++;
                 }
 
+                // Append last row of table (TOTAL)
+                $total_data = array("TOTAL");
+                foreach($product_name_company as $key => $value){
+                    $total_data[] = $product_totals[$key]['lit'] ." Lit / " . number_format($product_totals[$key]['money'], 2, '.', '') ." Euro";
+                }
+                $total_data[] = number_format($total_staff,2) . " Euro";
+
+                // Append last row(TOTAL) of table to main array of data
+                $final_data_array[] = $total_data;
+
+                // Print Excel file
+                foreach ($final_data_array as $fd) {
+                    $sheet->appendRow($fd);
+                }
             });
 
         });

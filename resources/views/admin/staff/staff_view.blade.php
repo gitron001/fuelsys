@@ -142,23 +142,23 @@
                 @foreach($staffData as $transaction)
                 <tr>
                     <td>{{ $transaction['user_name'] }}</td>
-                        @foreach($product_name as $key => $value)
-                            <td>
-                            {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
-                            {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
-                            </td>
-							<?php
-							    if(isset($transaction[$key])){
-								  if(isset($product_totals[$key])){
-									$product_totals[$key]['lit'] += $transaction[$key][0];
-									$product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
-								  }else{
-									$product_totals[$key]['lit'] = $transaction[$key][0];
-									$product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
-								  }
-								}
-							?>
-                        @endforeach
+                    @foreach($product_name as $key => $value)
+                    <td>
+                        {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
+                        {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
+                    </td>
+                    <?php
+                        if(isset($transaction[$key])){
+                            if(isset($product_totals[$key])){
+                            $product_totals[$key]['lit'] += $transaction[$key][0];
+                            $product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
+                            }else{
+                            $product_totals[$key]['lit'] = $transaction[$key][0];
+                            $product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
+                            }
+                        }
+                    ?>
+                    @endforeach
                     <td>{{  number_format($transaction['totalMoney'],2)  }} Euro</td>
 					<?php $total_staff += $transaction['totalMoney']; ?>
                 </tr>
