@@ -167,7 +167,7 @@
 								}
 							?>
                         @endforeach
-                    <td>{{  $transaction['totalMoney']  }} Euro</td>
+                    <td>{{  number_format($transaction['totalMoney'],2)  }} Euro</td>
 					<?php $total_staff += $transaction['totalMoney']; ?>
                 </tr>
                 @endforeach
@@ -207,8 +207,8 @@
 				<?php $product_totals = array(); ?>
                 @foreach($companyData as $transaction)
                 <tr>
-                    <td>{{ $transaction['c_name'] }}</td>
-                        @foreach($product_name as $key => $value)
+                    <td>{{ $transaction['company_name'] }}</td>
+                        @foreach($product_name_company as $key => $value)
                             <td>
                             {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
                             {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
@@ -225,7 +225,7 @@
 								}
 							?>
                         @endforeach
-                    <td>{{  $transaction['totalMoney']  }} Euro</td>
+                    <td>{{  number_format($transaction['totalMoney'], 2)  }} Euro</td>
 					<?php $total_company += $transaction['totalMoney']; ?>
                 </tr>
                 @endforeach
