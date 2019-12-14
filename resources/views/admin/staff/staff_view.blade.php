@@ -71,9 +71,9 @@
                 <td>{{ number_format($product['max_totalizer']/100 - $product['min_totalizer']/100, 2) }} Euro</td>
             </tr>
 			<?php if(isset($totalizer_sales[$product['product_id']])){
-					$totalizer_sales[$product['product_id']] += $product['lit'];
+					$totalizer_sales[$product['product_id']] += number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
 				  }else{
-					$totalizer_sales[$product['product_id']] = $product['lit'];
+					$totalizer_sales[$product['product_id']] = number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
 				  }
 			?>
             @endforeach

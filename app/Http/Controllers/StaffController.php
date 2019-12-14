@@ -63,9 +63,9 @@ class StaffController extends Controller
                 $totalizer_sales = array();
                 foreach($totalizer_totals as $product) {
                     if(isset($totalizer_sales[$product['product_id']])){
-					    $totalizer_sales[$product['product_id']] += $product['lit'];
+					    $totalizer_sales[$product['product_id']] += number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
 				    }else{
-					    $totalizer_sales[$product['product_id']] = $product['lit'];
+					    $totalizer_sales[$product['product_id']]  = number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
                     }
                 }
 
