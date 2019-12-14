@@ -17,7 +17,7 @@
 
             <div class="form-group">
                 <label for="User:">Staff:</label>
-                <select class="users-dropdown form-control" name="user[]" multiple="multiple">
+                <select class="users-dropdown form-control" name="user[]" multiple="multiple" id="user">
                 <option value="">Select a user</option>
                 @foreach($usersFilter as $id => $name)
                     <option value="{{ $id }}"
@@ -34,6 +34,7 @@
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
                 <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i> Clear filters </a>
             </div>
+            <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Export</button>
         </div>
     </form>
     <br>
@@ -141,23 +142,23 @@
                 @foreach($staffData as $transaction)
                 <tr>
                     <td>{{ $transaction['user_name'] }}</td>
-                        @foreach($product_name as $key => $value)
-                            <td>
-                            {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
-                            {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
-                            </td>
-							<?php
-							    if(isset($transaction[$key])){
-								  if(isset($product_totals[$key])){
-									$product_totals[$key]['lit'] += $transaction[$key][0];
-									$product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
-								  }else{
-									$product_totals[$key]['lit'] = $transaction[$key][0];
-									$product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
-								  }
-								}
-							?>
-                        @endforeach
+                    @foreach($product_name as $key => $value)
+                    <td>
+                        {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
+                        {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
+                    </td>
+                    <?php
+                        if(isset($transaction[$key])){
+                            if(isset($product_totals[$key])){
+                            $product_totals[$key]['lit'] += $transaction[$key][0];
+                            $product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
+                            }else{
+                            $product_totals[$key]['lit'] = $transaction[$key][0];
+                            $product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
+                            }
+                        }
+                    ?>
+                    @endforeach
                     <td>{{  number_format($transaction['totalMoney'],2)  }} Euro</td>
 					<?php $total_staff += $transaction['totalMoney']; ?>
                 </tr>
@@ -167,7 +168,7 @@
                         @foreach($product_name as $key => $value)
 							<td> {{ $product_totals[$key]['lit'] }} Lit / {{ number_format($product_totals[$key]['money'], 2, '.', '') }} Euro</td>
 						@endforeach
-					<td> <b>{{ $total_staff }}</b> </td>
+					<td> <b>{{ number_format($total_staff,2) }}</b> </td>
 				</tr>
             </tbody>
         </table>
@@ -225,7 +226,7 @@
                         @foreach($product_name_company as $key => $value)
 							<td> {{ $product_totals[$key]['lit'] }} Lit / {{ number_format($product_totals[$key]['money'], 2, '.', '') }} Euro</td>
 						@endforeach
-					<td> <b>{{ $total_company }}</b> </td>
+					<td> <b>{{ number_format($total_company,2) }}</b> </td>
 				</tr>
             </tbody>
         </table>
@@ -254,6 +255,30 @@
 
 @section('js')
     <script>
+        $(document).ready(function(){
+            $('#export_excel_staff_view').click(function(){
+            var fromDate = $('#datetimepicker4').val();
+            var toDate = $('#datetimepicker5').val();
+            var user = $("#user").val();
+
+            $.ajax({
+                type: "GET",
+                data: {fromDate: fromDate, toDate: toDate, user: user},
+                url: "{{ URL('/excel_export_staff_view')}}",
+                dataType: "JSON",
+                success: function(response, textStatus, request){
+                var a = document.createElement("a");
+                a.href = response.file;
+                a.download = response.name;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                }
+            });
+
+            });
+        });
+
         $( document ).ready(function() {
             $('.users-dropdown').select2({
                 placeholder: "Select a user"
