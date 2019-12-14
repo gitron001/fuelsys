@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PFC;
 use App\Models\RunninProcessModel as Process;
 use Artisan;
+use App\Jobs\StartPFC;
 
 class PFCController extends Controller
 {
@@ -121,7 +122,8 @@ class PFCController extends Controller
 		if($type == 6){
 			$type = 1;	
 			Process::where('pfc_id', $pfc_id)->where('type_id', 5)->delete();
-			Artisan::call('card:reader '.$pfc_id);
+			$recepit = new StartPFC($pfc_id);
+			dispatch($recepit);
 		}
 		
 		Process::insert(array('start_time'=> time(),

@@ -202,6 +202,7 @@ class DispanserService extends ServiceProvider
             Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();  	 
 			if(Process::where('type_id', 1)->where('pfc_id', $pfc_id)->count() != 0){
 				socket_close($socket);
+				exit();
 			}
 			return false;
         }
