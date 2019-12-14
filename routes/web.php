@@ -96,7 +96,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 	// Settings
 	//Route::get('/admin/staff','StaffController@searchWithPagination');
 	//Route::get('/admin/staff','StaffController@searchWithPagination');
-	Route::get('/admin/staff','StaffController@staff_view');
+    Route::get('/admin/staff','StaffController@staff_view');
+    Route::get('/excel_export_staff_view','StaffController@export_excel');
 
 	// Pusher
 	Route::get('/counter',function(){
