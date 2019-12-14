@@ -16,6 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->char('status');
+            $table->integer('status')->default(0);
             $table->char('locker');
             $table->integer('tr_no');
 			$table->integer('channel_id')->nullable()->index();

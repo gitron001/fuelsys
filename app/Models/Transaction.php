@@ -12,6 +12,7 @@ class Transaction extends Model
     
     protected $fillable = [
         'status', 
+        'error_flag', 
         'locker', 
         'tr_no',
         'receipt_no',

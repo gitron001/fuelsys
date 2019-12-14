@@ -39,8 +39,33 @@ class SendTransactionEmail implements ShouldQueue
     public function handle()
     {	
 		$transactions  = Transaction::where('id', $this->trans_id)->first();
+		
+		//vallidate Transaction
+		$prev_trsansaction = Transaction::where('sl_no', $transactions->sl_no)->where('channel_id', $transactions->channel_id)->latest('created_by')->where('id', '<', $this->trans_id)->first();
+		
+		$check_liters 	   =  ($transactions->dis_tot - $prev_trsansaction->dis_tot)/100  ;
+		
+		if($transactions->lit != $check_liters){
+			$transactions->error_flag = 3;				
+			/*$mailable  = new TransactionMail($transactions);
+			$the_email = $transactions->users->company->email;
+			$company       = Company::where('status',4)->first();
+			if(trim($company->email) == ""){				
+				return true;
+			}
+			Mail::to($company->email)->send($mailable);*/
+		}
+		$transactions->lit_tot      = $check_liters;
+		$transactions->dis_tot_last = $prev_trsansaction->dis_tot;
+		$transactions->pfc_tot_last = $prev_trsansaction->pfc_tot;
+		$transactions->save();
+		echo 'EMAIL';
+		
+		
+		
+		
 		if(!is_null($transactions->users->company->id) && $transactions->users->company->send_email == 1 && $transactions->users->company->on_transaction == 1){
-			$mailable = new TransactionMail($transactions);
+			$mailable  = new TransactionMail($transactions);
 			$the_email = $transactions->users->company->email;
 	
 			if(trim($the_email) == ""){				
