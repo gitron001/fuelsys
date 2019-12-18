@@ -62,7 +62,7 @@
 					<span class="label label-danger"> VIEW </span></a>
 				</li>
 				<li class="list-group-item">
-				  <b>Tracking Commands</b> <a href="{{ url('/track-commands') }}" class="pull-right">
+				  <b>Tracking Commands</b> <a href="{{ url('/tracking_command') }}" class="pull-right">
 					<span class="label label-danger"> VIEW </span></a>
 				</li>
 				<li class="list-group-item">
