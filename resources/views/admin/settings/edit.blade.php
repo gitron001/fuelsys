@@ -62,6 +62,10 @@
 					<span class="label label-danger"> VIEW </span></a>
 				</li>
 				<li class="list-group-item">
+				  <b>Tracking Commands</b> <a href="{{ url('/track-commands') }}" class="pull-right">
+					<span class="label label-danger"> VIEW </span></a>
+				</li>
+				<li class="list-group-item">
 				  <b>Export Payments</b> <a href="{{ url('/api/payments') }}" class="pull-right">
 					<span class="label label-success"> EXPORT </span></a>
 				</li>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\FaileAttempt;
+use App\Models\TrackingCommands;
+use App\Models\Dispaneser;
 
 class SettingsController extends Controller
 {
@@ -105,6 +107,29 @@ class SettingsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function tracking_commands(Request $request)
+    {
+		$channels = Dispaneser::get();
+        $query = new TrackingCommands;
+		
+		if($request->input('channel_id')){
+			$query = $query->where('channel_id', $request->input('channel_id'));
+		}
+
+		if($request->input('from_date')){
+			$query = $query->whereBetween('created_at', [strtotime($request->input('from_date')),  strtotime($request->input('to_date'))]);
+		}
+        
+		$commands = $query->orderBy('created_at','ASC')->paginate(15);
+			
+        if($request->ajax() == false){			
+            return view('/admin/settings/tracking',compact('commands', 'channels'));
+        } else {
+            return view('/admin/settings/tracking_data',compact('commands', 'channels'))->render();
+        }
+
     }
 
     public function failed_attempts(Request $request)

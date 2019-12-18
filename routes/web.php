@@ -133,6 +133,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 
 	// Show failed attemps
 	Route::get('/failed-attempts','SettingsController@failed_attempts');
+	
+	Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
+
 
 });
 
