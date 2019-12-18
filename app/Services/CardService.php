@@ -78,8 +78,8 @@ class CardService extends ServiceProvider
             . pack("c*", 0x0A)
             . pack("c*", $channel)
             . strrev(pack("s", $the_crc))
-            . pack("c*", 02);
-		
+            . pack("c*", 02);		
+
         $response = PFC::send_message($socket, $binarydata, $message);
 		
 		if(!$response){ return false; } 
@@ -142,7 +142,7 @@ class CardService extends ServiceProvider
 			$bonus_requst = Bonus::where('channel_id', $channel)->where('pfc_id', $pfc_id)->where('created_at', '>', $time_difference)->first();
 			if(isset($bonus_requst->user_id)){
 				$all_discounts = self::generate_discounts($bonus_requst->user_id, $response, $pfc_id);
-				self::activate_card_discount($socket, $channel, $all_discounts);
+				self::activate_card_discount($socket, $channel, $all_discounts);						
 			}else{				
 				self::activate_card($socket, $channel);
 			}
@@ -185,8 +185,12 @@ class CardService extends ServiceProvider
             $binarydata .= strrev(pack("s",$the_crc));
             //End of Message
             $binarydata .= pack("c*",02);
-
+			
+			PFC::storeLogs($channel, null, 1, unpack('c*', $binarydata));
+			
             $response = PFC::send_message($socket, $binarydata, $message);
+			
+			PFC::storeLogs($channel, null, 2,  $response);
 
             return true;
     }
@@ -230,7 +234,12 @@ class CardService extends ServiceProvider
             //End of Message
             $binarydata .= pack("c*",02);
 			
+			
+			PFC::storeLogs($channel, null, 3, unpack('c*', $binarydata));
+			
             $response = PFC::send_message($socket, $binarydata, $message);
+			
+			PFC::storeLogs($channel, null, 4, $response);
 		
             return true;
     }
@@ -312,4 +321,5 @@ class CardService extends ServiceProvider
 		
 		FaileAttempt::firstOrCreate($data);
     }
+
 }

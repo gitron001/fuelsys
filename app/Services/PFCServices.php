@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
 use App\Models\PFC as PfcModel;
+use DB;
 
 class PFCServices extends ServiceProvider
 {
@@ -120,4 +121,31 @@ class PFCServices extends ServiceProvider
             //break;
         }
     }
+	/*
+     * type 1 - Activate Card
+     * type 2 - Activate Card Response
+     * type 3 - Activate Card with Discounts
+     * type 4 - Activate Card with Discounts Response
+     * type 5 - Read Transaction
+     * type 6 - Transaction Data
+     * type 7 - Lock Transaction
+     * type 8 - Lock Transaction Response
+     * type 9 - Clear Transaction 
+     * type 10 - Clear Transaction Response
+     */
+	public static  function storeLogs($channel, $sl_no, $type, $command){
+
+		$data = array(
+		 'channel_id' => $channel,
+		 'sl_no' => $sl_no,
+		 'type' => $type,
+		 'command' => serialize($command),
+		 'created_at' => time()
+		);
+		
+		DB::table('tracking')->insert(
+			 $data
+		);
+    }	
+	
 }

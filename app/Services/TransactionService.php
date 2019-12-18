@@ -33,9 +33,8 @@ class TransactionService extends ServiceProvider
             .pack("c*",0x1)
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
-
-
-        $response = PFC::send_message($socket, $binarydata);
+        
+		$response = PFC::send_message($socket, $binarydata);
         //print_r($response);
 		
 		if(!$response)
@@ -93,9 +92,14 @@ class TransactionService extends ServiceProvider
          .pack("C*", $controller )
          .strrev(pack("s",$the_crc))
          .pack("c*",02);
-
-        $response = PFC::send_message($socket, $binarydata);
-
+		
+		
+		PFC::storeLogs($channel, null, 5, unpack('c*', $binarydata));
+        
+		$response = PFC::send_message($socket, $binarydata);
+		
+		PFC::storeLogs($channel, null, 6, $response);
+		
 		if(!$response){ return false; } 
 
         $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel, $type);
@@ -136,7 +140,13 @@ class TransactionService extends ServiceProvider
         $pos_id =  pack("C*", $controller);
         $bin_channel = pack("C*", $channel);
         $status_bin = pack("C*", $status);
-
+		
+		if($status == 1){
+			$type = 7;
+		}elseif($status == 2){
+			$type = 9;			
+		}
+		
         //Generate CRC for the Transaction Message
         $message = "\x1\x7\x82" .$bin_channel. $pos_id.$status_bin;
         $the_crc = PFC::crc16($message);
@@ -150,8 +160,12 @@ class TransactionService extends ServiceProvider
             .pack("C*", $status)
             .strrev(pack("s", $the_crc))
             .pack("c*", 02);
-
+				
+		PFC::storeLogs($channel, null, $type, unpack('c*', $binarydata));
+		
         $response = PFC::send_message($socket, $binarydata);
+		
+		PFC::storeLogs($channel, null, $type+1, $response);
 		
         return true;
     }
