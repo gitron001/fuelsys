@@ -328,6 +328,7 @@ class PaymentsController extends Controller
     public static function printFunction(Request $request)
     {
 		PrintPaymentService::printFunction($request->input('id'));
+		echo true;
     }
 
 

@@ -101,21 +101,22 @@
 							{!! Form::label('bis_number', 'Bis.Number'); !!}
 							{!! Form::text('bis_number',null,['class'=>'form-control']); !!} 
 						</div>
-
 						<div class="form-group">
-							{!! Form::label('starting_balance', 'Starting Balance'); !!}
-							{!! Form::text('starting_balance',null,['class'=>'form-control']); !!} 
+							{!! Form::label('tax_number', 'Tax.Number'); !!}
+							{!! Form::text('tax_number',null,['class'=>'form-control']); !!} 
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('contact_person', 'Contact Person:'); !!}
 							{!! Form::text('contact_person',null,['class'=>'form-control']); !!} 
 						</div>
-
+						
 						<div class="form-group">
-							{!! Form::label('tax_number', 'Tax.Number'); !!}
-							{!! Form::text('tax_number',null,['class'=>'form-control']); !!} 
+							{!! Form::label('printer_id', 'Printer IP'); !!}
+							{!! Form::text('printer_id',null,['class'=>'form-control']); !!} 
 						</div>
+
+						
 
 						<div class="form-group">
 							{!! Form::label('photo', 'Photo:'); !!}

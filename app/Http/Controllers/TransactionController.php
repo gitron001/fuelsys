@@ -31,7 +31,7 @@ class TransactionController extends Controller
     public function index()  {
         $transactions   = Transactions::orderBy('created_at', 'desc')->paginate(15);
         $users          = Users::pluck('name','id')->all();
-        $companies      = Company::pluck('name','id')->all();
+        $companies      = Company::pluck('name','id')->where('status', 1)->all();
         return view('/admin/transactions/home',compact('transactions','users','companies'));
     }
 

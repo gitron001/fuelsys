@@ -29,13 +29,23 @@ class PrintPaymentService extends ServiceProvider
 
             $company    	= Company::where('status',4)->first();
 			
-			if($company->printer_id == "" || $company->printer_id == NULL){
+			if(!isset($company->id) || $company->printer_id == "" || $company->printer_id == NULL){
 				return true;
 			}
 
-            $image          = public_path().'/images/nesim-bakija.png';
-            $logo           = EscposImage::load($image, false);
+            $image          = public_path().'/images/company/'.$company->images;            
             $printer        = new Printer($connector);
+
+			if(file_exists($image) && !empty($company->images)){
+				if(exif_imagetype($image) == IMAGETYPE_PNG){
+					$logo           = EscposImage::load(public_path().'/images/nesim-bakija.png', false);
+					  /* Print top logo */
+					$printer -> setJustification(Printer::JUSTIFY_CENTER);
+					$printer -> graphics($logo);
+					$printer->text("\n");
+				}
+			}
+
             $date           = date("F j, Y, H:i", time());
 
             /* Print top logo */
@@ -46,12 +56,12 @@ class PrintPaymentService extends ServiceProvider
             /* Name & Info of Company */
             $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
             $printer->setEmphasis(true);
-            $printer->text("Nesim Bakija SH.P.K.\n");
+            $printer->text($company->name.".\n");
             $printer->setEmphasis(false);
             $printer->selectPrintMode();
             $printer->text("\n");
-            $printer->text("Rruga Skënderbeu, Gjakovë, Kosovë\n"); // blank line
-            $printer->text("NRB. 810235722\n");
+            $printer->text("$company->address $company->city, $company->country\n"); // blank line
+            $printer->text("NRB. $company->bis_number\n");
             /*if($transaction->receipt_no != 0){
                 $printer->text("Fat. NR. $transaction->receipt_no\n");
             }*/

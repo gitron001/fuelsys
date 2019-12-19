@@ -36,6 +36,7 @@ class Company extends Model
         'monthly_report',
         'daily_at',
         'on_transaction',
+        'printer_id',
     ];
 
     public function getDateFormat(){

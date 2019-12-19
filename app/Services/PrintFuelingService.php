@@ -23,31 +23,41 @@ class PrintFuelingService extends ServiceProvider
      */
     public static function printFunction($id)
     {
-        try {
-
-            $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
-            $transaction    = Transaction::where('id', $id)->first();
-
-            $image          = public_path().'/images/nesim-bakija.png';
-            $logo           = EscposImage::load($image, false);
-            $printer        = new Printer($connector);
-            $date           = date("F j, Y, H:i", time());
-
+       // try {
 			
-            /* Print top logo */
-            $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            $printer -> graphics($logo);
-            $printer->text("\n");
+			$company    	= Company::where('status',4)->first();
+			
+			if(!isset($company->id) || $company->printer_id == "" || $company->printer_id == NULL){
+				return true;
+			}		
+
+            $connector      = new NetworkPrintConnector($company->printer_id, 9100);
+            $transaction    = Transaction::where('id', $id)->first();
+            $image          = public_path().'/images/company/'.$company->images;            
+            $printer        = new Printer($connector);
+
+			if(file_exists($image) && !empty($company->images)){
+				if(exif_imagetype($image) == IMAGETYPE_PNG){
+					$logo           = EscposImage::load(public_path().'/images/nesim-bakija.png', false);
+					  /* Print top logo */
+					$printer -> setJustification(Printer::JUSTIFY_CENTER);
+					$printer -> graphics($logo);
+					$printer->text("\n");
+				}
+			}
+			
+            $date           = date("F j, Y, H:i", time());
+          
 
             /* Name & Info of Company */
             $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
             $printer->setEmphasis(true);
-            $printer->text("Nesim Bakija SH.P.K.\n");
+            $printer->text($company->name.".\n");
             $printer->setEmphasis(false);
             $printer->selectPrintMode();
             $printer->text("\n");
-            $printer->text("Rruga Skënderbeu, Gjakovë, Kosovë\n"); // blank line
-            $printer->text("NRB. 810235722\n");
+            $printer->text("$company->address $company->city, $company->country\n"); // blank line
+            $printer->text("NRB. $company->bis_number\n");
             if($transaction->receipt_no != 0){
                 $printer->text("Fat. NR. $transaction->receipt_no\n");
             }
@@ -96,11 +106,11 @@ class PrintFuelingService extends ServiceProvider
             $printer -> cut();
             $printer -> close();
 			
-			return true; 
+			return 'PRINT'; 
 			
-        } catch (Exception $e) {
-            echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
-        }
+       // } catch (Exception $e) {
+           // echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+        //}
     }
 
     /**
