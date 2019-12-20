@@ -14,7 +14,7 @@ class CreateRfidLimitsTable extends Migration
     public function up()
     {
         Schema::create('rfid_limits', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('rfid_id');
             $table->integer('branch_id');
             $table->double('limit');

@@ -14,8 +14,8 @@ class CreateCompanyDiscountsTable extends Migration
     public function up()
     {
         Schema::create('company_discounts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('company_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('company_id');
             $table->integer('product_id');
             $table->double('discount');
             $table->integer('created_at');

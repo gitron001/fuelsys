@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Company as Company;
 use App\Models\Users as Users;
+use App\Models\Dispaneser as Dispaneser;
+use Session;
 
 class Transaction extends Model
 {
@@ -30,6 +32,8 @@ class Transaction extends Model
         'ctype',
         'method',
         'bill_no',
+        'test_user_id',
+        'test_card_nr',
     ];
 
     public function getDateFormat(){
@@ -53,7 +57,9 @@ class Transaction extends Model
     }
 
     public static function insertTransactionData($response, $pfc_id, $channel_id){
-
+		
+		$dispaneser = Dispaneser::where('channel_id', $channel_id)->first();
+		
         $transaction = new Transaction();
 
         $transaction->status = $response[4];
@@ -75,15 +81,15 @@ class Transaction extends Model
 
         $price = pack('c', $response[12]).pack('c', $response[11]);
         $price = unpack('s', $price)[1];
-        $transaction->price = number_format(($price/1000),2, '.', '');
+        $transaction->price = number_format(($price/(int)$dispaneser->price_division),2, '.', '');
 
         $lit = pack('c', $response[16]).pack('c', $response[15]).pack('c', $response[14]).pack('c', $response[13]);
         $lit = unpack('i', $lit)[1];
-        $transaction->lit = number_format(($lit/100),2, '.', '');
+        $transaction->lit = number_format(($lit/(int)$dispaneser->lit_division),2, '.', '');
 
         $money = pack('c', $response[20]).pack('c', $response[19]).pack('c', $response[18]).pack('c', $response[17]);
         $money = unpack('i', $money)[1];
-        $transaction->money = number_format(($money/100),2, '.', '');
+        $transaction->money = number_format(($money/(int)$dispaneser->money_division),2, '.', '');
 
         $dis_tot = pack('c', $response[24]).pack('c', $response[23]).pack('c', $response[22]).pack('c', $response[21]);
         $dis_tot = unpack('i', $dis_tot)[1];
@@ -98,8 +104,10 @@ class Transaction extends Model
 
         $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
         $rfid = unpack('i', $rfid)[1];
+		
+		$transaction_data 	 = Session::get($channel_id.'.transaction');	
 
-        $user = Users::where("rfid", $rfid)->where('status', 1)->first();
+        $user = Users::where("rfid", $transaction_data['user_card'])->where('status', 1)->first();
 		
 		/*if(isset($user->id)){
 
@@ -116,6 +124,10 @@ class Transaction extends Model
 
         $transaction->ctype = $response[34];
 
+        $transaction->method = $response[35];		
+		
+        $transaction->bonus_user_id = $transaction_data['bonus_card'];
+		
         $transaction->method = $response[35];
 
         $bill_no = pack('c', $response[37]).pack('c', $response[36]);

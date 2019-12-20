@@ -14,7 +14,7 @@ class CreateTrackingHistoriesTable extends Migration
     public function up()
     {
         Schema::create('tracking_histories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('tracking_id');
             $table->integer('created_by');
             $table->integer('created_at');

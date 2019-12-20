@@ -132,6 +132,10 @@ class PFCServices extends ServiceProvider
      * type 8 - Lock Transaction Response
      * type 9 - Clear Transaction 
      * type 10 - Clear Transaction Response
+     * type 11 - Prepay Command
+     * type 12 - Prepay Command Response
+	 * type 13 - Preset Command
+     * type 14 - Preset Command Response
      */
 	public static  function storeLogs($channel, $sl_no, $type, $command){
 

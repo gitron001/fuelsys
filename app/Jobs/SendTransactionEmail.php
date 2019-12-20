@@ -61,6 +61,8 @@ class SendTransactionEmail implements ShouldQueue
 			if(trim($the_email) == ""){				
 				return true;
 			}
+			//Send to multiple email if divided by comman
+			$the_email = array_map('trim', explode(',',$the_email) );
 			Mail::to($the_email)->send($mailable);
 			
 			if( count(Mail::failures()) > 0 ) {

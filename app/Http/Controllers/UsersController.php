@@ -247,6 +247,7 @@ class UsersController extends Controller
         $user->status           = $request->input('status');
         $user->vehicle          = $request->input('vehicle');
         $user->type             = $request->input('type');
+        $user->one_time_limit   = $request->input('one_time_limit');
         $user->password         = bcrypt($password);
         $user->updated_at       = now()->timestamp;
         $user->update();

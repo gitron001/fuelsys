@@ -696,8 +696,10 @@ class TransactionController extends Controller
 
 
         Mail::send('emails.report',["data"=>"Raport Transaksionesh - Nesim Bakija"],function($m) use($pdf, $company_details){
-            // STATIC EMAIL - TEST
-            $m->to($company_details->email)->subject('Raport Transaksionesh - Nesim Bakija');
+            // Send to multiple emails if divided by comma
+			$email = array_map('trim', explode(',',$company_details->email) );
+
+            $m->to($email)->subject('Raport Transaksionesh - Nesim Bakija');
             $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
         });
     }

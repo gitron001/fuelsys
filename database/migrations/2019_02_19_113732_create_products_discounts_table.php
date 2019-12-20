@@ -14,7 +14,7 @@ class CreateProductsDiscountsTable extends Migration
     public function up()
     {
         Schema::create('rfid_discounts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('rfid_id');
             $table->integer('product_id');
             $table->double('discount');

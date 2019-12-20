@@ -14,6 +14,7 @@ use App\Models\Bonus_request as Bonus;
 use App\Models\FaileAttempt as FaileAttempt;
 use DB;
 use App\Services\TransactionService;
+use Session;
 
 
 class CardService extends ServiceProvider
@@ -97,8 +98,9 @@ class CardService extends ServiceProvider
         if($user->status != 1 ){ self::storeFailedAttempt($channel, $cardNumber, $pfc_id, 2); return false; }
 	
         if($user->company->status != 1 &&  $user->company->status != 4){ return false; }
-		
-		if(in_array($user->type, array(6,7,8))){			
+	
+		if(in_array($user->type, array(6,7,8))){
+			
 			Bonus::where('pfc_id', $pfc_id)->where('channel_id', $channel)->delete();
 			
 			Bonus::insert(
@@ -133,14 +135,24 @@ class CardService extends ServiceProvider
             }
         }
 		
+		if(!empty($user->one_time_limit) && $user->one_time_limit != 0){
+			$liters = $user->one_time_limit*100;
+            self::setPreset($socket, $channel, str_replace('.', '', $liters));
+		}
 		//unblock
 		//
 		//self::activate_card($socket, $channel, 4);	
         echo 'ACTIVATE';
-		if(count($user->discounts) == 0 && count($user->company->discounts) == 0){
+		$transaction_data = array();
+		$transaction['bonus_card'] = "";
+		if(count($user->discounts) == 0 && count($user->company->discounts) == 0){			
+			$bonus_requst = Bonus::where('channel_id', $channel)
+							->where('pfc_id', $pfc_id)
+							->where('created_at', '>', $time_difference)
+							->first();	
 			
-			$bonus_requst = Bonus::where('channel_id', $channel)->where('pfc_id', $pfc_id)->where('created_at', '>', $time_difference)->first();
 			if(isset($bonus_requst->user_id)){
+				$transaction['bonus_card'] = $bonus_requst->user_id;
 				$all_discounts = self::generate_discounts($bonus_requst->user_id, $response, $pfc_id);
 				self::activate_card_discount($socket, $channel, $all_discounts);						
 			}else{				
@@ -148,12 +160,14 @@ class CardService extends ServiceProvider
 			}
         }else{
 			//self::activate_card($socket, $channel, 4);
-			
             $all_discounts = self::generate_discounts($user->id, $response, $pfc_id);
 			
             self::activate_card_discount($socket, $channel, $all_discounts);
         }
-
+		$transaction['user_card']	= $cardNumber;
+		$transaction['user_id']		= $user->id;
+		Session::put($channel.'.transaction', $transaction);
+		Session::save();
         return true;
     }
 
@@ -265,7 +279,41 @@ class CardService extends ServiceProvider
         //End of Message
         $binarydata .= pack("c*",02);		
 		
-        $response = PFC::send_message($socket, $binarydata, $message);
+		PFC::storeLogs($channel, null, 11, unpack('c*', $binarydata));
+		
+		$response = PFC::send_message($socket, $binarydata, $message);
+		
+		PFC::storeLogs($channel, null, 12,  $response);
+
+        return true;
+    }
+	
+	public static function setPreset($socket, $channel, $liters) {
+        //Get all transaction by channel
+        $channel_id = pack("C*", $channel);
+        $limit_left_bin = strrev(pack("I",$liters));
+        $message = "\x1\x9\x8E".$channel_id.$limit_left_bin;
+        $the_crc = PFC::crc16($message);
+        //Start of mesasge
+        $binarydata = pack("c*", 0x01);
+        //Length
+        $binarydata .= pack("c*",0x09);
+        //Command
+        $binarydata .= pack("c*",0x8E);
+        //Message
+        $binarydata .= pack("C*", $channel);
+        //Command
+        $binarydata .= strrev(pack("I",$liters));
+        //CRC
+        $binarydata .= strrev(pack("s",$the_crc));
+        //End of Message
+        $binarydata .= pack("c*",02);		
+		
+		PFC::storeLogs($channel, null, 13, unpack('c*', $binarydata));
+		
+		$response = PFC::send_message($socket, $binarydata, $message);
+		
+		PFC::storeLogs($channel, null, 14,  $response);
 
         return true;
     }

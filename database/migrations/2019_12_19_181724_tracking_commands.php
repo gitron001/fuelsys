@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTrackingsTable extends Migration
+class TrackingCommands extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateTrackingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('trackings', function (Blueprint $table) {
+        Schema::create('tracking', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('tracking_name');
+            $table->integer('channel_id')->nullable();
+            $table->string('type');
+            $table->longText('command');
             $table->integer('created_at');
-            $table->integer('updated_at');
         });
     }
 
@@ -28,6 +29,6 @@ class CreateTrackingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trackings');
+        Schema::dropIfExists('tracking');
     }
 }

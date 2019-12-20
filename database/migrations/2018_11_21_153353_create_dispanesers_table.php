@@ -18,6 +18,9 @@ class CreateDispanesersTable extends Migration
             $table->string('name');
             $table->integer('channel_id');
             $table->integer('pfc_id');
+            $table->string('price_division')->default('1000');
+            $table->string('lit_division')->default('100');
+            $table->string('money_division')->default('100');
             $table->integer('created_at');
             $table->integer('updated_at');
         });

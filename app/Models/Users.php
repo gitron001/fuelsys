@@ -27,6 +27,7 @@ class Users extends Model
         'status',
         'password',
         'starting_balance',
+        'one_time_limit',
         'limits',
         'limit_left',
         'type',

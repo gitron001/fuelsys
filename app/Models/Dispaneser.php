@@ -11,6 +11,9 @@ class Dispaneser extends Model
     protected $fillable = [
         'name',
         'pfc_id', 
+        'price_division', 
+        'lit_division', 
+        'money_division', 
     ];
 
     public function getDateFormat(){

@@ -14,7 +14,7 @@ class CreateTransactionsTable extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->char('status');
             $table->integer('status')->default(0);
             $table->char('locker');
@@ -35,9 +35,10 @@ class CreateTransactionsTable extends Migration
             $table->longText('pfc_tot_last')->nullable();
             $table->integer('exported')->default(0);
             $table->integer('branch_id')->default(0);
-            $table->integer('branch_transaction_id')->default(0);
+            $table->bigInteger('branch_transaction_id')->default(0);
             $table->char('tr_status')->nullable();
-            $table->integer('user_id')->nullable()->index();
+            $table->bigInteger('user_id')->nullable()->index();
+            $table->bigInteger('bonus_user_id')->nullable()->index();
             $table->char('ctype')->nullable();
             $table->char('method')->nullable();
             $table->integer('type')->nullable();
