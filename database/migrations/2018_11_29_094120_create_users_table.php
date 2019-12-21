@@ -16,8 +16,6 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('rfid')->nullable();
-            $table->integer('branch_id')->nullable();
-            $table->integer('branch_user_id')->nullable();
             $table->string('name');
             $table->string('surname')->nullable();
             $table->string('residence')->nullable();
@@ -37,7 +35,6 @@ class CreateUsersTable extends Migration
             $table->double('limits')->default('0');
             $table->double('limit_left')->default('0');
             $table->string('remember_token')->default('');
-            $table->integer('exported')->nullable();
             $table->integer('created_at');
             $table->integer('updated_at');
         });
