@@ -23,15 +23,19 @@ class PrintPaymentService extends ServiceProvider
      public static function printFunction($id)
     {
         try {
-
-            $connector      = new NetworkPrintConnector("192.168.1.100", 9100);
-            $payment        = Payments::where('id', $id)->first();
-
-            $company    	= Company::where('status',4)->first();
+			
+			$company    	= Company::where('status',4)->first();
 			
 			if(!isset($company->id) || $company->printer_id == "" || $company->printer_id == NULL){
 				return true;
+			}		
+			if (filter_var($company->printer_id, FILTER_VALIDATE_IP)) {
+				$connector      = new NetworkPrintConnector($company->printer_id, 9100);
+			} else {
+				$connector      = new Printer($company->printer_id);
 			}
+			
+            $payment        = Payments::where('id', $id)->first();
 
             $image          = public_path().'/images/company/'.$company->images;            
             $printer        = new Printer($connector);

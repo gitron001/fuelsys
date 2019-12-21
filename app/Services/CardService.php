@@ -144,7 +144,7 @@ class CardService extends ServiceProvider
 		//self::activate_card($socket, $channel, 4);	
         echo 'ACTIVATE';
 		$transaction_data = array();
-		$transaction['bonus_card'] = "";
+		$transaction['bonus_card'] = NULL;
 		if(count($user->discounts) == 0 && count($user->company->discounts) == 0){			
 			$bonus_requst = Bonus::where('channel_id', $channel)
 							->where('pfc_id', $pfc_id)

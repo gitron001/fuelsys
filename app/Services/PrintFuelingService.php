@@ -23,7 +23,7 @@ class PrintFuelingService extends ServiceProvider
      */
     public static function printFunction($id)
     {
-       // try {
+        try {
 			
 			$company    	= Company::where('status',4)->first();
 			
@@ -108,9 +108,9 @@ class PrintFuelingService extends ServiceProvider
 			
 			return 'PRINT'; 
 			
-       // } catch (Exception $e) {
-           // echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
-        //}
+        } catch (Exception $e) {
+           echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+        }
     }
 
     /**

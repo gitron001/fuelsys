@@ -60,6 +60,8 @@ class Transaction extends Model
 		
 		$dispaneser = Dispaneser::where('channel_id', $channel_id)->first();
 		
+		$transaction_data 	 = Session::get($channel_id.'.transaction');	
+		
         $transaction = new Transaction();
 
         $transaction->status = $response[4];
@@ -104,10 +106,8 @@ class Transaction extends Model
 
         $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
         $rfid = unpack('i', $rfid)[1];
-		
-		$transaction_data 	 = Session::get($channel_id.'.transaction');	
 
-        $user = Users::where("rfid", $transaction_data['user_card'])->where('status', 1)->first();
+        $user = Users::where("rfid", (int)$transaction_data['user_card'])->where('status', 1)->first();
 		
 		/*if(isset($user->id)){
 
@@ -124,9 +124,11 @@ class Transaction extends Model
 
         $transaction->ctype = $response[34];
 
-        $transaction->method = $response[35];		
+        $transaction->method = $response[35];
+			
 		
-        $transaction->bonus_user_id = $transaction_data['bonus_card'];
+        $transaction->bonus_user_id = (int) $transaction['bonus_card'];
+        //$transaction->test_card_nr = $transaction_data['user_card'];
 		
         $transaction->method = $response[35];
 
