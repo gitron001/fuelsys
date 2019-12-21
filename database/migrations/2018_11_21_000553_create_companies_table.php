@@ -15,13 +15,11 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('master_id')->nullable();
             $table->string('name');
             $table->integer('bis_number')->index();
             $table->integer('fis_number')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('main_url')->nullable();
-            $table->string('printer_id')->nullable();
             $table->integer('tax_number')->nullable();
             $table->integer('res_number')->nullable();
             $table->string('tel_number')->nullable();
@@ -37,10 +35,6 @@ class CreateCompaniesTable extends Migration
             $table->tinyInteger('has_limit')->default(0);
             $table->tinyInteger('has_receipt')->default(0);
             $table->tinyInteger('has_receipt_nr')->default(0);
-            $table->tinyInteger('send_email')->default(0);
-            $table->tinyInteger('on_transaction')->default(0);
-            $table->tinyInteger('daily_at')->default(0);
-            $table->tinyInteger('monthly_report')->default(0);
             $table->integer('created_at');
             $table->integer('updated_at');
         });

@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('status');
-            $table->integer('status')->default(0);
+            $table->integer('error_flag')->default(0);
             $table->char('locker');
             $table->integer('tr_no');
 			$table->integer('channel_id')->nullable()->index();
@@ -30,12 +30,9 @@ class CreateTransactionsTable extends Migration
             $table->double('money');
             $table->longText('dis_tot');
             $table->longText('pfc_tot');
-            $table->double('lit_tot')->default(0)
+            $table->double('lit_tot')->default(0);
             $table->longText('dis_tot_last')->nullable();
             $table->longText('pfc_tot_last')->nullable();
-            $table->integer('exported')->default(0);
-            $table->integer('branch_id')->default(0);
-            $table->bigInteger('branch_transaction_id')->default(0);
             $table->char('tr_status')->nullable();
             $table->bigInteger('user_id')->nullable()->index();
             $table->bigInteger('bonus_user_id')->nullable()->index();
