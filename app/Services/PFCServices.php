@@ -141,7 +141,6 @@ class PFCServices extends ServiceProvider
 
 		$data = array(
 		 'channel_id' => $channel,
-		 'sl_no' => $sl_no,
 		 'type' => $type,
 		 'command' => serialize($command),
 		 'created_at' => time()
