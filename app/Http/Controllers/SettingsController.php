@@ -137,6 +137,23 @@ class SettingsController extends Controller
         $failed_attempts = new FaileAttempt;
 
         if($request->ajax() == false){
+            $failed_attempts = $failed_attempts->orderBy('id','ASC')
+                                ->paginate(15);
+            return view('/admin/failed_attempts/failed_attempts',compact('failed_attempts'));
+        } else {
+            $failed_attempts = $failed_attempts->orderBy('id','ASC')
+                                ->paginate(15);
+            return view('/admin/failed_attempts/table_data',compact('failed_attempts'))->render();
+        }
+
+    }
+	
+	public function error_transactions(Request $request)
+    {
+		/*
+        $error_trans = new Trasactions::where('error_log', 3);
+
+        if($request->ajax() == false){
             $failed_attempts = $failed_attempts->orderBy('created_at','ASC')
                                 ->paginate(15);
             return view('/admin/failed_attempts/failed_attempts',compact('failed_attempts'));
@@ -145,6 +162,6 @@ class SettingsController extends Controller
                                 ->paginate(15);
             return view('/admin/failed_attempts/table_data',compact('failed_attempts'))->render();
         }
-
+		*/
     }
 }

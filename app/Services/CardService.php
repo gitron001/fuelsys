@@ -142,6 +142,8 @@ class CardService extends ServiceProvider
 		//unblock
 		//
 		//self::activate_card($socket, $channel, 4);	
+		$text = trim($user->name).' '.trim($user->plates);
+		self::screenMessage($socket, $channel, $text);
         echo 'ACTIVATE';
 		$transaction_data = array();
 		$transaction['bonus_card'] = NULL;
@@ -315,6 +317,42 @@ class CardService extends ServiceProvider
 		
 		PFC::storeLogs($channel, null, 14,  $response);
 
+        return true;
+    }
+	
+	public static function screenMessage($socket, $channel, $text) {
+        //Get all transaction by channel
+        $channel_id 	= pack("C*", $channel);
+		$screenText     = "";
+		$text_length	= (int) strlen($text) + 5;
+		$text_array		= str_split($text);
+		$length_bin		= pack('c*', $text_length);
+		for($i = 0; $i < ($text_length - 5); $i++){
+			$screenText    .= pack('a*',  $text_array[$i]);
+		}
+        $message = "\x1".$length_bin."\x8B".$channel_id.$screenText;
+        $the_crc = PFC::crc16($message);
+        //Start of mesasge
+        $binarydata = pack("c*", 0x01);
+        //Length
+        $binarydata .= $length_bin;
+        //Command
+        $binarydata .= pack("c*",0x8B);
+        //Message
+        $binarydata .= pack("C*", $channel);
+        //Command
+        $binarydata .= $screenText;
+        //CRC
+        $binarydata .= strrev(pack("s",$the_crc));
+        //End of Message
+        $binarydata .= pack("c*",02);		
+		
+		PFC::storeLogs($channel, null, 15, unpack('c*', $binarydata));
+		
+		$response = PFC::send_message($socket, $binarydata, $message);
+		
+		PFC::storeLogs($channel, null, 16,  $response);
+		
         return true;
     }
 	

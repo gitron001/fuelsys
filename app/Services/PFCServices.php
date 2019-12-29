@@ -136,6 +136,8 @@ class PFCServices extends ServiceProvider
      * type 12 - Prepay Command Response
 	 * type 13 - Preset Command
      * type 14 - Preset Command Response
+     * type 15 - Preset Command Response
+     * type 16 - Preset Command Response
      */
 	public static  function storeLogs($channel, $sl_no, $type, $command){
 

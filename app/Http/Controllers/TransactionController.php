@@ -338,6 +338,7 @@ class TransactionController extends Controller
         }
 		
 		if($request->input('exc_balance')){
+			$transactions->orderBy('transactions.created_at');
 			return $transactions->get();
 		}
 		
