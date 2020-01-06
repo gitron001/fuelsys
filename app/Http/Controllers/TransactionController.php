@@ -331,7 +331,7 @@ class TransactionController extends Controller
             $transactions->whereIn('user_id',$user)->orWhere('companies.id','=',$company);
         }
 
-        if($request->input('bonus_user')){
+        if($request->input('bonus_user') || empty($request->input('user')) || empty($request->input('company'))){
             $transactions->whereIn('bonus_user_id',$bonus_user);
         }
 
@@ -356,6 +356,11 @@ class TransactionController extends Controller
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->union($transactions)
             ->orderBy('date','ASC');
+
+        if($request->input('bonus_user') && empty($request->input('user')) && empty($request->input('company'))){
+            $payments->where('user_id',0);
+            $payments->where('payments.company_id',0);
+        }
 
         if ($request->input('user') && empty($request->input('company'))) {
             $payments->whereIn('user_id',$user);
