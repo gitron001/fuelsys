@@ -97,11 +97,8 @@ class ReportsController extends Controller
 
     public function searchWithPagination(Request $request) {
         $users              = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
-        $bonus_users        = Users::select(DB::RAW('users.name as name'), DB::RAW('users.id as id'))
-                                ->join('transactions', 'transactions.bonus_user_id', '=', 'users.id')
-                                ->orderBy('name', 'ASC')
-                                ->distinct()
-                                ->get();
+        $bonus_users    = Users::where('status',1)->whereIn('type',[6,7,8])->orderBy('name','asc')->pluck('name','id')->all();
+		
         $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_date          = strtotime($request->input('fromDate'));
