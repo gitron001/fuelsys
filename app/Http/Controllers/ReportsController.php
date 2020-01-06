@@ -97,11 +97,17 @@ class ReportsController extends Controller
 
     public function searchWithPagination(Request $request) {
         $users              = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
+        $bonus_users        = Users::select(DB::RAW('users.name as name'), DB::RAW('users.id as id'))
+                                ->join('transactions', 'transactions.bonus_user_id', '=', 'users.id')
+                                ->orderBy('name', 'ASC')
+                                ->distinct()
+                                ->get();
         $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_date          = strtotime($request->input('fromDate'));
         $to_date            = strtotime($request->input('toDate'));
         $user               = $request->input('user');
+        $bonus_user         = $request->input('bonus_user');
         $company            = $request->input('company');
         $sort_by_company 	= $request->get('sortby');
 
@@ -125,13 +131,14 @@ class ReportsController extends Controller
             $from_date = self::last_payment_date($request);
         }
 
-        $query = Transactions::select(DB::RAW('users.name as user_name'), 'users.type', DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
+        $query = Transactions::select(DB::RAW('user1.name as user_name'), 'user1.type', DB::RAW('user2.name as bonus_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
                     ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-                    ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-                    ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
+                    ->leftJoin('users as user1', 'user1.id', '=', 'transactions.user_id')
+                    ->leftJoin('users as user2', 'user2.id', '=', 'transactions.bonus_user_id')
+                    ->leftJoin('companies', 'companies.id', '=', 'user1.company_id');
 
         if ($request->input('user') && empty($request->input('company'))) {
-            $query = $query->whereIn('users.id',$user);
+            $query = $query->whereIn('user1.id',$user);
         }
 
         if ($request->input('company') && empty($request->input('user'))) {
@@ -139,21 +146,25 @@ class ReportsController extends Controller
         }
 
         if($request->input('user') && $request->input('company')){
-            $query = $query->whereIn('users.id',$user)->orWhere('companies.id',$company);
+            $query = $query->whereIn('user1.id',$user)->orWhere('companies.id',$company);
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
 
+        if ($request->input('bonus_user')) {
+            $query = $query->whereIn('user2.id',$bonus_user);
+        }
+
         if($request->ajax() == false){
             $query->orderBy($sort_by,$sort_type);
             $transactions = $query->paginate(15);
-            return view('/admin/reports/home',compact('transactions','users','companies'));
+            return view('/admin/reports/home',compact('transactions','users','companies','bonus_users'));
         } else {
             $query->orderBy($sort_by,$sort_type);
             $transactions = $query->paginate(15);
-            return view('/admin/reports/table_data',compact('transactions','users','companies'))->render();
+            return view('/admin/reports/table_data',compact('transactions','users','companies','bonus_users'))->render();
         }
 
 

@@ -200,12 +200,12 @@ class TransactionController extends Controller
                     $payment = str_replace(',', '', $payment);
                     $total	 = $total + $fueling - $payment;
 					$user  	 = $row->username ? $row->username : $row->company_id;
-					
+
 					if($row->plates != "" && $row->plates != 0){
 						$user = $row->plates;
 					}
-					
-					
+
+
                     $sheet->appendRow(array(
                         $row->created_at,
                         $row->description == NULL  ? $row->type : $row->description,
@@ -300,6 +300,7 @@ class TransactionController extends Controller
         $to_date        = strtotime($request->input('toDate'));
 
         $user           = $request->input('user');
+        $bonus_user     = $request->input('bonus_user');
         $company        = $request->input('company');
         $dailyReport    = $request->input('dailyReport');
         $date           = date('Y-m-d').' 00:00:00';
@@ -313,9 +314,10 @@ class TransactionController extends Controller
         $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'T' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money", "transactions.lit", "transactions.price", DB::RAW(" 0 as company")
-                ,"users.name as username", "users.plates","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
-            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
+                ,"user1.name as username","user2.name as bonus_username", "user1.plates","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
+            ->leftJoin('users as user1', 'transactions.user_id', '=', 'user1.id')
+            ->leftJoin('users as user2', 'transactions.bonus_user_id', '=', 'user2.id')
+            ->leftJoin('companies', 'companies.id', '=', 'user1.company_id');
 
         if ($request->input('user') && empty($request->input('company'))) {
             $transactions->whereIn('user_id',$user);
@@ -329,6 +331,10 @@ class TransactionController extends Controller
             $transactions->whereIn('user_id',$user)->orWhere('companies.id','=',$company);
         }
 
+        if($request->input('bonus_user')){
+            $transactions->whereIn('bonus_user_id',$bonus_user);
+        }
+
         if ($request->input('fromDate') && $request->input('toDate') && !$request->input('dailyReport')) {
             $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
@@ -336,16 +342,16 @@ class TransactionController extends Controller
         if ($request->input('dailyReport')) {
             $transactions->where('transactions.created_at', '>=', strtotime($date));
         }
-		
+
 		if($request->input('exc_balance')){
 			$transactions->orderBy('transactions.created_at');
 			return $transactions->get();
 		}
-		
+
         $payments = Payments::select("payments.user_id",DB::RAW(" 'P' as type")
                 ,"payments.amount","payments.date",
                 DB::RAW(" 0 as money"), DB::RAW(" 0 as lit"), DB::RAW(" 0 as price"), "payments.company_id"
-                ,"users.name as username", DB::RAW(" '' as plates"), "payments.created_at","companies.name as company_name","payments.description")
+                ,"users.name as username", DB::RAW(" '' as bonus_username"),DB::RAW(" '' as plates"), "payments.created_at","companies.name as company_name","payments.description")
             ->leftJoin('users', 'payments.user_id', '=', 'users.id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->union($transactions)
@@ -380,7 +386,7 @@ class TransactionController extends Controller
 		if($request->input('exc_balance')){
 			return 0;
 		}
-		
+
         $from_date          = strtotime($request->input('fromDate'));
 		$from_payment	    = strtotime(date('Y-m-d', $from_date));
         $user               = $request->input('user');
@@ -495,7 +501,7 @@ class TransactionController extends Controller
 
         return $products;
     }
-	
+
 	public static function getGeneralDataTotalizers(Request $request){
         if(!$request->input('fromDate')){
 			$from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
@@ -510,7 +516,7 @@ class TransactionController extends Controller
 		if($last_payment == 'Yes'){
             $from_date = self::last_payment_date($request);
         }
-	
+
         $products = Transactions::select(DB::raw('MAX(products.name) as product_name'), 'transactions.sl_no', 'transactions.channel_id', DB::raw('MAX(products.pfc_pr_id) as product_id'),
             DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'), DB::raw('Max(CAST(dis_tot as SIGNED)) as max_totalizer'), DB::raw('MIN(CAST(dis_tot as SIGNED)) as min_totalizer'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
@@ -534,10 +540,10 @@ class TransactionController extends Controller
         //if ($from_date && $request->input('toDate')) {
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
         //}
-		
+
         $products = $products->get();
-	
-		
+
+
 		$min_totalizers = Transactions::select('transactions.sl_no', 'transactions.channel_id', DB::raw('MAX(CAST(dis_tot as SIGNED)) as totalizer'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
@@ -560,7 +566,7 @@ class TransactionController extends Controller
         //if ($request->input('fromDate') && $request->input('toDate')) {
             $min_totalizers = $min_totalizers->where('transactions.created_at', '<', $from_date);
         //}
-		
+
         $min_totalizers = $min_totalizers->get();
 		foreach($products as $p){
 			foreach($min_totalizers as $mt){
@@ -569,7 +575,7 @@ class TransactionController extends Controller
 					}
 			}
 		}
-		
+
         return $products;
     }
 
@@ -630,11 +636,17 @@ class TransactionController extends Controller
 
     public function searchWithPagination(Request $request) {
         $users          = Users::where('status',1)->whereIn('type',[1,2,3,4,5])->orderBy('name','asc')->pluck('name','id')->all();
+        $bonus_users        = Users::select(DB::RAW('users.name as name'), DB::RAW('users.id as id'))
+                                ->join('transactions', 'transactions.bonus_user_id', '=', 'users.id')
+                                ->orderBy('name', 'ASC')
+                                ->distinct()
+                                ->get();
         $companies      = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_date       = strtotime($request->input('fromDate'));
         $to_date         = strtotime($request->input('toDate'));
         $user            = $request->input('user');
+        $bonus_user      = $request->input('bonus_user');
         $company         = $request->input('company');
         $sort_by_company = $request->get('sortby');
         if($sort_by_company == 'name'){
@@ -644,14 +656,15 @@ class TransactionController extends Controller
             $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "transactions".".".$request->get('sortby'));
             $sort_type       = $request->get('sorttype');
         }
-        $query = Transactions::select(DB::RAW('users.name as user_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
+        $query = Transactions::select(DB::RAW('user1.name as user_name'),DB::RAW('user2.name as bonus_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
            'transactions.price', 'transactions.lit','transactions.money','transactions.created_at','transactions.id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id');
+            ->leftJoin('users as user1', 'user1.id', '=', 'transactions.user_id')
+            ->leftJoin('users as user2', 'user2.id', '=', 'transactions.bonus_user_id')
+            ->leftJoin('companies', 'companies.id', '=', 'user1.company_id');
 
         if ($request->input('user')) {
-            $query = $query->whereIn('users.id',$user);
+            $query = $query->whereIn('user1.id',$user);
         }
 
         if ($request->input('company')) {
@@ -662,21 +675,25 @@ class TransactionController extends Controller
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
 
+        if ($request->input('bonus_user')) {
+            $query = $query->whereIn('user2.id',$bonus_user);
+        }
+
         if($request->ajax() == false){
             $query->orderBy('transactions.created_at', 'DESC');
             $transactions = $query->paginate(15);
-            return view('/admin/transactions/home',compact('transactions','users','companies'));
+            return view('/admin/transactions/home',compact('transactions','users','companies','bonus_users'));
         } else {
             $query->orderBy($sort_by,$sort_type);
             $transactions = $query->paginate(15);
-            return view('/admin/transactions/table_data',compact('transactions','users','companies'))->render();
+            return view('/admin/transactions/table_data',compact('transactions','users','companies','bonus_users'))->render();
         }
 
     }
 
     public function generateDailyReport(Request $request) {
         $payments           = self::generate_data($request);
-		$balance            = self::generate_balance($request);		
+		$balance            = self::generate_balance($request);
         $data               = self::getGeneralData($request);
         $company            = Company::where('status', 4)->first();
         $date               = $request->fromDate;

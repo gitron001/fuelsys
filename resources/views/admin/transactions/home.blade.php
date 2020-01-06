@@ -37,6 +37,20 @@
         </div>
 
         <div class="form-group">
+            <label for="User:">Bonus User:</label>
+            <select class="users-dropdown form-control" name="bonus_user[]" multiple="multiple" id="user">
+              @foreach($bonus_users as $b_u)
+                  <option value="{{ $b_u->id }}"
+                  @if(!empty( request()->get("bonus_user") ))
+                    @foreach( request()->get("bonus_user") as $us)
+                      {{ $us == $b_u->id ? 'selected' : '' }}
+                    @endforeach
+                  @endif > {{ $b_u->name }} </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
           <label for="User:">Company:</label>
           <select class="selectpicker form-control" id="company" name="company" data-live-search="true" data-style="btn-dropdownSelectNew">
             <option value="">Choose a Company</option>
@@ -69,6 +83,7 @@
               <tr>
                 <th class="sorting" data-sorting_type="asc" data-column_name="user_id">User <span id="user_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="company_id">Company <span id="company_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="#">Bonus User <span id="#" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="product_id">Product <span id="product_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="price">Price <span id="price_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="lit">Lit <span id="lit_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
