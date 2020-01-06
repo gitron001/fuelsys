@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Payments extends Model
 {
     protected $table = 'payments';
-    
+
     protected $fillable = [
-        'date', 
+        'date',
         'amount',
         'description',
         'company_id',
         'exported',
         'type',
+        'print',
         'branch_id',
         'branch_payment_id',
     ];
@@ -22,7 +23,7 @@ class Payments extends Model
     public function getDateFormat(){
         return 'U';
     }
-    
+
     public function company(){
     	return $this->belongsTo('App\Models\Company')->withDefault([
             'name' => ''
@@ -34,7 +35,7 @@ class Payments extends Model
             'name' => ''
         ]);
     }
-	
+
 	public function paymentCreator(){
         return $this->belongsTo('App\Models\Users', 'created_by', 'id')->withDefault([
             'name' => ''

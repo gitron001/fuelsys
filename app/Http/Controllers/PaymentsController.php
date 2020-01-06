@@ -126,6 +126,9 @@ class PaymentsController extends Controller
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
         $payments->description  = $request->input('description');
+        if(!empty($request->input('print'))){
+            $payments->print        = $request->input('print');
+        }
         $payments->user_id      = $request->input('user_id');
         $payments->company_id   = $request->input('company_id');
 		if($request->input('branch_id')){
@@ -137,8 +140,10 @@ class PaymentsController extends Controller
         $payments->updated_at   = now()->timestamp;
         $payments->save();
 
-		$recepit = new PrintPayment($payments->id);
-        dispatch($recepit);
+        if($request->input('print') == 1) {
+            $recepit = new PrintPayment($payments->id);
+            dispatch($recepit);
+        }
 
         /*$msg = "Payment Print not Succesful";
 
@@ -263,12 +268,18 @@ class PaymentsController extends Controller
         $payments->company_id   = $company_id;
         $payments->date         = strtotime($request->input('date'));
         $payments->description  = $request->input('description');
+        $payments->print        = $request->input('print');
         $payments->amount       = $amount;
         $payments->type         = $request->input('type');
         $payments->branch_id    = $request->input('branch_id');
-        $payments->edited_by   = Auth::user()->id;
+        $payments->edited_by    = Auth::user()->id;
         $payments->updated_at   = now()->timestamp;
         $payments->update();
+
+        if($request->input('print') == 1) {
+            $recepit = new PrintPayment($payments->id);
+            dispatch($recepit);
+        }
 
         session()->flash('info','Success');
 

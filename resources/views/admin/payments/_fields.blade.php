@@ -37,7 +37,19 @@
                     {!! Form::label('type', 'Type:'); !!}
 					{!! Form::select('type',[''=>'Choose type','1'=>'Pagese','2'=>'Hyrje'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('type','<span class="help-block">:message</span>') !!}
-        		</div>
+                </div>
+
+                <div class="form-group {{ $errors->has('print') ? 'has-error' :'' }}">
+                    <label for="print">Print the bill: </label>
+                    <br>
+                    @if (!isset($payment))
+                        <input type="radio" name="print" value="1"> Yes &nbsp;
+                        <input type="radio" name="print" value="0" checked> No<br>
+                    @else
+                        <input type="radio" name="print" value="1" @if (isset($payment) && $payment->print == 1) checked @endif> Yes &nbsp;
+                        <input type="radio" name="print" value="0" @if (isset($payment) && $payment->print == 0) checked @endif> No<br>
+                    @endif
+                </div>
 
 
 			</div>
@@ -76,7 +88,7 @@
 					{!! Form::select('branch_id',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
 					{!! $errors->first('branch_id','<span class="help-block">:message</span>') !!}
 				</div>
-				@endif
+                @endif
 
 			</div>
 		</div>
