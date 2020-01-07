@@ -37,18 +37,18 @@
     e.preventDefault();
     var link = $(this).attr('href');
      swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this!",
+        title: "A jeni të sigurt?",
+        text: "Nëse të dhënat fshihen nuk do të mund te kthehen prap!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
       })
       .then((willDelete) => {
         if (willDelete) {
-          swal("Success!", "Record deleted successfully!", "success");
+          swal("Sukses!", "Te dhënat u fshin me sukses!", "success");
           window.location.href = link;
         } else {
-          swal("The current change request has been cancelled.");
+          swal("Kërkesa për fshirjen e të dhënave është anuluar.");
         }
       });
 

@@ -39,19 +39,18 @@
 	<br>
 	<table width="100%">
 	<tr>
-		<td valign="top"><img src="{{ public_path().'/images/company/'.$company->images }}" alt="" width="150"/></td>
+		<td valign="top"><img src="{{ public_path().'/images/company/'.$company->images }}" alt="" width="80"/></td>
 	</tr>
 	<tr>
-
 		<td align="left">
-	    <h3>{{ $company->name }}</h3>
-	    	<p style="line-height:1.5">
-				<span><b>LOKACIONI:</b> {{ $company->city }}, {{ $company->country }}</span><br/>
-				<span><b>EMAIL:</b> {{ $company->email }}</span><br/>
-                <span><b>TELEFONI:</b> {{ $company->tel_number }}</span><br/>
-                <span><b>NR.BIZNESIT:</b> {{ $company->bis_number }}</span><br/>
-                <span><b>NR.TAKSES:</b> {{ $company->tax_number }}</span><br/>
-                <span><b>NR.FISKAL:</b> {{ $company->fis_number }}</span><br/>
+            <p style="line-height:1.2">
+                <span style="font-size: 16px;"><b> {{ $company->name }} </b></span><br/>
+				<span><b>Lokacioni :</b> {{ $company->city }}, {{ $company->country }}</span><br/>
+				<span><b>Email :</b> {{ $company->email }}</span><br/>
+                <span><b>Tel. :</b> {{ $company->tel_number }}</span><br/>
+                <span><b>Nr. Biz. :</b> {{ $company->bis_number }}</span><br/>
+                <span><b>Tax. Nr. :</b> {{ $company->tax_number }}</span><br/>
+                <span><b>Nr. Fis. :</b> {{ $company->fis_number }}</span><br/>
             </p>
         </td>
 
@@ -78,12 +77,9 @@
 			</td>
 			@endforeach
         @endif
-
         <p align="center">
-            <span>Datat e zgjedhur për paraqitjen e të dhënave:</span><br/>
-            <span><b>{{ $date }} - {{ $date_to }}</b></span>
+            <span>Datat e zgjedhur për paraqitjen e të dhënave: <b>{{ $date }} - {{ $date_to }}</b></span>
         </p>
-
 	</tr>
 
 	</table>
@@ -228,17 +224,6 @@
 	<!-- END Show only last row (TOTAL row) -->
 	</tfoot>
 	</table>
-
-	<div class="information" style="position: absolute; bottom: 0;">
-	    <table width="100%">
-	        <tr>
-	            <td align="center" style="width: 50%;">
-	                &copy; {{ date('Y') }} - {{ $company->name }}
-	            </td>
-	        </tr>
-
-	    </table>
-	</div>
 
 </body>
 </html>
