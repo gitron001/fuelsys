@@ -265,7 +265,8 @@ class TransactionController extends Controller
         $data       = self::getGeneralData($request);
         $company    = Company::where('status', 4)->first();
         $date 		= $request->fromDate;
-        $date_to 		= $request->toDate;
+        $date_to    = $request->toDate;
+        $bonus_user = $request->bonus_user;
         $inc_transactions = $request->input('inc_transactions');
         $company_checked  = $request->input('company');
 		$exc_balance  	  = $request->input('exc_balance');
@@ -277,9 +278,12 @@ class TransactionController extends Controller
         }
 
         if(isset($request->user)){
-            $id = $request->user;
-            $user_details = Users::whereIN('id',$id)->get();
+            $user_details = Users::whereIN('id',$request->user)->get();
 			//$payment_date = Payments::where('user_id', $id)->where('status', 1)->first()->pluck('date');
+        }
+
+        if(isset($request->bonus_user) && !isset($request->user)){
+            $user_details = Users::whereIN('id',$request->bonus_user)->get();
         }
 
         if(isset($request->company)){
@@ -288,7 +292,7 @@ class TransactionController extends Controller
 			//$payment_date = Payments::where('company_id', $id)->where('status', 1)->first()->pluck('date');
         }
 
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','date_to','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','date_to','bonus_user','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
 
