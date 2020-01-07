@@ -205,13 +205,14 @@
       var fromDate = $('#datetimepicker4').val();
       var toDate = $('#datetimepicker5').val();
       var user = $("#user").val();
+      var bonus_user = $("#bonus_user").val();
       var last_payment = $("#last_payment").val();
       var inc_transactions = $("#inc_transactions").val();
       var company = $("#company").val();
 
       $.ajax({
         type: "GET",
-        data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment,inc_transactions:inc_transactions},
+        data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment,inc_transactions:inc_transactions,bonus_user:bonus_user},
         url: "{{ URL('/export')}}",
         dataType: "JSON",
         success: function(response, textStatus, request){

@@ -49,8 +49,12 @@
 				<span>{{ $company->city }}, {{ $company->country }}</span><br/>
 				<span>{{ $company->email }}</span><br/>
 	            <span> {{ $company->tel_number }}</span>
-	        </p>
-		</td>
+            </p>
+            <p>
+                <span>Datat e zgjedhur për paraqitjen e të dhënave:</span><br/>
+                <span>{{ $date }} - {{ $date_to }}</span>
+            </p>
+        </td>
 
 		<td align="right">
 		@if(isset($company_details))
@@ -109,7 +113,7 @@
 	    <th align="center">DATA</th>
 	    <th align="center">LLOJI</th>
         <th align="center">PERSONI</th>
-        @if($inc_transactions == 'Yes') <th align="center">BONUS USER</th> @endif
+        @if($inc_transactions == 'Yes') <th align="center">BONUS PERSONI</th> @endif
 	    <th align="center">MBUSHJA</th>
 	    <th align="center">PAGESA</th>
 	    <th align="center">GJENDJA</th>
@@ -158,7 +162,7 @@
 			<th align="center">{{ $date }}</th>
 			<td align="center">{{ !empty($tr->description) ? 'P ('.$tr->description.')' : 'P' }}</td>
             <td align="center">@if(trim($tr->plates) != "" && $tr->plates != 0) {{ $tr->plates }} @else {{ $tr->username }} @endif</td>
-            @if($inc_transactions == 'Yes') <th align="center">{{ $tr->bonus_username }}</th> @endif
+            @if($inc_transactions == 'Yes') <td align="center">{{ $tr->bonus_username }}</td> @endif
 			<td align="center">{{ number_format($tr->money, 2) }} €</td>
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
@@ -168,7 +172,7 @@
 			<th align="center">{{ $date }}</th>
 			<td align="center">{{ $tr->type == 'payment' ? 'P - '.$tr->description.'' : 'T' }}</td>
             <td align="center">@if(trim($tr->plates) != "" && $tr->plates != 0) {{ $tr->plates }}  @else {{ $tr->username }} @endif</td>
-            @if($inc_transactions == 'Yes') <th align="center">{{ $tr->bonus_username }}</th> @endif
+            @if($inc_transactions == 'Yes') <td align="center">{{ $tr->bonus_username }}</td> @endif
 			<td align="center">{{ number_format($transaction_sum, 2) }} €</td>
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
@@ -199,7 +203,7 @@
 			<th align="center" scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d H:i', $py->date) : $py->created_at }}</th>
 			<td align="center" @if($py->type == "P") style="background-color:grey" @endif > {{ $py->description == NULL  ? $py->type : $py->description }} </td>
             <td align="center">@if(trim($py->plates) != "" && $py->plates != 0) {{ $py->plates }} @else {{ $py->username }} @endif</td>
-            @if($inc_transactions == 'Yes') <th align="center">{{ $py->bonus_username }}</th> @endif
+            @if($inc_transactions == 'Yes') <td align="center">{{ $py->bonus_username }}</td> @endif
 			<td align="center">{{ number_format($py->lit, 2) }} L | {{ $py->price }} | {{ number_format($fueling, 2) }} €</td>
 			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>

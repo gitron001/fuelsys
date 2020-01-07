@@ -38,7 +38,7 @@
 
         <div class="form-group">
             <label for="User:">Bonus User:</label>
-            <select class="users-dropdown form-control" name="bonus_user[]" multiple="multiple" id="user">
+            <select class="users-dropdown form-control" name="bonus_user[]" multiple="multiple" id="bonus_user">
               @foreach($bonus_users as $b_u)
                   <option value="{{ $b_u->id }}"
                   @if(!empty( request()->get("bonus_user") ))

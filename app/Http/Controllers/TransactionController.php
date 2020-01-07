@@ -143,6 +143,7 @@ class TransactionController extends Controller
 
         $totalAmount = number_format($balance, 2);
         $startDate = $request->fromDate;
+        $from_to_date = $request->fromDate . ' - ' . $request->toDate;
 
         $dataArray[] = array('PRODUKTI','SASIA','TOTALI');
         foreach($data as $d) {
@@ -156,9 +157,9 @@ class TransactionController extends Controller
 
         $file_name  = 'Transactions - '.date('Y-m-d h-i', strtotime("now"));
 
-        $myFile = Excel::create($file_name, function($excel) use( $transactions,$totalAmount,$startDate,$dataArray )
+        $myFile = Excel::create($file_name, function($excel) use( $transactions,$totalAmount,$startDate,$dataArray,$from_to_date )
         {
-            $excel->sheet('Transactions', function($sheet) use( $transactions,$totalAmount,$startDate )
+            $excel->sheet('Transactions', function($sheet) use( $transactions,$totalAmount,$startDate,$from_to_date )
             {
 
                 if($totalAmount != 0){ $total = $totalAmount; }else{ $total = 0; };
@@ -169,9 +170,12 @@ class TransactionController extends Controller
                     'DATA',
                     'LLOJI',
                     'PERSONI',
+                    'BONUS PERSONI',
                     'MBUSHJA',
                     'PAGESA',
                     'GJENDJA',
+                    '       ',
+                    'Datat e zgjedhura për paraqitjen e të dhënave',
                 ));
 
                 $sheet->cell('A2', function($cell) use( $startDate ){
@@ -184,6 +188,10 @@ class TransactionController extends Controller
 
                 $sheet->cell('F2', function($cell) use( $totalAmount ){
                         $cell->setValue($totalAmount);
+                });
+
+                $sheet->cell('I2', function($cell) use( $from_to_date ){
+                    $cell->setValue($from_to_date);
                 });
 
                 foreach ($transactions as $row)
@@ -199,7 +207,8 @@ class TransactionController extends Controller
                     $fueling = str_replace(',', '', $fueling);
                     $payment = str_replace(',', '', $payment);
                     $total	 = $total + $fueling - $payment;
-					$user  	 = $row->username ? $row->username : $row->company_id;
+                    $user  	 = $row->username ? $row->username : $row->company_id;
+                    $bonus_user = $row->bonus_username;
 
 					if($row->plates != "" && $row->plates != 0){
 						$user = $row->plates;
@@ -210,6 +219,7 @@ class TransactionController extends Controller
                         $row->created_at,
                         $row->description == NULL  ? $row->type : $row->description,
                         $user,
+                        $bonus_user,
                         $fueling,
                         $payment,
                         $total,
@@ -217,6 +227,7 @@ class TransactionController extends Controller
                 }
 
                 $sheet->appendRow(array(
+                    '',
                     '',
                     '',
                     '',
@@ -254,6 +265,7 @@ class TransactionController extends Controller
         $data       = self::getGeneralData($request);
         $company    = Company::where('status', 4)->first();
         $date 		= $request->fromDate;
+        $date_to 		= $request->toDate;
         $inc_transactions = $request->input('inc_transactions');
         $company_checked  = $request->input('company');
 		$exc_balance  	  = $request->input('exc_balance');
@@ -276,7 +288,7 @@ class TransactionController extends Controller
 			//$payment_date = Payments::where('company_id', $id)->where('status', 1)->first()->pluck('date');
         }
 
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','date_to','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
 
@@ -331,7 +343,7 @@ class TransactionController extends Controller
             $transactions->whereIn('user_id',$user)->orWhere('companies.id','=',$company);
         }
 
-        if($request->input('bonus_user') || empty($request->input('user')) || empty($request->input('company'))){
+        if($request->input('bonus_user')){
             $transactions->whereIn('bonus_user_id',$bonus_user);
         }
 
@@ -346,7 +358,7 @@ class TransactionController extends Controller
 		if($request->input('exc_balance')){
 			$transactions->orderBy('transactions.created_at');
 			return $transactions->get();
-		}
+        }
 
         $payments = Payments::select("payments.user_id",DB::RAW(" 'P' as type")
                 ,"payments.amount","payments.date",
