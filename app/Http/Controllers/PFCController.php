@@ -124,18 +124,17 @@ class PFCController extends Controller
 			Process::where('pfc_id', $pfc_id)->where('type_id', 5)->delete();
 			$recepit = new StartPFC($pfc_id);
 			dispatch($recepit);
+		}else{		
+			Process::insert(array('start_time'=> time(),
+				'refresh_time' => time(),
+				'faild_attempt'=> 0,
+				'class_name'=>'',
+				'pfc_id' =>$pfc_id,
+				'type_id' =>$type,
+				'created_at' => time(),
+				'updated_at' => time()
+			));
 		}
-		
-		Process::insert(array('start_time'=> time(),
-			'refresh_time' => time(),
-			'faild_attempt'=> 0,
-			'class_name'=>'',
-			'pfc_id' =>$pfc_id,
-			'type_id' =>$type,
-			'created_at' => time(),
-			'updated_at' => time()
-		));
-		
         return redirect('/admin/pfc');
     }
     /**
