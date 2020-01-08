@@ -12,10 +12,10 @@ class PusherController extends Controller
     {
         //Remember to change this with your cluster name.
         $options = array(
-            'cluster' => 'eu', 
+            'cluster' => 'eu',
             'encrypted' => true
         );
- 
+
        //Remember to set your credentials below.
         $pusher = new Pusher(
             'e4958392f2f741f9f74c',
@@ -23,16 +23,16 @@ class PusherController extends Controller
             '849737',
             $options
         );
-        
-        $message= request()->text;
-        
-        //Send a message to notify channel with an event name of notify-event
-        $pusher->trigger('my-channel', 'my-event', $message); 
 
-        
-        /*$text = request()->text;
-        event(new FormSubmitted('hello world'));*/
-        //event(new FormSubmitted($text));
-        return "OK";
+        $message= request()->text;
+
+        //Send a message to notify channel with an event name of notify-event
+        $pusher->trigger('my-channel', 'my-event', $message);
+
+
+        $text = request()->text;
+        //event(new FormSubmitted('hello world'));*/
+        event(new FormSubmitted($text));
+        //return "OK";
     }
 }
