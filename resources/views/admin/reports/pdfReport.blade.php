@@ -1,4 +1,5 @@
 <!Doctype html>
+<?php if(!isset($bonus_user)){ $bonus_user = NULL; } ?>
 <html lang="en">
 <head>
 <meta charset="UTF-8">

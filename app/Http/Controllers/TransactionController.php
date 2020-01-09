@@ -717,7 +717,7 @@ class TransactionController extends Controller
         $inc_transactions   = $request->inc_transactions;
         $exc_balance  		= $request->exc_balance;
         $company_checked    = $request->input('company');
-
+		$date_to			= $request->input('date_to');
         if(isset($request->company)){
             $company_details = Company::find($request->company);
 
@@ -726,7 +726,7 @@ class TransactionController extends Controller
 		if(count($payments) == 0){
 			return false;
 		}
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','data','inc_transactions', 'company','user_details','company_details','company_checked', 'exc_balance'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date', 'date_to', 'data','inc_transactions', 'company','user_details','company_details','company_checked', 'exc_balance'));
         $file_name  = 'Transaction - '.date('Y-m-d', time());
 
 

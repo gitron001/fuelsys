@@ -41,7 +41,6 @@ class SendDailyEmail extends Command
     public function handle()
     {
 		$hour 			= date('H');
-        //$companies  	= Company::where('id', 2)->get();
         $companies  	= Company::select('id','email','daily_at')->where('send_email',1)->where('daily_at',$hour)->get();
         $current_time   = date('H');
         $from_date      = date('Y-m-d H:00:00', strtotime('- 1 day', strtotime(date("Y-m-d $hour:00:00"))));
@@ -54,7 +53,8 @@ class SendDailyEmail extends Command
                 'toDate'   => $to_date,
                 'inc_transactions' => 'Yes',
                 'exc_balance' => 'Yes',
-                //'dailyReport' => 1,
+                'date' => $from_date,
+                'date_to' => $to_date,
             ];
 
             $request = new Request($data);
