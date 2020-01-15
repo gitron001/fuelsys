@@ -5,14 +5,27 @@
     <br>
     <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/staff') }}" role="form">
         <div class="box-body">
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label for="Start Date:">Start Date:</label>
-                <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{ request()->get("fromDate") }}">
+                <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="#" value="{{ request()->get("fromDate") }}">
+            </div>
+
+            <div class="form-group" style="display: none;">
+                <label for="End Date:">End Date:</label>
+                <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="#" value="{{ request()->get("toDate") }}">
             </div>
 
             <div class="form-group">
-                <label for="End Date:">End Date:</label>
-                <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{ request()->get("toDate") }}">
+                <label for="Shift:">Shift</label>
+                <select class="form-control" name="shift">
+                    <option value="">Select shift</option>
+                    @foreach($shift as $shift)
+                        <?php $start_end_date = $shift->start_date . ' - ' . $shift->end_date; ?>
+                        <option value="{{ $start_end_date }}" @if($start_end_date == request()->get("shift")) selected @endif>
+                            {{ date('m/d/Y H:i', $shift->start_date) }} - {{ date('m/d/Y H:i', $shift->end_date) }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
@@ -32,9 +45,10 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
-                <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i> Clear filters </a>
+                <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-warning" title="Clear All Filters"><i class="fa fa-trash"></i> Clear filters </a>
             </div>
             <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Export</button>
+            <button type="button" data-toggle="tooltip" class="btn btn-danger" id="close_shift" title="Close Shift"><i class="fas fa-exclamation-triangle"></i> Close Shift</button>
         </div>
     </form>
     <br>
@@ -256,25 +270,62 @@
 @section('js')
     <script>
         $(document).ready(function(){
+
+            // Export staff data to Excel
             $('#export_excel_staff_view').click(function(){
             var fromDate = $('#datetimepicker4').val();
             var toDate = $('#datetimepicker5').val();
             var user = $("#user").val();
 
-            $.ajax({
-                type: "GET",
-                data: {fromDate: fromDate, toDate: toDate, user: user},
-                url: "{{ URL('/excel_export_staff_view')}}",
-                dataType: "JSON",
-                success: function(response, textStatus, request){
-                var a = document.createElement("a");
-                a.href = response.file;
-                a.download = response.name;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
+                $.ajax({
+                    type: "GET",
+                    data: {fromDate: fromDate, toDate: toDate, user: user},
+                    url: "{{ URL('/excel_export_staff_view')}}",
+                    dataType: "JSON",
+                    success: function(response, textStatus, request){
+                    var a = document.createElement("a");
+                    a.href = response.file;
+                    a.download = response.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    }
+                });
+
+            });
+
+            // Close shift button
+            $('#close_shift').click(function(){
+                swal({
+                    title: "A dëshironi të vazhdoni?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                    buttons: ['Jo','Po']
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        data: {"_token":"{{ csrf_token() }}"},
+                        url: "{{ URL('/close_shift')}}",
+                        beforeSend:function(){
+                            window.swal({
+                            title: "Ju lutem prisni!",
+                            icon: "info",
+                            text: "Të dhënat janë duke u ruajtur",
+                            buttons:false,
+                            });
+                        },
+                        success: function(e){
+                            swal("Sukses", "Të dhënat u ruajtën me sukses", "success")
+                        }
+                    });
+                } else {
+                    swal("Kërkesa është anuluar.");
                 }
             });
+
 
             });
         });

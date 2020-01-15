@@ -3,11 +3,6 @@
 Auth::routes();
 
 Route::resource('/', 'HomeController');
-Route::get('/admin/transactions','TransactionController@searchWithPagination');
-Route::get('transactions-info', 'TransactionController@info');
-// Transactions - Genrate bill
-Route::get('/transaction-email/{id}','CompaniesController@send_email');
-Route::get('/transaction-receipt','TransactionController@printFunction');
 
 //Change language
 Route::get('locale/{locale}',function($locale){
@@ -71,7 +66,14 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/admin/pfc-delete-all', 'PFCController@delete_all');
 
 	// Settings
-	Route::resource('/admin/settings', 'SettingsController');
+    Route::resource('/admin/settings', 'SettingsController');
+
+    // Transactions
+    Route::get('/admin/transactions','TransactionController@searchWithPagination');
+    Route::get('transactions-info', 'TransactionController@info');
+    // Transactions - Genrate bill
+    Route::get('/transaction-email/{id}','CompaniesController@send_email');
+    Route::get('/transaction-receipt','TransactionController@printFunction');
 
 	// Transactions - Generate EXCEL & PDF
 	Route::post('/transaction/excel_export', 'TransactionController@excel_export');
@@ -98,6 +100,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 	//Route::get('/admin/staff','StaffController@searchWithPagination');
     Route::get('/admin/staff','StaffController@staff_view');
     Route::get('/excel_export_staff_view','StaffController@export_excel');
+
+    // Staff
+    Route::post('/close_shift','StaffController@close_shift');
 
 	// Pusher
 	Route::get('/counter',function(){
@@ -133,7 +138,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 
 	// Show failed attemps
 	Route::get('/failed-attempts','SettingsController@failed_attempts');
-	
+
 	Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
 
 

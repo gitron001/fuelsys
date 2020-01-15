@@ -16,13 +16,13 @@ class AuthenticatedMiddleware
      */
     public function handle($request, Closure $next)
     {
-        /*if(Auth::check() && Auth::getUser()->type == 3 || Auth::getUser()->type == 5){
+        if(Auth::check()){
             return $next($request);
         }else{
-            abort(403, 'Unauthorized action.');
-        }*/
+            return redirect()->route('login');
+        }
 
         return $next($request);
-        
+
     }
 }
