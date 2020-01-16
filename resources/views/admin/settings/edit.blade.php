@@ -81,42 +81,44 @@
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
+              <li ><a href="#running_process" data-toggle="tab">Running Process</a></li>
             </ul>
             <div class="tab-content">
+                <div class="tab-pane active" id="settings">
 				{!! Form::model($company,['method'=>'PATCH', 'action'=>['SettingsController@update',$company->id],'enctype' => 'multipart/form-data']) !!}
-	
+
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
 							{!! Form::label('name', 'Name'); !!}
-							{!! Form::text('name',null,['class'=>'form-control']); !!} 
+							{!! Form::text('name',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('fis_number', 'Fis.Number'); !!}
-							{!! Form::text('fis_number',null,['class'=>'form-control']); !!} 
+							{!! Form::text('fis_number',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('bis_number', 'Bis.Number'); !!}
-							{!! Form::text('bis_number',null,['class'=>'form-control']); !!} 
+							{!! Form::text('bis_number',null,['class'=>'form-control']); !!}
 						</div>
 						<div class="form-group">
 							{!! Form::label('tax_number', 'Tax.Number'); !!}
-							{!! Form::text('tax_number',null,['class'=>'form-control']); !!} 
+							{!! Form::text('tax_number',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('contact_person', 'Contact Person:'); !!}
-							{!! Form::text('contact_person',null,['class'=>'form-control']); !!} 
-						</div>
-						
-						<div class="form-group">
-							{!! Form::label('printer_id', 'Printer IP'); !!}
-							{!! Form::text('printer_id',null,['class'=>'form-control']); !!} 
+							{!! Form::text('contact_person',null,['class'=>'form-control']); !!}
 						</div>
 
-						
+						<div class="form-group">
+							{!! Form::label('printer_id', 'Printer IP'); !!}
+							{!! Form::text('printer_id',null,['class'=>'form-control']); !!}
+						</div>
+
+
 
 						<div class="form-group">
 							{!! Form::label('photo', 'Photo:'); !!}
@@ -133,32 +135,32 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							{!! Form::label('res_number', 'Res.Number'); !!}
-							{!! Form::text('res_number',null,['class'=>'form-control']); !!} 
+							{!! Form::text('res_number',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('tel_number', 'Phone'); !!}
-							{!! Form::text('tel_number',null,['class'=>'form-control']); !!} 
+							{!! Form::text('tel_number',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('email', 'Email'); !!}
-							{!! Form::text('email',null,['class'=>'form-control']); !!} 
+							{!! Form::text('email',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('address', 'Address'); !!}
-							{!! Form::text('address',null,['class'=>'form-control']); !!} 
+							{!! Form::text('address',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('city', 'City'); !!}
-							{!! Form::text('city',null,['class'=>'form-control']); !!} 
+							{!! Form::text('city',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
 							{!! Form::label('country', 'Country'); !!}
-							{!! Form::text('country',null,['class'=>'form-control']); !!} 
+							{!! Form::text('country',null,['class'=>'form-control']); !!}
 						</div>
 					</div>
 				</div>
@@ -169,7 +171,13 @@
 					</button>
 				</div>
 
-				{!! Form::close() !!}
+                {!! Form::close() !!}
+                </div>
+
+                <div class="tab-pane" id="running_process">
+                    @include('admin.settings.running_process')
+                </div>
+
             </div>
             <!-- /.tab-content -->
           </div>
@@ -183,4 +191,58 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+@endsection
+
+@section('js')
+
+<script>
+
+$(document).ready(function(){
+    setInterval(function(){
+        $('#running_process').load('{{ url('/get_refresh_time')}}').fadeIn('slow');
+    },10000)
+});
+
+$(document).on('click', '#delete_process', function(e) {
+    var id = this.getAttribute('data-id');
+
+    swal({
+        title: "A dëshironi të vazhdoni?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: false,
+        buttons: ['Jo','Po']
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "GET",
+                data: {id:id},
+                url: "{{ URL('/delete_process')}}",
+                dataType: 'JSON',
+                beforeSend:function(){
+                    window.swal({
+                    title: "Ju lutem prisni!",
+                    icon: "info",
+                    text: "Të dhënat janë duke u fshirë",
+                    buttons:false,
+                    });
+                },
+                success: function(e){
+                    if(e == 'success'){
+                        $("#table_data").empty();
+                        swal("Sukses", "Të dhënat janë fshirë me sukses", "success")
+                    }else{
+                        swal("Gabim", "Ndodhi një gabim.", "error")
+                    }
+                }
+            });
+        } else {
+            swal("Kërkesa është anuluar.");
+        }
+    });
+});
+
+</script>
+
 @endsection

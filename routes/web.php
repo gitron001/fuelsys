@@ -3,6 +3,7 @@
 Auth::routes();
 
 Route::resource('/', 'HomeController');
+Route::get('transactions-info', 'TransactionController@info');
 
 //Change language
 Route::get('locale/{locale}',function($locale){
@@ -67,10 +68,11 @@ Route::group(['middleware' => 'authenticated'], function () {
 
 	// Settings
     Route::resource('/admin/settings', 'SettingsController');
+    Route::get('/delete_process', 'SettingsController@delete_process');
+    Route::get('/get_refresh_time', 'SettingsController@get_refresh_time');
 
     // Transactions
     Route::get('/admin/transactions','TransactionController@searchWithPagination');
-    Route::get('transactions-info', 'TransactionController@info');
     // Transactions - Genrate bill
     Route::get('/transaction-email/{id}','CompaniesController@send_email');
     Route::get('/transaction-receipt','TransactionController@printFunction');
@@ -143,8 +145,3 @@ Route::group(['middleware' => 'authenticated'], function () {
 
 
 });
-
-
-
-
-
