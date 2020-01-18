@@ -122,7 +122,7 @@ class SettingsController extends Controller
 			$query = $query->whereBetween('created_at', [strtotime($request->input('from_date')),  strtotime($request->input('to_date'))]);
 		}
         
-		$commands = $query->orderBy('created_at','DESC')->paginate(15);
+		$commands = $query->orderBy('created_at','DESC')->where('type', 18)->paginate(15);
 			
         if($request->ajax() == false){			
             return view('/admin/settings/tracking',compact('commands', 'channels'));

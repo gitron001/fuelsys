@@ -83,6 +83,7 @@ class CheckCardReadersCommand extends Command
 			if(!$dispanser_status){ continue; }
             CardService::check_readers($socket, $pfc_id);
             usleep(150000);
+            TransactionService::readLiveData($socket, $pfc_id);
             TransactionService::read($socket, $pfc_id);
             usleep(150000);
             $proccess = Process::where('type_id', 1)->where('pfc_id', $pfc_id)->first();
