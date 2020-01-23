@@ -164,13 +164,16 @@ class TransactionService extends ServiceProvider
 					$amount = pack('c', $response[$row+3]).pack('c', $response[$row+2]).pack('c', $response[$row+1]).pack('c', $response[$row]);
 					$amount = unpack('i', $amount)[1];
 					if($amount == 0){ continue; }
-					$channel_id 					  = ($i+1);
-					$transaction_data 	 			  = Session::get($channel_id.'.transaction');	
-					$the_dispanser 					  = Dispaneser::where('channel_id', $channel_id)->first();
-					var_dump($amount);
-					$the_dispanser->current_amount 	  = (int)$amount;
-					$the_dispanser->current_user_id   = $transaction_data['user_id'];
+					$channel_id 					 		= ($i+1);
+					$transaction_data 	 			  		= Session::get($channel_id.'.transaction');	
+					$the_dispanser 					  		= Dispaneser::where('channel_id', $channel_id)->first();
+					$the_dispanser->current_amount 	  		= (int)$amount;
+					$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
+					$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];
+					$the_dispanser->status			   		= 3;
+					$the_dispanser->data_updated_at   		= time();
 					$the_dispanser->save();
+					//Send Message to websocket for view update
 			}
 	}
 

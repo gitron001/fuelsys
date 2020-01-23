@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\FaileAttempt;
 use App\Models\TrackingCommands;
 use App\Models\Dispaneser;
+use App\Models\RunninProcessModel;
 
 class SettingsController extends Controller
 {
@@ -22,50 +23,28 @@ class SettingsController extends Controller
     public function index()
     {
         $company = Company::where('status',4)->first();
-        return view('/admin/settings/edit',compact('company'));
+        $running_process = RunninProcessModel::first();
+        return view('/admin/settings/edit',compact('company','running_process'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function get_refresh_time(Request $request)
     {
-        //
+        $running_process = RunninProcessModel::first();
+
+        return view('admin.settings.running_process',compact('running_process'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function delete_process(Request $request)
     {
-        //
-    }
+        $delete = RunninProcessModel::where('id', $request->id)->delete();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        if($delete){
+            echo json_encode('success');
+        }else{
+            echo json_encode('error');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        exit();
     }
 
     /**
@@ -78,7 +57,7 @@ class SettingsController extends Controller
     public function update(Request $request, $id)
     {
         $company = Company::findOrFail($id);
-        
+
         // Edit photo if exist to public/company folder
         if($request->hasFile('image')){
             $image = $request->file('image');
@@ -113,7 +92,7 @@ class SettingsController extends Controller
     {
 		$channels = Dispaneser::get();
         $query = new TrackingCommands;
-		
+
 		if($request->input('channel_id')){
 			$query = $query->where('channel_id', $request->input('channel_id'));
 		}
@@ -121,10 +100,10 @@ class SettingsController extends Controller
 		if($request->input('from_date')){
 			$query = $query->whereBetween('created_at', [strtotime($request->input('from_date')),  strtotime($request->input('to_date'))]);
 		}
-        
-		$commands = $query->orderBy('created_at','DESC')->where('type', 18)->paginate(15);
-			
-        if($request->ajax() == false){			
+
+		$commands = $query->orderBy('created_at','DESC')->paginate(15);
+
+        if($request->ajax() == false){
             return view('/admin/settings/tracking',compact('commands', 'channels'));
         } else {
             return view('/admin/settings/tracking_data',compact('commands', 'channels'))->render();
@@ -147,7 +126,7 @@ class SettingsController extends Controller
         }
 
     }
-	
+
 	public function error_transactions(Request $request)
     {
 		/*

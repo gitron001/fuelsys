@@ -102,7 +102,7 @@
         </a>
     </li>
 
-    
+
 @elseif(Auth::check() && Auth::user()->type == 5)
 
     <li class="{{ request()->is('/') ? 'active' : '' }}">
@@ -134,18 +134,11 @@
     </li>
 
 @else
-    
+
     <li class="{{ request()->is('/') ? 'active' : '' }}">
         <a href="{{ URL('/') }}">
             <i class="fa fa-home" aria-hidden="true"></i>
             <span>{{ trans('adminlte::adminlte.home') }}</span>
-        </a>
-    </li>
-
-    <li class="{{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
-        <a href="{{ URL('admin/transactions') }}">
-            <i class="fa fas fa-exchange-alt" aria-hidden="true"></i>
-            <span>{{ trans('adminlte::adminlte.transaction') }}</span>
         </a>
     </li>
 

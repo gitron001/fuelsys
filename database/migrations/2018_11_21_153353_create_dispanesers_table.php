@@ -21,6 +21,11 @@ class CreateDispanesersTable extends Migration
             $table->string('price_division')->default('1000');
             $table->string('lit_division')->default('100');
             $table->string('money_division')->default('100');
+            $table->integer('current_user_id')->nullable();
+            $table->integer('current_bonus_user_id')->nullable();
+            $table->integer('data_updated_at')->nullable();
+            $table->integer('current_amount')->nullable();
+            $table->integer('status')->nullable();
             $table->integer('created_at');
             $table->integer('updated_at');
         });
