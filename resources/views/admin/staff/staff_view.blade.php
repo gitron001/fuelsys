@@ -5,19 +5,19 @@
     <br>
     <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/staff') }}" role="form">
         <div class="box-body">
-            <div class="form-group" style="display: none;">
+            <!--<div class="form-group" style="display: none;">
                 <label for="Start Date:">Start Date:</label>
-                <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="#" value="{{ request()->get("fromDate") }}">
-            </div>
+                <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="#" value="">
+            </div>-->
 
-            <div class="form-group" style="display: none;">
+            <!--<div class="form-group" style="display: none;">
                 <label for="End Date:">End Date:</label>
-                <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="#" value="{{ request()->get("toDate") }}">
-            </div>
+                <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="#" value="">
+            </div>-->
 
             <div class="form-group">
                 <label for="Shift:">Shift</label>
-                <select class="form-control" name="shift">
+                <select class="form-control" name="shift" id="shift">
                     <option value="">Select shift</option>
                     @foreach($shift as $shift)
                         <?php $start_end_date = $shift->start_date . ' - ' . $shift->end_date; ?>
@@ -275,11 +275,12 @@
             $('#export_excel_staff_view').click(function(){
             var fromDate = $('#datetimepicker4').val();
             var toDate = $('#datetimepicker5').val();
+            var shift = $('#shift').val();
             var user = $("#user").val();
 
                 $.ajax({
                     type: "GET",
-                    data: {fromDate: fromDate, toDate: toDate, user: user},
+                    data: {fromDate: fromDate, toDate: toDate, user: user,shift:shift},
                     url: "{{ URL('/excel_export_staff_view')}}",
                     dataType: "JSON",
                     success: function(response, textStatus, request){

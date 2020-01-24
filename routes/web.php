@@ -1,5 +1,5 @@
 <?php
-
+use App\Events\NewMessage;
 Auth::routes();
 
 Route::resource('/', 'HomeController');
@@ -10,6 +10,13 @@ Route::get('locale/{locale}',function($locale){
 	Session::put('locale',$locale);
 	return redirect()->back();
 });
+
+Route::get('/websocket',function(){
+	broadcast(new NewMessage('here'));
+
+    return view('pusher_index');
+});
+
 
 Route::get('/test/events', 'HomeController@testing_event');
 
@@ -105,15 +112,6 @@ Route::group(['middleware' => 'authenticated'], function () {
 
     // Staff
     Route::post('/close_shift','StaffController@close_shift');
-
-	// Pusher
-	Route::get('/counter',function(){
-		return view('pusher_index');
-	});
-
-	Route::get('/sender',function(){
-		return view('form_page');
-	});
 
 	Route::post('sender','PusherController@sender');
 

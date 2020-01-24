@@ -524,7 +524,6 @@ class TransactionController extends Controller
     }
 
 	public static function getGeneralDataTotalizers(Request $request){
-
         if(!$request->input('fromDate')){
 			$from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
 			$to_date =  strtotime(date('d-m-Y H:i', time()));
@@ -536,7 +535,7 @@ class TransactionController extends Controller
         if(!$request->input('shift')){
             $from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
 			$to_date =  strtotime(date('d-m-Y H:i', time()));
-        }else{
+        }else if(!$request->input('fromDate') && $request->input('shift')){
             $from_date  = str_replace(' ', '', explode("-", $request->input('shift'))[0]);
 			$to_date    = str_replace(' ', '', explode("-", $request->input('shift'))[1]);
         }
