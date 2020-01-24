@@ -36,8 +36,7 @@ class PrintPaymentService extends ServiceProvider
 			}
 			
             $payment        = Payments::where('id', $id)->first();
-
-            $image          = public_path().'/images/company/'.$company->images;            
+	        $image          = public_path().'/images/company/'.$company->images;            
             $printer        = new Printer($connector);
 
 			if(file_exists($image) && !empty($company->images)){
@@ -53,9 +52,9 @@ class PrintPaymentService extends ServiceProvider
             $date           = date("F j, Y, H:i", time());
 
             /* Print top logo */
-            $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            $printer -> graphics($logo);
-            $printer->text("\n");
+            //$printer -> setJustification(Printer::JUSTIFY_CENTER);
+           // $printer -> graphics($logo);
+           // $printer->text("\n");
 
             /* Name & Info of Company */
             $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);

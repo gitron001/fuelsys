@@ -9,6 +9,8 @@ use App\Models\Transaction;
 use App\Models\Users;
 use App\Jobs\PrintFuelRecept;
 use App\Jobs\SendTransactionEmail;
+use App\Models\Dispaneser;
+use Session;
 
 class TransactionService extends ServiceProvider
 {
@@ -62,9 +64,13 @@ class TransactionService extends ServiceProvider
                 $channel = (($i/4));
                 self::read_data($socket, $channel, $pfc_id, $response[$i]);
             }else if($response[$i] == 5){
-                $channel = (($i/4));
+                //Nozzle lifted
+				$channel = (($i/4));
                 //self::read_data($socket, $channel, $pfc_id, $response[$i]);
-            }
+            }else if($response[$i] == 3){
+				$channel = (($i/4));
+				self::read_data($socket, $channel, $pfc_id, $response[$i]);
+			}
         }
         //LOCKED
         return true;
@@ -101,29 +107,75 @@ class TransactionService extends ServiceProvider
 		PFC::storeLogs($channel, null, 6, $response);
 		
 		if(!$response){ return false; } 
-
-        $transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel, $type);
-		
-        //Clear status transaction
-        $status = 2;
-
-        //call job to update company balance
-        //HERE
-		if(!$transaction_id){ return true; } 
-		
-		if($type == 1 || $type == 2){
-			$changed_status = self::transaction_status($channel, $status, $socket);
-		}
-		
-        $recepit = new PrintFuelRecept($transaction_id);
-        dispatch($recepit);
-		
-		$recepit = new SendTransactionEmail($transaction_id);
-		dispatch($recepit);
+		if($type == 3){			
+			$transaction_id  =  Transaction::insertTransactionDataLive($response, $pfc_id, $channel, $type);			
+		}else{
+			$transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel, $type);
 			
-        echo 'stored';
-        return true;
+			//Clear status transaction
+			$status = 2;
+
+			//call job to update company balance
+			//HERE
+			if(!$transaction_id){ return true; } 
+			
+			if($type == 1 || $type == 2){
+				$changed_status = self::transaction_status($channel, $status, $socket);
+			}
+			
+			$recepit = new PrintFuelRecept($transaction_id);
+			dispatch($recepit);
+			
+			$recepit = new SendTransactionEmail($transaction_id);
+			dispatch($recepit);
+			
+			echo 'stored';
+			return true;
+		}
     }
+
+	/* 
+	*Reading Channel Totalizers.
+	*
+	*/
+	
+	public static function readLiveData($socket = null, $pfc_id = 1){
+        //Generate CRC for the Transaction Message
+        $message = "\x1\x4\x7";
+        $the_crc = PFC::crc16($message);
+
+        //Clear Transactions Message
+        $binarydata = pack("c*", 0x01)
+            .pack("c*", 0x04)
+            .pack("c*", 0x07)
+            .strrev(pack("s", $the_crc))
+            .pack("c*", 02);	
+			
+			//PFC::storeLogs(1, null, 17, unpack('c*', $binarydata));
+			
+			$response = PFC::send_message($socket, $binarydata);
+			
+			//PFC::storeLogs(1, null, 18, $response);		
+			
+			$channel_nr = ($response[2] - 4) / 4;
+			
+			for($i = 0; $i < $channel_nr; $i ++){
+					$row = 4 + ($i * 4);
+					$amount = pack('c', $response[$row+3]).pack('c', $response[$row+2]).pack('c', $response[$row+1]).pack('c', $response[$row]);
+					$amount = unpack('i', $amount)[1];
+					if($amount == 0){ continue; }
+					$channel_id 					 		= ($i+1);
+					$transaction_data 	 			  		= Session::get($channel_id.'.transaction');	
+					$the_dispanser 					  		= Dispaneser::where('channel_id', $channel_id)->first();
+					$the_dispanser->current_amount 	  		= (int)$amount;
+					$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
+					$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];
+					$the_dispanser->status			   		= 3;
+					$the_dispanser->data_updated_at   		= time();
+					$the_dispanser->save();
+					//Send Message to websocket for view update
+			}
+	}
 
      /**
          *Change Transaction status

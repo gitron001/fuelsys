@@ -130,7 +130,7 @@
 	    <td align="right" class="gray">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
 	</tr>
 	@endif
-	<?
+	<?php
 	$total = 0;
 	if($inc_transactions == 'No' || !isset($inc_transactions)) {
 		$totalTrans = $balance;
@@ -167,7 +167,7 @@
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
 		</tr>
-		<? } } ?>
+		<?php } } ?>
 		<tr @if($tr->type == 'payment') echo style="display:none;" @endif>
 			<th align="center">{{ $date }}</th>
 			<td align="center">{{ $tr->type == 'payment' ? 'P - '.$tr->description.'' : 'T' }}</td>
@@ -177,12 +177,12 @@
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
 		</tr>
-	<? } }else{ ?>
+	<?php } }else{ ?>
 	<!-- END Total transactions row -->
 
 
 	<!-- Show all rows except TOTAL row -->
-	<? $total = $balance; ?>
+	<?php $total = $balance; ?>
 	@foreach($payments as $py)
 		<?php
 

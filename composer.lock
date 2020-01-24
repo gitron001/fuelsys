@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "77ef131fdd0370779cb276a6923d0a0c",
+=======
+    "content-hash": "45610466053dac790faad754cd24993d",
+>>>>>>> 3375810210ca4b7b3de908646cfa6a04496bd290
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -63,6 +67,7 @@
             "time": "2019-08-23T14:30:33+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "beyondcode/laravel-websockets",
             "version": "1.3.0",
             "source": {
@@ -255,6 +260,8 @@
             "time": "2020-01-14T13:22:15+00:00"
         },
         {
+=======
+>>>>>>> 3375810210ca4b7b3de908646cfa6a04496bd290
             "name": "dnoegel/php-xdg-base-dir",
             "version": "v0.1.1",
             "source": {
@@ -639,93 +646,6 @@
                 "parser"
             ],
             "time": "2019-12-30T22:54:17+00:00"
-        },
-        {
-            "name": "evenement/evenement",
-            "version": "v3.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/igorw/evenement.git",
-                "reference": "531bfb9d15f8aa57454f5f0285b18bec903b8fb7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/igorw/evenement/zipball/531bfb9d15f8aa57454f5f0285b18bec903b8fb7",
-                "reference": "531bfb9d15f8aa57454f5f0285b18bec903b8fb7",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Evenement": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch"
-                }
-            ],
-            "description": "Événement is a very simple event dispatching library for PHP",
-            "keywords": [
-                "event-dispatcher",
-                "event-emitter"
-            ],
-            "time": "2017-07-23T21:35:13+00:00"
-        },
-        {
-            "name": "facade/ignition-contracts",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/facade/ignition-contracts.git",
-                "reference": "f445db0fb86f48e205787b2592840dd9c80ded28"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition-contracts/zipball/f445db0fb86f48e205787b2592840dd9c80ded28",
-                "reference": "f445db0fb86f48e205787b2592840dd9c80ded28",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Facade\\IgnitionContracts\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://flareapp.io",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Solution contracts for Ignition",
-            "homepage": "https://github.com/facade/ignition-contracts",
-            "keywords": [
-                "contracts",
-                "flare",
-                "ignition"
-            ],
-            "time": "2019-08-30T14:06:08+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -2734,31 +2654,30 @@
             "time": "2019-12-17T08:18:51+00:00"
         },
         {
-            "name": "ratchet/rfc6455",
-            "version": "v0.2.6",
+            "name": "sabberworm/php-css-parser",
+            "version": "8.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ratchetphp/RFC6455.git",
-                "reference": "879e48c840f8dbc296d68d6a5030673df79bd916"
+                "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
+                "reference": "91bcc3e3fdb7386c9a2e0e0aa09ca75cc43f121f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ratchetphp/RFC6455/zipball/879e48c840f8dbc296d68d6a5030673df79bd916",
-                "reference": "879e48c840f8dbc296d68d6a5030673df79bd916",
+                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/91bcc3e3fdb7386c9a2e0e0aa09ca75cc43f121f",
+                "reference": "91bcc3e3fdb7386c9a2e0e0aa09ca75cc43f121f",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/psr7": "^1.0",
-                "php": ">=5.4.2"
+                "php": ">=5.3.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.8.*",
-                "react/socket": "^1.3"
+                "codacy/coverage": "^1.4",
+                "phpunit/phpunit": "~4.8"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Ratchet\\RFC6455\\": "src"
+                "psr-0": {
+                    "Sabberworm\\CSS": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2767,85 +2686,101 @@
             ],
             "authors": [
                 {
-                    "name": "Chris Boden",
-                    "email": "cboden@gmail.com",
-                    "role": "Developer"
+                    "name": "Raphael Schweikert"
                 }
             ],
-            "description": "RFC6455 WebSocket protocol handler",
-            "homepage": "http://socketo.me",
+            "description": "Parser for CSS Files written in PHP",
+            "homepage": "http://www.sabberworm.com/blog/2010/6/10/php-css-parser",
             "keywords": [
-                "WebSockets",
-                "rfc6455",
-                "websocket"
+                "css",
+                "parser",
+                "stylesheet"
             ],
-            "time": "2019-12-15T10:18:18+00:00"
+            "time": "2019-02-22T07:42:52+00:00"
         },
         {
-            "name": "react/cache",
-            "version": "v1.0.0",
+            "name": "swiftmailer/swiftmailer",
+            "version": "v6.2.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/reactphp/cache.git",
-                "reference": "aa10d63a1b40a36a486bdf527f28bac607ee6466"
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "149cfdf118b169f7840bbe3ef0d4bc795d1780c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/cache/zipball/aa10d63a1b40a36a486bdf527f28bac607ee6466",
-                "reference": "aa10d63a1b40a36a486bdf527f28bac607ee6466",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/149cfdf118b169f7840bbe3ef0d4bc795d1780c9",
+                "reference": "149cfdf118b169f7840bbe3ef0d4bc795d1780c9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
-                "react/promise": "~2.0|~1.1"
+                "egulias/email-validator": "~2.0",
+                "php": ">=7.0.0",
+                "symfony/polyfill-iconv": "^1.0",
+                "symfony/polyfill-intl-idn": "^1.10",
+                "symfony/polyfill-mbstring": "^1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.4 || ^5.7 || ^4.8.35"
+                "mockery/mockery": "~0.9.1",
+                "symfony/phpunit-bridge": "^3.4.19|^4.1.8"
+            },
+            "suggest": {
+                "ext-intl": "Needed to support internationalized email addresses",
+                "true/punycode": "Needed to support internationalized email addresses, if ext-intl is not installed"
             },
             "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "React\\Cache\\": "src/"
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.2-dev"
                 }
+            },
+            "autoload": {
+                "files": [
+                    "lib/swift_required.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Async, Promise-based cache interface for ReactPHP",
-            "keywords": [
-                "cache",
-                "caching",
-                "promise",
-                "reactphp"
+            "authors": [
+                {
+                    "name": "Chris Corbyn"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
             ],
-            "time": "2019-07-11T13:45:28+00:00"
+            "description": "Swiftmailer, free feature-rich PHP mailer",
+            "homepage": "https://swiftmailer.symfony.com",
+            "keywords": [
+                "email",
+                "mail",
+                "mailer"
+            ],
+            "time": "2019-11-12T09:31:26+00:00"
         },
         {
-            "name": "react/dns",
-            "version": "v1.2.0",
+            "name": "symfony/console",
+            "version": "v4.4.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/reactphp/dns.git",
-                "reference": "a214d90c2884dac18d0cac6176202f247b66d762"
+                "url": "https://github.com/symfony/console.git",
+                "reference": "e9ee09d087e2c88eaf6e5fc0f5c574f64d100e4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/dns/zipball/a214d90c2884dac18d0cac6176202f247b66d762",
-                "reference": "a214d90c2884dac18d0cac6176202f247b66d762",
+                "url": "https://api.github.com/repos/symfony/console/zipball/e9ee09d087e2c88eaf6e5fc0f5c574f64d100e4f",
+                "reference": "e9ee09d087e2c88eaf6e5fc0f5c574f64d100e4f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
-                "react/cache": "^1.0 || ^0.6 || ^0.5",
-                "react/event-loop": "^1.0 || ^0.5",
-                "react/promise": "^2.7 || ^1.2.1",
-                "react/promise-timer": "^1.2"
+                "php": "^7.1.3",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php73": "^1.8",
+                "symfony/service-contracts": "^1.1|^2"
             },
-            "require-dev": {
-                "clue/block-react": "^1.2",
-                "phpunit/phpunit": "^7.0 || ^6.4 || ^5.7 || ^4.8.35"
-            },
+<<<<<<< HEAD
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3384,6 +3319,8 @@
                 "symfony/polyfill-php73": "^1.8",
                 "symfony/service-contracts": "^1.1|^2"
             },
+=======
+>>>>>>> 3375810210ca4b7b3de908646cfa6a04496bd290
             "conflict": {
                 "symfony/dependency-injection": "<3.4",
                 "symfony/event-dispatcher": "<4.3|>=5",
@@ -4496,6 +4433,7 @@
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
             "time": "2020-01-09T09:50:08+00:00"
+<<<<<<< HEAD
         },
         {
             "name": "symfony/psr-http-message-bridge",
@@ -4561,6 +4499,8 @@
                 "psr-7"
             ],
             "time": "2019-11-25T19:33:50+00:00"
+=======
+>>>>>>> 3375810210ca4b7b3de908646cfa6a04496bd290
         },
         {
             "name": "symfony/routing",
