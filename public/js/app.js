@@ -798,16 +798,34 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(33);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
-  broadcaster: 'pusher',
-  key: 'anyKey',
-  wsHost: window.location.hostname,
-  wsPort: 6001,
-  disableStats: true
+    broadcaster: 'pusher',
+    key: 'anyKey',
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    disableStats: true
 });
 
 window.Echo.channel('home').listen('NewMessage', function (e) {
-  document.getElementsByClassName('channel_' + e.message)[0].style.color = 'red';
-  console.log('done');
+    switch (e.message.status) {
+        case 1:
+            document.getElementsByClassName('channel_' + e.message.channel_id)[0].style.color = '#333';
+            document.getElementsByClassName('text_' + e.message.channel_id)[0].textContent = 'Pump - ' + e.message.channel_id;
+            break;
+        case 2:
+            document.getElementsByClassName('channel_' + e.message.channel_id)[0].style.color = '#ffea00';
+            document.getElementsByClassName('text_' + e.message.channel_id)[0].textContent = 'Pump - ' + e.message.channel_id + ' (' + e.message.username + '-' + e.message.amount + ')';
+            break;
+        case 3:
+            document.getElementsByClassName('channel_' + e.message.channel_id)[0].style.color = '#009d00';
+            document.getElementsByClassName('text_' + e.message.channel_id)[0].textContent = 'Pump - ' + e.message.channel_id + ' (' + e.message.username + '-' + e.message.amount + ')';
+            break;
+        case 4:
+            document.getElementsByClassName('channel_' + e.message.channel_id)[0].style.color = '#f8001a';
+            document.getElementsByClassName('text_' + e.message.channel_id)[0].textContent = 'Pump - ' + e.message.channel_id + ' (' + e.message.username + '-' + e.message.amount + ')';
+            break;
+    }
+
+    console.log('DONE');
 });
 
 /***/ }),

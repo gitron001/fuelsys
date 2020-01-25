@@ -24,8 +24,8 @@
 
             <ul style="list-style:none; margin:0; padding:0">
             <li class="text-center">
-                <i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;"></i>
-                <p class="text-center">{{ $dispaneser->name }}</p>
+                <i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:"></i>
+                <p class="text-center text_{{ $dispaneser->channel_id }}">{{ $dispaneser->name }}</p>
             </li>
             </ul>
 
