@@ -288,7 +288,7 @@ class StaffController extends Controller
         $user       = $request->input('user');
 
 		$staffData = [];
-        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('AVG(transactions.price) as product_price'), DB::raw('products.name as product'), DB::raw('users.name as user_name'))
+        $transactions = Transactions::select(DB::raw('SUM(money) as money'), DB::raw('SUM(lit) as total'), DB::RAW('users.id as user_id'),DB::raw('AVG(transactions.price) as product_price'), DB::raw('max(products.name) as product'), DB::raw('max(users.name) as user_name'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->whereIn('users.type',['1', '3', '4'])
@@ -339,7 +339,7 @@ class StaffController extends Controller
         }
 
         $companyData = [];
-		$companies 	= Transactions::select(DB::raw('companies.name as company_name'),DB::raw('companies.id as company_id'),DB::raw('SUM(money) as money'),DB::raw('SUM(lit) as total'), DB::RAW('MAX(products.name) as p_name'),DB::raw('products.name as product'),DB::raw('AVG(transactions.price) as product_price'))
+		$companies 	= Transactions::select(DB::raw('max(companies.name) as company_name'),DB::raw('companies.id as company_id'),DB::raw('SUM(money) as money'),DB::raw('SUM(lit) as total'), DB::RAW('MAX(products.name) as p_name'),DB::raw('max(products.name) as product'),DB::raw('AVG(transactions.price) as product_price'))
             ->join('users', 'users.id', '=', 'transactions.user_id')
             ->join('companies', 'users.company_id', '=', 'companies.id')
             ->join('products', 'products.pfc_pr_id', '=', 'transactions.product_id')

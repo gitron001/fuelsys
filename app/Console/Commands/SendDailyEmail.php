@@ -61,5 +61,6 @@ class SendDailyEmail extends Command
             $controller = new TransactionController();
             $controller->generateDailyReport($request);
         }
+		echo 'RUN AT'.$from_date;
     }
 }

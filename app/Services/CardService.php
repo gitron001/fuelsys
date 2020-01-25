@@ -15,7 +15,7 @@ use App\Models\FaileAttempt as FaileAttempt;
 use DB;
 use App\Services\TransactionService;
 use Session;
-
+use App\Events\NewMessage;
 
 class CardService extends ServiceProvider
 {
@@ -57,8 +57,7 @@ class CardService extends ServiceProvider
                 self::activate_card($socket, $channel, 4);
             }
         }
-        //print_r($response);
-        //socket_close($socket);
+		
         return true;
      }
 
@@ -89,7 +88,6 @@ class CardService extends ServiceProvider
         $cardNumber = pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]).pack('c', $response[5]);
         $cardNumber = unpack('i', $cardNumber)[1];
 		
-        //echo '<br> Card Number: '. $cardNumber;
         $user = Users::where("rfid", $cardNumber)->where('status', 1)->first();
         $card_count = Users::where("rfid", $cardNumber)->where('status', 1)->count();
 		
@@ -170,6 +168,9 @@ class CardService extends ServiceProvider
 		$transaction['user_id']		= $user->id;
 		Session::put($channel.'.transaction', $transaction);
 		Session::save();
+		$data['channel_id'] = $channel;
+		$data['user'] 		= $user->name;
+		event(new NewMessage($data));
         return true;
     }
 
