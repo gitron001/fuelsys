@@ -806,7 +806,8 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */](
 });
 
 window.Echo.channel('home').listen('NewMessage', function (e) {
-  console.log(e);
+  document.getElementsByClassName('channel_' + e.message)[0].style.color = 'red';
+  console.log('done');
 });
 
 /***/ }),

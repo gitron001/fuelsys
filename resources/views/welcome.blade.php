@@ -1,6 +1,11 @@
 @extends('adminlte::page')
 
 @section('content')
+<style>
+.active {
+    color:red;
+}
+</style>
 
 <div class='row'>
   <div class="col-md-6">
@@ -19,7 +24,7 @@
 
             <ul style="list-style:none; margin:0; padding:0">
             <li class="text-center">
-                <i class="fas fa-gas-pump" style="font-size:80px;"></i>
+                <i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;"></i>
                 <p class="text-center">{{ $dispaneser->name }}</p>
             </li>
             </ul>
@@ -121,7 +126,7 @@
 @endsection
 
 @section('js')
-
+<script src="js/app.js"></script>
 <script>
 
   $(document).ready(function(){

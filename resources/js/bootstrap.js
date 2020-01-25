@@ -30,5 +30,6 @@ window.Echo = new Echo({
 
 window.Echo.channel('home')
 .listen('NewMessage', (e) => {
-    console.log(e);
+    document.getElementsByClassName('channel_'+e.message)[0].style.color ='red';
+    console.log('done');
 });

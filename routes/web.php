@@ -1,5 +1,5 @@
 <?php
-use App\Events\NewMessage;
+
 Auth::routes();
 
 Route::resource('/', 'HomeController');
@@ -11,14 +11,6 @@ Route::get('locale/{locale}',function($locale){
 	return redirect()->back();
 });
 
-Route::get('/websocket',function(){
-	broadcast(new NewMessage('here'));
-
-    return view('pusher_index');
-});
-
-
-Route::get('/test/events', 'HomeController@testing_event');
 
 Route::group(['middleware' => 'authenticated'], function () {
 

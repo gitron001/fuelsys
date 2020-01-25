@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\Event_Test;
+use App\Events\NewMessage;
 use Illuminate\Http\Request;
 use App\Models\Dispaneser;
 use App\Models\Company;
@@ -33,7 +33,7 @@ class HomeController extends Controller
         $transactions       = Transaction::orderBy('created_at', 'DESC')->limit(15)->get();
         $company_low_limit  = Company::where('limit_left', '<' , 50)->where('status',1)->where('has_limit', 1)->orderBy('limit_left', 'ASC')->limit(15)->get();
         $dispanesers        = Dispaneser::all();
-
+        event(new NewMessage('2'));
         return view('welcome',compact('dispanesers','transactions','company_low_limit'));
     }
 
@@ -53,7 +53,7 @@ class HomeController extends Controller
             $message->subject("Hello from Scotch");
 
         });
-        
+
     }
 
     public function testing_event(){
