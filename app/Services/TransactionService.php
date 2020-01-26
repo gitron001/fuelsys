@@ -11,6 +11,7 @@ use App\Jobs\PrintFuelRecept;
 use App\Jobs\SendTransactionEmail;
 use App\Models\Dispaneser;
 use Session;
+use App\Events\NewMessage;
 
 class TransactionService extends ServiceProvider
 {
@@ -107,31 +108,29 @@ class TransactionService extends ServiceProvider
 		PFC::storeLogs($channel, null, 6, $response);
 		
 		if(!$response){ return false; } 
-		if($type == 3){			
-			$transaction_id  =  Transaction::insertTransactionDataLive($response, $pfc_id, $channel, $type);			
-		}else{
-			$transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel, $type);
-			
-			//Clear status transaction
-			$status = 2;
 
-			//call job to update company balance
-			//HERE
-			if(!$transaction_id){ return true; } 
-			
-			if($type == 1 || $type == 2){
-				$changed_status = self::transaction_status($channel, $status, $socket);
-			}
-			
-			$recepit = new PrintFuelRecept($transaction_id);
-			dispatch($recepit);
-			
-			$recepit = new SendTransactionEmail($transaction_id);
-			dispatch($recepit);
-			
-			echo 'stored';
-			return true;
+		$transaction_id  =  Transaction::insertTransactionData($response, $pfc_id, $channel, $type);
+		
+		//Clear status transaction
+		$status = 2;
+
+		//call job to update company balance
+		//HERE
+		if(!$transaction_id){ return true; } 
+		
+		if($type == 1 || $type == 2){
+			$changed_status = self::transaction_status($channel, $status, $socket);
 		}
+		
+		$recepit = new PrintFuelRecept($transaction_id);
+		dispatch($recepit);
+		
+		$recepit = new SendTransactionEmail($transaction_id);
+		dispatch($recepit);
+		
+		echo 'stored';
+		return true;
+		
     }
 
 	/* 
@@ -174,6 +173,12 @@ class TransactionService extends ServiceProvider
 					$the_dispanser->data_updated_at   		= time();
 					$the_dispanser->save();
 					//Send Message to websocket for view update
+					$data['channel_id'] = $channel_id;
+					$data['username'] 	= $transaction_data['user_name'];
+					$data['amount'] 	= number_format(($the_dispanser->current_amount)/100, 2);
+					$data['status'] 	= 3;
+					event(new NewMessage($data));
+					
 			}
 	}
 

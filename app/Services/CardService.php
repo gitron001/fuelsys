@@ -166,18 +166,23 @@ class CardService extends ServiceProvider
         }
 		$transaction['user_card']	= $cardNumber;
 		$transaction['user_id']		= $user->id;
+		$transaction['user_name']	= $user->name;
 		Session::put($channel.'.transaction', $transaction);
 		Session::save();
-		$data['channel_id'] = $channel;
-		$data['user'] 		= $user->name;
+		//Send Message to websocket for view update
+		$data = array(
+			'channel_id' => $channel,
+			'username' 	 => $user->name;,
+			'status'	 => 2,
+			'amount'	 => " ";
+		);
+		
 		event(new NewMessage($data));
         return true;
     }
 
     /**
      * Authorize Card without set prices
-     *
-     * @return void
      */
     public static function activate_card($socket, $channel = 1, $status = 3) {
             //Get all transaction by channel
@@ -213,9 +218,7 @@ class CardService extends ServiceProvider
     }
     /**
      * Authorize card with  set prices
-     *
-     *
-     */
+    */
     public static function activate_card_discount($socket, $channel, $all_discounts) {
             //Get all transaction by channel
             $channel_id = pack("C*", $channel);

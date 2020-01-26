@@ -8,6 +8,7 @@ use App\Models\Users as Users;
 use App\Models\Dispaneser as Dispaneser;
 use App\Models\LiveTransaction as LiveTransaction;
 use Session;
+use App\Events\NewMessage;
 
 class Transaction extends Model
 {
@@ -157,118 +158,24 @@ class Transaction extends Model
 			$user->save();
 		}
 		
-		
+		if(isset($transaction->id)){
+			$dispaneser->current_amount 	  	= (int)$amount;
+			$dispaneser->current_user_id   		= (int)$transaction_data['user_id'];
+			$dispaneser->current_bonus_user_id  = (int)$transaction_data['bonus_card'];
+			$dispaneser->status			   		= 1;
+			$dispaneser->data_updated_at   		= time();
+			$dispaneser->save();
+			
+			$data['channel_id'] = $channel_id;
+			$data['username'] 	= $user->name;
+			$data['amount'] 	= $transaction->money;
+			$data['status'] 	= 1;
+			event(new NewMessage($data));
+		}
 
         return $transaction->id;
 
     }
-
-	public static function insertTransactionDataLive($response, $pfc_id, $channel_id){
-		
-		$dispaneser = Dispaneser::where('channel_id', $channel_id)->first();
-		
-		$transaction_data 	 = Session::get($channel_id.'.transaction');	
-		
-        $transaction = new LiveTransaction();
-
-        $transaction->status = $response[4];
-
-        $transaction->pfc_id = $pfc_id;
-
-        $transaction->locker = $response[5];
-
-        $tr_no = pack('c', $response[7]).pack('c', $response[6]);
-        $tr_no = unpack('s', $tr_no)[1];
-
-        $transaction->tr_no = $tr_no;
-		if(!isset($response[8])){ return false; }
-        $transaction->sl_no = $response[8];
-
-        $transaction->product_id = $response[9];
-
-        $transaction->dis_tot = $response[10];
-
-        $price = pack('c', $response[12]).pack('c', $response[11]);
-        $price = unpack('s', $price)[1];
-        $transaction->price = number_format(($price/(int)$dispaneser->price_division),2, '.', '');
-
-        $lit = pack('c', $response[16]).pack('c', $response[15]).pack('c', $response[14]).pack('c', $response[13]);
-        $lit = unpack('i', $lit)[1];
-        $transaction->lit = number_format(($lit/(int)$dispaneser->lit_division),2, '.', '');
-
-        $money = pack('c', $response[20]).pack('c', $response[19]).pack('c', $response[18]).pack('c', $response[17]);
-        $money = unpack('i', $money)[1];
-        $transaction->money = number_format(($money/(int)$dispaneser->money_division),2, '.', '');
-
-        $dis_tot = pack('c', $response[24]).pack('c', $response[23]).pack('c', $response[22]).pack('c', $response[21]);
-        $dis_tot = unpack('i', $dis_tot)[1];
-        $transaction->dis_tot = $dis_tot;
-
-
-        $pfc_tot = pack('c', $response[28]).pack('c', $response[27]).pack('c', $response[26]).pack('c', $response[25]);
-        $pfc_tot = unpack('i', $pfc_tot)[1];
-        $transaction->pfc_tot = $pfc_tot;
-
-        $transaction->tr_status = $response[29];
-
-        $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
-        $rfid = unpack('i', $rfid)[1];
-
-        $user = Users::where("rfid", (int)$transaction_data['user_card'])->where('status', 1)->first();
-		
-		/*if(isset($user->id)){
-
-
-			$transaction->user_id = $user->id;
-		}else{
-			$transaction->user_id = $rfid;
-			//echo $rfid;
-		}*/
-
-		$transaction->user_id = $user->id;
-		
-        $transaction->channel_id = $channel_id;
-
-        $transaction->ctype = $response[34];
-
-        $transaction->method = $response[35];
-			
-		
-        $transaction->bonus_user_id = (int) $transaction['bonus_card'];
-        //$transaction->test_card_nr = $transaction_data['user_card'];
-		
-        $transaction->method = $response[35];
-
-        $bill_no = pack('c', $response[37]).pack('c', $response[36]);
-        $bill_no = unpack('s', $bill_no)[1];
-        $transaction->bill_no = $bill_no;
-		
-        $saved = $transaction->save();
-		
-		if(!$saved){
-			return false;
-		}
-		
-		
-		if(!is_null($user->company->id)){			
-						
-			if($user->company->has_limit == 1){
-				$company = Company::find( $user->company->id );
-				$company->limit_left -= $transaction->money;
-				$company->save();
-			}
-			
-		}elseif($user->has_limit == 1){
-			$user->limit_left -= $transaction->money;
-			$user->save();
-		}
-		
-		
-
-        return $transaction->id;
-
-    }
-
 
     public static function generateInvoiceNr($tran_id){
         //get last record
