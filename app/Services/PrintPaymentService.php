@@ -31,8 +31,8 @@ class PrintPaymentService extends ServiceProvider
 			}		
 			if (filter_var($company->printer_id, FILTER_VALIDATE_IP)) {
 				$connector      = new NetworkPrintConnector($company->printer_id, 9100);
-			} else {
-				$connector      = new Printer($company->printer_id);
+			}else{
+				$connector 		= $company->printer_id;
 			}
 			
             $payment        = Payments::where('id', $id)->first();

@@ -214,9 +214,9 @@ class DispanserService extends ServiceProvider
 		return true;
     }
     /**
-     * Read Totalizers from channel
-     *
+     * Message 4 - Dispenser Totalizers
      * 
+     * Read Totalizers from channel
      */
 	public static function checkChannelTotalizers($socket, $channel_id, $pfc_id = 1){
 
@@ -230,13 +230,13 @@ class DispanserService extends ServiceProvider
         $binarydata = pack("c*", 0x01)
             .pack("c*", 0x05)
             .pack("c*", 0x04)
-            .pack("C*", $channel)
+            .pack("C*", $channel_id)
             .strrev(pack("s", $the_crc))
             .pack("c*", 02);				
-		PFC::storeLogs(1, null, 17, unpack('c*', $binarydata));
+		PFC::storeLogs($channel_id, null, 17, unpack('c*', $binarydata));
         $response = PFC::send_message($socket, $binarydata);		
-		PFC::storeLogs(1, null, 18, $response);
-        return true;		
+		PFC::storeLogs($channel_id, null, 18, $response);
+        return $response;		
 		
 	}
 

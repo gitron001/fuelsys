@@ -66,8 +66,8 @@
             <thead>
                 <tr>
                     <th>Produkti</th>
+                    <th>Nozzle</th>
                     <th>Litrat</th>
-                    <th>Totali</th>
                     <th>MIN</th>
                     <th>MAX</th>
                     <th>Totalizatori</th>
@@ -77,11 +77,11 @@
 			<?php $totalizer_sales = array(); ?>
             @foreach($totalizer_totals as $product)
             <tr>
-                <td>{{ $product['product_name']. ' ' . $product['channel_id'] . ' ' . $product['sl_no'] }} </td>
+                <td>{{ $product['product_name'] }} </td>
+                <td>{{ $product['channel_id'] . '-' . $product['sl_no'] }}</td>
                 <td>{{ $product['lit'] }} litra</td>
-                <td>{{ $product['money'] }} Euro</td>
-                <td>{{ $product['min_totalizer']/100 }} Euro</td>
-                <td>{{ $product['max_totalizer']/100 }} Euro</td>
+                <td>{{ $product['min_totalizer']/100 }} </td>
+                <td>{{ $product['max_totalizer']/100 }} </td>
                 <td>{{ number_format($product['max_totalizer']/100 - $product['min_totalizer']/100, 2) }} Euro</td>
             </tr>
 			<?php if(isset($totalizer_sales[$product['product_id']])){

@@ -164,8 +164,9 @@ class TransactionService extends ServiceProvider
 					$amount = unpack('i', $amount)[1];
 					if($amount == 0){ continue; }
 					$channel_id 					 		= ($i+1);
-					$transaction_data 	 			  		= Session::get($channel_id.'.transaction');	
+					$transaction_data 	 			  		= Session::get($channel_id.'.transaction');						
 					$the_dispanser 					  		= Dispaneser::where('channel_id', $channel_id)->first();
+					if($amount == $the_dispanser->current_amount || $the_dispanser->status == 1){ continue; }
 					$the_dispanser->current_amount 	  		= (int)$amount;
 					$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
 					$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];

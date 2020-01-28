@@ -109,7 +109,11 @@ class Transaction extends Model
         $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
         $rfid = unpack('i', $rfid)[1];
 
-        $user = Users::where("rfid", (int)$transaction_data['user_card'])->where('status', 1)->first();
+		if($transaction_data['user_card'] != 0){
+			$user = Users::where("rfid", (int)$transaction_data['user_card'])->where('status', 1)->first();			
+		}else{
+			$user = Users::where("rfid", $rfid)->where('status', 1)->first();					
+		}
 		
 		/*if(isset($user->id)){
 
@@ -158,10 +162,10 @@ class Transaction extends Model
 			$user->save();
 		}
 		
-		if(isset($transaction->id)){
-			$dispaneser->current_amount 	  	= (int)$amount;
-			$dispaneser->current_user_id   		= (int)$transaction_data['user_id'];
-			$dispaneser->current_bonus_user_id  = (int)$transaction_data['bonus_card'];
+		//if(isset($transaction->id)){
+			$dispaneser->current_amount 	  	= (int)($transaction->money*100);
+			$dispaneser->current_user_id   		= (int)$transaction->user_id;
+			$dispaneser->current_bonus_user_id  = (int)$transaction->bonus_user_id;
 			$dispaneser->status			   		= 1;
 			$dispaneser->data_updated_at   		= time();
 			$dispaneser->save();
@@ -171,7 +175,7 @@ class Transaction extends Model
 			$data['amount'] 	= $transaction->money;
 			$data['status'] 	= 1;
 			event(new NewMessage($data));
-		}
+		//}
 
         return $transaction->id;
 
