@@ -33,19 +33,19 @@ window.Echo.channel('home')
     switch (e.message.status) {
         case 1:
             document.getElementsByClassName('channel_'+e.message.channel_id)[0].style.color ='#333';
-            document.getElementsByClassName('text_'+e.message.channel_id)[0].textContent  = 'Pump - ' + e.message.channel_id;
+            //document.getElementsByClassName('text_'+e.message.channel_id)[0].textContent  = 'Pump - ' + e.message.channel_id;
             break;
         case 2:
             document.getElementsByClassName('channel_'+e.message.channel_id)[0].style.color ='#ffea00';
-            document.getElementsByClassName('text_'+e.message.channel_id)[0].textContent  = 'Pump - ' + e.message.channel_id + ' (' + e.message.username + '-' + e.message.amount + ')';
+            document.getElementsByClassName('text_'+e.message.channel_id)[0].textContent  = (' + e.message.username + '-' + e.message.amount + ')';
             break;
         case 3:
             document.getElementsByClassName('channel_'+e.message.channel_id)[0].style.color ='#009d00';
-            document.getElementsByClassName('text_'+e.message.channel_id)[0].textContent  = 'Pump - ' + e.message.channel_id + ' (' + e.message.username + '-' + e.message.amount + ')';
+            document.getElementsByClassName('text_'+e.message.channel_id)[0].textContent  = '(' + e.message.username + '-' + e.message.amount + ')';
             break;
         case 4:
             document.getElementsByClassName('channel_'+e.message.channel_id)[0].style.color ='#f8001a';
-            document.getElementsByClassName('text_'+e.message.channel_id)[0].textContent  = 'Pump - ' + e.message.channel_id + ' (' + e.message.username + '-' + e.message.amount + ')';
+            document.getElementsByClassName('text_'+e.message.channel_id)[0].textContent  = ' (' + e.message.username + '-' + e.message.amount + ')';
             break;
       }
 

@@ -100,7 +100,8 @@ class SettingsController extends Controller
 		if($request->input('from_date')){
 			$query = $query->whereBetween('created_at', [strtotime($request->input('from_date')),  strtotime($request->input('to_date'))]);
 		}
-
+		$query = $query->where('type', 18);
+		
 		$commands = $query->orderBy('created_at','DESC')->paginate(15);
 
         if($request->ajax() == false){

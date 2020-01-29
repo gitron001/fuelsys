@@ -28,5 +28,9 @@ class Dispaneser extends Model
         return $this->belongsTo('App\Models\PFC');
     }
 
-
+    public function user(){
+        return $this->belongsTo('App\Models\Users', 'current_user_id', 'id')->withDefault([
+            'name' => ''
+        ]);
+    }
 }

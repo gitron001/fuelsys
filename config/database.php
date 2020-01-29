@@ -45,7 +45,7 @@ return [
             'port' => '3306',
             'database' => 'fuel_system',
             'username' => 'root',
-            'password' => 'td8610',
+            'password' => '',
             'unix_socket' => '',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',

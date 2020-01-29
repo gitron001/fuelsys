@@ -413,23 +413,34 @@ class UsersController extends Controller
 
     public function updateCard(Request $request) {
         // Get all users with the same type
-        $users = Users::select('id')->where('type',$request->input('type'))->get();
-
+        $users = Users::select(DB::RAW('id as rfid_id'))->where('type',$request->input('type'))->get()->toArray();
+	
         // Delete discount from those users
         RFID_Discounts::whereIn('rfid_id', $users)->delete();
 
         foreach(array_combine($request->input('product'), $request->input('discount')) as $product => $discount){
             if(!empty($product) && !empty($discount)){
-
-                // Save new discounts
-                foreach($users as $user) {
+				$users = collect($users);
+				$users = $users->map(function ($users) use ($product, $discount) {
+					$users['product_id'] = $product;
+					$users['discount'] = $discount;
+					$users['created_at'] = time();
+					$users['updated_at'] = time();
+					return $users;
+				});
+				
+				$users = $users->toArray();
+				
+				RFID_Discounts::insert($users);
+				// Save new discounts
+                /*foreach($users as $user) {
                     $rfid_product = new RFID_Discounts();
 
                     $rfid_product->rfid_id      = $user->id;
                     $rfid_product->product_id   = $product;
                     $rfid_product->discount     = $discount;
                     $rfid_product->save();
-                }
+                }*/
 
             }
 

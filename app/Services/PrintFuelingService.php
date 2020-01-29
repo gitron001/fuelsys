@@ -30,8 +30,12 @@ class PrintFuelingService extends ServiceProvider
 			if(!isset($company->id) || $company->printer_id == "" || $company->printer_id == NULL){
 				return true;
 			}		
-
-            $connector      = new NetworkPrintConnector($company->printer_id, 9100);
+			
+			if (filter_var($company->printer_id, FILTER_VALIDATE_IP)) {
+				$connector      = new NetworkPrintConnector($company->printer_id, 9100);
+			}else{
+				$connector 		= $company->printer_id;
+			}
             $transaction    = Transaction::where('id', $id)->first();
             $image          = public_path().'/images/company/'.$company->images;            
             $printer        = new Printer($connector);

@@ -31,8 +31,8 @@ class Kernel extends ConsoleKernel
 
         // Send daily email to companies
 
-        $schedule->command('send:daily')
-              ->hourly();
+        $schedule->command('send:daily')->appendOutputTo(storage_path() . "/logs/daily.log")
+              ->hourlyAt(18);
 
         //$schedule->command('send:dailyEmail')
         //      ->hourly();
