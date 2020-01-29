@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     protected $table = 'companies';
-    
+
     protected $fillable = [
         'name',
         'master_id',
-        'fis_number', 
+        'fis_number',
         'bis_number',
         'tax_number',
         'res_number',
@@ -37,12 +37,15 @@ class Company extends Model
         'daily_at',
         'on_transaction',
         'printer_id',
+        'print_transaction',
+        'transaction_location'
+
     ];
 
     public function getDateFormat(){
         return 'U';
     }
-    
+
     public function users(){
         return $this->hasMany('App\Models\Rfid');
     }

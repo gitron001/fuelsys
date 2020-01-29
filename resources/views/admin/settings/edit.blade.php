@@ -116,7 +116,14 @@
 						<div class="form-group">
 							{!! Form::label('printer_id', 'Printer IP'); !!}
 							{!! Form::text('printer_id',null,['class'=>'form-control']); !!}
-						</div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="print">Print transaction: </label>
+                            <br>
+                            <input type="radio" name="print_transaction" value="1" @if (isset($company) && $company->print_transaction == 1) checked @endif> Yes &nbsp;
+                            <input type="radio" name="print_transaction" value="0" @if (isset($company) && $company->print_transaction == 0) checked @endif> No<br>
+                        </div>
 
 
 
@@ -161,7 +168,13 @@
 						<div class="form-group">
 							{!! Form::label('country', 'Country'); !!}
 							{!! Form::text('country',null,['class'=>'form-control']); !!}
-						</div>
+                        </div>
+
+                        <div class="form-group">
+							{!! Form::label('transaction_location', 'Transaction Location'); !!}
+							{!! Form::text('transaction_location',null,['class'=>'form-control','placeholder'=>'Example: D:\FuelSystem']); !!}
+                        </div>
+
 					</div>
 				</div>
 
@@ -199,7 +212,7 @@
 
 $(document).ready(function(){
     setInterval(function(){
-        $('#running_process').load('{{ url('/get_refresh_time')}}').fadeIn('slow');
+        $('.running_process').load('{{ url('/get_refresh_time')}}').fadeIn('slow');
     },10000)
 });
 

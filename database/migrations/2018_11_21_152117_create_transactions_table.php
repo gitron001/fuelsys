@@ -24,6 +24,7 @@ class CreateTransactionsTable extends Migration
             $table->char('sl_no');
             $table->integer('pfc_id');
             $table->integer('product_id');
+            $table->integer('printed')->default(0);
             $table->char('dis_status')->nullable();
             $table->double('price');
             $table->double('lit');

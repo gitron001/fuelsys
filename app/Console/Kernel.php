@@ -27,6 +27,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('card:reader 1')->appendOutputTo(storage_path() . "/logs/cron.log")
                  ->everyMinute();
 
+        $schedule->command('export:transactions')->daily();
+
         // Send daily email to companies
 
         $schedule->command('send:daily')

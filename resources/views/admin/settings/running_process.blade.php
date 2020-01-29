@@ -1,5 +1,5 @@
 @if(!empty($running_process))
-<div class="box">
+<div class="box running_process">
     <!-- /.box-header -->
     <div class="box-body">
       <table class="table table-bordered" style="text-align:center">

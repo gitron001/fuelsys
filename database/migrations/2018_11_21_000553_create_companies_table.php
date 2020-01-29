@@ -34,6 +34,8 @@ class CreateCompaniesTable extends Migration
             $table->double('limits')->nullable();
             $table->double('limit_left')->nullable();
             $table->tinyInteger('has_limit')->default(0);
+            $table->tinyInteger('print_transaction')->default(0);
+            $table->string('transaction_location')->nullable();
             $table->tinyInteger('has_receipt')->default(0);
             $table->tinyInteger('has_receipt_nr')->default(0);
             $table->integer('created_at');
