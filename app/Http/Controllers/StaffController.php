@@ -216,52 +216,58 @@ class StaffController extends Controller
     }
 
     public function staff_view(Request $request){
-        $usersFilter = Users::where('type','1')->pluck('name','id');
-        $shift       = Shifts::select('start_date','end_date')->where('end_date','!=',NULL)->get();
+        
+        $request      = self::setDates($request);
+        //echo $request->input('fromDate'); echo '<br>';
+        //echo $request->input('toDate');
+        $shift                  = Shifts::select('id', 'start_date','end_date')->get(); 
 
-        $staffData      = self::show_staff_info($request)['staffData'];
-        $product_name   = self::show_staff_info($request)['product_name'];
-
+        $staffData              = self::show_staff_info($request)['staffData'];
+        $product_name           = self::show_staff_info($request)['product_name'];
+    
         $companyData            = self::show_companies_info($request)['companyData'];
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
-        $companies              = self::show_companies_info($request)['companies'];
-
+        $companies              = self::show_companies_info($request)['companies'];        
 
         $products           = self::show_products_info($request);
+       
         $totalizer_totals   = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('usersFilter','shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company'));
+        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company'));
     }
 
+
+    public function dispensers(Request $request){        
+        $request                = self::setDates($request);        
+        
+        $shift                  = Shifts::select('id', 'start_date','end_date')->get(); 
+        $products               = self::show_products_info($request);
+        $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
+      
+        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals'));
+    }
+    
+    public function companies(Request $request){        
+        $request                = self::setDates($request);        
+        
+        $shift                  = Shifts::select('id', 'start_date','end_date')->get(); 
+        $companyData            = self::show_companies_info($request)['companyData'];
+        $product_name_company   = self::show_companies_info($request)['product_name_company'];
+        $companies              = self::show_companies_info($request)['companies']; 
+      
+        return view('admin.staff.staff_view',compact('shift','companyData', 'product_name_company', 'companies'));
+    }
+    
+    
     public static function show_products_info($request){
-        if(!$request->input('fromDate')){
-			$from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
-			$to_date =  strtotime(date('d-m-Y H:i', time()));
-		}else{
-			$from_date  = strtotime($request->input('fromDate'));
-			$to_date    = strtotime($request->input('toDate'));
-        }
-
-        if(!$request->input('shift')){
-            $from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
-			$to_date =  strtotime(date('d-m-Y H:i', time()));
-        }else{
-            $from_date  = str_replace(' ', '', explode("-", $request->input('shift'))[0]);
-			$to_date    = str_replace(' ', '', explode("-", $request->input('shift'))[1]);
-        }
-
-        $user       = $request->input('user');
 
         $products 	= Transactions::select(DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::raw('count(transactions.id) as transNR'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('max(transactions.price) as product_price'))
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->groupBy('products.pfc_pr_id');
             //->groupBy('transactions.price');
 
-        if ($request->input('user')) {
-            $products = $products->whereIn('transactions.user_id',$user);
-        }
 
-        $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        $products = $products->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
 
         $products = $products->get();
 
@@ -269,22 +275,6 @@ class StaffController extends Controller
     }
 
     public static function show_staff_info($request){
-        if(!$request->input('fromDate')){
-			$from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
-			$to_date =  strtotime(date('d-m-Y H:i', time()));
-		}else{
-			$from_date  = strtotime($request->input('fromDate'));
-			$to_date    = strtotime($request->input('toDate'));
-        }
-
-        if(!$request->input('shift')){
-            $from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
-			$to_date =  strtotime(date('d-m-Y H:i', time()));
-        }else{
-            $from_date  = str_replace(' ', '', explode("-", $request->input('shift'))[0]);
-			$to_date    = str_replace(' ', '', explode("-", $request->input('shift'))[1]);
-        }
-
         $user       = $request->input('user');
 
 		$staffData = [];
@@ -300,7 +290,7 @@ class StaffController extends Controller
             $transactions = $transactions->whereIn('users.id',$user);
         }
 
-        $transactions = $transactions->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        $transactions = $transactions->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
 
         $transactions = $transactions->get();
 
@@ -322,22 +312,6 @@ class StaffController extends Controller
     }
 
     public static function show_companies_info($request){
-        if(!$request->input('fromDate')){
-			$from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
-			$to_date =  strtotime(date('d-m-Y H:i', time()));
-		}else{
-			$from_date  = strtotime($request->input('fromDate'));
-			$to_date    = strtotime($request->input('toDate'));
-        }
-
-        if(!$request->input('shift')){
-            $from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
-			$to_date =  strtotime(date('d-m-Y H:i', time()));
-        }else{
-            $from_date  = str_replace(' ', '', explode("-", $request->input('shift'))[0]);
-			$to_date    = str_replace(' ', '', explode("-", $request->input('shift'))[1]);
-        }
-
         $companyData = [];
 		$companies 	= Transactions::select(DB::raw('max(companies.name) as company_name'),DB::raw('companies.id as company_id'),DB::raw('SUM(money) as money'),DB::raw('SUM(lit) as total'), DB::RAW('MAX(products.name) as p_name'),DB::raw('max(products.name) as product'),DB::raw('AVG(transactions.price) as product_price'))
             ->join('users', 'users.id', '=', 'transactions.user_id')
@@ -346,7 +320,7 @@ class StaffController extends Controller
             ->groupBy('companies.id')
             ->groupBy('products.id');
 
-        $companies  = $companies->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        $companies  = $companies->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
         $companies  = $companies->get();
 
         $product_name_company = array();
@@ -389,5 +363,26 @@ class StaffController extends Controller
 
         }
 
+    }
+    
+    public static function setDates($request){
+        if(!$request->input('search_type') || $request->input('search_type') == 'shifts'){
+            if(!$request->input('shift')){
+                $shift       = Shifts::select('id', 'start_date','end_date')->where('end_date','!=',NULL)->latest('id')->first();
+            }else{
+                $shift       = Shifts::select('id', 'start_date','end_date')->where('id',$request->input('shift'))->first();                
+            }    
+            $request->merge(['fromDate' => $shift->start_date]);
+            if($shift->end_date == NULL){
+                $request->merge(['toDate' => time()]);                
+            }else{    
+                $request->merge(['toDate' => $shift->end_date]);
+            }
+        }else{
+            $request->merge(['fromDate' => strtotime($request->input('fromDate')) ]);
+            $request->merge(['toDate' => strtotime($request->input('toDate')) ]);            
+        }
+        
+        return $request;
     }
 }
