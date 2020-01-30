@@ -379,10 +379,23 @@ class StaffController extends Controller
     public static function setDates($request){
         if(!$request->input('search_type') || $request->input('search_type') == 'shifts'){
             if(!$request->input('shift')){
-                $shift       = Shifts::select('id', 'start_date','end_date')->where('end_date','!=',NULL)->latest('id')->first();
+                $shift       = Shifts::select('id', 'start_date','end_date')->where('end_date',NULL)->latest('id')->first();
             }else{
                 $shift       = Shifts::select('id', 'start_date','end_date')->where('id',$request->input('shift'))->first();                
-            }    
+            }  
+			//Create new shift is there is none.
+			if(!isset($shift->start_date)){
+				$transaction  = Transactions::select('created_at')->orderBy('id','asc')->first();
+				if(!isset($transaction->created_at)){
+					$shift_start = time();
+				}else{
+					$shift_start = strtotime($transaction->created_at) - 10;
+				}
+				Shifts::insert(
+					['start_date' => $shift_start, 'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
+				);
+                $shift       = Shifts::select('id', 'start_date','end_date')->where('end_date',NULL)->latest('id')->first();
+			}
             $request->merge(['fromDate' => $shift->start_date]);
             if($shift->end_date == NULL){
                 $request->merge(['toDate' => time()]);                
