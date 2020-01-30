@@ -83,6 +83,7 @@
                     $.ajax({
                         type: "POST",
                         data: {"_token":"{{ csrf_token() }}"},
+                        dataType: 'json',
                         url: "{{ URL('/close_shift')}}",
                         beforeSend:function(){
                             window.swal({
@@ -92,8 +93,12 @@
                             buttons:false,
                             });
                         },
-                        success: function(e){
-                            swal("Sukses", "Të dhënat u ruajtën me sukses", "success")
+                        success: function(data){
+                            if(data.response == '-2'){
+                                swal("Error", "Te gjitha popat duhet te jene te mbyllura. Provon Perseri!!", "error");
+                            }else{
+                                swal("Sukses", "Të dhënat u ruajtën me sukses", "success");                                
+                            }
                         }
                     });
                 } else {

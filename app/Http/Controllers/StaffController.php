@@ -8,6 +8,7 @@ use App\Models\Users;
 use App\Models\Shifts;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
+use App\Models\Dispaneser as Dispaneser;
 use App\Http\Controllers\TransactionController as TransactionController;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
@@ -339,7 +340,13 @@ class StaffController extends Controller
     }
 
     public function close_shift(){
+        
+        $active_dispansers  = Dispaneser::where('status', 3)->count();
+        if($active_dispansers > 0){
+            $data['response'] = '-2';
 
+            return json_encode($data);
+        }
         $last_id = Shifts::select('id')->where('end_date',NULL)->orderBy('created_at', 'desc')->first();
 
         if(empty($last_id)){
@@ -362,6 +369,10 @@ class StaffController extends Controller
             );
 
         }
+        
+        $data['response'] = true;
+
+        return json_encode($data);
 
     }
     
