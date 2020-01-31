@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use DB;
+use PDF;
 use Excel;
 use App\Models\Users;
 use App\Models\Shifts;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
 use App\Models\Dispaneser as Dispaneser;
@@ -26,9 +28,9 @@ class StaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function export_excel(Request $request){
-		
-        $request                = self::setDates($request);  		
-		
+
+        $request                = self::setDates($request);
+
         $totalizer_totals   = TransactionController::getGeneralDataTotalizers($request);
         $products           = self::show_products_info($request);
 
@@ -220,48 +222,48 @@ class StaffController extends Controller
     }
 
     public function staff_view(Request $request){
-        
+
         $request      = self::setDates($request);
         //echo $request->input('fromDate'); echo '<br>';
         //echo $request->input('toDate');
-        $shift                  = Shifts::select('id', 'start_date','end_date')->get(); 
+        $shift                  = Shifts::select('id', 'start_date','end_date')->get();
 
         $staffData              = self::show_staff_info($request)['staffData'];
         $product_name           = self::show_staff_info($request)['product_name'];
-    
+
         $companyData            = self::show_companies_info($request)['companyData'];
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
-        $companies              = self::show_companies_info($request)['companies'];        
+        $companies              = self::show_companies_info($request)['companies'];
 
         $products           = self::show_products_info($request);
-       
+
         $totalizer_totals   = TransactionController::getGeneralDataTotalizers($request);
 
         return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company'));
     }
 
 
-    public function dispensers(Request $request){        
-        $request                = self::setDates($request);        
-        
-        $shift                  = Shifts::select('id', 'start_date','end_date')->get(); 
+    public function dispensers(Request $request){
+        $request                = self::setDates($request);
+
+        $shift                  = Shifts::select('id', 'start_date','end_date')->get();
         $products               = self::show_products_info($request);
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
-      
+
         return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals'));
     }
-    
-    public function companies(Request $request){        
-        $request                = self::setDates($request);        
-        
-        $shift                  = Shifts::select('id', 'start_date','end_date')->get(); 
+
+    public function companies(Request $request){
+        $request                = self::setDates($request);
+
+        $shift                  = Shifts::select('id', 'start_date','end_date')->get();
         $companyData            = self::show_companies_info($request)['companyData'];
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
-        $companies              = self::show_companies_info($request)['companies']; 
-      
+        $companies              = self::show_companies_info($request)['companies'];
+
         return view('admin.staff.staff_view',compact('shift','companyData', 'product_name_company', 'companies'));
     }
-   
+
     public static function show_products_info($request){
 
         $products 	= Transactions::select(DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::raw('count(transactions.id) as transNR'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('max(transactions.price) as product_price'))
@@ -342,7 +344,7 @@ class StaffController extends Controller
     }
 
     public function close_shift(){
-        
+
         $active_dispansers  = Dispaneser::where('status', 3)->count();
         if($active_dispansers > 0){
             $data['response'] = '-2';
@@ -371,20 +373,20 @@ class StaffController extends Controller
             );
 
         }
-        
+
         $data['response'] = true;
 
         return json_encode($data);
 
     }
-    
+
     public static function setDates($request){
         if(!$request->input('search_type') || $request->input('search_type') == 'shifts'){
             if(!$request->input('shift')){
                 $shift       = Shifts::select('id', 'start_date','end_date')->where('end_date',NULL)->latest('id')->first();
             }else{
-                $shift       = Shifts::select('id', 'start_date','end_date')->where('id',$request->input('shift'))->first();                
-            }  
+                $shift       = Shifts::select('id', 'start_date','end_date')->where('id',$request->input('shift'))->first();
+            }
 			//Create new shift is there is none.
 			if(!isset($shift->start_date)){
 				$transaction  = Transactions::select('created_at')->orderBy('id','asc')->first();
@@ -400,15 +402,60 @@ class StaffController extends Controller
 			}
             $request->merge(['fromDate' => $shift->start_date]);
             if($shift->end_date == NULL){
-                $request->merge(['toDate' => time()]);                
-            }else{    
+                $request->merge(['toDate' => time()]);
+            }else{
                 $request->merge(['toDate' => $shift->end_date]);
             }
         }else{
             $request->merge(['fromDate' => strtotime($request->input('fromDate')) ]);
-            $request->merge(['toDate' => strtotime($request->input('toDate')) ]);            
+            $request->merge(['toDate' => strtotime($request->input('toDate')) ]);
         }
-        
+
         return $request;
+    }
+
+    public function create_shift(){
+        $first_transaction_date = Transactions::select('created_at')->orderBy('created_at','DESC')->first();
+        $end_date = strtotime(date('Y-m-d H:i:s',strtotime("-1 days")));
+
+        Shifts::insert(
+            ['start_date' => strtotime($first_transaction_date->created_at),'end_date' => $end_date,'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
+        );
+
+        Shifts::insert(
+            ['start_date' => now()->timestamp, 'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
+        );
+    }
+
+    public function export_pdf(Request $request){
+
+        $request                = self::setDates($request);
+        $company                = Company::where('status', 4)->first();
+
+        $shift                  = Shifts::select('id', 'start_date','end_date')->get();
+
+        $staffData              = self::show_staff_info($request)['staffData'];
+        $product_name           = self::show_staff_info($request)['product_name'];
+
+        $companyData            = self::show_companies_info($request)['companyData'];
+        $product_name_company   = self::show_companies_info($request)['product_name_company'];
+        $companies              = self::show_companies_info($request)['companies'];
+
+        $products               = self::show_products_info($request);
+
+        $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
+
+        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
+        $file_name  = 'Staff-PDF - '.date('Y-m-d', time());
+        return $pdf->stream($file_name);
+
+
+        $myFile = $pdf->download($file_name.'.pdf');
+        $response =  array(
+           'name' => $file_name,
+           'file' => "data:application/pdf;base64,".base64_encode($myFile)
+        );
+
+        return response()->json($response);
     }
 }

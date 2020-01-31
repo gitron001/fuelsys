@@ -4,7 +4,7 @@
 @if (Request::path() == 'admin/staff/dispensers')
     <div class="box box-primary">
 @else
-    <div class="box box-primary" style="display:none;">    
+    <div class="box box-primary" style="display:none;">
 @endif
     <div class="box-header">
         <i class="fa fa-calculator" aria-hidden="true"></i>
@@ -34,7 +34,7 @@
                 <td>{{ $product['lit'] }} litra</td>
                 <td>{{ number_format($product['max_totalizer']/100 - $product['min_totalizer']/100, 2 , '.' , '') }}</td>
                 <td>{{ number_format( (($product['max_totalizer']/100 - $product['min_totalizer']/100) - $product['lit']) , 2 , '.' , '') }} litra</td>
-                
+
             </tr>
 			<?php if(isset($totalizer_sales[$product['product_id']])){
 					$totalizer_sales[$product['product_id']] += number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
@@ -43,8 +43,6 @@
 				  }
 			?>
             @endforeach
-			<tr><td>
-			<tr><td>
 		    </tbody>
         </table>
     </div>

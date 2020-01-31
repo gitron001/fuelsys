@@ -13,13 +13,13 @@
         <div class="box-body">
             <div class="form-group date_range_js" @if(request()->get("search_type") != 'date_range') style="display: none;" @endif>
                 <label for="Start Date:">Start Date:</label>
-                <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" 
+                <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate"
                     value="{{ date('m/d/Y H:i', request()->get('fromDate')) }}">
             </div>
-           
+
             <div class="form-group date_range_js"  @if(request()->get("search_type") != 'date_range') style="display: none;" @endif>
                 <label for="End Date:">End Date:</label>
-                <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" 
+                <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate"
                 value="{{ date('m/d/Y H:i', request()->get('toDate')) }}">
             </div>
 
@@ -29,7 +29,7 @@
                     <option value="">Select shift</option>
                     @foreach($shift as $shift)
                         <option value="{{ $shift->id }}" @if($shift->id == request()->get("shift")) selected @endif>
-                            {{ date('m/d/Y H:i', $shift->start_date) }} - 
+                            {{ date('m/d/Y H:i', $shift->start_date) }} -
                             @if($shift->end_date == NULL)
                                NOW
                             @else
@@ -43,9 +43,11 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
             </div>
-            <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Export</button>
+            <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Export EXCEL</button>
+            <a href="{{ route('generate_staff_pdf/pdf', ['fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
+                ] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i class="fas fa-file-pdf"></i> Export PDF</a>
             <button type="button" data-toggle="tooltip" class="btn btn-danger" id="close_shift" title="Close Shift"><i class="fas fa-exclamation-triangle"></i> Close Shift</button>
-            
+
             <div class="btn-group" role="group">
               <input type="radio" name="search_type" class="btn btn-secondary search_type_js" value="shifts" @if(request()->get("search_type") != 'date_range') checked @endif >Shifts<br>
               <input type="radio" name="search_type" class="btn btn-secondary search_type_js" value="date_range" @if(request()->get("search_type") == 'date_range') checked @endif>Date Range
