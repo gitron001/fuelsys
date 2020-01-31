@@ -26,6 +26,9 @@ class StaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function export_excel(Request $request){
+		
+        $request                = self::setDates($request);  		
+		
         $totalizer_totals   = TransactionController::getGeneralDataTotalizers($request);
         $products           = self::show_products_info($request);
 
@@ -258,8 +261,7 @@ class StaffController extends Controller
       
         return view('admin.staff.staff_view',compact('shift','companyData', 'product_name_company', 'companies'));
     }
-    
-    
+   
     public static function show_products_info($request){
 
         $products 	= Transactions::select(DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::raw('count(transactions.id) as transNR'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('max(transactions.price) as product_price'))
