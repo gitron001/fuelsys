@@ -43,11 +43,10 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
             </div>
-            <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Export EXCEL</button>
+            <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Excel</button>
             <a href="{{ route('generate_staff_pdf/pdf', ['fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
-                ] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i class="fas fa-file-pdf"></i> Export PDF</a>
+                ] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-warning" title="Export PDF"><i class="fas fa-file-pdf"></i> PDF</a>
             <button type="button" data-toggle="tooltip" class="btn btn-danger" id="close_shift" title="Close Shift"><i class="fas fa-exclamation-triangle"></i> Close Shift</button>
-
             <div class="btn-group" role="group">
               <input type="radio" name="search_type" class="btn btn-secondary search_type_js" value="shifts" @if(request()->get("search_type") != 'date_range') checked @endif >Shifts<br>
               <input type="radio" name="search_type" class="btn btn-secondary search_type_js" value="date_range" @if(request()->get("search_type") == 'date_range') checked @endif>Date Range
