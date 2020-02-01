@@ -142,6 +142,13 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/transactions') }}">
+            <i class="fa fas fa-exchange-alt" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.transaction') }}</span>
+        </a>
+    </li>
+
 @endif
 
 
