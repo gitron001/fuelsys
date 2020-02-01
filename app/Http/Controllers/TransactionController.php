@@ -14,6 +14,7 @@ use App\Models\Payments;
 use App\Models\Products;
 use App\Services\TransactionService;
 use Excel;
+use Auth;
 use DB;
 use DateTime;
 use PDF;
@@ -541,7 +542,7 @@ class TransactionController extends Controller
         }*/
         $from_date  = $request->input('fromDate');
         $to_date    = $request->input('toDate');
-        
+
         $user       = $request->input('user');
         $company    = $request->input('company');
         $last_payment    = $request->input('last_payment');
@@ -670,6 +671,7 @@ class TransactionController extends Controller
         $users          = Users::where('status',1)->whereIn('type',[1,2,3,4,5])->orderBy('name','asc')->pluck('name','id')->all();
         $bonus_users    = Users::where('status',1)->whereIn('type',[6,7,8])->orderBy('name','asc')->select('name','id')->get();
         $companies      = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $main_company   = Company::where('status',4)->first();
 
         $from_date       = strtotime($request->input('fromDate'));
         $to_date         = strtotime($request->input('toDate'));
@@ -699,7 +701,11 @@ class TransactionController extends Controller
             $query = $query->where('companies.id',$company);
         }
 
-        if ($request->input('fromDate') && $request->input('toDate')) {
+        if(Auth::check() == 0 && $main_company->show_transaction == 1){
+            $query = $query->where('transactions.created_at','>=',strtotime(Carbon::now()->subDays($main_company->show_transaction_time)));
+        }
+
+        if (Auth::check() == 1 && $request->input('fromDate') && $request->input('toDate')) {
             $query = $query->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
 

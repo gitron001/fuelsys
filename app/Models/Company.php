@@ -38,8 +38,9 @@ class Company extends Model
         'on_transaction',
         'printer_id',
         'print_transaction',
-        'transaction_location'
-
+        'transaction_location',
+        'show_transaction',
+        'show_transaction_time'
     ];
 
     public function getDateFormat(){
