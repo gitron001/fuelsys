@@ -166,20 +166,22 @@ class TransactionService extends ServiceProvider
 					$channel_id 					 		= ($i+1);
 					$transaction_data 	 			  		= Session::get($channel_id.'.transaction');						
 					$the_dispanser 					  		= Dispaneser::where('channel_id', $channel_id)->first();
-					if($amount == $the_dispanser->current_amount || $the_dispanser->status == 1){ continue; }
-					$the_dispanser->current_amount 	  		= (int)$amount;
-					$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
-					$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];
-					$the_dispanser->status			   		= 3;
-					$the_dispanser->data_updated_at   		= time();
-					$the_dispanser->save();
-					//Send Message to websocket for view update
-					$data['channel_id'] = $channel_id;
-					$data['username'] 	= $transaction_data['user_name'];
-					$data['amount'] 	= number_format(($the_dispanser->current_amount)/100, 2);
-					$data['status'] 	= 3;
-					event(new NewMessage($data));
-					
+					if(isset($the_dispanser->current_amount)){
+						if($amount == $the_dispanser->current_amount || $the_dispanser->status == 1){ continue; }
+						$the_dispanser->current_amount 	  		= (int)$amount;
+						$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
+						$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];
+						$the_dispanser->status			   		= 3;
+						$the_dispanser->data_updated_at   		= time();
+						$the_dispanser->save();
+						//Send Message to websocket for view update
+						$data['channel_id'] = $channel_id;
+						$data['username'] 	= $transaction_data['user_name'];
+						$data['amount'] 	= number_format(($the_dispanser->current_amount)/$the_dispanser->money_division, 2);
+						$data['status'] 	= 3;
+						event(new NewMessage($data));
+					}
+						
 			}
 	}
 
