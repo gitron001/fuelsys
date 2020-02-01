@@ -12,6 +12,10 @@
     @include('admin.staff.dispanser_data')  
 @endif
 
+@if (Request::path() == 'admin/staff/products')
+    <!-- include staff data --> 
+    @include('admin.staff.products_data')
+@endif
 
 @if (Request::path() == 'admin/staff')
     <!-- include staff data --> 

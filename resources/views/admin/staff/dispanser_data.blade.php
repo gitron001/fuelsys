@@ -47,7 +47,7 @@
         </table>
     </div>
 </div>
-<!-- END products table -->
+<!-- END Totalizers table -->
 
 <!-- START products table -->
 <div class="box box-primary">
