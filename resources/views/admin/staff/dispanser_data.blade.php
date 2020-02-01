@@ -18,8 +18,8 @@
                     <th>Nozzle</th>
                     <th>MIN</th>
                     <th>MAX</th>
-                    <th>Totalizatori</th>
                     <th>Litrat</th>
+                    <th>Totalizatori</th>
                     <th>Ndryshimi</th>
                 </tr>
             </thead>
@@ -33,7 +33,7 @@
                 <td>{{ $product['max_totalizer']/100 }} </td>
                 <td>{{ $product['lit'] }} litra</td>
                 <td>{{ number_format($product['max_totalizer']/100 - $product['min_totalizer']/100, 2 , '.' , '') }}</td>
-                <td>{{ number_format( (($product['max_totalizer']/100 - $product['min_totalizer']/100) - $product['lit']) , 2 , '.' , '') }} litra</td>
+                <td>{{ number_format( ( $product['lit'] - ($product['max_totalizer']/100 - $product['min_totalizer']/100)) , 2 , '.' , '') }} litra</td>
 
             </tr>
 			<?php if(isset($totalizer_sales[$product['product_id']])){

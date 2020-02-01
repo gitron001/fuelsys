@@ -525,21 +525,7 @@ class TransactionController extends Controller
     }
 
 	public static function getGeneralDataTotalizers(Request $request){
-        /* if(!$request->input('fromDate')){
-			$from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
-			$to_date =  strtotime(date('d-m-Y H:i', time()));
-		}else{
-			$from_date  = strtotime($request->input('fromDate'));
-			$to_date    = strtotime($request->input('toDate'));
-        }
 
-        if(!$request->input('shift')){
-            $from_date = strtotime('- 1 day', strtotime(date('d-m-Y H:i', time())));
-			$to_date =  strtotime(date('d-m-Y H:i', time()));
-        }else if(!$request->input('fromDate') && $request->input('shift')){
-            $from_date  = str_replace(' ', '', explode("-", $request->input('shift'))[0]);
-			$to_date    = str_replace(' ', '', explode("-", $request->input('shift'))[1]);
-        }*/
         $from_date  = $request->input('fromDate');
         $to_date    = $request->input('toDate');
 
@@ -555,27 +541,16 @@ class TransactionController extends Controller
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
-            ->groupBy('transactions.sl_no')
-            ->groupBy('transactions.channel_id');
-
-        if ($request->input('user') && empty($request->input('company'))) {
-            $products = $products->whereIn('user_id',$user);
-        }
-
-        if ($request->input('company') && empty($request->input('user'))) {
-            $products = $products->where('companies.id','=',$company);
-        }
-
-        if($request->input('user') && $request->input('company')){
-            $products = $products->whereIn('user_id',$user)->where('companies.id','=',$company);
-        }
+            //->groupBy()
+            ->groupBy('transactions.sl_no', 'transactions.channel_id');
 
         //if ($from_date && $request->input('toDate')) {
+			
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
         //}
 
         $products = $products->get();
-
+		//dd($products);
 
 		$min_totalizers = Transactions::select('transactions.sl_no', 'transactions.channel_id', DB::raw('MAX(CAST(dis_tot as SIGNED)) as totalizer'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
