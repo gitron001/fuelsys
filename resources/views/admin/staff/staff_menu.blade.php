@@ -40,7 +40,9 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
             </div>
-            <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Excel</button>
+			@if (Request::path() == 'admin/staff')
+				<button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Excel</button>
+			@endif
             <a href="{{ route('generate_staff_pdf/pdf', ['search_type' => request()->get("search_type"), 'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
                 ] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-warning" title="Export PDF"><i class="fas fa-file-pdf"></i> PDF</a>
             <button type="button" data-toggle="tooltip" class="btn btn-danger" id="close_shift" title="Close Shift"><i class="fas fa-exclamation-triangle"></i> Close Shift</button>

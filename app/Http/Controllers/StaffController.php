@@ -226,7 +226,7 @@ class StaffController extends Controller
         $request      = self::setDates($request);
         //echo $request->input('fromDate'); echo '<br>';
         //echo $request->input('toDate');
-        $shift                  = Shifts::select('id', 'start_date','end_date')->get();
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('id', 'DESC')->get();
 
         $staffData              = self::show_staff_info($request)['staffData'];
         $product_name           = self::show_staff_info($request)['product_name'];
@@ -431,16 +431,30 @@ class StaffController extends Controller
     }
 
     public function create_shift($hours, $end_hour){
-        $first_transaction_date = Transactions::select('created_at')->orderBy('created_at','DESC')->first();
+        $first_transaction_date = Transactions::select('created_at')->orderBy('created_at','ASC')->first();
         $end_date = strtotime(date('Y-m-d H:i:s',strtotime("-1 days")));
+		$shift_array = array();
+		echo (strtotime($first_transaction_date->created_at));
+		$first_shift	= strtotime(date('Y-m-d 00:00:00', strtotime($first_transaction_date->created_at)));
+		echo '<br>';
+		echo ($first_shift);
+		echo ($first_shift);
+		$now 		= time();
+		while(true){
+			$end_time	= strtotime('+ '.$hours.' Hours', $first_shift);
+			if($end_time > $now){
+				Shifts::insert(
+					['start_date' => $first_shift,'end_date' => null,'created_at' => $end_time, 'updated_at' => $end_time]
+				);
+				break;
+			}
+			Shifts::insert(
+				['start_date' => $first_shift,'end_date' => $end_time,'created_at' => $end_time, 'updated_at' => $end_time]
+			);
+			$first_shift = $end_time+1;
 		
-        Shifts::insert(
-            ['start_date' => strtotime($first_transaction_date->created_at),'end_date' => $end_date,'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
-        );
-
-        Shifts::insert(
-            ['start_date' => now()->timestamp, 'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
-        );
+		}
+        
     }
 
     public function export_pdf(Request $request){
