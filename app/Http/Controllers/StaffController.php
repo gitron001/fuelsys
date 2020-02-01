@@ -435,11 +435,12 @@ class StaffController extends Controller
         $end_date = strtotime(date('Y-m-d H:i:s',strtotime("-1 days")));
 		$shift_array = array();
 		echo (strtotime($first_transaction_date->created_at));
-		$first_shift	= strtotime(date('Y-m-d 00:00:00', strtotime($first_transaction_date->created_at)));
+		$first_shift	= strtotime(date('Y-m-d '.$end_hour.':00:00', strtotime($first_transaction_date->created_at)));
 		echo '<br>';
 		echo ($first_shift);
 		echo ($first_shift);
 		$now 		= time();
+		//exit();
 		while(true){
 			$end_time	= strtotime('+ '.$hours.' Hours', $first_shift);
 			if($end_time > $now){
