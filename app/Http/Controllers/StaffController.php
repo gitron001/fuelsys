@@ -472,10 +472,16 @@ class StaffController extends Controller
 			$products               = self::show_products_info($request);
 			$totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 		}else{
-			$companyData            = null;
-			$product_name_company   = null;
-			$companies              = null;		
+			$products            = null;
+			$totalizer_totals   = null;	
 		}
+		
+		if($request->input('url') == 'products'){
+			$products               = self::show_products_info($request, 'products_view');
+		}
+		
+		
+		
         $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
         $file_name  = 'Staff-PDF - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
