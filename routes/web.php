@@ -102,6 +102,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/admin/staff','StaffController@staff_view');
     Route::get('/admin/staff/dispensers','StaffController@dispensers');
     Route::get('/admin/staff/companies','StaffController@companies');
+    Route::get('/admin/staff/products','StaffController@products');
     Route::get('/excel_export_staff_view','StaffController@export_excel');
 
     // Staff

@@ -1,13 +1,10 @@
 <div class="box box-primary">
     <ul class="nav nav-tabs">
       <li @if(Request::path() == 'admin/staff') class="active" @endif><a href="{{ URL::to('/admin/staff') }}">Shift</a></li>
-      <li @if(Request::path() == 'admin/staff/dispensers') class="active" @endif><a href="{{ URL::to('/admin/staff/dispensers') }}">Dispansers</a></li>
-      <!--
+      <li @if(Request::path() == 'admin/staff/dispensers') class="active" @endif><a href="{{ URL::to('/admin/staff/dispensers') }}">Totalizers</a></li>
       <li @if(Request::path() == 'admin/staff/products') class="active" @endif><a href="{{ URL::to('/admin/staff/products') }}">Products</a></li>
-      -->
       <li @if(Request::path() == 'admin/staff/companies') class="active" @endif><a href="{{ URL::to('/admin/staff/companies') }}">Companies</a></li>
     </ul>
-
     <br>
     <form class="form-inline text-center" method="GET" action="{{ URL::to(Request::path()) }}" role="form">
         <div class="box-body">
@@ -44,7 +41,7 @@
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
             </div>
             <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Excel</button>
-            <a href="{{ route('generate_staff_pdf/pdf', ['fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
+            <a href="{{ route('generate_staff_pdf/pdf', ['search_type' => request()->get("search_type"), 'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
                 ] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-warning" title="Export PDF"><i class="fas fa-file-pdf"></i> PDF</a>
             <button type="button" data-toggle="tooltip" class="btn btn-danger" id="close_shift" title="Close Shift"><i class="fas fa-exclamation-triangle"></i> Close Shift</button>
             <div class="btn-group" role="group">
