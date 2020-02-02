@@ -442,7 +442,8 @@ class CardService extends ServiceProvider
 	*/
 	public static function storeMissingTransaction($socket, $channel, $the_dispanser, $pfc_id){
 		$responseTot = DispanserService::checkChannelTotalizers($socket, $channel, $pfc_id);
-
+		$updated = false;
+		$ch_user		= Users::find($the_dispanser->current_user_id);
 		for($i = 0; $i < 5; $i++){
 			$row = 5 + ($i * 4);
 			$totalizer = pack('c', $responseTot[$row+3]).pack('c', $responseTot[$row+2]).pack('c', $responseTot[$row+1]).pack('c', $responseTot[$row]);
@@ -452,8 +453,7 @@ class CardService extends ServiceProvider
 			if($totalizer == 0){ continue; }
 			$last_transaction 					 	= Transaction::select('product_id','sl_no', 'dis_tot')->where('channel_id', $channel)->where('sl_no', $i+1)->latest('created_at')->first();
 			if(isset($last_transaction->dis_tot) && $totalizer != $last_transaction->dis_tot){
-				$data['lit'] 	= number_format( (($totalizer - $last_transaction->dis_tot) / 100), 2, '.', '');	
-				$ch_user		= Users::find($the_dispanser->current_user_id);
+				$data['lit'] 	= number_format( (($totalizer - $last_transaction->dis_tot) / 100), 2, '.', '');				
 				if($the_dispanser->current_bonus_user_id != 0){
 					$ch_b_user = Users::find($the_dispanser->current_bonus_user_id);
 				}
@@ -510,9 +510,7 @@ class CardService extends ServiceProvider
 				$transaction 			= Transaction::insertGetId($data);
 				print_r($transaction);	
 				
-				$the_dispanser->current_amount 	  		= (int)($transaction->money*100);
-				$the_dispanser->current_user_id   		= (int)$transaction->user_id;
-				$the_dispanser->current_bonus_user_id  	= (int)$transaction->bonus_user_id;
+				$the_dispanser->current_amount 	  		= (int)($data['money']*100);
 				$the_dispanser->status			   		= 1;
 				$the_dispanser->data_updated_at   		= time();
 				$the_dispanser->save();
@@ -528,7 +526,22 @@ class CardService extends ServiceProvider
 				
 				$recepit = new SendTransactionEmail($transaction->id);
 				dispatch($recepit);
+				$updated = true;
+				break;
 			}				
+		}
+		
+		if(!$updated){
+				//$the_dispanser->current_amount 	  		= (int)($data['money']*100);
+				$the_dispanser->status			   		= 1;
+				$the_dispanser->data_updated_at   		= time();
+				$the_dispanser->save();			
+				
+				$data['channel_id'] = $channel;
+				$data['username'] 	= $ch_user->name;
+				$data['amount'] 	= $the_dispanser->current_amount;
+				$data['status'] 	= 1;
+				event(new NewMessage($data));
 		}
 		return true;
 	}
