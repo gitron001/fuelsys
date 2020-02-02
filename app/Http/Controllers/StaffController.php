@@ -226,7 +226,7 @@ class StaffController extends Controller
         $request      = self::setDates($request);
         //echo $request->input('fromDate'); echo '<br>';
         //echo $request->input('toDate');
-        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('id', 'DESC')->get();
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
 
         $staffData              = self::show_staff_info($request)['staffData'];
         $product_name           = self::show_staff_info($request)['product_name'];
@@ -246,7 +246,7 @@ class StaffController extends Controller
     public function dispensers(Request $request){
         $request                = self::setDates($request);
 
-        $shift                  = Shifts::select('id', 'start_date','end_date')->get();
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $products               = self::show_products_info($request);
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
@@ -256,7 +256,7 @@ class StaffController extends Controller
     public function companies(Request $request){
         $request                = self::setDates($request);
 
-        $shift                  = Shifts::select('id', 'start_date','end_date')->get();
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $companyData            = self::show_companies_info($request)['companyData'];
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
         $companies              = self::show_companies_info($request)['companies'];
@@ -267,7 +267,7 @@ class StaffController extends Controller
 	public function products(Request $request){
         $request                = self::setDates($request);
 
-        $shift                  = Shifts::select('id', 'start_date','end_date')->get();
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $products               = self::show_products_info($request, 'products_view');
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
