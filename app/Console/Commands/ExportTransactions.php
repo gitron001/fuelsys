@@ -52,18 +52,34 @@ class ExportTransactions extends Command
                 ->where('transactions.printed',0)
                 ->get();
 
-            foreach($transactions as $transaction){
 
-                $fp = fopen($tr_location."/Trans_".$transaction['id']."_".date("d-m-Y").".txt", "a");
 
-                fwrite($fp, 'Kanali, Doreza, SeqNumber, GradeId, Malli, Sasia, Cmimi, Shuma, ZbritjaVlere, Zbritja%,  ShumaMeZbritje, Data, Totali, StartTime, FinishTime;' .PHP_EOL);
+            if(!file_exists($tr_location."/export.txt")){
+                $fp = fopen($tr_location."/export.txt", "a");
+                fwrite($fp, 'ID_PERSHT;DATAORA;KODART;ARTIKULLI;SASIA;CMIMI;REZERVUAR;RFID;NrKuponit;discount;originalprice' .PHP_EOL);
 
-                fwrite($fp, $transaction['channel_id'].','.$transaction['sl_no'].','.$transaction['tr_no'].','.$transaction['product_id'].','.$transaction['product'].','.$transaction['lit'].','.$transaction['price'].','.$transaction['money'].',0,0,'.$transaction['money'].','.date("d/m/Y h:i:s").',0,'.date("d/m/Y h:i:s",strtotime($transaction['created_at'])).','.date("d/m/Y h:i:s",strtotime($transaction['created_at'])).';');
+                foreach($transactions as $transaction){
 
-                Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';1/6/1;0;'.$transaction['id'].';0;'.$transaction['price'].PHP_EOL);
+
+                    Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
+                }
+
+                fclose($fp);
+            }else{
+                $fp = fopen($tr_location."/export.txt", "a");
+
+                foreach($transactions as $transaction){
+
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';1/6/1;0;'.$transaction['id'].';0;'.$transaction['price'].PHP_EOL);
+
+                    Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
+                }
 
                 fclose($fp);
             }
+
+
         }
     }
 }
