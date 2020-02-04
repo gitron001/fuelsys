@@ -62,7 +62,7 @@ class ExportTransactions extends Command
             foreach($transactions as $transaction){
 
                 // Print data to txt file
-                fwrite($fp, $transaction['username'].' - '.$transaction['rfid'].' - '.$transaction['lit'].'lit - '.$transaction['price'].'€ - '.$transaction['money'].'€'.PHP_EOL);
+                fwrite($fp, $transaction['username'].' '.$transaction['rfid'].' '.$transaction['lit'].' '.$transaction['price'].' '.$transaction['money'].PHP_EOL);
 
                 // Update printed field to exported(1)
                 Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
