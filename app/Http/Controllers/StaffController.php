@@ -422,9 +422,8 @@ class StaffController extends Controller
                 $request->merge(['toDate' => $shift->end_date]);
             }
         }else{
-            //$request->merge(['fromDate' => strtotime($request->input('fromDate')) ]);
-            //$request->merge(['toDate' => strtotime($request->input('toDate')) ]);
-		
+            $request->merge(['fromDate' => strtotime($request->input('fromDate')) ]);
+            $request->merge(['toDate' => strtotime($request->input('toDate')) ]);		
         }
 
         return $request;

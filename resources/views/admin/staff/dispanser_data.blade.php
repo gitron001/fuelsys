@@ -60,7 +60,6 @@
             <thead>
                 <tr>
                     <th>Produkti</th>
-                    <th>Cmimi</th>
                     <th>Sasia</th>
                     <th>Sasia Me Numra</th>
                     <th>Ndryshimi</th>
@@ -71,11 +70,10 @@
             @foreach($products as $product)
             <tr>
                 <td>{{ $product['p_name'] }} </td>
-                <td>{{ $product['product_price'] }} Euro</td>
                 <td>{{ $product['totalLit'] }} litra</td>
                 @if(isset($totalizer_sales[$product['product_id']]))
                 <td>{{ $totalizer_sales[$product['product_id']] }} litra</td>
-                <td>{{ number_format($totalizer_sales[$product['product_id']], 2, '.', '') - number_format($product['totalLit'], 2, '.', '')  }} litra</td>
+                <td>{{ number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')  }} litra</td>
                 @endif
             </tr>
             @endforeach

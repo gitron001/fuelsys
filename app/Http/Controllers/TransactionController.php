@@ -542,6 +542,8 @@ class TransactionController extends Controller
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             //->groupBy()
+			->orderBy('transactions.channel_id')
+			->orderBy('transactions.sl_no')
             ->groupBy('transactions.sl_no', 'transactions.channel_id');
 
         //if ($from_date && $request->input('toDate')) {

@@ -150,7 +150,6 @@ class CardService extends ServiceProvider
 		$the_dispanser 					  		= Dispaneser::where('channel_id', $channel)->first();
 		//Checking is a transaction is running or not saved
 		if((int)$the_dispanser->status == 3){
-			echo 'Runing';
 			if($the_dispanser->data_updated_at < (time()-40)){
 				echo 'Saving Missing';
 				self::storeMissingTransaction($socket, $channel, $the_dispanser, $pfc_id);

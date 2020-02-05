@@ -68,7 +68,7 @@
 		<td align="left">
             <p style="line-height:1.2">
                 <span style="font-size: 16px;"><b> {{ $company->name }} </b></span><br/>
-                Data e zgjedhur: <?php echo date('Y-m-d h:i',$_GET['fromDate']) .' - '. date('Y-m-d h:i',$_GET['toDate']); ?>
+                Data e zgjedhur: <?php echo $_GET['fromDate'] .' - '. $_GET['toDate']; ?>
             </p>
         </td>
 	</tr>
@@ -118,7 +118,6 @@
 		<thead style="background-color: lightgray;">
             <tr>
                 <th>Produkti</th>
-                <th>Cmimi</th>
                 <th>Sasia</th>
                 <th>Sasia Me Numra</th>
                 <th>Ndryshimi</th>
@@ -130,11 +129,10 @@
             @foreach($products as $product)
             <tr>
                 <td>{{ $product['p_name'] }} </td>
-                <td>{{ $product['product_price'] }} Euro</td>
                 <td>{{ $product['totalLit'] }} litra</td>
                 @if(isset($totalizer_sales[$product['product_id']]))
                 <td>{{ $totalizer_sales[$product['product_id']] }} litra</td>
-                <td>{{ number_format($totalizer_sales[$product['product_id']], 2, '.', '') - number_format($product['totalLit'], 2, '.', '')  }} litra</td>
+                <td>{{ number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')  }} litra</td>
                 @endif
             </tr>
             @endforeach
