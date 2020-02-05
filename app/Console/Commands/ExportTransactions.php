@@ -43,32 +43,43 @@ class ExportTransactions extends Command
         $company        = Company::where('status',4)->first();
         $tr_location    = $company->transaction_location;
 
-        if(empty($tr_location) || $tr_location == NULL){
-            $tr_location = storage_path()."/logs/Transactions.txt";
-        }else{
-            $tr_location = $tr_location."/Transactions.txt";
-        }
 
-        if($company->print_transaction == 1){
+        if($company->print_transaction == 1 && !empty($tr_location)){
 
-            $transactions = Transaction::select(DB::RAW('users.name as username'),DB::RAW('users.rfid as rfid'),
-            'transactions.price', 'transactions.lit','transactions.money','transactions.id')
-                ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            $transactions = Transaction::select(DB::RAW('products.name as product'),
+            'transactions.price', 'transactions.lit','transactions.money','transactions.id','transactions.channel_id','transactions.sl_no','transactions.tr_no','transactions.product_id','transactions.lit','transactions.price','transactions.money','transactions.created_at')
+                ->leftJoin('products', 'products.id', '=', 'transactions.product_id')
                 ->where('transactions.printed',0)
                 ->get();
 
-            $fp = fopen($tr_location, "a");
 
-            foreach($transactions as $transaction){
 
-                // Print data to txt file
-                fwrite($fp, $transaction['username'].' - '.$transaction['rfid'].' - '.$transaction['lit'].'lit - '.$transaction['price'].'€ - '.$transaction['money'].'€'.PHP_EOL);
+            if(!file_exists($tr_location."/export.txt")){
+                $fp = fopen($tr_location."/export.txt", "a");
+                fwrite($fp, 'ID_PERSHT;DATAORA;KODART;ARTIKULLI;SASIA;CMIMI;REZERVUAR;RFID;NrKuponit;discount;originalprice' .PHP_EOL);
 
-                // Update printed field to exported(1)
-                Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
+                foreach($transactions as $transaction){
+
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';1/6/1;0;'.$transaction['id'].';0;'.$transaction['price'].PHP_EOL);
+
+                    Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
+                }
+
+                fclose($fp);
+            }else{
+                $fp = fopen($tr_location."/export.txt", "a");
+
+                foreach($transactions as $transaction){
+
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';1/6/1;0;'.$transaction['id'].';0;'.$transaction['price'].PHP_EOL);
+
+                    Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
+                }
+
+                fclose($fp);
             }
 
-            fclose($fp);
+
         }
     }
 }
