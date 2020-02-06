@@ -95,6 +95,7 @@ Route::group(['middleware' => 'authenticated'], function () {
 	//Route::resource('/admin/reports', 'ReportsController');
 	Route::get('/search','ReportsController@search');
 	Route::get('/admin/reports','ReportsController@searchWithPagination');
+	Route::get('/get_bonus_user','ReportsController@get_bonus_user');
 
 	// Settings
 	//Route::get('/admin/staff','StaffController@searchWithPagination');

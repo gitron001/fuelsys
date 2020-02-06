@@ -1,6 +1,27 @@
 @section('js')
 
 <script>
+
+    $('.bonus_user_select').select2({
+        placeholder: 'Bonus user',
+        ajax: {
+          url: '/get_bonus_user',
+          dataType: 'json',
+          delay: 250,
+          processResults: function (data) {
+            return {
+              results:  $.map(data, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.id
+                    }
+                })
+            };
+          },
+          cache: true
+        }
+    });
+
   // Print transaction or Payment receipt with AJAX
   $(document).on('click', '#print_receipt', function(e) {
       e.preventDefault();
