@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Models\RFID_Discounts;
 use App\Jobs\SendTransactionEmail;
 use Illuminate\Support\Facades\Input;
+use Session;
 
 class UsersController extends Controller
 {
