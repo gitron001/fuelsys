@@ -440,11 +440,13 @@ class CardService extends ServiceProvider
 	* Store Transaction when there was a error on closing it
 	*/
 	public static function storeMissingTransaction($socket, $channel, $the_dispanser, $pfc_id){
-		$responseTot = DispanserService::checkChannelTotalizers($socket, $channel, $pfc_id);
-		$updated = false;
+		$responseTot 	= DispanserService::checkChannelTotalizers($socket, $channel, $pfc_id);
+		$updated 		= false;
 		$ch_user		= Users::find($the_dispanser->current_user_id);
-		for($i = 0; $i < 5; $i++){
-			$row = 5 + ($i * 4);
+		$channel_used 	= TransactionService::last_nozzle_used($socket, $pfc_id);
+		
+		//for($i = 0; $i < 5; $i++){
+			$row = 5 + ($channel_used * 4);
 			$totalizer = pack('c', $responseTot[$row+3]).pack('c', $responseTot[$row+2]).pack('c', $responseTot[$row+1]).pack('c', $responseTot[$row]);
 			$totalizer = unpack('i', $totalizer)[1];
 			print_r($totalizer);
@@ -458,14 +460,14 @@ class CardService extends ServiceProvider
 				}
 				$last_product  = Products::where('pfc_pr_id', $last_transaction->product_id)->first();
 				$data['price'] = $last_product->price;
-				if(count($ch_user->discounts) != 0){
+				if(isset($ch_user->discounts) && count($ch_user->discounts) != 0){
 					foreach($ch_user->discounts as $ch_dis){
 						if($ch_dis->product_details->pfc_pr_id == $last_transaction->product_id){
 							$data['price'] = $data['price'] - ($ch_dis->discount*1000);
 							break;
 						}
 					}
-				}elseif(count($ch_user->company->discounts) != 0){
+				}elseif(isset($ch_user->company->discounts) && count($ch_user->company->discounts) != 0){
 					foreach($ch_user->company->discounts as $ch_c_dis){
 						if($ch_c_dis->product_details->pfc_pr_id == $last_transaction->product_id){
 							$data['price'] = $data['price'] - ($ch_c_dis->discount*1000);
@@ -507,7 +509,7 @@ class CardService extends ServiceProvider
 				$data['created_at']		= time();
 				$data['updated_at']		= time();
 				$transaction 			= Transaction::insertGetId($data);
-				print_r($transaction);	
+				//print_r($transaction);	
 				
 				$the_dispanser->current_amount 	  		= (int)($data['money']*100);
 				$the_dispanser->status			   		= 1;
@@ -528,7 +530,7 @@ class CardService extends ServiceProvider
 				$updated = true;
 				break;
 			}				
-		}
+		//}
 		
 		if(!$updated){
 				//$the_dispanser->current_amount 	  		= (int)($data['money']*100);

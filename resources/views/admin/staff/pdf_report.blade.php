@@ -95,8 +95,8 @@
             <td>{{ $product['channel_id'] . '-' . $product['sl_no'] }}</td>
             <td>{{ $product['min_totalizer']/100 }} </td>
             <td>{{ $product['max_totalizer']/100 }} </td>
-            <td>{{ $product['lit'] }} litra</td>
             <td>{{ number_format($product['max_totalizer']/100 - $product['min_totalizer']/100, 2 , '.' , '') }}</td>
+            <td>{{ $product['lit'] }} litra</td>
             <td>{{ number_format( (($product['max_totalizer']/100 - $product['min_totalizer']/100) - $product['lit']) , 2 , '.' , '') }} litra</td>
 
         </tr>

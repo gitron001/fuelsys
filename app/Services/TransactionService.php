@@ -64,14 +64,7 @@ class TransactionService extends ServiceProvider
             }else if($response[$i] == 2){
                 $channel = (($i/4));
                 self::read_data($socket, $channel, $pfc_id, $response[$i]);
-            }else if($response[$i] == 5){
-                //Nozzle lifted
-				$channel = (($i/4));
-                //self::read_data($socket, $channel, $pfc_id, $response[$i]);
-            }else if($response[$i] == 3){
-				$channel = (($i/4));
-				self::read_data($socket, $channel, $pfc_id, $response[$i]);
-			}
+            }			
         }
         //LOCKED
         return true;
@@ -184,6 +177,38 @@ class TransactionService extends ServiceProvider
 						
 			}
 	}
+	/* Read last used Nozzle
+	*/
+	public static last_nozzle_used($socket, $pfc_id, $channel){
+
+        //Get all transaction by channel
+        $message = "\x1\x5\x2\x1";
+        $the_crc = PFC::crc16( $message);
+
+        $binarydata = pack("c*", 0x01)
+            .pack("c*",0x05)
+            .pack("c*",0x02)
+            .pack("c*",0x1)
+            .strrev(pack("s",$the_crc))
+            .pack("c*",02);
+        
+		$response = PFC::send_message($socket, $binarydata);
+		
+		if(!$response)
+		{ 
+			return '-2'; 
+		}
+        $total_msg_legth = count($response);
+		
+		$changed_row = $channel * 4;
+		
+		if(isset($response[$changed_row+3])){
+			return $response[$changed_row+3];
+		}else{
+			return '-2';
+		}	
+	}
+
 
      /**
          *Change Transaction status
