@@ -18,6 +18,8 @@ use App\Services\DispanserService;
 use Session;
 use App\Events\NewMessage;
 use App\Models\Dispaneser as Dispaneser;
+use App\Jobs\PrintFuelRecept;
+use App\Jobs\SendTransactionEmail;
 
 class CardService extends ServiceProvider
 {
@@ -150,7 +152,7 @@ class CardService extends ServiceProvider
 		$the_dispanser 					  		= Dispaneser::where('channel_id', $channel)->first();
 		//Checking is a transaction is running or not saved
 		if((int)$the_dispanser->status == 3){
-			if($the_dispanser->data_updated_at < (time()-40)){
+			if($the_dispanser->data_updated_at < (time()-15)){
 				echo 'Saving Missing';
 				self::storeMissingTransaction($socket, $channel, $the_dispanser, $pfc_id);
 			}else{
@@ -443,94 +445,110 @@ class CardService extends ServiceProvider
 		$responseTot 	= DispanserService::checkChannelTotalizers($socket, $channel, $pfc_id);
 		$updated 		= false;
 		$ch_user		= Users::find($the_dispanser->current_user_id);
-		$channel_used 	= TransactionService::last_nozzle_used($socket, $pfc_id);
+		$channel_used 	= TransactionService::last_nozzle_used($socket, $pfc_id, $channel);
+	
+		if($channel_used == '-2'){ return false; }
 		
-		//for($i = 0; $i < 5; $i++){
-			$row = 5 + ($channel_used * 4);
-			$totalizer = pack('c', $responseTot[$row+3]).pack('c', $responseTot[$row+2]).pack('c', $responseTot[$row+1]).pack('c', $responseTot[$row]);
-			$totalizer = unpack('i', $totalizer)[1];
-			print_r($totalizer);
-			echo '  -  ';
-			if($totalizer == 0){ continue; }
-			$last_transaction 					 	= Transaction::select('product_id','sl_no', 'dis_tot')->where('channel_id', $channel)->where('sl_no', $i+1)->latest('created_at')->first();
-			if(isset($last_transaction->dis_tot) && $totalizer != $last_transaction->dis_tot){
-				$data['lit'] 	= number_format( (($totalizer - $last_transaction->dis_tot) / 100), 2, '.', '');				
-				if($the_dispanser->current_bonus_user_id != 0){
-					$ch_b_user = Users::find($the_dispanser->current_bonus_user_id);
-				}
-				$last_product  = Products::where('pfc_pr_id', $last_transaction->product_id)->first();
-				$data['price'] = $last_product->price;
-				if(isset($ch_user->discounts) && count($ch_user->discounts) != 0){
-					foreach($ch_user->discounts as $ch_dis){
-						if($ch_dis->product_details->pfc_pr_id == $last_transaction->product_id){
-							$data['price'] = $data['price'] - ($ch_dis->discount*1000);
-							break;
-						}
+		$row = 5 + (($channel_used-1) * 4);
+		$totalizer = pack('c', $responseTot[$row+3]).pack('c', $responseTot[$row+2]).pack('c', $responseTot[$row+1]).pack('c', $responseTot[$row]);
+		$totalizer = unpack('i', $totalizer)[1];
+		print_r($totalizer);
+		echo '  -  ';
+		if($totalizer == 0){
+			$the_dispanser->status			   		= 1;
+			$the_dispanser->data_updated_at   		= time();
+			$the_dispanser->save();			
+			
+			$data['channel_id'] = $channel;
+			$data['username'] 	= $ch_user->name;
+			$data['amount'] 	= $the_dispanser->current_amount;
+			$data['status'] 	= 1;
+			event(new NewMessage($data));
+			return true;
+
+		}
+		$last_transaction 					 	= Transaction::select('product_id','sl_no', 'dis_tot')->where('channel_id', $channel)->where('sl_no', $channel_used)->latest('created_at')->first();
+		
+		if(isset($last_transaction->dis_tot) && $totalizer != $last_transaction->dis_tot){
+			$data['lit'] 	= number_format( (($totalizer - $last_transaction->dis_tot) / 100), 2, '.', '');				
+			if($the_dispanser->current_bonus_user_id != 0){
+				$ch_b_user = Users::find($the_dispanser->current_bonus_user_id);
+			}
+			$last_product  = Products::where('pfc_pr_id', $last_transaction->product_id)->first();
+			$data['price'] = $last_product->price;
+			if(isset($ch_user->discounts) && count($ch_user->discounts) != 0){
+				foreach($ch_user->discounts as $ch_dis){
+					if($ch_dis->product_details->pfc_pr_id == $last_transaction->product_id){
+						$data['price'] = $data['price'] - ($ch_dis->discount*1000);
+						break;
 					}
-				}elseif(isset($ch_user->company->discounts) && count($ch_user->company->discounts) != 0){
-					foreach($ch_user->company->discounts as $ch_c_dis){
-						if($ch_c_dis->product_details->pfc_pr_id == $last_transaction->product_id){
-							$data['price'] = $data['price'] - ($ch_c_dis->discount*1000);
-							break;
-						}
-					}							
-				}elseif(isset($ch_b_user->discounts) && count($ch_b_user->discounts) != 0){
-					foreach($ch_b_user->discounts as $ch_b_dis){
-						if($ch_b_dis->product_details->pfc_pr_id == $last_transaction->product_id){
-							$data['price'] = $data['price'] - ($ch_b_dis->discount*1000);
-							break;
-						}
-					}								
-				}elseif(isset($ch_b_user->discounts) && count($ch_b_user->company->discounts) != 0){
-					foreach($ch_b_user->company->discounts as $ch_b_c_dis){
-						if($ch_b_c_dis->product_details->pfc_pr_id == $last_transaction->product_id){
-							$data['price'] = $data['price'] - ($ch_b_c_dis->discount*1000);
-							break;
-						}
-					}								
 				}
-				$data['price']			= number_format(  ($data['price'] /  1000) ,2, '.', '');
-				
-				$data['money'] 			= number_format( ( $data['lit'] * $data['price'] ) ,2, '.', '');			
-				$data['status']			= 2;
-				$data['error_flag']		= 3;
-				$data['locker']			= 11;
-				$data['tr_no']			= 0;
-				$data['channel_id']		= $channel;
-				$data['sl_no']			= $last_transaction->sl_no;
-				$data['pfc_id']			= $pfc_id;
-				$data['product_id']		= $last_transaction->product_id;
-				$data['dis_tot']		= $totalizer;
-				$data['pfc_tot']		= 0;
-				$data['dis_tot_last']	= $last_transaction->dis_tot;
-				$data['tr_status']		= 0;
-				$data['user_id']		= $the_dispanser->current_user_id;
-				$data['bonus_user_id']	= $the_dispanser->current_bonus_user_id;
-				$data['created_at']		= time();
-				$data['updated_at']		= time();
-				$transaction 			= Transaction::insertGetId($data);
-				//print_r($transaction);	
-				
-				$the_dispanser->current_amount 	  		= (int)($data['money']*100);
-				$the_dispanser->status			   		= 1;
-				$the_dispanser->data_updated_at   		= time();
-				$the_dispanser->save();
-				
-				$data['channel_id'] = $channel;
-				$data['username'] 	= $ch_user->name;
-				$data['amount'] 	= $data['money'];
-				$data['status'] 	= 1;
-				event(new NewMessage($data));
-				
-				$recepit = new PrintFuelRecept($transaction->id);
-				dispatch($recepit);
-				
-				$recepit = new SendTransactionEmail($transaction->id);
-				dispatch($recepit);
-				$updated = true;
-				break;
-			}				
-		//}
+			}elseif(isset($ch_user->company->discounts) && count($ch_user->company->discounts) != 0){
+				foreach($ch_user->company->discounts as $ch_c_dis){
+					if($ch_c_dis->product_details->pfc_pr_id == $last_transaction->product_id){
+						$data['price'] = $data['price'] - ($ch_c_dis->discount*1000);
+						break;
+					}
+				}							
+			}elseif(isset($ch_b_user->discounts) && count($ch_b_user->discounts) != 0){
+				foreach($ch_b_user->discounts as $ch_b_dis){
+					if($ch_b_dis->product_details->pfc_pr_id == $last_transaction->product_id){
+						$data['price'] = $data['price'] - ($ch_b_dis->discount*1000);
+						break;
+					}
+				}								
+			}elseif(isset($ch_b_user->discounts) && count($ch_b_user->company->discounts) != 0){
+				foreach($ch_b_user->company->discounts as $ch_b_c_dis){
+					if($ch_b_c_dis->product_details->pfc_pr_id == $last_transaction->product_id){
+						$data['price'] = $data['price'] - ($ch_b_c_dis->discount*1000);
+						break;
+					}
+				}								
+			}
+			$data['price']			= number_format(  ($data['price'] /  1000) ,2, '.', '');
+			
+			$transaction			= new Transaction();
+			
+			$transaction->price 			= $data['price'];			
+			$transaction->lit 				= $data['lit'];			
+			$transaction->money 			= number_format( ( $data['lit'] * $data['price'] ) ,2, '.', '');			
+			$transaction->status			= 2;
+			$transaction->error_flag		= 3;
+			$transaction->locker			= 11;
+			$transaction->tr_no				= 0;
+			$transaction->channel_id		= $channel;
+			$transaction->sl_no				= $last_transaction->sl_no;
+			$transaction->pfc_id			= $pfc_id;
+			$transaction->product_id		= $last_transaction->product_id;
+			$transaction->dis_tot			= $totalizer;
+			$transaction->pfc_tot			= 0;
+			$transaction->dis_tot_last		= $last_transaction->dis_tot;
+			$transaction->tr_status			= 0;
+			$transaction->user_id			= $the_dispanser->current_user_id;
+			$transaction->bonus_user_id		= $the_dispanser->current_bonus_user_id;
+			$transaction->created_at		= time();
+			$transaction->updated_at		= time();
+			$transaction->save();
+			
+			$the_dispanser->current_amount 	  		= (int)($data['money']*100);
+			$the_dispanser->status			   		= 1;
+			$the_dispanser->data_updated_at   		= time();
+			$the_dispanser->save();
+			
+			$data['channel_id'] = $channel;
+			$data['username'] 	= $ch_user->name;
+			$data['amount'] 	= $data['money'];
+			$data['status'] 	= 1;
+			event(new NewMessage($data));
+			
+			$recepit = new PrintFuelRecept($transaction->id);
+			dispatch($recepit);
+			
+			$recepit = new SendTransactionEmail($transaction->id);
+			dispatch($recepit);
+			$updated = true;
+		}				
+	
 		
 		if(!$updated){
 				//$the_dispanser->current_amount 	  		= (int)($data['money']*100);

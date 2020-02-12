@@ -179,7 +179,7 @@ class TransactionService extends ServiceProvider
 	}
 	/* Read last used Nozzle
 	*/
-	public static last_nozzle_used($socket, $pfc_id, $channel){
+	public static function last_nozzle_used($socket, $pfc_id, $channel){
 
         //Get all transaction by channel
         $message = "\x1\x5\x2\x1";
