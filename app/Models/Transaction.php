@@ -160,7 +160,7 @@ class Transaction extends Model
 		}
 		
 		//if(isset($transaction->id)){
-		if(isset($dispaneser->current_amount)){
+		if(isset($dispaneser->id)){
 			$dispaneser->current_amount 	  	= (int)($transaction->money*100);
 			$dispaneser->current_user_id   		= (int)$transaction->user_id;
 			$dispaneser->current_bonus_user_id  = (int)$transaction->bonus_user_id;

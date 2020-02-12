@@ -5,6 +5,12 @@
 .active {
     color:red;
 }
+#wrapper {
+    width: 25%;
+    height: 180px;
+    display: block;
+    text-align: center;
+}
 </style>
 
 <div class='row'>
@@ -19,12 +25,12 @@
       </div>
 
       @foreach($dispanesers as $dispaneser)
-      <div class="col-md-3">
+      <div class="col-sm-3" id="wrapper">
         <div class="box-body">
 
             <ul style="list-style:none; margin:0; padding:0">
             <li class="text-center">
-				<p class="text-center">{{ $dispaneser->name }}</p>
+				<p class="text-center users-list-name">{{ $dispaneser->name }}</p>
 				@if($dispaneser->status == 2)
 					<i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:#ffea00"></i>
 				@elseif($dispaneser->status == 3)
@@ -32,12 +38,12 @@
 				@elseif($dispaneser->status == 4)
 					<i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:#f8001a"></i>
 				@else
-					<i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:"></i>					
+					<i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:"></i>
 				@endif
 				@if( $dispaneser->user->name  != "")
 					<p class="text-center text_{{ $dispaneser->channel_id }}">{{ $dispaneser->user->name }} - {{ number_format($dispaneser->current_amount/100, 2) }}</p>
 				@else
-					<p class="text-center text_{{ $dispaneser->channel_id }}"></p>					
+					<p class="text-center text_{{ $dispaneser->channel_id }}"></p>
 				@endif
             </li>
             </ul>

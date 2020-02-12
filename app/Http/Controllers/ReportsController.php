@@ -98,7 +98,7 @@ class ReportsController extends Controller
     public function searchWithPagination(Request $request) {
         $users              = Users::whereIn('type',[1,2,3,4,5])->pluck('name','id')->all();
         $bonus_users    	= Users::where('status',1)->whereIn('type',[6,7,8])->orderBy('name','asc')->select('name','id')->get();
-		
+
         $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_date          = strtotime($request->input('fromDate'));
@@ -175,5 +175,15 @@ class ReportsController extends Controller
 		}
 		$payments = $query->orderBy('date', 'desc')->first();
 		return $payments->date+1;
-	}
+    }
+
+    public function get_bonus_user(Request $request){
+        $data = [];
+        if($request->has('q')){
+            $search         = $request->q;
+            $data    = Users::where('status',1)->where('name', 'like', '%' . $search . '%')->whereIn('type',[6,7,8])->orderBy('name','asc')->select('name','id')->get();
+        }
+
+        return response()->json($data);
+    }
 }
