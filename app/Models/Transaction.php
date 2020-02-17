@@ -85,15 +85,27 @@ class Transaction extends Model
 
         $price = pack('c', $response[12]).pack('c', $response[11]);
         $price = unpack('s', $price)[1];
-        $transaction->price = number_format(($price/(int)$dispaneser->price_division),2, '.', '');
+		if(!isset($dispaneser->money_division)){
+			$transaction->price = number_format(($price/(int)1000),2, '.', '');
+		}else{
+			$transaction->price = number_format(($price/(int)$dispaneser->price_division),2, '.', '');			
+		}
 
         $lit = pack('c', $response[16]).pack('c', $response[15]).pack('c', $response[14]).pack('c', $response[13]);
         $lit = unpack('i', $lit)[1];
-        $transaction->lit = number_format(($lit/(int)$dispaneser->lit_division),2, '.', '');
+		if(!isset($dispaneser->money_division)){
+			$transaction->lit = number_format(($lit/(int)100),2, '.', '');
+		}else{
+			$transaction->lit = number_format(($lit/(int)$dispaneser->lit_division),2, '.', '');		
+		}
 
         $money = pack('c', $response[20]).pack('c', $response[19]).pack('c', $response[18]).pack('c', $response[17]);
         $money = unpack('i', $money)[1];
-        $transaction->money = number_format(($money/(int)$dispaneser->money_division),2, '.', '');
+		if(!isset($dispaneser->money_division)){
+			$transaction->money = number_format(($money/(int)1000),2, '.', '');
+		}else{
+			$transaction->money = number_format(($money/(int)$dispaneser->money_division),2, '.', '');	
+		}
 
         $dis_tot = pack('c', $response[24]).pack('c', $response[23]).pack('c', $response[22]).pack('c', $response[21]);
         $dis_tot = unpack('i', $dis_tot)[1];
@@ -109,7 +121,7 @@ class Transaction extends Model
         $rfid = pack('c', $response[33]).pack('c', $response[32]).pack('c', $response[31]).pack('c', $response[30]);
         $rfid = unpack('i', $rfid)[1];
 
-		if($dispaneser->current_user_id != 0){
+		if(isset($dispaneser->current_user_id) && $dispaneser->current_user_id != 0){
 			$user = Users::where("id", $dispaneser->current_user_id)->where('status', 1)->first();	
 		}elseif($transaction_data['user_card'] != 0){
 			$user = Users::where("rfid", (int)$transaction_data['user_card'])->where('status', 1)->first();			
@@ -125,7 +137,7 @@ class Transaction extends Model
 
         $transaction->method = $response[35];
 			
-		if($dispaneser->current_bonus_user_id != 0){
+		if(isset($dispaneser->current_bonus_user_id) && $dispaneser->current_bonus_user_id != 0){
 			 $transaction->bonus_user_id = $dispaneser->current_bonus_user_id; 
 		}else{
 			 $transaction->bonus_user_id = (int) $transaction['bonus_card'];		
