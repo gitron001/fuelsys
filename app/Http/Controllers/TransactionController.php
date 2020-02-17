@@ -554,12 +554,13 @@ class TransactionController extends Controller
         $products = $products->get();
 		//dd($products);
 
-		$min_totalizers = Transactions::select('transactions.sl_no', 'transactions.channel_id', DB::raw('MAX(CAST(dis_tot as SIGNED)) as totalizer'))
-            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+		$min_totalizers = Transactions::select('t.sl_no', 't.channel_id', DB::raw('MAX(CAST(dis_tot as SIGNED)) as totalizer'))
+			->from(DB::raw('(SELECT * FROM transactions ORDER BY created_at DESC) t'))
+            ->leftJoin('users', 'users.id', '=', 't.user_id')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 't.product_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
-            ->groupBy('transactions.sl_no')
-            ->groupBy('transactions.channel_id');
+            ->groupBy('t.sl_no')
+            ->groupBy('t.channel_id');
 
         if ($request->input('user') && empty($request->input('company'))) {
             $min_totalizers = $min_totalizers->whereIn('user_id',$user);
@@ -574,7 +575,7 @@ class TransactionController extends Controller
         }
 
         //if ($request->input('fromDate') && $request->input('toDate')) {
-            $min_totalizers = $min_totalizers->where('transactions.created_at', '<', $from_date);
+            $min_totalizers = $min_totalizers->where('t.created_at', '<', $from_date);
         //}
 
         $min_totalizers = $min_totalizers->get();
