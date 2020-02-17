@@ -537,7 +537,7 @@ class TransactionController extends Controller
         }
 
         $products = Transactions::select(DB::raw('MAX(products.name) as product_name'), 'transactions.sl_no', 'transactions.channel_id', DB::raw('MAX(products.pfc_pr_id) as product_id'),
-            DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'), DB::raw('Max(CAST(dis_tot as SIGNED)) as max_totalizer'), DB::raw('MIN(CAST(dis_tot as SIGNED)) as min_totalizer'))
+            DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'), DB::raw('Max(CAST(dis_tot as SIGNED)) as max_totalizer'), DB::raw('MIN(CAST(dis_tot_last as SIGNED)) as min_totalizer'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
@@ -553,7 +553,7 @@ class TransactionController extends Controller
 
         $products = $products->get();
 		//dd($products);
-
+		/*
 		$min_totalizers = Transactions::select('t.sl_no', 't.channel_id', DB::raw('MAX(CAST(dis_tot as SIGNED)) as totalizer'))
 			->from(DB::raw('(SELECT * FROM transactions ORDER BY created_at DESC) t'))
             ->leftJoin('users', 'users.id', '=', 't.user_id')
@@ -582,11 +582,11 @@ class TransactionController extends Controller
 		foreach($products as $p){
 			foreach($min_totalizers as $mt){
 					if($p->channel_id == $mt->channel_id && $p->sl_no == $mt->sl_no){
-							$p->min_totalizer = $mt->totalizer;
+							//$p->min_totalizer = $mt->totalizer;
 					}
 			}
 		}
-
+		*/
         return $products;
     }
 
