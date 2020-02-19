@@ -530,7 +530,7 @@ class CardService extends ServiceProvider
 			$transaction->updated_at		= time();
 			$transaction->save();
 			
-			$the_dispanser->current_amount 	  		= (int)($data['money']*100);
+			$the_dispanser->current_amount 	  		= (int)($transaction->money*100);
 			$the_dispanser->status			   		= 1;
 			$the_dispanser->data_updated_at   		= time();
 			$the_dispanser->save();
