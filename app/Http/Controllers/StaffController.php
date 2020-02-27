@@ -323,7 +323,7 @@ class StaffController extends Controller
                 $staffData[$tr->user_id]['user_name'] = $tr->user_name;
                 //$staffData[$tr->user_id][$tr->product.'_'.$tr->product_price] = [$tr->total,$tr->product_price];
                 $staffData[$tr->user_id][$tr->product] = [$tr->total,$tr->product_price];
-                $staffData[$tr->user_id]['totalMoney'] += ($tr->total * $tr->product_price);
+                $staffData[$tr->user_id]['totalMoney'] += ($tr->money);
                 $product_name[$tr->product] = $tr->product;
                 //$product_name[$tr->product.'_'.$tr->product_price] = $tr->product;
         }
