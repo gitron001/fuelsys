@@ -68,13 +68,19 @@
 		<td align="left">
             <p style="line-height:1.2">
                 <span style="font-size: 16px;"><b> {{ $company->name }} </b></span><br/>
-                Data e zgjedhur: <?php echo $_GET['fromDate'] .' - '. $_GET['toDate']; ?>
+                <?php
+                if(isset($_GET['fromDate']) || isset($_GET['toDate'])) {
+                    echo "Data e zgjedhur: " . $_GET['fromDate'] .' - '. $_GET['toDate'];
+                }else {
+                    echo "Data e zgjedhur: " . date('d-m-Y H:i:s', $request->fromDate) .' - '. date('d-m-Y H:i:s', $request->toDate);
+                } ?>
             </p>
         </td>
 	</tr>
     </table>
     <!-- TOTAL SECTION -->
-    @if (Request::input('url') == 'dispensers') <h4>Total</h4> 
+    @if (Request::input('url') == 'dispensers' || Request::input('url') == 'staff' || $request->url == 'staff')
+    <h4 @if (Request::input('url') == 'staff' || $request->url == 'staff') style="display: none;" @endif>Total</h4>
     <table width="100%" id="table_design" @if (Request::input('url') != 'dispensers') style="display: none;" @endif>
         <thead>
             <tr>
@@ -110,9 +116,9 @@
         </tbody>
     </table>
     <!-- END TOTAL SECTION -->
-	@endif
+    @endif
     <!-- TOTAL SECTION -->
-    @if (Request::input('url') == 'staff' || Request::input('url') == 'dispensers')
+    @if (Request::input('url') == 'staff' || Request::input('url') == 'dispensers' || $request->url == 'staff')
     <h4>Total</h4>
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
@@ -143,7 +149,7 @@
     <!-- END TOTAL SECTION -->
 
     <!-- STAFF SECTION -->
-    @if (Request::input('url') == 'staff')
+    @if (Request::input('url') == 'staff' || $request->url == 'staff')
     <h4>Staff</h4>
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
@@ -195,10 +201,10 @@
     </table>
     @endif
     <!-- STAFF SECTION -->
-    @if (Request::input('url') == 'staff' || Request::input('url') == 'companies')
+    @if (Request::input('url') == 'staff' || Request::input('url') == 'companies' || $request->url == 'staff')
 		<!-- COMPANIES SECTION -->
 		@if(count($companies) != 0)
-			@if (Request::input('url') == 'staff' || Request::input('url') == 'companies')
+			@if (Request::input('url') == 'staff' || Request::input('url') == 'companies' || $request->url == 'staff')
 			<h4>Company</h4>
 			<table width="100%" id="table_design">
 				<thead style="background-color: lightgray;">
@@ -250,9 +256,9 @@
 			</table>
 			@endif
 		@endif
-	@endif 
+	@endif
     <!-- END COMPANIES SECTION -->
-	
+
 	 <!-- START PRODUCTS SECTION -->
 	@if (Request::input('url') == 'products')
 		<h4>Products by Price</h4>
