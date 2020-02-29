@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\FaileAttempt;
@@ -101,7 +102,7 @@ class SettingsController extends Controller
 			$query = $query->whereBetween('created_at', [strtotime($request->input('from_date')),  strtotime($request->input('to_date'))]);
 		}
 		$query = $query->where('type', 18);
-		
+
 		$commands = $query->orderBy('created_at','DESC')->paginate(15);
 
         if($request->ajax() == false){
@@ -143,5 +144,17 @@ class SettingsController extends Controller
             return view('/admin/failed_attempts/table_data',compact('failed_attempts'))->render();
         }
 		*/
+    }
+
+    public function test_email(Request $request)
+    {
+        $data = array('response' => 'Good');
+        Mail::send('test_email', $data, function($message){
+            $message->to('orges1@hotmail.com')->subject('Fuel System');
+        });
+
+        session()->flash('info','Success');
+        return redirect()->back();
+
     }
 }

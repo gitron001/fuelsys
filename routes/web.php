@@ -112,6 +112,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/create_shift/{hours}/{start}','StaffController@create_shift');
     // Export PDF
     Route::get('/staff_pdf','StaffController@export_pdf')->name('generate_staff_pdf/pdf');
+    // Send shift in email
+    Route::post('/send_shift_email','StaffController@send_shift_email');
 
 	Route::post('sender','PusherController@sender');
 
@@ -137,7 +139,10 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('/api/payments-import','API\PaymentsController@getServerPayments');
 
 	// Show failed attemps
-	Route::get('/failed-attempts','SettingsController@failed_attempts');
+    Route::get('/failed-attempts','SettingsController@failed_attempts');
+
+    // Test email
+    Route::get('/test/email','SettingsController@test_email');
 
 	Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
 

@@ -1,4 +1,4 @@
-<div class="box box-primary">
+<div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
       <li @if(Request::path() == 'admin/staff') class="active" @endif><a href="{{ URL::to('/admin/staff') }}">Shift</a></li>
       <li @if(Request::path() == 'admin/staff/dispensers') class="active" @endif><a href="{{ URL::to('/admin/staff/dispensers') }}">Totalizers</a></li>
@@ -22,7 +22,7 @@
 
             <div class="form-group shift_range_js" @if(request()->get("search_type") == 'date_range') style="display: none;" @endif>
                 <label for="Shift:">Shift</label>
-                <select class="form-control" name="shift" id="shift">
+                <select class="form-control shift_range_reset" name="shift" id="shift">
                     <option value="">Select shift</option>
                     @foreach($shift as $shift)
                         <option value="{{ $shift->id }}" @if($shift->id == request()->get("shift")) selected @endif>
@@ -41,7 +41,8 @@
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
             </div>
 			@if (Request::path() == 'admin/staff')
-				<button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Excel</button>
+                <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Excel</button>
+                <button type="button" data-toggle="tooltip" class="btn btn-info" id="send_shift_email" title="Send shift in email"><i class="fa fa-envelope"></i> Send Email</button>
 			@endif
             <a href="{{ route('generate_staff_pdf/pdf', ['search_type' => request()->get("search_type"), 'fromDate' => date('m/d/Y H:i', request()->get("fromDate")),'toDate' => date('m/d/Y H:i',request()->get("toDate")),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
                 ] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-warning" title="Export PDF"><i class="fas fa-file-pdf"></i> PDF</a>

@@ -397,6 +397,42 @@ class StaffController extends Controller
             ->toArray();
         $request = new Request($request);
 
+        self::email($request);
+
+        $data['response'] = true;
+
+        return json_encode($data);
+
+    }
+
+    public function send_shift_email(Request $request){
+        // Check if user has select shift or data range
+        if(!empty($request->shift)){
+            $shift       = Shifts::select('id', 'start_date','end_date')->where('id',$request->input('shift'))->first();
+
+            $data = [
+                "fromDate"  => $shift->start_date,
+                "toDate"    => $shift->end_date,
+                "url"       => "staff"
+            ];
+        }else {
+            $data = [
+                "fromDate"  => strtotime($request->fromDate),
+                "toDate"    => strtotime($request->toDate),
+                "url"       => "staff"
+            ];
+        }
+
+        $request = new Request($data);
+
+        self::email($request);
+
+        $data['response'] = true;
+
+        return json_encode($data);
+    }
+
+    public static function email($request){
         $product_name           = self::show_staff_info($request)['product_name'];
         $staffData              = self::show_staff_info($request)['staffData'];
         $products               = self::show_products_info($request);
@@ -404,7 +440,7 @@ class StaffController extends Controller
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
         $companyData            = self::show_companies_info($request)['companyData'];
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
-        $company = Company::where('status',4)->first();
+        $company                = Company::where('status',4)->first();
 
         if(!empty($company->email)){
             $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
@@ -418,18 +454,7 @@ class StaffController extends Controller
                 $m->to($email)->subject('Raport Transaksionesh - '.$company->name);
                 $m->attachData($pdf->output(),'Raport - '.$company->name.'.pdf');
             });
-
-            /*$data = array('name' => 'Jordan');
-            Mail::send('pusher_index', $data, function($message) use($company){
-                $message->to($company->email)
-                ->subject('Hi there!  Laravel sent me!');
-	        });*/
         }
-
-        $data['response'] = true;
-
-        return json_encode($data);
-
     }
 
     public static function setDates($request){

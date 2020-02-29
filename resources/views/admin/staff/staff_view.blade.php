@@ -3,29 +3,29 @@
 @section('content')
 
 
-<!-- include staff menu --> 
+<!-- include staff menu -->
 @include('admin.staff.staff_menu')
 <!-- END box box-primary -->
 
 @if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/dispensers')
-    <!-- include dispanser and product data --> 
-    @include('admin.staff.dispanser_data')  
+    <!-- include dispanser and product data -->
+    @include('admin.staff.dispanser_data')
 @endif
 
 @if (Request::path() == 'admin/staff/products')
-    <!-- include staff data --> 
+    <!-- include staff data -->
     @include('admin.staff.products_data')
 @endif
 
 @if (Request::path() == 'admin/staff')
-    <!-- include staff data --> 
+    <!-- include staff data -->
     @include('admin.staff.staff_data')
 @endif
 
 @if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/companies')
     <!-- inlcude companies data -->
     @include('admin.staff.companies_data')
-@endif 
+@endif
 
 @endsection
 
@@ -73,6 +73,47 @@
 
             });
 
+            // Send shift in email
+            $('#send_shift_email').click(function(){
+                var fromDate = $('#datetimepicker4').val();
+                var toDate = $('#datetimepicker5').val();
+                var shift = $('#shift').val();
+                var user = $("#user").val();
+
+                swal({
+                    title: "A dëshironi të vazhdoni?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                    buttons: ['Jo','Po']
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        data: {fromDate: fromDate, toDate: toDate, user: user,shift:shift,"_token":"{{ csrf_token() }}"},
+                        dataType: 'json',
+                        url: "{{ URL('/send_shift_email')}}",
+                        beforeSend:function(){
+                            window.swal({
+                            title: "Ju lutem prisni!",
+                            icon: "info",
+                            text: "Email është duke u dërguar.",
+                            buttons:false,
+                            });
+                        },
+                        success: function(data){
+                            swal("Sukses", "Email është dërguar me sukses", "success");
+                        }
+                    });
+                } else {
+                    swal("Kërkesa është anuluar.");
+                }
+            });
+
+
+            });
+
             // Close shift button
             $('#close_shift').click(function(){
                 swal({
@@ -101,7 +142,7 @@
                             if(data.response == '-2'){
                                 swal("Error", "Te gjitha popat duhet te jene te mbyllura. Provon Perseri!!", "error");
                             }else{
-                                swal("Sukses", "Të dhënat u ruajtën me sukses", "success");                                
+                                swal("Sukses", "Të dhënat u ruajtën me sukses", "success");
                             }
                         }
                     });
@@ -122,7 +163,7 @@
             document.querySelector('body').classList.remove('sidebar-mini');
             document.querySelector('body').classList.add('sidebar-collapse');
             $('.navbar a').removeClass("sidebar-toggle");
-            
+
             $('.search_type_js').click(function(){
                 $('.search_type_js').prop("checked", false);
                 $(this).prop("checked", true);
@@ -130,8 +171,9 @@
                     $('.shift_range_js').show();
                     $('.date_range_js').hide();
                 }else{
+                    $('.shift_range_reset').prop('selectedIndex',0);
                     $('.shift_range_js').hide();
-                    $('.date_range_js').show();                    
+                    $('.date_range_js').show();
                 }
             });
         });
