@@ -547,7 +547,7 @@ class TransactionController extends Controller
             ->groupBy('transactions.sl_no', 'transactions.channel_id');
 
         //if ($from_date && $request->input('toDate')) {
-			
+
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
         //}
 
@@ -725,12 +725,12 @@ class TransactionController extends Controller
         $file_name  = 'Transaction - '.date('Y-m-d', time());
 
 
-        Mail::send('emails.report',["data"=>"Raport Transaksionesh - Nesim Bakija"],function($m) use($pdf, $company_details){
+        Mail::send('emails.report',["data"=> "Raport"],function($m) use($pdf, $company_details, $company){
             // Send to multiple emails if divided by comma
 			$email = array_map('trim', explode(',',$company_details->email) );
 
-            $m->to($email)->subject('Raport Transaksionesh - Nesim Bakija');
-            $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
+            $m->to($email)->subject('Raport Transaksionesh - '.$company->name);
+            $m->attachData($pdf->output(),'Raporti - '.$company->name.'pdf');
         });
     }
 

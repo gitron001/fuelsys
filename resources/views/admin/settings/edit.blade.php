@@ -1,6 +1,9 @@
 @extends('adminlte::page')
 
 @section('content')
+
+@include('includes/alert_info')
+
 <div class="row">
         <div class="col-md-3">
 
@@ -68,7 +71,11 @@
 				<li class="list-group-item">
 				  <b>Export Payments</b> <a href="{{ url('/api/payments') }}" class="pull-right">
 					<span class="label label-success"> EXPORT </span></a>
-				</li>
+                </li>
+                <li class="list-group-item">
+                    <b>Test Email</b> <a href="{{ url('/test/email') }}" class="pull-right">
+                      <span class="label label-success"> TEST </span></a>
+                </li>
               </ul>
 
             </div>

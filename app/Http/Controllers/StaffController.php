@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use PDF;
+use Mail;
 use Excel;
 use App\Models\Users;
 use App\Models\Shifts;
@@ -271,8 +272,8 @@ class StaffController extends Controller
         $products               = self::show_products_info($request, 'products_view');
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals'));		
-	
+        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals'));
+
 	}
 
     public static function show_products_info($request, $view_type = null){
@@ -280,13 +281,13 @@ class StaffController extends Controller
         $products 	= Transactions::select(DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'), DB::raw('count(transactions.id) as transNR'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('max(transactions.price) as product_price'))
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->groupBy('products.pfc_pr_id');
-			
-		if($view_type == 'products_view'){	
+
+		if($view_type == 'products_view'){
 			$products = $products->groupBy('transactions.price');
 		}
 
         $products = $products->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
-		
+
         $products = $products->orderBy('products.pfc_pr_id');
 
         $products = $products->get();
@@ -389,10 +390,71 @@ class StaffController extends Controller
 
         }
 
+        $request = Shifts::select(DB::raw('start_date AS fromDate'),DB::raw('end_date AS toDate'),DB::raw("'staff' as url"))->orderBy('created_at', 'desc')
+            ->skip(1)
+            ->take(1)
+            ->first()
+            ->toArray();
+        $request = new Request($request);
+
+        self::email($request);
+
         $data['response'] = true;
 
         return json_encode($data);
 
+    }
+
+    public function send_shift_email(Request $request){
+        // Check if user has select shift or data range
+        if(!empty($request->shift)){
+            $shift       = Shifts::select('id', 'start_date','end_date')->where('id',$request->input('shift'))->first();
+
+            $data = [
+                "fromDate"  => $shift->start_date,
+                "toDate"    => $shift->end_date,
+                "url"       => "staff"
+            ];
+        }else {
+            $data = [
+                "fromDate"  => strtotime($request->fromDate),
+                "toDate"    => strtotime($request->toDate),
+                "url"       => "staff"
+            ];
+        }
+
+        $request = new Request($data);
+
+        self::email($request);
+
+        $data['response'] = true;
+
+        return json_encode($data);
+    }
+
+    public static function email($request){
+        $product_name           = self::show_staff_info($request)['product_name'];
+        $staffData              = self::show_staff_info($request)['staffData'];
+        $products               = self::show_products_info($request);
+        $companies              = self::show_companies_info($request)['companies'];
+        $product_name_company   = self::show_companies_info($request)['product_name_company'];
+        $companyData            = self::show_companies_info($request)['companyData'];
+        $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
+        $company                = Company::where('status',4)->first();
+
+        if(!empty($company->email)){
+            $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
+
+            $file_name  = 'Raport - '.date('Y-m-d', time());
+
+            Mail::send('emails.report',["data"=> "Raport"],function($m) use($pdf, $company){
+                // Send to multiple emails if divided by comma
+                $email = array_map('trim', explode(',',$company->email) );
+
+                $m->to($email)->subject('Raport Transaksionesh - '.$company->name);
+                $m->attachData($pdf->output(),'Raport - '.$company->name.'.pdf');
+            });
+        }
     }
 
     public static function setDates($request){
@@ -423,7 +485,7 @@ class StaffController extends Controller
             }
         }else{
             $request->merge(['fromDate' => strtotime($request->input('fromDate')) ]);
-            $request->merge(['toDate' => strtotime($request->input('toDate')) ]);		
+            $request->merge(['toDate' => strtotime($request->input('toDate')) ]);
         }
 
         return $request;
@@ -452,14 +514,15 @@ class StaffController extends Controller
 				['start_date' => $first_shift,'end_date' => $end_time,'created_at' => $end_time, 'updated_at' => $end_time]
 			);
 			$first_shift = $end_time+1;
-		
+
 		}
-        
+
     }
 
     public function export_pdf(Request $request){
 
         $request                = self::setDates($request);
+
         $company                = Company::where('status', 4)->first();
 
         //$shift                  = Shifts::select('id', 'start_date','end_date')->get();
@@ -469,33 +532,33 @@ class StaffController extends Controller
 			$product_name           = self::show_staff_info($request)['product_name'];
 		}else{
 			$staffData              = null;
-			$product_name           = null;			
+			$product_name           = null;
 		}
 
-		if($request->input('url') == 'staff' || $request->input('url') == 'companies'){		
+		if($request->input('url') == 'staff' || $request->input('url') == 'companies'){
 			$companyData            = self::show_companies_info($request)['companyData'];
 			$product_name_company   = self::show_companies_info($request)['product_name_company'];
 			$companies              = self::show_companies_info($request)['companies'];
 		}else{
 			$companyData            = null;
 			$product_name_company   = null;
-			$companies              = null;		
+			$companies              = null;
 		}
 
-		if($request->input('url') == 'staff' || $request->input('url') == 'dispensers'){			
+		if($request->input('url') == 'staff' || $request->input('url') == 'dispensers'){
 			$products               = self::show_products_info($request);
 			$totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 		}else{
 			$products            = null;
-			$totalizer_totals   = null;	
+			$totalizer_totals   = null;
 		}
-		
+
 		if($request->input('url') == 'products'){
 			$products               = self::show_products_info($request, 'products_view');
 		}
-		
-		
-		
+
+
+
         $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
         $file_name  = 'Staff-PDF - '.date('Y-m-d', time());
         return $pdf->stream($file_name);
