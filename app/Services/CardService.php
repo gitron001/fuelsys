@@ -537,7 +537,7 @@ class CardService extends ServiceProvider
 			
 			$data['channel_id'] = $channel;
 			$data['username'] 	= $ch_user->name;
-			$data['amount'] 	= $data['money'];
+			$data['amount'] 	= $transaction->money;
 			$data['status'] 	= 1;
 			event(new NewMessage($data));
 			
