@@ -445,7 +445,7 @@ class StaffController extends Controller
         if(!empty($company->email)){
             $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
 
-            $file_name  = 'Raport - '.date('Y-m-d', time());
+            $file_name  = 'Raport - '.date('Y-m-d', time()).'.pdf';
 
             Mail::send('emails.report',["data"=> "Raport"],function($m) use($pdf, $company){
                 // Send to multiple emails if divided by comma
@@ -560,7 +560,7 @@ class StaffController extends Controller
 
 
         $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
-        $file_name  = 'Staff-PDF - '.date('Y-m-d', time());
+        $file_name  = 'Staff-PDF - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
 
 

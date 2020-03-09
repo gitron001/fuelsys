@@ -294,7 +294,7 @@ class TransactionController extends Controller
         }
 
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','date_to','bonus_user','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
-        $file_name  = 'Transaction - '.date('Y-m-d', time());
+        $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
 
 
@@ -722,7 +722,7 @@ class TransactionController extends Controller
 			return false;
 		}
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date', 'date_to', 'data','inc_transactions', 'company','user_details','company_details','company_checked', 'exc_balance'));
-        $file_name  = 'Transaction - '.date('Y-m-d', time());
+        $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
 
 
         Mail::send('emails.report',["data"=> "Raport"],function($m) use($pdf, $company_details, $company){
@@ -730,7 +730,7 @@ class TransactionController extends Controller
 			$email = array_map('trim', explode(',',$company_details->email) );
 
             $m->to($email)->subject('Raport Transaksionesh - '.$company->name);
-            $m->attachData($pdf->output(),'Raporti - '.$company->name.'pdf');
+            $m->attachData($pdf->output(),'Raporti - '.$company->name.'.pdf');
         });
     }
 
