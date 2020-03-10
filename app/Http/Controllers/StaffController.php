@@ -9,6 +9,7 @@ use Excel;
 use App\Models\Users;
 use App\Models\Shifts;
 use App\Models\Company;
+use App\Jobs\SendShiftEmail;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
 use App\Models\Dispaneser as Dispaneser;
@@ -390,14 +391,18 @@ class StaffController extends Controller
 
         }
 
-        $request = Shifts::select(DB::raw('start_date AS fromDate'),DB::raw('end_date AS toDate'),DB::raw("'staff' as url"))->orderBy('created_at', 'desc')
+        $request = Shifts::select(DB::raw('start_date AS fromDate'),DB::raw('end_date AS toDate'),DB::raw("'staff' as url"),DB::raw("'email_sent' as email_sent"),'id')->orderBy('created_at', 'desc')
             ->skip(1)
             ->take(1)
             ->first()
             ->toArray();
         $request = new Request($request);
 
-        self::email($request);
+        // Send closed shift in email
+        if(!empty($request)){
+            $email = new SendShiftEmail($request);
+            dispatch($email);
+        }
 
         $data['response'] = true;
 
@@ -413,13 +418,15 @@ class StaffController extends Controller
             $data = [
                 "fromDate"  => $shift->start_date,
                 "toDate"    => $shift->end_date,
-                "url"       => "staff"
+                "url"       => "staff",
+                "id"        => $shift->id
             ];
         }else {
             $data = [
                 "fromDate"  => strtotime($request->fromDate),
                 "toDate"    => strtotime($request->toDate),
-                "url"       => "staff"
+                "url"       => "staff",
+                "id"        => $shift->id
             ];
         }
 
@@ -454,6 +461,13 @@ class StaffController extends Controller
                 $m->to($email)->subject('Raport Transaksionesh - '.$company->name);
                 $m->attachData($pdf->output(),'Raport - '.$company->name.'.pdf');
             });
+
+            if( count(Mail::failures()) == 0 ) {
+                Shifts::where('id',$request->id)
+                ->update(
+                    ['email_sent' => 1, 'updated_at' => now()->timestamp]
+                );
+            }
         }
     }
 

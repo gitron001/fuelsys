@@ -9,6 +9,7 @@ class Shifts extends Model
     protected $table = 'shifts';
 
     protected $fillable = [
+        'email_sent',
         'start_date',
         'end_date',
     ];
