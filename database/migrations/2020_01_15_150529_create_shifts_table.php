@@ -17,6 +17,7 @@ class CreateShiftsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('start_date')->nullable();
             $table->integer('end_date')->nullable();
+            $table->integer('email_sent')->default(0);
             $table->integer('created_at');
             $table->integer('updated_at');
         });
