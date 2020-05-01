@@ -68,6 +68,7 @@
           <button type="button" data-toggle="tooltip" class="btn btn-success" id="exportEXCEL" title="Export Excel"><i class="fas fa-file-excel"></i></button>
           <a href="{{ route('generate_pdf/pdf', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'last_payment' => request()->get("last_payment"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance")] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i class="fas fa-file-pdf"></i></a>
           <button type="button" data-toggle="tooltip" class="btn btn-info" id="dailyReport" title="Daily Report"><i class="far fa-envelope"></i></button>
+          <button type="button" data-toggle="tooltip" class="btn btn-warning" id="sendReportToEmail" title="Send raport to email"><i class="fas fa-paper-plane"></i></button>
         </div>
 
       </form>

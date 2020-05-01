@@ -295,21 +295,27 @@ class TransactionController extends Controller
 
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','date_to','bonus_user','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
         $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
-        return $pdf->stream($file_name);
 
 
-        /*Mail::send('emails.report',["data"=>"Raporti Mujor - Nesim Bakija"],function($m) use($pdf){
-            $m->to('orgesthaqi96@gmail.com')->subject('Raporti Mujor - Nesim Bakija');
-            $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
-        });*/
+        if(isset($request->sendReportToEmail)){
+            // We send email if button(#sendReportEmail) Send report to email in report view is clicked
+            Mail::send('emails.report',["data"=>"Raporti Mujor"],function($m) use($pdf,$company){
+                $m->to($company->email)->subject('Raporti Mujor - '.$company->name);
+                $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
+            });
+            return response()->json('DONE');
+        }else{
 
-        $myFile = $pdf->download($file_name.'.pdf');
-        $response =  array(
-           'name' => $file_name,
-           'file' => "data:application/pdf;base64,".base64_encode($myFile)
-        );
+            return $pdf->stream($file_name);
 
-        return response()->json($response);
+            $myFile = $pdf->download($file_name.'.pdf');
+            $response =  array(
+            'name' => $file_name,
+            'file' => "data:application/pdf;base64,".base64_encode($myFile)
+            );
+
+            return response()->json($response);
+        }
     }
 
     public static function generate_data($request){

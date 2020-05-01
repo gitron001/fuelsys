@@ -334,6 +334,59 @@
     });
   });
 
+    $(document).ready(function(){
+        $('#sendReportToEmail').click(function(){
+        var fromDate = $('#datetimepicker4').val();
+        var toDate = $('#datetimepicker5').val();
+        var user = $("#user").val();
+        var bonus_user = $("#bonus_user").val();
+        var last_payment = $("#last_payment").val();
+        var inc_transactions = $("#inc_transactions").val();
+        var company = $("#company").val();
+        var sendReportToEmail = "yes";
+
+        swal({
+            title: "A jeni të sigurt?",
+            text: "A dëshironi që të dhënat e zgjedhura të dërgohen në emailin tuaj?",
+            icon: "warning",
+            buttons: ["Jo","Po"],
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+            $.ajax({
+                type: "GET",
+                data: {fromDate:fromDate,toDate:toDate,user:user,bonus_user:bonus_user,last_payment:last_payment,inc_transactions:inc_transactions,company:company,sendReportToEmail:sendReportToEmail},
+                url: "/pdf",
+                dataType: "JSON",
+            beforeSend:function(){
+                window.swal({
+                title: "Ju lutem prisni!",
+                icon: "info",
+                text: "Email është duke u dërguar",
+                buttons:false,
+                });
+            },
+            success: function(data){
+                window.swal({
+                title: "Sukses",
+                icon: "success",
+                text: "Email u dërgua me sukses!",
+                buttons:false,
+                });
+            },
+            error: function () {
+                swal("Gabim", "Sigurohuni që të gjitha fushat të jenë të zgjedhura", "error")
+            }
+        });
+        } else {
+            swal("Kërkesa juaj është anuluar.");
+        }
+        });
+
+        });
+    });
+
   //  *** END REPORTS SCRIPT *** //
 
   // ***  SELECT ALL CHECKBOX *** //
