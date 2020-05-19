@@ -17,6 +17,7 @@ class CreateTanksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('product_id')->index();
+            $table->integer('quantity')->nullable();
             $table->integer('capacity');
             $table->integer('status');
             $table->integer('created_at');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tank;
 use App\Models\Products;
+use App\Http\Requests\TankRequest;
 
 class TankController extends Controller
 {
@@ -59,7 +60,7 @@ class TankController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TankRequest $request)
     {
         $tank = Tank::create($request->all());
 
@@ -100,7 +101,7 @@ class TankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TankRequest $request, $id)
     {
         $tank = Tank::findOrFail($id);
 

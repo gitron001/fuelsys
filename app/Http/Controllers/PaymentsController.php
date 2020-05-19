@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Payments;
-use App\Models\Company;
-use App\Models\Branch;
-use App\Models\Users;
-use App\Models\PFC;
-use App\Models\Transaction;
-use Mike42\Escpos\Printer;
-use Mike42\Escpos\EscposImage;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
-use DateTime;
-use Config;
 use DB;
 use Auth;
+use Config;
+use DateTime;
+use App\Models\PFC;
+use App\Models\Users;
+use App\Models\Branch;
+use App\Models\Company;
+use App\Models\Payments;
+use Mike42\Escpos\Printer;
 use App\Jobs\PrintPayment;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use Mike42\Escpos\EscposImage;
 use App\Services\PrintPaymentService;
+use App\Http\Requests\PaymentRequest;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 
 class PaymentsController extends Controller
 {
@@ -107,7 +108,7 @@ class PaymentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PaymentRequest $request)
     {
         $payments   = new Payments();
         $user       = $request->input('user_id');
@@ -210,7 +211,7 @@ class PaymentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(PaymentRequest $request, $id) {
         $payments = Payments::findOrFail($id);
 
         if($request->input('checkbox') == 'user'){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProductGroup;
+use App\Http\Requests\ProductGroupRequest;
 
 class ProductGroupController extends Controller
 {
@@ -58,7 +59,7 @@ class ProductGroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductGroupRequest $request)
     {
         $products_group = ProductGroup::create($request->all());
         session()->flash('info','Success');
@@ -96,7 +97,7 @@ class ProductGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductGroupRequest $request, $id)
     {
         $product_group = ProductGroup::findOrFail($id);
         $product_group->update($request->all());

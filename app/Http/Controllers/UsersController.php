@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Hash;
 use Excel;
+use Session;
 use App\Models\Users;
 use App\Models\Branch;
 use App\Models\Company;
@@ -15,7 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\RFID_Discounts;
 use App\Jobs\SendTransactionEmail;
 use Illuminate\Support\Facades\Input;
-use Session;
+use App\Http\Requests\UserRequest;
 
 class UsersController extends Controller
 {
@@ -94,7 +95,7 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         if (Users::where('rfid', $request->input('rfid'))->exists()) {
 
@@ -145,7 +146,7 @@ class UsersController extends Controller
 		$access_token   = config('token.access_token');
 		if($access_token != ""){
 			try {
-				
+
 						$client = new \GuzzleHttp\Client(['cookies' => true,
 						'headers' =>  [
 							'Authorization'          => $access_token
@@ -187,9 +188,9 @@ class UsersController extends Controller
 			if($exported  == 0){
 				session()->flash('info','Success');
 			}else{
-				session()->flash('info','Success [Exported: 1]');		
+				session()->flash('info','Success [Exported: 1]');
 			}
-			return redirect('admin/users/' . $id . '/edit');	
+			return redirect('admin/users/' . $id . '/edit');
         }
     }
 
@@ -229,7 +230,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = Users::findOrFail($id);
 
@@ -415,7 +416,7 @@ class UsersController extends Controller
     public function updateCard(Request $request) {
         // Get all users with the same type
         $users = Users::select(DB::RAW('id as rfid_id'))->where('type',$request->input('type'))->get()->toArray();
-	
+
         // Delete discount from those users
         RFID_Discounts::whereIn('rfid_id', $users)->delete();
 
@@ -429,9 +430,9 @@ class UsersController extends Controller
 					$users['updated_at'] = time();
 					return $users;
 				});
-				
+
 				$users = $users->toArray();
-				
+
 				RFID_Discounts::insert($users);
 				// Save new discounts
                 /*foreach($users as $user) {

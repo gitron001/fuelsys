@@ -11,6 +11,31 @@
     display: block;
     text-align: center;
 }
+#tank {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    background: #ecf0f5;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+    border-style: solid;
+    border-color: #92a8d1;
+}
+#tank .fuel {
+    position: absolute;
+    background: rgb(60, 141, 188);
+    width: 100%;
+    bottom: 0;
+    animation: cubic-bezier(.17,.67,.83,.67)
+}
+.tank-text {
+    position: absolute;
+    color: black;
+    margin: auto;
+    width: 50%;
+    padding: 30%;
+}
 </style>
 
 <div class='row'>
@@ -136,7 +161,29 @@
 </div>
 <!-- END LIVE Feed Area -->
 
+<!-- Tanks -->
+@if(count($tanks) > 0)
+<div class="col-md-12">
+    <div class="box box-primary">
+
+    @foreach($tanks as $tank)
+        <div class="col-xs-6 col-md-4 text-center">
+            <p class="text-center"><b>{{ $tank->name }} ( {{ $tank->product->name }} )</b></p>
+            <div id="tank">
+                @php($percentage = ($tank->quantity / $tank->capacity) * 100 )
+                <div class="fuel" style="height:{{$percentage}}%">
+                </div>
+                <p class="tank-text">{{ number_format($percentage,0) }}%</p>
+            </div>
+        </div>
+    @endforeach
+
+    <div class="box-footer"></div>
+
+    </div>
 </div>
+@endif
+<!-- END Tanks -->
 
 @endsection
 
@@ -153,7 +200,6 @@
       $('#loadTransaction').load('{{ url('/transactions-info')}}').fadeIn('slow');
     },60000)
   });
-
 
 </script>
 

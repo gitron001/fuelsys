@@ -9,7 +9,7 @@ class Tank extends Model
     protected $table = 'tanks';
 
     protected $fillable = [
-        'name',  
+        'name',
         'product_id',
         'capacity',
         'status',
@@ -18,7 +18,7 @@ class Tank extends Model
     public function getDateFormat(){
         return 'U';
     }
-    
+
     public function product(){
         return $this->belongsTo('App\Models\Products');
     }
