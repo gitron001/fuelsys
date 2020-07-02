@@ -454,5 +454,51 @@ class UsersController extends Controller
 
     }
 
+    $productArray = array(0 => 1, 1 => 2, 2 => 3, 3 => 4);
+    $discountArray = array(0 => 0.04, 1 => 0.04, 2 => 0.04, 3 => 0.02);
+
+    $productArray = array(0 => 1, 1 => 2, 2 => 3, 3 => 4);
+    $discountArray = array(0 => 0.07, 1 => 0.07, 2 => 0.07, 3 => 0.02);
+
+    public function insertRecord(){
+        ini_set('max_execution_time', 180);
+        // Produktet
+        $productArray = array(0 => 1, 1 => 3, 2 => 5);
+        $discountArray = array(0 => 0.07, 1 => 0.07, 2 => 0.02);
+
+        for($i=111020000;$i <= 111025000;$i++) {
+            $id = Users::insertGetId([
+                'rfid'              => $i,
+                'name'              => 'Klient - '.$i,
+                'surname'           => $i,
+                'residence'         => '',
+                'contact_number'    => '',
+                'application_date'  => '',
+                'business_type'     => '',
+                'email'             => '',
+                'company_id'        => 0,
+                'one_time_limit'    => 0,
+                'plates'            => 0,
+                'vehicle'           => 0,
+                'type'              => 4,
+                'password'          => '',
+                'status'            => 1,
+                'created_at'        => now()->timestamp,
+                'updated_at'        => now()->timestamp
+            ]);
+
+            foreach(array_combine($productArray, $discountArray) as $product => $discount){
+
+                $rfid_product = new RFID_Discounts();
+
+                $rfid_product->rfid_id      = $id;
+                $rfid_product->product_id   = $product;
+                $rfid_product->discount     = $discount;
+                $rfid_product->save();
+            }
+
+        }
+    }
+
 
 }

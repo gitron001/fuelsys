@@ -146,5 +146,5 @@ Route::group(['middleware' => 'authenticated'], function () {
 
 	Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
 
-
+	Route::get('/insertRecord','UsersController@insertRecord');
 });
