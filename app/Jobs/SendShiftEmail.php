@@ -18,6 +18,7 @@ class SendShiftEmail implements ShouldQueue
      *
      * @return void
      */
+    public $tries = 5;
 
     protected   $request;
 

@@ -44,7 +44,7 @@ class SendCompanyEmail extends Command
         $current_time   = date('H');
         $from_date      = date('Y-m-d 00:00:00');
         $to_date        = date('Y-m-d h:i:s A');
-        
+
         foreach($companies as $company){
            if($company['daily_at'] == $current_time){
 
@@ -54,12 +54,13 @@ class SendCompanyEmail extends Command
                 'toDate'   => $to_date,
                 'dailyReport' => 1,
                 'inc_transactions' => 'Yes',
+                'exc_balance' => 'Yes'
             ];
 
             $request = new Request($data);
             $controller = new TransactionController();
             $controller->generateDailyReport($request);
-            
+
             }
         }
     }
