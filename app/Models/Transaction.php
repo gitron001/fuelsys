@@ -60,7 +60,7 @@ class Transaction extends Model
 
     public static function insertTransactionData($response, $pfc_id, $channel_id){
 		
-		$dispaneser = Dispaneser::where('channel_id', $channel_id)->first();
+		$dispaneser = Dispaneser::where('channel_id', (int)$channel_id)->first();
 		
 		$transaction_data 	 = Session::get($channel_id.'.transaction');	
 		
@@ -131,6 +131,8 @@ class Transaction extends Model
 
 		$transaction->user_id = $user->id;
 		
+		$transaction->driver_id = $dispaneser->current_driver_id;
+		
         $transaction->channel_id = $channel_id;
 
         $transaction->ctype = $response[34];
@@ -170,12 +172,12 @@ class Transaction extends Model
 			$user->limit_left -= $transaction->money;
 			$user->save();
 		}
-		
-		//if(isset($transaction->id)){
+				
 		if(isset($dispaneser->id)){
 			$dispaneser->current_amount 	  	= (int)($transaction->money*100);
 			$dispaneser->current_user_id   		= (int)$transaction->user_id;
 			$dispaneser->current_bonus_user_id  = (int)$transaction->bonus_user_id;
+			$dispaneser->current_driver_id  	= NULL;
 			$dispaneser->status			   		= 1;
 			$dispaneser->data_updated_at   		= time();
 			$dispaneser->save();

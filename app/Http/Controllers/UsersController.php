@@ -454,12 +454,6 @@ class UsersController extends Controller
 
     }
 
-    $productArray = array(0 => 1, 1 => 2, 2 => 3, 3 => 4);
-    $discountArray = array(0 => 0.04, 1 => 0.04, 2 => 0.04, 3 => 0.02);
-
-    $productArray = array(0 => 1, 1 => 2, 2 => 3, 3 => 4);
-    $discountArray = array(0 => 0.07, 1 => 0.07, 2 => 0.07, 3 => 0.02);
-
     public function insertRecord(){
         ini_set('max_execution_time', 180);
         // Produktet

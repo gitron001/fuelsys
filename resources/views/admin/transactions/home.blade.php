@@ -74,7 +74,7 @@
               <tr>
                 <th class="sorting" data-sorting_type="asc" data-column_name="user_id">User <span id="user_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="company_id">Company <span id="company_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="#">Bonus User <span id="#" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                <th class="sorting" data-sorting_type="asc" data-column_name="#">Bonus/Driver Card <span id="#" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="product_id">Product <span id="product_id_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="price">Price <span id="price_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="lit">Lit <span id="lit_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>

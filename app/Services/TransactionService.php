@@ -162,8 +162,12 @@ class TransactionService extends ServiceProvider
 					if(isset($the_dispanser->current_amount)){
 						if($amount == $the_dispanser->current_amount || $the_dispanser->status == 1){ continue; }
 						$the_dispanser->current_amount 	  		= (int)( ($amount/$the_dispanser->money_division) * 100);
-						$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
-						$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];
+						if(is_null($transaction_data['user_id'])){
+							$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
+						}
+						if(is_null($transaction_data['bonus_card'])){
+							$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];
+						}
 						$the_dispanser->status			   		= 3;
 						$the_dispanser->data_updated_at   		= time();
 						$the_dispanser->save();
