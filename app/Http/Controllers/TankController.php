@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use DB;
+use Excel;
 use App\Models\Tank;
 use App\Models\Products;
+use App\Models\TankDetails;
+use Illuminate\Http\Request;
 use App\Http\Requests\TankRequest;
 
 class TankController extends Controller
@@ -134,5 +137,43 @@ class TankController extends Controller
         if($tank->delete()){
             echo "Data deleted";
         }
+    }
+
+    public function import_excel_file_view(){
+        $tanks = Tank::where('status',1)->get();
+        return view('import_excel_file',compact('tanks'));
+    }
+
+    public function import_excel_file(Request $request){
+        $cm = '';
+        $path = $request->file('select_file')->getRealPath();
+        $data = Excel::load($path)->get();
+        $tank_id = $request->input('tank_id');
+
+        if($data->count() > 0) {
+            foreach($data->toArray() as $key => $value) {
+                $insert_data[] = array(
+                    $value,
+                );
+            }
+        }
+
+        foreach($insert_data as $values){
+            foreach($values as $value){
+                $cm = $value['cm'];
+                for ($i=0; $i <= 9; $i++) {
+                    TankDetails::insert([
+                        'cm' => $cm + $i,
+                        'value' => $value[$i],
+                        'tank_id' => $tank_id,
+                        'created_at' => now()->timestamp,
+                        'updated_at' => now()->timestamp
+                        ]);
+                }
+            }
+        }
+
+        session()->flash('info','Success');
+        return redirect('/tanks_details');
     }
 }
