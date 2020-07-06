@@ -79,12 +79,12 @@
         </a>
     </li>
 
-    <li class="{{ request()->is('admin/reports') || request()->is('admin/reports/*') ? 'active' : '' }}">
+    <!--<li class="{{ request()->is('admin/reports') || request()->is('admin/reports/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/reports') }}">
             <i class="fas fa-chart-bar"></i>
             <span>{{ trans('adminlte::adminlte.report') }}</span>
         </a>
-    </li>
+    </li>-->
 
     <li class="{{ request()->is('admin/staff') || request()->is('admin/staff/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/staff') }}">

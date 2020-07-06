@@ -270,7 +270,7 @@ class TransactionController extends Controller
         $bonus_user = $request->bonus_user;
         $inc_transactions = $request->input('inc_transactions');
         $company_checked  = $request->input('company');
-		$exc_balance  	  = $request->input('exc_balance');
+        $exc_balance  	  = $request->input('exc_balance');
 
         if(!isset($inc_transactions) || $inc_transactions == 'No'){
             $total_transactions = $payments->groupBy(function($val) {

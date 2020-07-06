@@ -315,6 +315,25 @@
     }
   });
 
+  // Show checkbox value after page load
+  $(document).ready(function(){
+    if ($('input#exc_balance').is(':checked')) {
+      $('input[name="exc_balance"]').val('Yes');
+    } else {
+      $('input[name="exc_balance"]').val('No');
+    }
+  });
+
+  // Change Checkbox value onclick
+  $('#exc_balance').click(function(){
+    if($(this).is(':checked')){
+        $('input[name="exc_balance"]').val('Yes');
+    } else {
+        $('input[name="exc_balance"]').val('No');
+    }
+  });
+
+
   $(document).ready(function(){
     $('#dailyReport').click(function(){
       var inc_transactions = $("#inc_transactions").val();
@@ -342,6 +361,7 @@
         var bonus_user = $("#bonus_user").val();
         var last_payment = $("#last_payment").val();
         var inc_transactions = $("#inc_transactions").val();
+        var exc_balance = $("#exc_balance").val();
         var company = $("#company").val();
         var sendReportToEmail = "yes";
 
@@ -356,7 +376,7 @@
             if (willDelete) {
             $.ajax({
                 type: "GET",
-                data: {fromDate:fromDate,toDate:toDate,user:user,bonus_user:bonus_user,last_payment:last_payment,inc_transactions:inc_transactions,company:company,sendReportToEmail:sendReportToEmail},
+                data: {fromDate:fromDate,toDate:toDate,user:user,bonus_user:bonus_user,last_payment:last_payment,inc_transactions:inc_transactions,exc_balance:exc_balance,company:company,sendReportToEmail:sendReportToEmail},
                 url: "/pdf",
                 dataType: "JSON",
             beforeSend:function(){
