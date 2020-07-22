@@ -128,8 +128,11 @@ class Transaction extends Model
 		}else{
 			$user = Users::where("rfid", $rfid)->where('status', 1)->first();					
 		}
-
-		$transaction->user_id = $user->id;
+		if(isset($user->id)){
+			$transaction->user_id = $user->id;
+		}else{
+			$transaction->user_id = null;
+		}
 		
         $transaction->channel_id = $channel_id;
 

@@ -93,10 +93,14 @@ class PaymentsController extends Controller
     {
         $companies  = Company::pluck('name','id')->all();
         $branches   = Branch::orderBy('name','ASC')->pluck('name','id')->all();
-        $users      = Users::where('status',1)->where(function ($users) {
+        /*$users      = Users::where('status',1)->where(function ($users) {
 			$users->where('company_id', 0)
             ->orWhereNull('company_id');
-		})->whereNotIn('type', array(6,7,8))->pluck('name','id')->all();
+		})->whereNotIn('type', array(6,7,8))->pluck('name','id')->all();*/
+		$users      = Users::where('status',1)->where(function ($users) {
+			$users->where('company_id', 0)
+            ->orWhereNull('company_id');
+		})->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
 
 
         return view('/admin/payments/create',compact('companies','users','branches'));

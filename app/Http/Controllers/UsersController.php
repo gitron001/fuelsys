@@ -412,11 +412,11 @@ class UsersController extends Controller
 
         return view('/admin/users/bonus_members',compact('products'));
     }
-
-    public function updateCard(Request $request) {
+	
+	public function updateCard(Request $request) {
         // Get all users with the same type
         $users = Users::select(DB::RAW('id as rfid_id'))->where('type',$request->input('type'))->get()->toArray();
-
+	
         // Delete discount from those users
         RFID_Discounts::whereIn('rfid_id', $users)->delete();
 
@@ -430,10 +430,13 @@ class UsersController extends Controller
 					$users['updated_at'] = time();
 					return $users;
 				});
-
+				
 				$users = $users->toArray();
-
-				RFID_Discounts::insert($users);
+				//RFID_Discounts::insert($users);
+				foreach (array_chunk($users,1000) as $t)  
+				{
+					 RFID_Discounts::insert($t); 
+				}
 				// Save new discounts
                 /*foreach($users as $user) {
                     $rfid_product = new RFID_Discounts();
