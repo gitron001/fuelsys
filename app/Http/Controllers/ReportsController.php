@@ -128,10 +128,11 @@ class ReportsController extends Controller
             $from_date = self::last_payment_date($request);
         }
 
-        $query = Transactions::select(DB::RAW('user1.name as user_name'), 'user1.type', DB::RAW('user2.name as bonus_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
+        $query = Transactions::select(DB::RAW('user1.name as user_name'), 'user1.type', DB::RAW('user2.name as bonus_name'),  DB::RAW('driver.name as driver_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),'transactions.price', 'transactions.lit','transactions.money','transactions.created_at')
                     ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
                     ->leftJoin('users as user1', 'user1.id', '=', 'transactions.user_id')
                     ->leftJoin('users as user2', 'user2.id', '=', 'transactions.bonus_user_id')
+                    ->leftJoin('users as driver', 'driver.id', '=', 'transactions.driver_id')
                     ->leftJoin('companies', 'companies.id', '=', 'user1.company_id');
 
         if ($request->input('user') && empty($request->input('company'))) {

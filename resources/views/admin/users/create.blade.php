@@ -21,7 +21,7 @@
         var e = document.getElementById("showHide");
         var value = e.options[e.selectedIndex].value;
 
-        if(value == 2){
+        if(value == 2 || value == 4 || value == 9){
             $("#company").show();
             $("#one_time_limit").show();
             $("#plates").show();
@@ -55,7 +55,7 @@
         var e = document.getElementById("showHide");
         var value = e.options[e.selectedIndex].value;
 
-        if(value == 2){
+        if(value == 2 || value == 4 || value == 9){
             $("#company").show();
             $("#one_time_limit").show();
             $("#plates").show();

@@ -13,21 +13,6 @@ use Mail;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    /*public function __construct()
-    {
-        $this->middleware('auth');
-    }*/
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index(Request $request)
     {
 
@@ -57,9 +42,4 @@ class HomeController extends Controller
 
     }
 
-    public function testing_event(){
-
-        event(new Event_Test('hello world'));
-        echo 'ok';
-    }
 }

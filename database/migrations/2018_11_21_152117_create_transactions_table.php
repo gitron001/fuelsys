@@ -36,6 +36,7 @@ class CreateTransactionsTable extends Migration
             $table->longText('pfc_tot_last')->nullable();
             $table->char('tr_status')->nullable();
             $table->bigInteger('user_id')->nullable()->index();
+            $table->bigInteger('driver_id')->nullable()->index();
             $table->bigInteger('bonus_user_id')->nullable()->index();
             $table->char('ctype')->nullable();
             $table->char('method')->nullable();

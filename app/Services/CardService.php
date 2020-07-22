@@ -116,6 +116,26 @@ class CardService extends ServiceProvider
 			);
 			return true;
 		}
+		$the_dispanser 					  		= Dispaneser::where('channel_id', (int)$channel)->first();
+		if($user->type == 9){
+			if(isset($the_dispanser->id)){
+				$the_dispanser->current_driver_id   	= $user->id;
+				$the_dispanser->status			   		= 2;
+				$the_dispanser->data_updated_at   		= time();
+				$the_dispanser->save();	
+			}
+
+			return true;			
+		}
+		
+		if($user->type == 4){
+			
+			$driver = Users::where('id', $the_dispanser->current_driver_id)->first();
+			if(is_null($user->company->id) || is_null($driver->company->id) ||  $driver->company->id != $user->company->id){
+				return false;				
+			}
+			
+		}
 		
         //Call Function to check limit
         $limit = false;
@@ -149,7 +169,7 @@ class CardService extends ServiceProvider
         echo 'ACTIVATE';
 		
 		
-		$the_dispanser 					  		= Dispaneser::where('channel_id', $channel)->first();
+		
 		//Checking is a transaction is running or not saved
 		if((int)$the_dispanser->status == 3){
 			if($the_dispanser->data_updated_at < (time()-15)){
@@ -525,6 +545,7 @@ class CardService extends ServiceProvider
 			$transaction->dis_tot_last		= $last_transaction->dis_tot;
 			$transaction->tr_status			= 0;
 			$transaction->user_id			= $the_dispanser->current_user_id;
+			$transaction->driver_id			= $the_dispanser->current_driver_id;
 			$transaction->bonus_user_id		= $the_dispanser->current_bonus_user_id;
 			$transaction->created_at		= time();
 			$transaction->updated_at		= time();

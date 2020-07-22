@@ -24,6 +24,9 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('tank/{id}/delete', ['as' => 'tank.delete', 'uses' => 'TankController@destroy']);
     Route::get('/admin/tanks-delete-all', 'TankController@delete_all');
 
+    Route::get('/tanks_details','TankController@import_excel_file_view');
+    Route::post('/tanks_details', 'TankController@import_excel_file');
+
 	// Products
 	Route::resource('/admin/products', 'ProductController');
     Route::get('product/{id}/delete', ['as' => 'product.delete', 'uses' => 'ProductController@destroy']);
@@ -146,5 +149,6 @@ Route::group(['middleware' => 'authenticated'], function () {
 
 	Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
 
+    Route::get('/insertRecord','UsersController@insertRecord');
 
 });
