@@ -17,7 +17,7 @@ class CreateTankDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('cm');
             $table->integer('value')->nullable();
-            $table->tank_id('tank_id');
+            $table->integer('tank_id');
             $table->integer('created_at');
             $table->integer('updated_at');
         });
