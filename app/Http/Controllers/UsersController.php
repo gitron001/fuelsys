@@ -133,6 +133,8 @@ class UsersController extends Controller
             'plates'            => $request->input('plates') ? : 0,
             'vehicle'           => $request->input('vehicle') ? : 0,
             'type'              => $request->input('type'),
+            'send_email'        => $request->input('send_email'),
+            'on_transaction'    => $request->input('on_transaction'),
             'password'          => Hash::make($password),
             'status'            => 1,
             'created_at'        => now()->timestamp,
@@ -178,7 +180,9 @@ class UsersController extends Controller
 								'one_time_limit'    => $request->input('one_time_limit') ? : 0,
 								'plates'            => $request->input('plates') ? : 0,
 								'vehicle'           => $request->input('vehicle') ? : 0,
-								'type'              => $request->input('type'),
+                                'type'              => $request->input('type'),
+                                'send_email'        => $request->input('send_email'),
+                                'on_transaction'    => $request->input('on_transaction'),
 								'password'          => Hash::make($password),
 								'status'            => 1,
 								'remember_token'    => '',
@@ -263,6 +267,8 @@ class UsersController extends Controller
         $user->company_id       = $request->input('company_id');
         $user->plates           = $request->input('plates');
         $user->status           = $request->input('status');
+        $user->send_email       = $request->input('send_email');
+        $user->on_transaction   = $request->input('on_transaction');
         $user->vehicle          = $request->input('vehicle');
         $user->type             = $request->input('type');
         $user->limits           = $request->input('limits');
