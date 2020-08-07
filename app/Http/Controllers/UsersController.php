@@ -108,6 +108,11 @@ class UsersController extends Controller
 
         //$firstValueOfArrayBranch  = array_values($request->input('branch'))[0];
         //$firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
+        if($request->input('has_limit') == 1){
+            $limit_left = $request->input('limits') - $request->input('starting_balance');
+        }else{
+            $limit_left = 0;
+        }
 
         $password = $request->input('password');
 
@@ -120,6 +125,9 @@ class UsersController extends Controller
             'application_date'  => $request->input('application_date'),
             'business_type'     => $request->input('business_type'),
             'email'             => $request->input('email'),
+            'limits'            => $request->input('limits') ? : 0,
+            'has_limit'         => $request->input('has_limit'),
+            'limit_left'        => $limit_left,
             'company_id'        => $request->input('company_id') ? : 0,
             'one_time_limit'    => $request->input('one_time_limit') ? : 0,
             'plates'            => $request->input('plates') ? : 0,
@@ -236,6 +244,14 @@ class UsersController extends Controller
 
         $password = $request->input('password');
 
+        if($user->has_limit == 1){
+            $new_limit   = $request->input('limits') - $request->input('starting_balance');
+            $old_limit   = $user->limits - $user->starting_balance;
+            $limit_left  = $user->limit_left + ($new_limit - $old_limit);
+        }else{
+            $limit_left = 0;
+        }
+
         $user->rfid             = $request->input('rfid');
         $user->name             = $request->input('name');
         $user->surname          = $request->input('surname');
@@ -249,6 +265,9 @@ class UsersController extends Controller
         $user->status           = $request->input('status');
         $user->vehicle          = $request->input('vehicle');
         $user->type             = $request->input('type');
+        $user->limits           = $request->input('limits');
+        $user->has_limit        = $request->input('has_limit');
+        $user->limit_left       = $limit_left;
         $user->one_time_limit   = $request->input('one_time_limit');
         $user->password         = bcrypt($password);
         $user->updated_at       = now()->timestamp;
@@ -412,11 +431,11 @@ class UsersController extends Controller
 
         return view('/admin/users/bonus_members',compact('products'));
     }
-	
+
 	public function updateCard(Request $request) {
         // Get all users with the same type
         $users = Users::select(DB::RAW('id as rfid_id'))->where('type',$request->input('type'))->get()->toArray();
-	
+
         // Delete discount from those users
         RFID_Discounts::whereIn('rfid_id', $users)->delete();
 
@@ -430,12 +449,12 @@ class UsersController extends Controller
 					$users['updated_at'] = time();
 					return $users;
 				});
-				
+
 				$users = $users->toArray();
 				//RFID_Discounts::insert($users);
-				foreach (array_chunk($users,1000) as $t)  
+				foreach (array_chunk($users,1000) as $t)
 				{
-					 RFID_Discounts::insert($t); 
+					 RFID_Discounts::insert($t);
 				}
 				// Save new discounts
                 /*foreach($users as $user) {

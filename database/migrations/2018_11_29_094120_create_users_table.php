@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->integer('status')->default('1');
             $table->integer('type')->default('1');
             $table->double('starting_balance')->default('0');
+            $table->tinyInteger('has_limit')->default(0);
             $table->double('limits')->default('0');
             $table->double('limit_left')->default('0');
             $table->string('remember_token')->default('');
