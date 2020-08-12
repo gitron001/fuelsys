@@ -60,7 +60,8 @@ class SendTransactionEmail implements ShouldQueue
 
 		if((!is_null($transactions->users->company->id) && $transactions->users->company->send_email == 1 && $transactions->users->company->on_transaction == 1) || ($transactions->bonus_user->send_email == 1 && $transactions->bonus_user->on_transaction == 1)){
 			$mailable  = new TransactionMail($transactions);
-			$the_email = $transactions->users->company->email ? $transactions->users->company->email : $transactions->bonus_user->email;
+            $the_email = $transactions->users->company->email ? $transactions->users->company->email : $transactions->bonus_user->email;
+            $path = storage_path('logs');
 
 			if(trim($the_email) == ""){
 				return true;
@@ -71,14 +72,28 @@ class SendTransactionEmail implements ShouldQueue
 
 			if( count(Mail::failures()) > 0 ) {
 
-			   echo "There was one or more failures. They were: <br />";
+                // Check if email has been sent(Display output)
+                $fp = fopen($path."/OnTransactionEmail.txt", "a");
+                foreach($the_email as $email){
+                    fwrite($fp, 'ID:'.$transactions->id.' '. $email.' FAILED ('.date("M,d,Y h:i:s A").')' .PHP_EOL);
+                }
+                fclose($fp);
 
-			   foreach(Mail::failures() as $email_address) {
+			   /*echo "There was one or more failures. They were: <br />";
+
+			    foreach(Mail::failures() as $email_address) {
 				   echo " - $email_address <br />";
-				}
+				}*/
 
 			} else {
-				echo "No errors, all sent successfully!";
+                // Check if email has been sent(Display output)
+                $fp = fopen($path."/OnTransactionEmail.txt", "a");
+                foreach($the_email as $email){
+                    fwrite($fp, 'ID:'.$transactions->id.' '. $email.' SUCCESS ('.date("M,d,Y h:i:s A").')' .PHP_EOL);
+                }
+                fclose($fp);
+
+				//echo "No errors, all sent successfully!";
 			}
 		} else {
 			return true;
