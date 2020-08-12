@@ -58,7 +58,7 @@ class SendTransactionEmail implements ShouldQueue
 		$transactions->save();
 		echo 'EMAIL';
 
-		if((!is_null($transactions->users->company->id) && $transactions->users->company->send_email == 1 && $transactions->users->company->on_transaction == 1) || ($transactions->bonus_user->send_email == 1 && $transactions->bonus_user->on_transaction == 1)){
+		if((!is_null($transactions->users->company->id) && $transactions->users->company->send_email == 1 && $transactions->users->company->on_transaction == 1) || (isset($transactions->bonus_user->id) && $transactions->bonus_user->send_email == 1 && $transactions->bonus_user->on_transaction == 1)){
 			$mailable  = new TransactionMail($transactions);
             $the_email = $transactions->users->company->email ? $transactions->users->company->email : $transactions->bonus_user->email;
             $path = storage_path('logs');
