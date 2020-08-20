@@ -163,13 +163,15 @@ class TransactionService extends ServiceProvider
 						$transaction_data 	 			  		= Session::get($channel_id.'.transaction');						
 						$the_dispanser 					  		= Dispaneser::where('channel_id', $channel_id)->first();
 						if(isset($the_dispanser->current_amount)){
-							if($amount == $the_dispanser->current_amount || $the_dispanser->status == 1){ continue; }
+							
+							if(((int)(($amount/$the_dispanser->money_division) * 100) == (int)$the_dispanser->current_amount) || is_null($transaction_data['user_id']) || (int)$transaction_data['user_id'] == 0){ continue; }
 							$the_dispanser->current_amount 	  		= (int)( ($amount/$the_dispanser->money_division) * 100);
 							$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
 							$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];
 							$the_dispanser->status			   		= 3;
 							$the_dispanser->data_updated_at   		= time();
 							$the_dispanser->save();
+							//print_r($the_dispanser);
 							//Send Message to websocket for view update
 							$data['channel_id'] = $channel_id;
 							$data['username'] 	= $transaction_data['user_name'];
