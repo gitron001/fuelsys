@@ -18,7 +18,10 @@ class CreateTanksTable extends Migration
             $table->string('name');
             $table->integer('product_id')->index();
             $table->integer('quantity')->nullable();
+            $table->integer('pfc_tank_id')->index();
             $table->integer('capacity');
+			$table->integer('fuel_level');
+			$table->integer('water_level');
             $table->integer('status');
             $table->integer('created_at');
             $table->integer('updated_at');

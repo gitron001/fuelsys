@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
 use App\Models\Products;
 use App\Models\Dispaneser;
+use App\Models\Tank;
 use App\Models\RunninProcessModel as Process;
 
 class DispanserService extends ServiceProvider
@@ -211,6 +212,12 @@ class DispanserService extends ServiceProvider
             Process::where('type_id', 5)->where('pfc_id', $pfc_id)->delete();	  	
             Process::where('type_id', 6)->where('pfc_id', $pfc_id)->delete();	
 		}
+		
+		$stopCommand = Process::where('type_id', 7)->where('pfc_id', $pfc_id)->count();		
+        if($stopCommand != 0){
+			self::CheckTankLevel($socket, $pfc_id);
+            Process::where('type_id', 7)->where('pfc_id', $pfc_id)->delete();		
+		}
 		return true;
     }
     /**
@@ -237,6 +244,52 @@ class DispanserService extends ServiceProvider
         $response = PFC::send_message($socket, $binarydata);		
 		PFC::storeLogs($channel_id, null, 18, $response);
         return $response;		
+		
+	}
+    /**
+     * Check Tank Level Command
+     * 
+     * Read Totalizers from channel
+     */
+	public static function CheckTankLevel($socket, $pfc_id = 1){
+	
+		$tanks = Tank::where('status', 1)->get();
+		
+		foreach($tanks as $t){
+		
+			$tank_id = pack("C*", $t->pfc_tank_id);
+		
+			//Generate CRC for the Transaction Message
+			$message = "\x1\x5\x0F" .$tank_id;
+			$the_crc = PFC::crc16($message);
+
+			//Clear Transactions Message
+			$binarydata = pack("c*", 0x01)
+				.pack("c*", 0x05)
+				.pack("c*", 0x0F)
+				.pack("C*", $t->pfc_tank_id)
+				.strrev(pack("s", $the_crc))
+				.pack("c*", 02);				
+			PFC::storeLogs($t->id, null, 19, unpack('c*', $binarydata));
+			print_r(unpack('c*', $binarydata));
+			$response = PFC::send_message($socket, $binarydata);	
+			print_r($response);
+			$fuel_level = pack('c', $response[6]).pack('c', $response[5]);
+			$fuel_level = unpack('s', $fuel_level)[1];
+			$tank = Tank::find($t->id);
+			
+			$tank->fuel_level = $fuel_level;
+
+			$water_level = pack('c', $response[12]).pack('c', $response[11]);
+			$water_level = unpack('s', $water_level)[1];			
+			
+			$tank->water_level = $water_level;
+			
+			$tank->save();
+			
+			PFC::storeLogs($t->id, null, 20, $response);
+			//return $response;	
+		}
 		
 	}
 
