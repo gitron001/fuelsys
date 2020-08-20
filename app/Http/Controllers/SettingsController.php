@@ -91,24 +91,27 @@ class SettingsController extends Controller
 
     public function tracking_commands(Request $request)
     {
-		$channels = Dispaneser::get();
+        $channels = Dispaneser::get();
+        $command_types = array( 1 => 'Activate Card', 2 => 'Activate Card Response', 3 => 'Activate Card Discounts', 4 => 'Activate Card  Discounts Response', 5 => 'Read Transaction Commad', 6 => 'Transaction Data Response', 7=> 'Lock Transaction', 8 => 'Lock Transaction Response', 9 => 'Clear Transaction', 10 => 'Clear Transaction Response', 11 => 'Preset Command', 12 => 'Preset Command Response', 13 => 'Prepay Command', 14 => 'Prepay Command Response', 15 => 'Dispaly Text Command', 16 => 'Dispaly Text Command Response', 17 => 'Read Live Data', 18 => 'Read Live Data Response');
         $query = new TrackingCommands;
+        $from_date       = strtotime($request->input('fromDate'));
+        $to_date         = strtotime($request->input('toDate'));
 
 		if($request->input('channel_id')){
 			$query = $query->where('channel_id', $request->input('channel_id'));
 		}
 
-		if($request->input('from_date')){
-			$query = $query->whereBetween('created_at', [strtotime($request->input('from_date')),  strtotime($request->input('to_date'))]);
+		if($request->input('fromDate')){
+            $query = $query->whereBetween('created_at',[$from_date, $to_date]);
 		}
 		$query = $query->where('type', 18);
 
-		$commands = $query->orderBy('created_at','DESC')->paginate(15);
+        $commands = $query->orderBy('created_at','DESC')->paginate(15);
 
         if($request->ajax() == false){
-            return view('/admin/settings/tracking',compact('commands', 'channels'));
+            return view('/admin/settings/tracking',compact('commands', 'channels','command_types'));
         } else {
-            return view('/admin/settings/tracking_data',compact('commands', 'channels'))->render();
+            return view('/admin/settings/tracking_data',compact('commands', 'channels','command_types'))->render();
         }
 
     }

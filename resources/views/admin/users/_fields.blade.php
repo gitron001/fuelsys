@@ -41,11 +41,30 @@
                     {!! Form::number('one_time_limit',null,['class'=>'form-control']); !!}
                     {!! $errors->first('one_time_limit','<span class="help-block">:message</span>') !!}
                 </div>
-                <div class="form-group {{ $errors->has('plates') ? 'has-error' :'' }}" id="plates">
-                    {!! Form::label('plates', 'Plates:'); !!}
-                    {!! Form::text('plates',null,['class'=>'form-control']); !!}
-                    {!! $errors->first('plates','<span class="help-block">:message</span>') !!}
+
+                <div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
+                    {!! Form::label('has_limit', 'Has Limit:'); !!}
+                    {!! Form::select('has_limit',[0=>'No',1=>'Yes',],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
+                    {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
+
+                <div class="form-group {{ $errors->has('vehicle') ? 'has-error' :'' }}" id="vehicle" style="display: none">
+                    {!! Form::label('vehicle', 'Vehicle:'); !!}
+                    {!! Form::text('vehicle',null,['class'=>'form-control']); !!}
+                    {!! $errors->first('vehicle','<span class="help-block">:message</span>') !!}
+                </div>
+
+                <div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
+                    {!! Form::label('starting_balance', 'Starting Balance:'); !!}
+                    {!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
+                    {!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
+                </div>
+
+                <div class="form-group email_settings {{ $errors->has('on_transaction') ? 'has-error' :'' }}">
+					{!! Form::label('on_transaction', 'On Transaction:'); !!}
+					{!! Form::select('on_transaction',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+					{!! $errors->first('on_transaction','<span class="help-block">:message</span>') !!}
+				</div>
 
             </div>
 
@@ -80,9 +99,15 @@
                     {!! $errors->first('residence','<span class="help-block">:message</span>') !!}
                 </div>
 
-                <div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
-                    {!! Form::label('has_limit', 'Has Limit:'); !!}
-                    {!! Form::select('has_limit',[0=>'No',1=>'Yes',],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
+                <div class="form-group {{ $errors->has('plates') ? 'has-error' :'' }}" id="plates">
+                    {!! Form::label('plates', 'Plates:'); !!}
+                    {!! Form::text('plates',null,['class'=>'form-control']); !!}
+                    {!! $errors->first('plates','<span class="help-block">:message</span>') !!}
+                </div>
+
+                <div class="form-group {{ $errors->has('send_email') ? 'has-error' :'' }}">
+                    {!! Form::label('send_email', 'Send Email:'); !!}
+                    {!! Form::select('send_email',[0=>'No',1=>'Yes',],null,['class'=>'form-control','id' => 'showHideEmail']); !!}
                     {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
 
@@ -96,18 +121,6 @@
                     {!! Form::label('limits', 'Limit:'); !!}
                     {!! Form::number('limits',null,['class'=>'form-control']); !!}
                     {!! $errors->first('limits','<span class="help-block">:message</span>') !!}
-                </div>
-				
-                <div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
-                    {!! Form::label('starting_balance', 'Starting Balance:'); !!}
-                    {!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
-                    {!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
-                </div>
-
-                <div class="form-group {{ $errors->has('vehicle') ? 'has-error' :'' }}" id="vehicle" style="display: none">
-                    {!! Form::label('vehicle', 'Vehicle:'); !!}
-                    {!! Form::text('vehicle',null,['class'=>'form-control']); !!}
-                    {!! $errors->first('vehicle','<span class="help-block">:message</span>') !!}
                 </div>
 
             </div>

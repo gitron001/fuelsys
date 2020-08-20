@@ -75,7 +75,7 @@ class Handler extends ExceptionHandler
                     Debug stacktrace :
                     " . $e->getTraceAsString();
             try {
-                Mail::raw($body, function ($m) {
+				Mail::raw($body, function ($m) {
 					$emails = ['ideal.bakija@gmail.com','orgesthaqi96@gmail.com'];
                     $m->from('ideal.bakija@bakija.com', 'Fuel System');
 

@@ -1,31 +1,31 @@
 @extends('adminlte::page')
 
 @section('content')
-<?php $command_types = array( 1 => 'Activate Card', 2 => 'Activate Card Response', 3 => 'Activate Card Discounts', 4 => 'Activate Card  Discounts Response', 5 => 'Read Transaction Commad', 6 => 'Transaction Data Response', 7=> 'Lock Transaction', 8 => 'Lock Transaction Response', 9 => 'Clear Transaction', 10 => 'Clear Transaction Response', 11 => 'Preset Command', 12 => 'Preset Command Response', 13 => 'Prepay Command', 14 => 'Prepay Command Response', 15 => 'Dispaly Text Command', 16 => 'Dispaly Text Command Response', 17 => 'Read Live Data', 18 => 'Read Live Data Response'); ?> 
 
       <form class="form-inline text-center" method="GET" action="{{ URL::to('/tracking_command') }}">
         <div class="form-group">
           <label for="Start Date:">Start Date:</label>
-          <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="from_date" value="{{ request()->get('fromDate')}}">
+          <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{ request()->get('fromDate')}}">
         </div>
 
         <div class="form-group">
           <label for="End Date:">End Date:</label>
-          <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="to_date" value="{{ request()->get('toDate')}}">
+          <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{ request()->get('toDate')}}">
         </div>
 
         <div class="form-group">
         <label for="Cammenls:">Channels:</label>
-          <select class="users-dropdown form-control" name="channel_id" multiple="multiple" id="user">
+          <select class="users-dropdown form-control" name="channel_id" multiple="multiple" id="channel_id">
             @foreach($channels as $ch)
                 <option value="{{ $ch->channel_id }}"
                 @if(request()->get("channel_id") == $ch->channel_id) selected
-					
+
                 @endif > {{ $ch->channel_id }} </option>
               @endforeach
           </select>
         </div>
         <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i> Search</button>
+        <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-danger" title="Clear All Filters"><i class="fa fa-trash"></i></a>
       </form>
 
       <br>
@@ -50,6 +50,7 @@
                     @include('admin.settings.tracking_data')
                   </tbody>
                 </table>
+                @include('includes.hidden_inputs')
             </div>
             <!-- /.box-body -->
           </div>
