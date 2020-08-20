@@ -146,39 +146,41 @@ class TransactionService extends ServiceProvider
 			//PFC::storeLogs(1, null, 17, unpack('c*', $binarydata));
 			
 			$response = PFC::send_message($socket, $binarydata);
-			
+			$amount = 0;
 			//PFC::storeLogs(1, null, 18, $response);		
-			
-			$channel_nr = ($response[2] - 4) / 4;
-			
-			for($i = 0; $i < $channel_nr; $i ++){
-					$row = 4 + ($i * 4);
-					$amount = pack('c', $response[$row+3]).pack('c', $response[$row+2]).pack('c', $response[$row+1]).pack('c', $response[$row]);
-					$amount = unpack('i', $amount)[1];
-					if($amount == 0){ continue; }
-					$channel_id 					 		= ($i+1);
-					$transaction_data 	 			  		= Session::get($channel_id.'.transaction');						
-					$the_dispanser 					  		= Dispaneser::where('channel_id', $channel_id)->first();
-					if(isset($the_dispanser->current_amount)){
-						if($amount == $the_dispanser->current_amount || $the_dispanser->status == 1){ continue; }
-						$the_dispanser->current_amount 	  		= (int)( ($amount/$the_dispanser->money_division) * 100);
-						if(is_null($transaction_data['user_id'])){
+			if(isset($response[2])){			
+				$channel_nr = ($response[2] - 4) / 4;
+				
+				for($i = 0; $i < $channel_nr; $i ++){
+						$row = 4 + ($i * 4);
+						if(!isset($response[$row+3]) || !isset($response[$row+2]) || !isset($response[$row+1]) || !isset($response[$row])){ 
+							continue; 
+						}
+						$amount = pack('c', $response[$row+3]).pack('c', $response[$row+2]).pack('c', $response[$row+1]).pack('c', $response[$row]);
+						$amount = unpack('i', $amount)[1];
+						if($amount == 0){ continue; }
+						$channel_id 					 		= ($i+1);
+						$transaction_data 	 			  		= Session::get($channel_id.'.transaction');						
+						$the_dispanser 					  		= Dispaneser::where('channel_id', $channel_id)->first();
+						if(isset($the_dispanser->current_amount)){
+							
+							if(((int)(($amount/$the_dispanser->money_division) * 100) == (int)$the_dispanser->current_amount) || is_null($transaction_data['user_id']) || (int)$transaction_data['user_id'] == 0){ continue; }
+							$the_dispanser->current_amount 	  		= (int)( ($amount/$the_dispanser->money_division) * 100);
 							$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];
-						}
-						if(is_null($transaction_data['bonus_card'])){
 							$the_dispanser->current_bonus_user_id   = (int)$transaction_data['bonus_card'];
+							$the_dispanser->status			   		= 3;
+							$the_dispanser->data_updated_at   		= time();
+							$the_dispanser->save();
+							//print_r($the_dispanser);
+							//Send Message to websocket for view update
+							$data['channel_id'] = $channel_id;
+							$data['username'] 	= $transaction_data['user_name'];
+							$data['amount'] 	= number_format(($the_dispanser->current_amount)/$the_dispanser->money_division, 2);
+							$data['status'] 	= 3;
+							event(new NewMessage($data));
 						}
-						$the_dispanser->status			   		= 3;
-						$the_dispanser->data_updated_at   		= time();
-						$the_dispanser->save();
-						//Send Message to websocket for view update
-						$data['channel_id'] = $channel_id;
-						$data['username'] 	= $transaction_data['user_name'];
-						$data['amount'] 	= number_format(($the_dispanser->current_amount)/$the_dispanser->money_division, 2);
-						$data['status'] 	= 3;
-						event(new NewMessage($data));
-					}
-						
+							
+				}
 			}
 	}
 	/* Read last used Nozzle

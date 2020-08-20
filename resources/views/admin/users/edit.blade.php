@@ -28,6 +28,13 @@
             $("#vehicle").show();
         }
 
+        var value = $('#showHideEmail option:selected').val();
+        if(value == 1){
+            $(".email_settings").show();
+        }else {
+            $(".email_settings").hide();
+        }
+
     });
 
     var dateNow = new Date();
@@ -65,6 +72,16 @@
             $("#one_time_limit").hide();
             $("#plates").hide();
             $("#vehicle").hide();
+        }
+    });
+
+    $(document).on('click','#showHideEmail',function(){
+        var value = $('#showHideEmail option:selected').val();
+
+        if(value == 1){
+            $(".email_settings").show();
+        }else {
+            $(".email_settings").hide();
         }
     });
 
