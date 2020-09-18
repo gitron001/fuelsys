@@ -301,7 +301,7 @@ class TransactionController extends Controller
             // We send email if button(#sendReportEmail) Send report to email in report view is clicked
             Mail::send('emails.report',["data"=>"Raporti Mujor"],function($m) use($pdf,$company){
                 $m->to($company->email)->subject('Raporti Mujor - '.$company->name);
-                $m->attachData($pdf->output(),'Raporti - Nesim Bakija.pdf');
+                $m->attachData($pdf->output(),'Raporti - '.$company->name.'.pdf');
             });
             return response()->json('DONE');
         }else{

@@ -147,6 +147,39 @@ class PaymentsController extends Controller
             dispatch($recepit);
         }
 
+        // Another Payment Section
+        $firstValueOfArrayUser  = array_values($request->input('another_payment_user'))[0];
+        $firstValueOfArrayAmount = array_values($request->input('another_payment_amount'))[0];
+
+        if($firstValueOfArrayUser !== 0 && !empty($firstValueOfArrayAmount)){
+            foreach(array_combine($request->input('another_payment_user'), $request->input('another_payment_amount')) as $user_id => $amount){
+                $payments   = new Payments();
+
+                $user = Users::find( $user_id );
+                $user->limit_left += $amount;
+                $user->save();
+
+                $payments->date         = strtotime($request->input('date'));
+                $payments->amount       = $amount;
+                $payments->description  = $request->input('description');
+                $payments->user_id      = $user_id;
+                $payments->company_id   = $request->input('company_id');
+                if($request->input('branch_id')){
+                    $payments->branch_id    = $request->input('branch_id');
+                }
+                $payments->type         = $request->input('type');
+                $payments->created_at   = now()->timestamp;
+                $payments->created_by   = Auth::user()->id;
+                $payments->updated_at   = now()->timestamp;
+                $payments->save();
+
+                if($request->input('print') == 1) {
+                    $recepit = new PrintPayment($payments->id);
+                    dispatch($recepit);
+                }
+
+            }
+        }
         /*$msg = "Payment Print not Succesful";
 
         try {

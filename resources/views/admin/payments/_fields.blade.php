@@ -93,12 +93,29 @@
 			</div>
 		</div>
 		<div class="col-12">
-				<div class="form-group {{ $errors->has('description') ? 'has-error' :'' }}">
-					{!! Form::label('description', 'Description:'); !!}
-					{!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!}
-					{!! $errors->first('description','<span class="help-block">:message</span>') !!}
-				</div>
-			</div>
+            <div class="form-group {{ $errors->has('description') ? 'has-error' :'' }}">
+                {!! Form::label('description', 'Description:'); !!}
+                {!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!}
+                {!! $errors->first('description','<span class="help-block">:message</span>') !!}
+            </div>
+        </div>
+        @if(!isset($payment))
+        <div class="form-group" id="another_payment">
+            {!! Form::label('another_payment', 'Add another payment:'); !!}
+
+            <div class="row">
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-success btn-circle" id="addPayment"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+                <div class="col-md-5">
+                    {!! Form::select('another_payment_user[]',['' => 'Select a User'] + $users,null,['class'=>'form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
+                </div>
+                <div class="col-md-6">
+                    {!! Form::number('another_payment_amount[]',null,['class'=>'form-control','placeholder'=>'Amount','step'=>'any']); !!}
+                </div>
+            </div>
+        </div>
+        @endif
 	</div>
 
 
