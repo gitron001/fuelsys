@@ -48,6 +48,7 @@
         <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i> Search</button>
         <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="Delete all selected payments"><i class="fa fa-trash"></i> Delete</a>
         <a href="{{ url('admin/payments/create') }}" data-toggle="tooltip" class="btn btn-success" title="Create new payment"><i class="fa fa-plus"></i> New</a>
+        <a href="{{ url('admin/multiple-payments/create') }}" data-toggle="tooltip" class="btn btn-success" title="Create new payment"><i class="fa fa-plus"></i> Multiple</a>
       </form>
 
       <br>

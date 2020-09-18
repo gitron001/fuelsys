@@ -61,6 +61,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 	Route::get('payment/{id}/delete', ['as' => 'payment.delete', 'uses' => 'PaymentsController@destroy']);
     Route::get('/payment-receipt','PaymentsController@printFunction');
     Route::get('/admin/payments-delete-all', 'PaymentsController@delete_all');
+    Route::get('/admin/multiple-payments/create', 'PaymentsController@multiplePaymentsView');
+    Route::post('/admin/payments/multiple', 'PaymentsController@multiplePaymentsStore');
 
 	// PFC
 	Route::resource('/admin/pfc', 'PFCController');
