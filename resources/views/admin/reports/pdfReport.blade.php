@@ -79,7 +79,7 @@
 			@endforeach
         @endif
         <p align="center">
-            <span>Datat e zgjedhur për paraqitjen e të dhënave: <b>{{ $date }} - {{ $date_to }}</b></span>
+            <span>Datat e zgjedhur për paraqitjen e të dhënave: <b>{{ $date }} - {{ $date_to ? $date_to : $to_date}}</b></span>
         </p>
 	</tr>
 

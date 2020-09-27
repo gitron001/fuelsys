@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Console\Command;
@@ -41,11 +42,11 @@ class SendMonthlyCompanyEmail extends Command
     public function handle()
     {
         $companies  = Company::select('id','email','daily_at')->where('send_email',1)->where('monthly_report',1)->get();
-        $dateBegin  = strtotime("first day of last month");  
-        $dateEnd    = strtotime("last day of last month");
-        $first_day  = date('Y-m-01', $dateBegin);
-        $last_day   = date('Y-m-t', $dateEnd);
-        
+        $dateBegin  = Carbon::now()->startOfMonth()->subMonth();
+        $dateEnd    = Carbon::now()->subMonth()->endOfMonth();
+        $first_day  = $dateBegin;
+        $last_day   = $dateEnd;
+
         foreach($companies as $company){
 
             $data = [
