@@ -42,10 +42,8 @@ class SendMonthlyCompanyEmail extends Command
     public function handle()
     {
         $companies  = Company::select('id','email','daily_at')->where('send_email',1)->where('monthly_report',1)->get();
-        $dateBegin  = Carbon::now()->startOfMonth()->subMonth();
-        $dateEnd    = Carbon::now()->subMonth()->endOfMonth();
-        $first_day  = $dateBegin;
-        $last_day   = $dateEnd;
+        $first_day  = Carbon::now()->startOfMonth()->subMonth();
+        $last_day   = Carbon::now()->subMonth()->endOfMonth();
 
         foreach($companies as $company){
 
