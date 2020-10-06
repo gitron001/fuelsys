@@ -486,12 +486,12 @@ class UsersController extends Controller
         ini_set('max_execution_time', 180);
         // Produktet
         $productArray = array(0 => 1, 1 => 3, 2 => 5);
-        $discountArray = array(0 => 0.07, 1 => 0.07, 2 => 0.02);
+        $discountArray = array(0 => 0.06, 1 => 0.06, 2 => 0.02);
 
         for($i=111020000;$i <= 111025000;$i++) {
             $id = Users::insertGetId([
                 'rfid'              => $i,
-                'name'              => 'Klient - '.$i,
+                'name'              => 'Bonus Klient - '.$i,
                 'surname'           => $i,
                 'residence'         => '',
                 'contact_number'    => '',

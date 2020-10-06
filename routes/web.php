@@ -4,6 +4,7 @@ Auth::routes();
 
 Route::resource('/', 'HomeController');
 Route::get('transactions-info', 'TransactionController@info');
+Route::get('stock-info', 'StockController@info');
 
 //Change language
 Route::get('locale/{locale}',function($locale){
@@ -148,6 +149,10 @@ Route::group(['middleware' => 'authenticated'], function () {
 
     // Test email
     Route::get('/test/email','SettingsController@test_email');
+
+    // Stock
+    Route::get('/stock', 'StockController@index');
+    Route::post('/stock-save', 'StockController@store');
 
 	Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
 
