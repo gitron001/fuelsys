@@ -86,6 +86,13 @@
         </a>
     </li>-->
 
+    <li class="{{ request()->is('admin/stock') || request()->is('admin/stock/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/stock') }}">
+            <i class="fa fa-database" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.stock') }}</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('admin/staff') || request()->is('admin/staff/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/staff') }}">
             <i class="fa fa-users" aria-hidden="true"></i>

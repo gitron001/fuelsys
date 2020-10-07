@@ -12,16 +12,24 @@
                 <p class="tank-text">{{ number_format($percentage,0) }}%</p>
             </div>
             <div style="margin-top: 8px; line-height:10px;">
-                @if(count($stock_data) > 0)
-                    @foreach($stock_data as $stock)
-                        @foreach($sales as $sale)
-                            @if($stock->tank_id == $tank->id && $stock->tank_id == $sale->product_id)
-                                @php ($present = ($stock->amount - $sale->total_lit)) @endphp
-                                <p>Present: {{ $present }} litra</p>
-                            @endif
-                        @endforeach
-                    @endforeach
-                @endif
+                @foreach($sales as $sale)
+                    @if ($sale->product_id == $tank->id)
+                        @if(count($stock_data) > 0)
+                            @foreach($stock_data as $stok)
+                                @php ($present = ($stok->amount - $sale->total_lit)) @endphp
+                                @if ($sale->product_id == $stok->tank_id)
+                                    <p>Present: {{ printf("%.1f", $present) }} litra</p>
+                                @elseif(!$stock_data->contains('tank_id',$tank->id))
+                                    <p>Present: {{ printf("%.1f", $present) }} litra</p>
+                                    @break
+                                @endif
+                            @endforeach
+                        @else
+                            <p>Present: {{ printf("%.1f",$sale->total_lit) }} litra</p>
+                        @endif
+                    @endif
+
+                @endforeach
             </div>
         </div>
     @endforeach

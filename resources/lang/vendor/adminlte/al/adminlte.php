@@ -32,5 +32,6 @@ return [
     'settings'                      => 'Settings',
     'report'                        => 'Raportet',
     'products_group'                => 'Grupi i produkteve',
-    'staff'                         => 'Staff'
+    'staff'                         => 'Stafi',
+    'stock'                         => 'Stoku'
 ];

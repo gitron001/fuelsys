@@ -16,4 +16,8 @@ class Stock extends Model
     public function getDateFormat(){
         return 'U';
     }
+
+    public function tank(){
+        return $this->belongsTo('App\Models\Tank');
+    }
 }

@@ -25,6 +25,13 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('tank/{id}/delete', ['as' => 'tank.delete', 'uses' => 'TankController@destroy']);
     Route::get('/admin/tanks-delete-all', 'TankController@delete_all');
 
+    // Stock
+    Route::resource('/admin/stock', 'StockController');
+    Route::get('stock/{id}/delete', ['as' => 'stock.delete', 'uses' => 'StockController@destroy']);
+    Route::get('/admin/stock-delete-all', 'StockController@delete_all');
+    /*Route::get('/stock', 'StockController@index');
+    Route::post('/stock-save', 'StockController@store');*/
+
     Route::get('/tanks_details','TankController@import_excel_file_view');
     Route::post('/tanks_details', 'TankController@import_excel_file');
 
@@ -149,10 +156,6 @@ Route::group(['middleware' => 'authenticated'], function () {
 
     // Test email
     Route::get('/test/email','SettingsController@test_email');
-
-    // Stock
-    Route::get('/stock', 'StockController@index');
-    Route::post('/stock-save', 'StockController@store');
 
 	Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
 

@@ -33,5 +33,6 @@ return [
     'settings'                      => 'Settings',
     'report'                        => 'Reports',
     'products_group'                => 'Products Group',
-    'staff'                         => 'Staff'
+    'staff'                         => 'Staff',
+    'stock'                         => 'Stock'
 ];

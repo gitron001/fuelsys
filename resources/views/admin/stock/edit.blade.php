@@ -4,7 +4,7 @@
 
 @include('includes/alert_info')
 
-{{ Form::open( array( 'route' => ['stock.index'], 'role' => 'form' ) ) }}
+{{ Form::model( $stock, ['route' => ['stock.update', $stock->id], 'method' => 'put', 'role' => 'form'] ) }}
     @include('admin.stock._fields')
 {{ Form::close() }}
 
