@@ -30,9 +30,8 @@ class HomeController extends Controller
         $tanks              = Tank::all();
 
 
-        $stock_data         = Stock::select([DB::raw("SUM(amount) as amount"),DB::raw("tank_id")])->groupBy('tank_id')->get();
         $sales          	= Transaction::select([DB::raw("SUM(lit) as total_lit"),DB::raw("product_id")])->groupBy('product_id')->get();
-		
+
         return view('welcome',compact('dispanesers','transactions','company_low_limit','tanks','stock_data','sales'));
     }
 

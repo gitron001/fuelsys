@@ -84,14 +84,9 @@ class StockController extends Controller
     }
 
     public function info(){
-
         $tanks              = Tank::all();
-        $stock_data         = Stock::select([DB::raw("SUM(amount) as amount"),DB::raw("tank_id")])->groupBy('tank_id')->get();
-        $first_date         = Transaction::select('created_at','id')->orderBy('id', 'ASC')->first();
-        if(!empty($first_date)) {
-            $sales          = Transaction::select([DB::raw("SUM(lit) as total_lit"),DB::raw("product_id")])->where('created_at','>=',strtotime($first_date->created_at))->groupBy('product_id')->get();
-        }
-        return view('admin.stock.stock-info',compact('tanks','stock_data','first_item','sales'));
+        $sales          	= Transaction::select([DB::raw("SUM(lit) as total_lit"),DB::raw("product_id")])->groupBy('product_id')->get();
+        return view('admin.stock.stock-info',compact('tanks','sales'));
 
     }
 }

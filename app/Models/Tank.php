@@ -22,4 +22,8 @@ class Tank extends Model
     public function product(){
         return $this->belongsTo('App\Models\Products', 'product_id', 'pfc_pr_id');
     }
+
+    public function totalStock(){
+        return $this->belongsTo('App\Models\Stock', 'id', 'tank_id')->where('tank_id', $this->id)->get();
+    }
 }

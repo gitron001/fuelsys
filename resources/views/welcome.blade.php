@@ -180,23 +180,19 @@
             <div style="margin-top: 8px; line-height:10px;">
                 @foreach($sales as $sale)
                     @if ($sale->product_id == $tank->product_id)
-					{{ $sale->product_id  }} - {{ $tank->product_id }} </br>
-				
-                        @if(count($stock_data) > 0)
-                            @foreach($stock_data as $stok)
-                                @if ($sale->product_id == $stok->tank_id)
-                                    @php ($present = ($stok->amount - $sale->total_lit)) @endphp
-                                    <p>Present: {{ printf("%.1f", $present) }} litra</p>
-                                @elseif(!$stock_data->contains('tank_id',$tank->id))
-                                    <p>Present: {{ printf("%.1f", $sale->total_lit) }} litra</p>
-                                    @break
-                                @endif
-                            @endforeach
+					{{-- $sale->product_id  }} - {{ $tank->product_id --}} </br>
+                        @if(count($tank->totalStock()) > 0)
+                            @if ($sale->product_id == $tank->totalStock()[0]->tank_id)
+                                @php ($present = ($tank->totalStock()[0]->amount - $sale->total_lit)) @endphp
+                                <p>Present: {{ printf("%.1f", $present) }} litra</p>
+                            @elseif(!$tank->totalStock()->contains('tank_id',$tank->id))
+                                <p>Present: {{ printf("%.1f", $sale->total_lit) }} litra</p>
+                                @break
+                            @endif
                         @else
                             <p>Present: {{ printf("%.1f", $sale->total_lit) }} litra</p>
                         @endif
                     @endif
-
                 @endforeach
             </div>
         </div>
