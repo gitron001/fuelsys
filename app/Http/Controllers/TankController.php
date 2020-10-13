@@ -53,7 +53,7 @@ class TankController extends Controller
      */
     public function create()
     {
-        $products = Products::pluck('name','id')->all();
+        $products = Products::pluck('name',DB::RAW('pfc_pr_id as id'))->all();
         return view('/admin/tanks/create',compact('products'));
     }
 
@@ -92,7 +92,7 @@ class TankController extends Controller
     public function edit($id)
     {
         $tank = Tank::findOrFail($id);
-        $products = Products::pluck('name','id')->all();
+        $products = Products::pluck('name',DB::RAW('pfc_pr_id as id'))->all();
 
         return view('/admin/tanks/edit',compact('tank','products'));
     }

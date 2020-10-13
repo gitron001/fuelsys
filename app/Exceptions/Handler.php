@@ -76,10 +76,10 @@ class Handler extends ExceptionHandler
                     " . $e->getTraceAsString();
             try {
 				Mail::raw($body, function ($m) {
-					//$emails = ['ideal.bakija@gmail.com','orgesthaqi96@gmail.com'];
-                    //$m->from('ideal.bakija@bakija.com', 'Fuel System');
+					$emails = ['ideal.bakija@gmail.com','orgesthaqi96@gmail.com'];
+                    $m->from('ideal.bakija@bakija.com', 'Fuel System');
 
-                    //$m->to($emails)->subject("Fatal error - ALBA PETROL(GJILAN 3)");
+                    $m->to($emails)->subject("Fatal error - NESIM BAKIJA");
                 });
             } catch (\Exception $e) {
 

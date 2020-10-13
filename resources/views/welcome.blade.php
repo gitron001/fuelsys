@@ -179,7 +179,9 @@
             </div>
             <div style="margin-top: 8px; line-height:10px;">
                 @foreach($sales as $sale)
-                    @if ($sale->product_id == $tank->id)
+                    @if ($sale->product_id == $tank->product_id)
+					{{ $sale->product_id  }} - {{ $tank->product_id }} </br>
+				
                         @if(count($stock_data) > 0)
                             @foreach($stock_data as $stok)
                                 @if ($sale->product_id == $stok->tank_id)
