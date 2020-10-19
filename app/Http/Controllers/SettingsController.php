@@ -93,9 +93,16 @@ class SettingsController extends Controller
     {
         $channels = Dispaneser::get();
         $command_types = array( 1 => 'Activate Card', 2 => 'Activate Card Response', 3 => 'Activate Card Discounts', 4 => 'Activate Card  Discounts Response', 5 => 'Read Transaction Commad', 6 => 'Transaction Data Response', 7=> 'Lock Transaction', 8 => 'Lock Transaction Response', 9 => 'Clear Transaction', 10 => 'Clear Transaction Response', 11 => 'Preset Command', 12 => 'Preset Command Response', 13 => 'Prepay Command', 14 => 'Prepay Command Response', 15 => 'Dispaly Text Command', 16 => 'Dispaly Text Command Response', 17 => 'Read Live Data', 18 => 'Read Live Data Response');
+
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
         $query = new TrackingCommands;
+
         $from_date       = strtotime($request->input('fromDate'));
         $to_date         = strtotime($request->input('toDate'));
+
 
 		if($request->input('channel_id')){
 			$query = $query->where('channel_id', $request->input('channel_id'));
@@ -104,32 +111,54 @@ class SettingsController extends Controller
 		if($request->input('fromDate')){
             $query = $query->whereBetween('created_at',[$from_date, $to_date]);
 		}
-		//$query = $query->where('type', 18);
-
-        $commands = $query->orderBy('created_at','DESC')->paginate(15);
 
         if($request->ajax() == false){
-            return view('/admin/settings/tracking',compact('commands', 'channels','command_types'));
+            $commands = $query->orderBy('created_at','DESC')
+                            ->paginate(15);
+            return view('/admin/settings/tracking',compact('commands','channels','command_types'));
         } else {
-            return view('/admin/settings/tracking_data',compact('commands', 'channels','command_types'))->render();
+            $commands = $query->orderBy($sort_by,$sort_type)
+                            ->paginate(15);
+            return view('/admin/settings/tracking_data',compact('commands','channels','command_types'))->render();
         }
 
     }
 
+    public function delete_all_tracking_commands(Request $request) {
+        $tracking_id_array = $request->input('id');
+        $tracking = TrackingCommands::whereIn('id',$tracking_id_array);
+        if($tracking->delete()){
+            echo "Data deleted";
+        }
+    }
+
     public function failed_attempts(Request $request)
     {
+        $sort_by    = $request->get('sortby');
+        $sort_type  = $request->get('sorttype');
+        $search     = $request->get('search');
+
         $failed_attempts = new FaileAttempt;
 
         if($request->ajax() == false){
-            $failed_attempts = $failed_attempts->orderBy('id','ASC')
-                                ->paginate(15);
+            $failed_attempts  = $failed_attempts->orderBy('id','DESC')
+                        ->paginate(15);
             return view('/admin/failed_attempts/failed_attempts',compact('failed_attempts'));
         } else {
-            $failed_attempts = $failed_attempts->orderBy('id','ASC')
-                                ->paginate(15);
+            $failed_attempts  = $failed_attempts->orderBy($sort_by,$sort_type)
+                        ->paginate(15);
             return view('/admin/failed_attempts/table_data',compact('failed_attempts'))->render();
         }
 
+    }
+
+    public function delete_all_failed_attempts(Request $request)
+    {
+        $f_a_array = $request->input('id');
+        $failed_attempts = FaileAttempt::whereIn('id',$f_a_array);
+        if($failed_attempts->delete()){
+            echo "Data deleted";
+        }
     }
 
 	public function error_transactions(Request $request)

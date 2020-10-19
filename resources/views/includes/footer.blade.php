@@ -179,7 +179,11 @@
   // Users dropdown
   $(document).ready(function() {
     $('.users-dropdown').select2({
-      placeholder: "Select a user"
+      placeholder: "  Select a user  "
+    });
+
+    $('.channel-dropdown').select2({
+      placeholder: "  Select a channel  "
     });
   });
 

@@ -1,9 +1,10 @@
+@php $url = substr(strrchr(Request::fullUrl(), '?'),0); @endphp
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li @if(Request::path() == 'admin/staff') class="active" @endif><a href="{{ URL::to('/admin/staff') }}">Shift</a></li>
-      <li @if(Request::path() == 'admin/staff/dispensers') class="active" @endif><a href="{{ URL::to('/admin/staff/dispensers') }}">Totalizers</a></li>
-      <li @if(Request::path() == 'admin/staff/products') class="active" @endif><a href="{{ URL::to('/admin/staff/products') }}">Products</a></li>
-      <li @if(Request::path() == 'admin/staff/companies') class="active" @endif><a href="{{ URL::to('/admin/staff/companies') }}">Companies</a></li>
+      <li @if(Request::path() == 'admin/staff') class="active" @endif><a href="{{ URL::to('/admin/staff'.$url) }}">Shift</a></li>
+      <li @if(Request::path() == 'admin/staff/dispensers') class="active" @endif><a href="{{ URL::to('/admin/staff/dispensers'.$url) }}">Totalizers</a></li>
+      <li @if(Request::path() == 'admin/staff/products') class="active" @endif><a href="{{ URL::to('/admin/staff/products'.$url) }}">Products</a></li>
+      <li @if(Request::path() == 'admin/staff/companies') class="active" @endif><a href="{{ URL::to('/admin/staff/companies'.$url) }}">Companies</a></li>
     </ul>
     <br>
     <form class="form-inline text-center" method="GET" action="{{ URL::to(Request::path()) }}" role="form">

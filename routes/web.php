@@ -25,6 +25,11 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('tank/{id}/delete', ['as' => 'tank.delete', 'uses' => 'TankController@destroy']);
     Route::get('/admin/tanks-delete-all', 'TankController@delete_all');
 
+    // Pumps
+	Route::resource('/admin/pumps', 'PumpsController');
+    Route::get('pump/{id}/delete', ['as' => 'pump.delete', 'uses' => 'PumpsController@destroy']);
+    Route::get('/admin/pumps-delete-all', 'PumpsController@delete_all');
+
     // Stock
     Route::resource('/admin/stock', 'StockController');
     Route::get('stock/{id}/delete', ['as' => 'stock.delete', 'uses' => 'StockController@destroy']);
@@ -153,11 +158,13 @@ Route::group(['middleware' => 'authenticated'], function () {
 
 	// Show failed attemps
     Route::get('/failed-attempts','SettingsController@failed_attempts');
+    Route::get('/failed-attempts-delete-all', 'SettingsController@delete_all_failed_attempts');
 
     // Test email
     Route::get('/test/email','SettingsController@test_email');
 
-	Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
+    Route::match(array('GET', 'POST'),'/tracking_command', 'SettingsController@tracking_commands' );
+    Route::get('/tracking_command-delete-all', 'SettingsController@delete_all_tracking_commands');
 
     Route::get('/insertRecord','UsersController@insertRecord');
 

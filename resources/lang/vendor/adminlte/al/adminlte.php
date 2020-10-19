@@ -33,5 +33,6 @@ return [
     'report'                        => 'Raportet',
     'products_group'                => 'Grupi i produkteve',
     'staff'                         => 'Stafi',
-    'stock'                         => 'Stoku'
+    'stock'                         => 'Stoku',
+    'pumps'                         => 'Pompat'
 ];

@@ -93,6 +93,13 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('admin/pumps') || request()->is('admin/pumps/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/pumps') }}">
+            <i class="fa fa-tint" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.pumps') }}</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('admin/staff') || request()->is('admin/staff/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/staff') }}">
             <i class="fa fa-users" aria-hidden="true"></i>

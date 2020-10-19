@@ -34,5 +34,6 @@ return [
     'report'                        => 'Reports',
     'products_group'                => 'Products Group',
     'staff'                         => 'Staff',
-    'stock'                         => 'Stock'
+    'stock'                         => 'Stock',
+    'pumps'                         => 'Pumps'
 ];

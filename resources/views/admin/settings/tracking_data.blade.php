@@ -1,9 +1,10 @@
-@foreach($commands as $fa)
+@foreach($commands as $command)
     <tr>
-    <td>{{ $command_types[$fa->type] }}</td>
-    <td>{{ $fa->channel_id }}</td>
-    <td><textarea style="widht:100px" disabled>{{ print_r(unserialize($fa->command)) }}</textarea></td>
-    <td>{{ $fa->created_at }}</td>
+    <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $command->id }}"></td>
+    <td>{{ $command_types[$command->type] }}</td>
+    <td>{{ $command->dispaneser['name'] }}</td>
+    <td><textarea style="widht:100px" disabled>{{ print_r(unserialize($command->command)) }}</textarea></td>
+    <td>{{ $command->created_at }}</td>
     </tr>
 @endforeach
 
