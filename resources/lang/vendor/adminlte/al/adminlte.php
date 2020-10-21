@@ -2,7 +2,7 @@
 
 return [
     'full_name'                     => 'Emri',
-    'email'                         => 'Email/Adresa elektronike',
+    'email'                         => 'Email',
     'password'                      => 'Fjalëkalimi',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
@@ -13,7 +13,7 @@ return [
     'sign_in'                       => 'Kyçu',
     'log_out'                       => 'Çkyçu',
     'toggle_navigation'             => 'Toggle navigation',
-    'login_message'                 => 'Hyni/Kyçuni për të filluar sesionin tuaj',
+    'login_message'                 => 'Kyçuni për të filluar sesionin tuaj',
     'register_message'              => 'Regjistro një anëtarësim të ri',
     'password_reset_message'        => 'Rikthe fjalëkalimin',
     'reset_password'                => 'Rikthe fjalëkalimin',

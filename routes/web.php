@@ -2,16 +2,19 @@
 
 Auth::routes();
 
-Route::resource('/', 'HomeController');
-Route::get('transactions-info', 'TransactionController@info');
-Route::get('stock-info', 'StockController@info');
+// Use this middleware to check if the administrator wants to show homepage view without
+// needing to log in or without giving permission.
+Route::group(['middleware' => 'checkLogin'], function () {
+    Route::resource('/', 'HomeController');
+    Route::get('transactions-info', 'TransactionController@info');
+    Route::get('stock-info', 'StockController@info');
 
-//Change language
-Route::get('locale/{locale}',function($locale){
-	Session::put('locale',$locale);
-	return redirect()->back();
+    //Change language
+    Route::get('locale/{locale}',function($locale){
+        Session::put('locale',$locale);
+        return redirect()->back();
+    });
 });
-
 
 Route::group(['middleware' => 'authenticated'], function () {
 

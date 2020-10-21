@@ -127,16 +127,23 @@
 
                         <div class="form-group ">
                             <label for="print">Print transaction: </label>
-                            <br>
-                            <input type="radio" name="print_transaction" value="1" @if (isset($company) && $company->print_transaction == 1) checked @endif> Yes &nbsp;
-                            <input type="radio" name="print_transaction" value="0" @if (isset($company) && $company->print_transaction == 0) checked @endif> No<br>
+                            <div class="input-radio">
+                                <input type="radio" name="print_transaction" value="1" @if (isset($company) && $company->print_transaction == 1) checked @endif> Yes &nbsp;
+                                <input type="radio" name="print_transaction" value="0" @if (isset($company) && $company->print_transaction == 0) checked @endif> No<br>
+                            </div>
                         </div>
 
                         <div class="form-group ">
-                            <label for="print">Show transaction if user is not logged in: </label>
-                            <br>
-                            <input type="radio" name="show_transaction" id="show_transaction_yes" value="1" @if (isset($company) && $company->show_transaction == 1) checked @endif> Yes &nbsp;
-                            <input type="radio" name="show_transaction" id="show_transaction_no" value="0" @if (isset($company) && $company->show_transaction == 0) checked @endif> No<br>
+                            <label for="print">Hide all views (Direct login): </label>
+                            <div class="input-radio">
+                                <input type="radio" name="direct_login" value="1" @if (isset($company) && $company->direct_login == 1) checked @endif> Yes &nbsp;
+                                <input type="radio" name="direct_login" value="0" @if (isset($company) && $company->direct_login == 0) checked @endif> No<br>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="show_transaction_time_div" @if (isset($company) && $company->show_transaction == 0) style="display:none;" @endif>
+							{!! Form::label('show_transaction_time', 'Transactions date'); !!}
+							{!! Form::select('show_transaction_time',$time,$company->show_transaction_time,['class'=>'form-control']); !!}
                         </div>
 
 
@@ -189,13 +196,12 @@
 							{!! Form::text('transaction_location',null,['class'=>'form-control','placeholder'=>'Example: D:\FuelSystem']); !!}
                         </div>
 
-                        <?php
-                        $data = array('0' => 'Select date','1'=>'Older than 1 day','2'=>'Older than 2 days','3'=>'Older than 3 days','4'=>'Older than 4 days','5'=>'Older than 5 days','6'=>'Older than 6 days','7'=>'Older than 1 week','14'=>'Older than 2 weeks','21'=>'Older than 3 weeks','31'=>'Older than 1 month');
-                        ?>
-
-                        <div class="form-group" id="show_transaction_time_div" @if (isset($company) && $company->show_transaction == 0) style="display:none;" @endif>
-							{!! Form::label('show_transaction_time', 'Transactions date'); !!}
-							{!! Form::select('show_transaction_time',$data,$company->show_transaction_time,['class'=>'form-control']); !!}
+                        <div class="form-group ">
+                            <label for="print">Show transaction if user is not logged in: </label>
+                            <div class="input-radio">
+                                <input type="radio" name="show_transaction" id="show_transaction_yes" value="1" @if (isset($company) && $company->show_transaction == 1) checked @endif> Yes &nbsp;
+                                <input type="radio" name="show_transaction" id="show_transaction_no" value="0" @if (isset($company) && $company->show_transaction == 0) checked @endif> No<br>
+                            </div>
                         </div>
 
 					</div>

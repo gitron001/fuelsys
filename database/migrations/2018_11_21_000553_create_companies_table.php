@@ -37,6 +37,7 @@ class CreateCompaniesTable extends Migration
             $table->tinyInteger('print_transaction')->default(0);
             $table->string('transaction_location')->nullable();
             $table->integer('show_transaction')->default(0);
+            $table->integer('direct_login')->default(0);
             $table->integer('show_transaction_time')->default(0);
             $table->tinyInteger('has_receipt')->default(0);
             $table->tinyInteger('has_receipt_nr')->default(0);

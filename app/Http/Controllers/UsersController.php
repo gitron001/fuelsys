@@ -39,7 +39,7 @@ class UsersController extends Controller
         $search     = $request->get('search');
 
         //$users      = Users::whereIn('status',array(1, 2));
-        $users      = Users::select('users.name','users.email','users.rfid','users.type','users.type','users.created_at','users.updated_at','users.id','users.company_id','users.branch_user_id')
+        $users      = Users::select('users.name','users.email','users.rfid','users.type','users.type','users.created_at','users.updated_at','users.id','users.company_id','users.branch_user_id','users.plates','users.vehicle')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->leftJoin('branches', 'branches.id', '=', 'users.branch_id')
             ->whereIn('users.status',array(1, 2));

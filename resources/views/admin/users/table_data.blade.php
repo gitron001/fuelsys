@@ -6,14 +6,14 @@
     <td>{{ $user->rfid }}</td>
 	<td>
 	@if($user->type == 1)
-		 Staff 
+		 Staff
 	@else
 		{{ $user->company->name ? $user->company->name : 'No Company' }}
     @endif
 	</td>
 	<td>{{ $user->one_time_limit }}</td>
-    <td>{{ $user->plates }}</td>
-    <td>{{ $user->vehicle }}</td>
+    <td>{{ $user->plates ?? '' }}</td>
+    <td>{{ $user->vehicle ?? '' }}</td>
     <td>{{ $user->created_at->diffForHumans() }}</td>
     <td>{{ $user->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">

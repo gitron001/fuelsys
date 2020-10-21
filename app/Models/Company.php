@@ -37,6 +37,7 @@ class Company extends Model
         'daily_at',
         'on_transaction',
         'printer_id',
+        'direct_login',
         'print_transaction',
         'transaction_location',
         'show_transaction',

@@ -23,9 +23,10 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        $time = array('0' => 'Select date','1'=>'Older than 1 day','2'=>'Older than 2 days','3'=>'Older than 3 days','4'=>'Older than 4 days','5'=>'Older than 5 days','6'=>'Older than 6 days','7'=>'Older than 1 week','14'=>'Older than 2 weeks','21'=>'Older than 3 weeks','31'=>'Older than 1 month');
         $company = Company::where('status',4)->first();
         $running_process = RunninProcessModel::first();
-        return view('/admin/settings/edit',compact('company','running_process'));
+        return view('/admin/settings/edit',compact('company','running_process','time'));
     }
 
     public function get_refresh_time(Request $request)
@@ -71,6 +72,11 @@ class SettingsController extends Controller
 
         if($request->hasFile('image')){
             $company->images = $fileNameToStore;
+        }
+
+        if($request->direct_login == 1){
+            $request['show_transaction'] = 0;
+            $request['show_transaction_time'] = 0;
         }
 
         $company->update($request->all());
