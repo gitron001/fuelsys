@@ -161,31 +161,43 @@
     if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
       return decodeURIComponent(name[1]);
   }
+    $(function () {
+        var date = new Date();
+        date.setDate(date.getDate() -1);
+        $('#datetimepicker4').datetimepicker({
+            defaultDate:date,
+        });
 
-  // Start Date & End Date Filters
-  $(function () {
-      var date = new Date();
-      date.setDate(date.getDate() -1);
-      $('#datetimepicker4').datetimepicker({
-          defaultDate:date
-      });
-
-      var dateNow = new Date();
-      $('#datetimepicker5').datetimepicker({
-          defaultDate:dateNow
-      });
-  });
-
-  // Users dropdown
-  $(document).ready(function() {
-    $('.users-dropdown').select2({
-      placeholder: "  Select a user  "
+        var dateNow = new Date();
+        $('#datetimepicker5').datetimepicker({
+            defaultDate:dateNow
+        });
     });
 
-    $('.channel-dropdown').select2({
-      placeholder: "  Select a channel  "
+    var checkbox = document.getElementById('all_day');
+    checkbox.addEventListener('change', (event) => {
+        if (event.target.checked) {
+            var dateWithoutTimeStart = new Date(document.getElementById("datetimepicker4").value);
+            dateWithoutTimeStart.setHours(0,0,0,0);
+            $('#datetimepicker4').data("DateTimePicker").date(dateWithoutTimeStart);
+
+            var dateWithoutTimeEnd = new Date(document.getElementById("datetimepicker5").value);
+            dateWithoutTimeEnd.setHours(23,59,59,999);
+            $('#datetimepicker5').data("DateTimePicker").date(dateWithoutTimeEnd);
+        }
+    })
+
+    // Users dropdown
+    $(document).ready(function() {
+        $('.users-dropdown').select2({
+        placeholder: "  Select a user  "
+        });
+
+        $('.channel-dropdown').select2({
+        placeholder: "  Select a channel  "
+        });
     });
-  });
+
 
   $(document).ready(function() {
 

@@ -64,6 +64,10 @@
             <input type="checkbox" name="exc_balance"  id="exc_balance" {{ request()->get("exc_balance") ? 'checked' : ''}}> Exc. Balance<br>
         </div>&nbsp;
 
+        <div class="form-group">
+            <input type="checkbox" name="all_day"  id="all_day" {{ request()->get("all_day") == 'Yes' ? 'checked' : ''}}> All day<br>
+        </div>&nbsp;
+
         <div class="form-group" style="padding-top: 5px;">
           <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i></button>
           <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-warning" title="Clear All Filters"><i class="fa fa-trash"></i></a>
