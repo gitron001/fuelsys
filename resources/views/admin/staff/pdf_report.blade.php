@@ -268,7 +268,7 @@
                     <th>Produkti</th>
                     <th>Cmimi</th>
                     <th>Sasia</th>
-					<td>Totali</th>
+					<th>Totali</th>
                 </tr>
 			</thead>
 
@@ -292,7 +292,39 @@
 					<td><b>{{ number_format($total_sales, 2) }} <b></td>
 				</tr>
 			</tfoot>
-		</table>
+        </table>
+        <h4>Average</h4>
+        <table width="100%" id="table_design">
+            <thead>
+                <tr>
+                    <th>Produkti</th>
+                    <th>Cmimi</th>
+                    <th>Sasia</th>
+                    <th>Totali</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php $total_sales = 0; ?>
+            @foreach($products_average as $product)
+                <tr>
+                    <td>{{ $product['p_name'] .' - '. number_format($product['product_price'], 3) }} </td>
+                    <td>{{ number_format($product['product_price'], 3) }} Euro</td>
+                    <td>{{ number_format($product['totalLit'], 2) }} litra</td>
+                    <td>{{ number_format($product['totalLit'] * $product['product_price'], 2)  }} litra</td>
+                </tr>
+                <?php $total_sales += $product['totalLit'] * $product['product_price']; ?>
+            @endforeach
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan='2'>
+                    </td>
+                    <td><b>TOTAL</b></td>
+                    <td><b>{{ number_format($total_sales, 2) }}</b></td>
+                </tr>
+            </tfoot>
+        </table>
+
 	@endif
 	  <!-- START PRODUCTS SECTION -->
 </body>

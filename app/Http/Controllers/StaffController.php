@@ -237,9 +237,9 @@ class StaffController extends Controller
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
         $companies              = self::show_companies_info($request)['companies'];
 
-        $products           = self::show_products_info($request);
+        $products               = self::show_products_info($request);
 
-        $totalizer_totals   = TransactionController::getGeneralDataTotalizers($request);
+        $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
         return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company'));
     }
@@ -271,9 +271,10 @@ class StaffController extends Controller
 
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $products               = self::show_products_info($request, 'products_view');
+        $products_average       = self::show_products_average_info($request);
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals'));
+        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals','products_average'));
 
 	}
 
@@ -292,6 +293,28 @@ class StaffController extends Controller
         $products = $products->orderBy('products.pfc_pr_id');
 
         $products = $products->get();
+
+        return $products;
+    }
+
+    public static function show_products_average_info($request, $view_type = null){
+
+        $products 	= Transactions::select(DB::raw('avg(money) as totalMoney'),DB::raw('AVG(lit) as totalLit'), DB::raw('count(transactions.id) as transNR'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('avg(transactions.price) as product_price'))
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->groupBy('products.pfc_pr_id')
+            ->groupBy('product_id');
+
+        if($view_type == 'products_view'){
+            $products = $products->groupBy('transactions.price');
+        }
+
+        $products = $products->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
+
+        $products = $products->orderBy('products.pfc_pr_id');
+
+        $products = $products->get();
+
+        //dd($products);exit();
 
         return $products;
     }
@@ -568,12 +591,13 @@ class StaffController extends Controller
 		}
 
 		if($request->input('url') == 'products'){
-			$products               = self::show_products_info($request, 'products_view');
+            $products               = self::show_products_info($request, 'products_view');
+            $products_average       = self::show_products_average_info($request);
 		}
 
 
 
-        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
+        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','products_average'));
         $file_name  = 'Staff-PDF - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
 
