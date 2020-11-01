@@ -175,26 +175,32 @@
     });
 
     var checkbox = document.getElementById('all_day');
-    checkbox.addEventListener('change', (event) => {
-        if (event.target.checked) {
-            var dateWithoutTimeStart = new Date(document.getElementById("datetimepicker4").value);
-            dateWithoutTimeStart.setHours(0,0,0,0);
-            $('#datetimepicker4').data("DateTimePicker").date(dateWithoutTimeStart);
+    if(checkbox){
+        checkbox.addEventListener('change', (event) => {
+            if (event.target.checked) {
+                var dateWithoutTimeStart = new Date(document.getElementById("datetimepicker4").value);
+                dateWithoutTimeStart.setHours(0,0,0,0);
+                $('#datetimepicker4').data("DateTimePicker").date(dateWithoutTimeStart);
 
-            var dateWithoutTimeEnd = new Date(document.getElementById("datetimepicker5").value);
-            dateWithoutTimeEnd.setHours(23,59,59,999);
-            $('#datetimepicker5').data("DateTimePicker").date(dateWithoutTimeEnd);
-        }
-    })
+                var dateWithoutTimeEnd = new Date(document.getElementById("datetimepicker5").value);
+                dateWithoutTimeEnd.setHours(23,59,59,999);
+                $('#datetimepicker5').data("DateTimePicker").date(dateWithoutTimeEnd);
+            }
+        })
+    }
 
     // Users dropdown
     $(document).ready(function() {
         $('.users-dropdown').select2({
-        placeholder: "  Select a user  "
+            placeholder: "  Select a user  "
+        });
+
+        $('.company-dropdown').select2({
+            placeholder: "  Select a company "
         });
 
         $('.channel-dropdown').select2({
-        placeholder: "  Select a channel  "
+            placeholder: "  Select a channel  "
         });
     });
 

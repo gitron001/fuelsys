@@ -20,15 +20,15 @@
 					<label for="">Company / User: </label>
 					<br>
 					@if (!isset($payment))
-					<label class="checkbox-inline"><input type="checkbox" class="check_class checkbox-select-all" name="checkbox"
+					<label class="checkbox-inline" style="margin-top: 15px;"><input type="checkbox" class="check_class checkbox-select-all" name="checkbox"
 						value="company" echo checked />Company</label>
 					@endif
 
 					@if (isset($payment))
-					<label class="checkbox-inline"><input type="checkbox" class="check_class checkbox-select-all" name="checkbox"
+					<label class="checkbox-inline" style="margin-top: 15px;"><input type="checkbox" class="check_class checkbox-select-all" name="checkbox"
 						value="company" @if (isset($payment) && $payment->company_id != 0) echo checked @endif/>Company</label>
 					@endif
-					<label class="checkbox-inline"><input type="checkbox" class="check_class checkbox-select-all" name="checkbox"
+					<label class="checkbox-inline" style="margin-top: 15px;"><input type="checkbox" class="check_class checkbox-select-all" name="checkbox"
 						value="user" @if (isset($payment) && $payment->user_id != 0) echo checked @endif/>User</label>
 
 				</div>

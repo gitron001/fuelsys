@@ -146,3 +146,9 @@
     margin-top: 12px;
 }
 /* END RADIO INPUT */
+
+/* SELECT INPUT */
+.select2-container {
+    width: 150px !important;
+}
+/* END SELECT INPUT */

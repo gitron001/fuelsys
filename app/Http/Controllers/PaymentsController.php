@@ -108,7 +108,10 @@ class PaymentsController extends Controller
 
     public function multiplePaymentsView()
     {
-		$users      = Users::where('status',1)->where('type', 1)->pluck('name','id')->all();
+        $users      = Users::where('status',1)->where(function ($users) {
+			$users->where('company_id', 0)
+            ->orWhereNull('company_id');
+		})->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
 
         return view('/admin/payments/multiplePayments',compact('companies','users','branches'));
     }

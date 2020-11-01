@@ -20,7 +20,7 @@
                   </div>
                   <div class="form-group">
                     <label for="User:">Company:</label>
-                    <select class="users-dropdown form-control" name="company[]" multiple="multiple" id="company">
+                    <select class="company-dropdown form-control" name="company[]" multiple="multiple" id="company">
                       @foreach($companies as $id => $name)
                           <option value="{{ $id }}"
                           @if(!empty( request()->get("company") ))
