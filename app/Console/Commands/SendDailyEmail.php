@@ -45,7 +45,8 @@ class SendDailyEmail extends Command
         $current_time   = date('H');
         $from_date      = date('Y-m-d H:00:00', strtotime('- 1 day', strtotime(date("Y-m-d $hour:00:00"))));
         $to_date        = date("Y-m-d $hour:00:00");
-        
+        $fp             = fopen(storage_path() . "/logs/daily.txt", "a");
+
         foreach($companies as $company){
             $data = [
                 'company'  => $company->id,
@@ -61,6 +62,6 @@ class SendDailyEmail extends Command
             $controller = new TransactionController();
             $controller->generateDailyReport($request);
         }
-		echo 'RUN AT'.$from_date;
+        fwrite($fp, 'RUN AT: '.$to_date.PHP_EOL);
     }
 }
