@@ -56,11 +56,11 @@ class ExportTransactions extends Command
 
             if(!file_exists($tr_location."/export.txt")){
                 $fp = fopen($tr_location."/export.txt", "a");
-                fwrite($fp, 'ID_PERSHT;DATAORA;KODART;ARTIKULLI;SASIA;CMIMI;REZERVUAR;RFID;NrKuponit;discount;originalprice' .PHP_EOL);
+                fwrite($fp, 'ID;KOHA;ARTIKULLI;SASIA;CMIMI' .PHP_EOL);
 
                 foreach($transactions as $transaction){
 
-                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';1/6/1;0;'.$transaction['id'].';0;'.$transaction['price'].PHP_EOL);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].PHP_EOL);
 
                     Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
                 }
@@ -71,7 +71,7 @@ class ExportTransactions extends Command
 
                 foreach($transactions as $transaction){
 
-                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';1/6/1;0;'.$transaction['id'].';0;'.$transaction['price'].PHP_EOL);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].PHP_EOL);
 
                     Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
                 }
