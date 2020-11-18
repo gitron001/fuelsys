@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Tank extends Model
@@ -24,6 +25,6 @@ class Tank extends Model
     }
 
     public function totalStock(){
-        return $this->belongsTo('App\Models\Stock', 'id', 'tank_id')->where('tank_id', $this->id)->get();
+        return $this->belongsTo('App\Models\Stock', 'id', 'tank_id')->select(DB::raw("SUM(amount) as amount"),'tank_id')->where('tank_id', $this->id)->get();
     }
 }
