@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
 					$emails = ['ideal.bakija@gmail.com','orgesthaqi96@gmail.com'];
                     $m->from('ideal.bakija@bakija.com', 'Fuel System');
 
-                    $m->to($emails)->subject("Fatal error - NESIM BAKIJA");
+                    $m->to($emails)->subject("Fatal error - DARDANIA(661800870)");
                 });
             } catch (\Exception $e) {
 
