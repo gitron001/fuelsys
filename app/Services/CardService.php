@@ -172,7 +172,7 @@ class CardService extends ServiceProvider
 		
 		//Checking is a transaction is running or not saved
 		if((int)$the_dispanser->status == 3){
-			if($the_dispanser->data_updated_at < (time()-15)){
+			if($the_dispanser->data_updated_at < (time()-35)){
 				echo 'Saving Missing';
 				self::storeMissingTransaction($socket, $channel, $the_dispanser, $pfc_id);
 			}else{

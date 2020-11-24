@@ -1,6 +1,6 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">{{ !isset($pump) ? 'Create new tank' : 'Edit pump'}}</h3>
+		<h3 class="box-title">{{ !isset($pump) ? 'Create new pump' : 'Edit pump'}}</h3>
 	</div>
 
 	<div class="box-body">
@@ -24,8 +24,9 @@
 			</div>
 			<div class="col-md-6">
                 <div class="form-group {{ $errors->has('dispaneser_id') ? 'has-error' : '' }}">
-					{!! Form::label('channel','Dispanser:'); !!}
-					{!! Form::text('channel',$pump->dispaneser->name,['class'=>'form-control', 'disabled' => 'disabled']); !!}
+					{!! Form::label('dispaneser_id','Dispaneser:'); !!}
+					{!! Form::select('dispaneser_id',['' => 'Choose Dispaneser'] + $dispanesers,null,['class'=>'form-control']); !!}
+					{!! $errors->first('dispaneser_id','<span class="help-block">:message</span>') !!}
                 </div>
 
 				<div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
