@@ -7,6 +7,7 @@ use App\Services\PFCServices as PFC;
 use App\Models\Products;
 use App\Models\Dispaneser;
 use App\Models\Tank;
+use App\Models\Pump;
 use App\Models\RunninProcessModel as Process;
 
 class DispanserService extends ServiceProvider
@@ -177,6 +178,10 @@ class DispanserService extends ServiceProvider
                 Dispaneser::insert($data);
             }
         }
+		
+		self::ImportNozzles($socket, $pfc_id = 1);
+		
+		return true;
     }
 
     public static function checkForUpdates($socket, $pfc_id = 1){
@@ -217,6 +222,12 @@ class DispanserService extends ServiceProvider
         if($stopCommand != 0){
 			self::CheckTankLevel($socket, $pfc_id);
             Process::where('type_id', 7)->where('pfc_id', $pfc_id)->delete();		
+		}		
+		
+		$stopCommand = Process::where('type_id', 8)->where('pfc_id', $pfc_id)->count();		
+        if($stopCommand != 0){
+			self::ImportNozzles($socket, $pfc_id);
+            Process::where('type_id', 8)->where('pfc_id', $pfc_id)->delete();		
 		}
 		return true;
     }
@@ -245,6 +256,55 @@ class DispanserService extends ServiceProvider
 		PFC::storeLogs($channel_id, null, 18, $response);
         return $response;		
 		
+	}
+	
+	/**
+     * Message 4 - Dispenser Totalizers
+     * 
+     * Read Totalizers from channel
+     */
+	public static function ImportNozzles($socket, $pfc_id = 1){
+
+		Pump::where('pfc_id',$pfc_id)->delete();
+		
+        $dispansers = Dispaneser::All();
+		
+		foreach($dispansers as $dispanser){
+			$j = 1;
+			$responseTot = self::checkChannelTotalizers($socket, $dispanser->channel_id, $pfc_id);
+			//print_r($responseTot);
+			if($responseTot == '-2'){ return false; }
+			$length = count($responseTot) - 3;
+			//print_r($responseTot);
+			Pump::where('pfc_id', $pfc_id)->where('channel_id', $dispanser->channel_id)->delete();
+			for($i = 5; $i <= $length; $i++ ){
+				$totalizer = pack('c', $responseTot[$i+3]).pack('c', $responseTot[$i+2]).pack('c', $responseTot[$i+1]).pack('c', $responseTot[$i]);
+				
+				$totalizer = (int)unpack('i', $totalizer)[1];
+
+				if($totalizer != 0){
+					$nozzle_nr 		   				= $j; 
+					$data['name']      				= 'Nozzle - '.$nozzle_nr;
+					$data['nozzle_id'] 				= $nozzle_nr;
+					$data['channel_id'] 			= $dispanser->channel_id;
+					$data['status'] 				= 1;					
+					$data['pfc_id'] 				= $pfc_id;
+					$data['starting_totalizer'] 	= $totalizer;
+					$data['created_at'] 			= time();
+					$data['updated_at'] 			= time();
+					Pump::insert($data);
+				}else{
+					echo ' - Totalizer start -';
+					echo $totalizer;
+					echo ' - ' . $j. ' - '.  $dispanser->channel_id;
+					echo ' - Totalizer end -';					
+				}
+				$i+= 7;
+				$j++;
+			}
+			
+		}
+		return true;		
 	}
     /**
      * Check Tank Level Command

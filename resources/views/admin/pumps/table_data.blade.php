@@ -4,6 +4,7 @@
     <td>{{ $pump->name }}</td>
     <td>{{ $pump->tank->name ?? '' }}</td>
     <td>{{ $pump->dispaneser->name ?? '' }}</td>
+    <td>{{ $pump->starting_totalizer  }}</td>
     <td>{{ $pump->status == 1 ? 'Active' : 'No active' }}</td>
     <td>{{ $pump->created_at->diffForHumans() }}</td>
     <td>{{ $pump->updated_at->diffForHumans() }}</td>

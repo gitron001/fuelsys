@@ -9,10 +9,8 @@ class Pump extends Model
     protected $table = 'pumps';
 
     protected $fillable = [
-        'name',
         'status',
-        'tank_id',
-        'dispaneser_id'
+        'tank_id'
     ];
 
     public function getDateFormat(){
@@ -24,7 +22,7 @@ class Pump extends Model
     }
 
     public function dispaneser(){
-        return $this->belongsTo('App\Models\Dispaneser');
+        return $this->belongsTo('App\Models\Dispaneser', 'channel_id', 'channel_id');
     }
 
 }

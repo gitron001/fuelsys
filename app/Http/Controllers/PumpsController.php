@@ -29,7 +29,7 @@ class PumpsController extends Controller
         }
 
         if($request->ajax() == false){
-            $pumps  = $pumps->orderBy('name','ASC')
+            $pumps  = $pumps->orderBy('channel_id','ASC')->orderBy('name', 'ASC')
                         ->paginate(15);
             return view('/admin/pumps/home',compact('pumps'));
         } else {
@@ -42,7 +42,6 @@ class PumpsController extends Controller
     public function create()
     {
         $tanks = Tank::pluck('name','id')->all();
-        $dispanesers = Dispaneser::pluck('name','id')->all();
         return view('/admin/pumps/create',compact('tanks','dispanesers'));
     }
 
@@ -59,7 +58,6 @@ class PumpsController extends Controller
     {
         $pump = Pump::findOrFail($id);
         $tanks = Tank::pluck('name','id')->all();
-        $dispanesers = Dispaneser::pluck('name','id')->all();
 
         return view('/admin/pumps/edit',compact('pump','tanks','dispanesers'));
     }
