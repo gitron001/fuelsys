@@ -29,9 +29,9 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/admin/tanks-delete-all', 'TankController@delete_all');
 
     // Pumps
-	Route::resource('/admin/pumps', 'PumpsController');
-    Route::get('pump/{id}/delete', ['as' => 'pump.delete', 'uses' => 'PumpsController@destroy']);
-    Route::get('/admin/pumps-delete-all', 'PumpsController@delete_all');
+	Route::resource('/admin/nozzle', 'PumpsController');
+    Route::get('nozzle/{id}/delete', ['as' => 'nozzle.delete', 'uses' => 'PumpsController@destroy']);
+    Route::get('/admin/nozzle-delete-all', 'PumpsController@delete_all');
 
     // Stock
     Route::resource('/admin/stock', 'StockController');

@@ -9,8 +9,8 @@
     <td>{{ $pump->created_at->diffForHumans() }}</td>
     <td>{{ $pump->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">
-        <a href="{{ url('admin/pumps/'.$pump->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
-        <a href="{{ route('pump.delete', $pump->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
+        <a href="{{ url('admin/nozzle/'.$pump->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
+        <a href="{{ route('nozzle.delete', $pump->id) }}" data-toggle="tooltip" title="Delete" class="delete-item"><i class="fa fa-trash"></i></a>
     </td>
 </tr>
 @endforeach

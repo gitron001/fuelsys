@@ -93,10 +93,10 @@
         </a>
     </li>
 
-    <li class="{{ request()->is('admin/pumps') || request()->is('admin/pumps/*') ? 'active' : '' }}">
-        <a href="{{ URL('admin/pumps') }}">
+    <li class="{{ request()->is('admin/nozzle') || request()->is('admin/nozzle/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/nozzle') }}">
             <i class="fa fa-tint" aria-hidden="true"></i>
-            <span>{{ trans('adminlte::adminlte.pumps') }}</span>
+            <span>{{ trans('adminlte::adminlte.nozzle') }}</span>
         </a>
     </li>
 

@@ -31,18 +31,20 @@ class PumpsController extends Controller
         if($request->ajax() == false){
             $pumps  = $pumps->orderBy('channel_id','ASC')->orderBy('name', 'ASC')
                         ->paginate(15);
-            return view('/admin/pumps/home',compact('pumps'));
+            return view('/admin/nozzle/home',compact('pumps'));
         } else {
             $pumps  = $pumps->orderBy($sort_by,$sort_type)
                         ->paginate(15);
-            return view('/admin/pumps/table_data',compact('pumps'))->render();
+            return view('/admin/nozzle/table_data',compact('pumps'))->render();
         }
     }
 
     public function create()
     {
         $tanks = Tank::pluck('name','id')->all();
-        return view('/admin/pumps/create',compact('tanks','dispanesers'));
+        $dispanesers = Dispaneser::pluck('name','id')->all();
+
+        return view('/admin/nozzle/create',compact('tanks','dispanesers'));
     }
 
     public function store(Request $request)
@@ -51,15 +53,16 @@ class PumpsController extends Controller
 
         session()->flash('info','Success');
 
-        return redirect('admin/pumps/' . $pump->id . '/edit');
+        return redirect('admin/nozzle/' . $pump->id . '/edit');
     }
 
     public function edit($id)
     {
         $pump = Pump::findOrFail($id);
         $tanks = Tank::pluck('name','id')->all();
+        $dispanesers = Dispaneser::pluck('name','id')->all();
 
-        return view('/admin/pumps/edit',compact('pump','tanks','dispanesers'));
+        return view('/admin/nozzle/edit',compact('pump','tanks','dispanesers'));
     }
 
     public function update(Request $request, $id)
@@ -79,7 +82,7 @@ class PumpsController extends Controller
         $pump->delete();
         session()->flash('info','Success');
 
-        return redirect('/admin/pumps');
+        return redirect('/admin/nozzle');
     }
 
     public function delete_all(Request $request)

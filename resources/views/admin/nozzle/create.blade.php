@@ -4,8 +4,8 @@
 
 @include('includes/alert_info')
 
-{{ Form::model( $pump, ['route' => ['pumps.update', $pump->id], 'method' => 'put', 'role' => 'form'] ) }}
-    @include('admin.pumps._fields')
+{{ Form::open( array( 'route' => ['nozzle.index'], 'role' => 'form' ) ) }}
+    @include('admin.nozzle._fields')
 {{ Form::close() }}
 
 @endsection

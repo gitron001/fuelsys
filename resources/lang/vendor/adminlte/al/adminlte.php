@@ -34,5 +34,5 @@ return [
     'products_group'                => 'Grupi i produkteve',
     'staff'                         => 'Stafi',
     'stock'                         => 'Stoku',
-    'pumps'                         => 'Pompat'
+    'nozzle'                        => 'Nozzle'
 ];

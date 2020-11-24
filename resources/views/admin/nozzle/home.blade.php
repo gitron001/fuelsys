@@ -8,12 +8,11 @@
 	<div class="row">
 		<div class="box box-primary">
             <div class="box-header">
-              <div class="col-md-8"><h3 class="box-title">Pumps</h3></div>
+              <div class="col-md-8"><h3 class="box-title">Nozzle</h3></div>
               <div class="col-md-4">
 
-                <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/pumps') }}">
+                <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/nozzle') }}">
                   @include('includes.search_filter')
-                  <a href="{{ url('admin/pumps/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new pump"><i class="fa fa-plus"></i> New</a>
                   <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="Delete all selected tanks"><i class="fa fa-trash"></i> Delete</a>
                 </form>
 
@@ -36,7 +35,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  @include('admin.pumps.table_data')
+                  @include('admin.nozzle.table_data')
                 </tbody>
               </table>
               @include('includes.hidden_inputs')

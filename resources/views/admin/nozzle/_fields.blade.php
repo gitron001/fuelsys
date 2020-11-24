@@ -1,6 +1,6 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">{{ !isset($pump) ? 'Create new pump' : 'Edit pump'}}</h3>
+		<h3 class="box-title">{{ !isset($pump) ? 'Create new nozzle' : 'Edit nozzle'}}</h3>
 	</div>
 
 	<div class="box-body">
@@ -19,8 +19,8 @@
 				</div>
 				<div class="form-group {{ $errors->has('dispaneser_id') ? 'has-error' : '' }}">
 					{!! Form::label('starting_totalizer','Starting Totalizer:'); !!}
-					{!! Form::text('starting_totalizer',$pump->starting_totalizer,['class'=>'form-control', 'disabled' => 'disabled']); !!}
-                </div>	
+					{!! Form::text('starting_totalizer',null,['class'=>'form-control', 'disabled' => 'disabled']); !!}
+                </div>
 			</div>
 			<div class="col-md-6">
                 <div class="form-group {{ $errors->has('dispaneser_id') ? 'has-error' : '' }}">
