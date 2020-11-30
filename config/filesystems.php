@@ -64,6 +64,16 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'baseLocation' => [
+            'driver' => 'local',
+            'root'   => 'D:\FuelSystem',
+        ],
+
+        'dailyLocation' => [
+            'driver' => 'local',
+            'root'   => 'D:\FuelSystem\DailyBackup',
+        ],
+
     ],
 
 ];

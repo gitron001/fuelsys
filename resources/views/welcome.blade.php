@@ -11,12 +11,12 @@
     display: block;
     text-align: center;
 }
-#tank {
+/*#tank {
     width: 70px;
     height: 70px;
     position: relative;
     background: #ecf0f5;
-    border-radius: 50%;
+    border-radius: 5px 5px 15px 15px;
     overflow: hidden;
     margin: auto;
     border-style: solid;
@@ -25,9 +25,9 @@
 #tank .fuel {
     position: absolute;
     background: rgb(60, 141, 188);
-    width: 100%;
+    width: 250%;
     bottom: 0;
-    animation: cubic-bezier(.17,.67,.83,.67)
+    animation: wave 5s cubic-bezier(.17,.67,.83,.67) infinite;
 }
 .tank-text {
     position: absolute;
@@ -35,6 +35,51 @@
     margin: auto;
     width: 50%;
     padding: 30%;
+}
+
+@keyframes wave {
+    0%, 100% {
+    transform: translate3d(0,0px,0);
+  }
+  50% {
+    transform: translate3d(0,10px,0px);
+  }
+}*/
+#tank {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    background: #ecf0f5;
+    border-radius: 5px 5px 15px 15px;
+    overflow: hidden;
+    margin: auto;
+    border-style: solid;
+    border-color: rgb(70, 69, 69);
+}
+#tank .fuel {
+    position: absolute;
+    top: 30px;
+    left: -80px;
+    width: 200px;
+    height: 200px;
+    background:rgb(199, 148, 8);
+    border-radius: 70px;
+    animation: loading 15s linear infinite;
+}
+.tank-text {
+    position: absolute;
+    color: black;
+    margin: auto;
+    width: 50%;
+    padding: 30%;
+}
+@keyframes loading {
+  0%{
+    transform: rotate(0);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
 }
 </style>
 
@@ -162,11 +207,9 @@
 <!-- END LIVE Feed Area -->
 
 <!-- Tanks -->
-@if(count($tanks) > 0)
-    <div class="col-md-12" id="loadTanks">
-        @include('admin.stock.stock-info')
-    </div>
-@endif
+<div class="col-md-12" id="loadTanks">
+    @include('admin.stock.stock-info')
+</div>
 <!-- END Tanks -->
 
 @endsection

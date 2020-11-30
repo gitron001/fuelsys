@@ -27,15 +27,8 @@ class HomeController extends Controller
                                         ->limit(15)
                                         ->get();
         $dispanesers        = Dispaneser::all();
-        $tanks              = Tank::all();
 
-
-        $sales = Transaction::select([DB::raw("SUM(transactions.lit) as total_lit"),DB::raw("transactions.product_id"),'transactions.product_id','pumps.tank_id'])
-                ->leftJoin('pumps', 'transactions.sl_no', '=', 'pumps.nozzle_id')
-                ->groupBy('pumps.tank_id')
-                ->get();
-
-        return view('welcome',compact('dispanesers','transactions','company_low_limit','tanks','stock_data','sales'));
+        return view('welcome',compact('dispanesers','transactions','company_low_limit','tanks','stock_data'));
     }
 
 }

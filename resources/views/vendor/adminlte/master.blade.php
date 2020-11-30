@@ -65,9 +65,9 @@
 
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
-<script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-1.10.2.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-ui.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/font-awesome/js/all.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/moment.js/2.13.0/moment.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') }}"></script>

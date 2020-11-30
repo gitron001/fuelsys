@@ -77,6 +77,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('export:company')
                    ->everyFifteenMinutes();
 
+        // RUN BACKUP EVERY 15 MINUTES AND DELETE OLD BACKUPS AFTER 3 HOURS
+        $schedule->command('backup:run')->everyFifteenMinutes();
+        $schedule->command('backup:clean')->cron('0 */3 * * *');
+
+        // BACKUP DAILY
+        $schedule->command('app:backup')->daily();
+        $schedule->command('app:backup --clean')->weekly();
     }
 
     /**

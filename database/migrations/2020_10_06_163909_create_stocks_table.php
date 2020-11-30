@@ -17,7 +17,7 @@ class CreateStocksTable extends Migration
             $table->bigIncrements('id');
             $table->integer('date');
             $table->integer('tank_id');
-            $table->integer('amount');
+            $table->double('amount');
             $table->integer('created_at');
             $table->integer('updated_at');
         });
