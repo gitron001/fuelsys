@@ -28,7 +28,7 @@ class HomeController extends Controller
                                         ->get();
         $dispanesers        = Dispaneser::all();
 
-        return view('welcome',compact('dispanesers','transactions','company_low_limit','tanks','stock_data'));
+        return view('welcome',compact('dispanesers','transactions','company_low_limit','tanks','stock_data','sales'));
     }
 
 }

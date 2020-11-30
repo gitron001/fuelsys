@@ -90,5 +90,6 @@ class StockController extends Controller
                 ->groupBy('pumps.tank_id')
                 ->get();
         return view('admin.stock.stock-info',compact('tanks','sales'));
+
     }
 }

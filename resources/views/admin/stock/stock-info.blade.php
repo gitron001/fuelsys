@@ -9,7 +9,7 @@
                 @php ($data = 0) @endphp
                 <p class="text-center"><b>{{ $tank->name }} ( {{ $tank->product->name }} )</b></p>
                 @foreach($sales as $sale)
-                    @if ($sale->product_id == $tank->product_id)
+                    @if($sale->product_id == $tank->product_id)
                         @if(count($tank->totalStock()) > 0)
                             @if ($sale->product_id == $tank->totalStock()[0]->tank['product_id'])
                                 @php ($present = ($tank->totalStock()[0]->amount - $sale->total_lit)) @endphp
@@ -17,16 +17,13 @@
                                 @php ($data = $present) @endphp
                             @elseif(!$tank->totalStock()->contains('tank_id',$tank->id))
                                 <p>Present: {{ round($sale->total_lit,2) }} litra</p>
-                                @break
                                 @php ($data = $sale->total_lit) @endphp
+                                @break
                             @endif
                         @else
                             <p>Present: {{ round($sale->total_lit,2) }} litra</p>
                             @php ($data = $sale->total_lit) @endphp
                         @endif
-                    @else
-                        <p>Present: {{ round($tank->totalStock()[0]->amount,2) }} litra</p>
-                        @php ($data = $tank->totalStock()[0]->amount) @endphp
                     @endif
                 @endforeach
             </div>
