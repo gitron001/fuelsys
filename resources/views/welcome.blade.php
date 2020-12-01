@@ -224,16 +224,17 @@
 
     $(document).ready(function(){
         // Load tanks after page load
-        $('#loadTanks').load('{{ url('/stock-info')}}');
+        //$('#loadTanks').load('{{ url('/stock-info')}}');
 
         // Refresh transaction and tanks data
         setInterval(function(){
             $('#loadTransaction').load('{{ url('/transactions-info')}}').fadeIn('slow');
         },60000);
 
-        setInterval(function(){
-            $('#loadTanks').load('{{ url('/stock-info')}}').fadeIn('slow');
-        },10000);
+		$('#loadTanks').load('{{ url('/stock-info')}}').fadeIn('slow');
+        /*setInterval(function(){
+            
+        },10000);*/
     });
 
 </script>

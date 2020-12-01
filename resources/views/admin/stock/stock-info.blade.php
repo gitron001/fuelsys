@@ -7,25 +7,12 @@
         <div class="col-xs-6 col-md-4 text-center" style="margin-top: 5px;">
             <div style="margin-top: 8px; line-height:10px;">
                 @php ($data = 0) @endphp
-                <p class="text-center"><b>{{ $tank->name }} ( {{ $tank->product->name }} )</b></p>
-                @foreach($sales as $sale)
-                    @if($sale->product_id == $tank->product_id)
-                        @if(count($tank->totalStock()) > 0)
-                            @if ($sale->product_id == $tank->totalStock()[0]->tank['product_id'])
-                                @php ($present = ($tank->totalStock()[0]->amount - $sale->total_lit)) @endphp
-                                <p>Present: {{ round($present,2) }} litra</p>
-                                @php ($data = $present) @endphp
-                            @elseif(!$tank->totalStock()->contains('tank_id',$tank->id))
-                                <p>Present: {{ round($sale->total_lit,2) }} litra</p>
-                                @php ($data = $sale->total_lit) @endphp
-                                @break
-                            @endif
-                        @else
-                            <p>Present: {{ round($sale->total_lit,2) }} litra</p>
-                            @php ($data = $sale->total_lit) @endphp
-                        @endif
-                    @endif
-                @endforeach
+                <p class="text-center"><b>{{ $tank->name }} ( {{ $tank->product->name }} )  </b></p>
+				<p>Preset: {{  $tank->totalStock()[0]['amount'] - $tank->totalSales()[0]->total_lit  }} 
+					@php ($data = $tank->totalStock()[0]['amount'] - $tank->totalSales()[0]->total_lit ) @endphp
+				</p>
+				<p>Sales per tank: {{ $tank->totalSales()[0]->total_lit }} </p>
+				<p>Stock per tank: {{ $tank->totalStock()[0]['amount'] }}</p>
             </div>
             <div id="tank">
                 @php ($percentage = ($data / $tank->capacity) * 100 ) @endphp
