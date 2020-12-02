@@ -217,7 +217,7 @@ class TransactionController extends Controller
 
 
                     $sheet->appendRow(array(
-                        $row->created_at,
+                        date("Y-m-d h:i:s", $row->date),
                         $row->description == NULL  ? $row->type : $row->description,
                         $user,
                         $bonus_user,
@@ -334,7 +334,7 @@ class TransactionController extends Controller
 			$from_date = self::last_payment_date($request);
         }
 
-        $transactions = Transaction::select("transactions.product_id",DB::RAW(" 'T' as type"),
+        $transactions = Transaction::select("transactions.id","transactions.product_id",DB::RAW(" 'T' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money", "transactions.lit", "transactions.price", DB::RAW(" 0 as company")
                 ,"user1.name as username","user2.name as bonus_username", "user1.plates","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
@@ -371,8 +371,8 @@ class TransactionController extends Controller
 			return $transactions->get();
         }
 
-        $payments = Payments::select("payments.user_id",DB::RAW(" 'P' as type")
-                ,"payments.amount","payments.date",
+        $payments = Payments::select("payments.id","payments.user_id",DB::RAW(" 'P' as type")
+                ,"payments.amount","payments.date as date",
                 DB::RAW(" 0 as money"), DB::RAW(" 0 as lit"), DB::RAW(" 0 as price"), "payments.company_id"
                 ,"users.name as username", DB::RAW(" '' as bonus_username"),DB::RAW(" '' as plates"), "payments.created_at","companies.name as company_name","payments.description")
             ->leftJoin('users', 'payments.user_id', '=', 'users.id')
@@ -406,6 +406,7 @@ class TransactionController extends Controller
         }
 
         $payments = $payments->get();
+
         return $payments;
 
     }
@@ -413,7 +414,8 @@ class TransactionController extends Controller
     public static function generate_balance($request){
 		if($request->input('exc_balance')){
 			return 0;
-		}
+        }
+
 
         $from_date          = strtotime($request->input('fromDate'));
 		$from_payment	    = strtotime(date('Y-m-d', $from_date));

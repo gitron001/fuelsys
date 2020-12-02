@@ -4,7 +4,7 @@
 
 @include('includes/alert_info')
 
-{{ Form::open( array( 'route' => ['payments.index'], 'role' => 'form' ) ) }}
+{{ Form::open( array( 'route' => ['payments.index'], 'role' => 'form','class' => 'payment-form') ) }}
     @include('admin.payments._fields')
 {{ Form::close() }}
 
@@ -17,6 +17,13 @@
 @section('js')
 
 <script>
+
+    $(document).ready(function(){
+        $("form.payment-form").submit(function () {
+            const button = document.getElementById('payment-save-btn');
+            button.disabled = true;
+        });
+    });
 
 	$(function() {
 		$(".datepicker" ).datepicker();

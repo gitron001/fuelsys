@@ -103,7 +103,7 @@
 
 
 	<div class="box-footer">
-		<button type="submit" class="btn btn-primary">
+		<button type="submit" class="btn btn-primary" id="payment-save-btn">
             <i class="fas fa-save"></i> Save
         </button>
 		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
