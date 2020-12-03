@@ -4,14 +4,21 @@
     <a href="{{ url('/admin/stock/create') }}"><span class="label label-primary">+ Stock</span></a>
     </div>
     @foreach($tanks as $tank)
+		 @php ($total_sales = 0) @endphp
+		@foreach($sales as $sale)
+			@if($sale->tank_id == $tank->id)
+				 @php ($total_sales = $sale->total_lit)  @endphp
+				 @php  break @endphp
+			@endif
+		@endforeach
         <div class="col-xs-6 col-md-4 text-center" style="margin-top: 5px;">
             <div style="margin-top: 8px; line-height:10px;">
                 @php ($data = 0) @endphp
                 <p class="text-center"><b>{{ $tank->name }} ( {{ $tank->product->name }} )  </b></p>
-				<p>Preset: {{  $tank->totalStock()[0]['amount'] - $tank->totalSales()[0]->total_lit  }} 
-					@php ($data = $tank->totalStock()[0]['amount'] - $tank->totalSales()[0]->total_lit ) @endphp
+				<p>Preset: {{  $tank->totalStock()[0]['amount'] - $total_sales  }} 
+					@php ($data = $tank->totalStock()[0]['amount'] - $total_sales ) @endphp
 				</p>
-				<p>Sales per tank: {{ $tank->totalSales()[0]->total_lit }} </p>
+				<p>Sales per tank: {{ $total_sales }} </p>
 				<p>Stock per tank: {{ $tank->totalStock()[0]['amount'] }}</p>
             </div>
             <div id="tank">

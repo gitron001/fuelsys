@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Transaction;
+use DB;
 
 class Pump extends Model
 {
@@ -24,5 +26,4 @@ class Pump extends Model
     public function dispaneser(){
         return $this->belongsTo('App\Models\Dispaneser', 'channel_id', 'channel_id');
     }
-
 }

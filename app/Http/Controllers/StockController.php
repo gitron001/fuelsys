@@ -6,6 +6,7 @@ use DB;
 use App\Models\Tank;
 use App\Models\Stock;
 use App\Models\Transaction;
+use App\Models\Pump;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
@@ -86,11 +87,13 @@ class StockController extends Controller
     public function info(){
 		set_time_limit(500);
         $tanks              = Tank::all();
-        /*$sales = Transaction::select([DB::raw("SUM(transactions.lit) as total_lit"),DB::raw("transactions.product_id"),'transactions.product_id','pumps.tank_id'])
-                ->leftJoin('pumps', 'transactions.sl_no', '=', 'pumps.nozzle_id')
-                ->groupBy('pumps.tank_id')
-                ->get();*/
-		$sales = array();
+		$sales 				= Transaction::select(DB::RAW('sum(lit) as total_lit'), DB::RAW('max(tank_id) as tank_id'))
+							 ->join('pumps', function ($join) {
+									$join->on('transactions.sl_no', '=', 'pumps.nozzle_id')
+									->on('transactions.channel_id', '=', 'pumps.channel_id');	 
+							   })
+							  ->get();
+		
         return view('admin.stock.stock-info',compact('tanks','sales'));
 
     }
