@@ -92,6 +92,7 @@ class StockController extends Controller
 									$join->on('transactions.sl_no', '=', 'pumps.nozzle_id')
 									->on('transactions.channel_id', '=', 'pumps.channel_id');	 
 							   })
+							  ->groupBy('pumps.tank_id')
 							  ->get();
 		
         return view('admin.stock.stock-info',compact('tanks','sales'));
