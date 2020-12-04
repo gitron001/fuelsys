@@ -33,8 +33,13 @@ class PumpsController extends Controller
                         ->paginate(15);
             return view('/admin/nozzle/home',compact('pumps'));
         } else {
-            $pumps  = $pumps->orderBy($sort_by,$sort_type)
+            if($request->get('sortby') == 'name'){
+                $pumps  = $pumps->orderBy('channel_id','ASC')->orderBy('name', 'ASC')
                         ->paginate(15);
+            }else{
+                $pumps  = $pumps->orderBy($sort_by,$sort_type)
+                        ->paginate(15);
+            }
             return view('/admin/nozzle/table_data',compact('pumps'))->render();
         }
     }

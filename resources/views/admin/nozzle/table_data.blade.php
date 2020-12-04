@@ -2,8 +2,8 @@
 <tr>
     <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $pump->id }}"></td>
     <td>{{ $pump->name }}</td>
-    <td>{{ $pump->tank->name ?? '' }}</td>
-    <td>{{ $pump->dispaneser->name ?? '' }}</td>
+    <td>{{ $pump->tank ? $pump->tank->name : '' }}</td>
+    <td>{{ $pump->dispaneser ? $pump->dispaneser->name : '' }}</td>
     <td>{{ $pump->starting_totalizer  }}</td>
     <td>{{ $pump->status == 1 ? 'Active' : 'No active' }}</td>
     <td>{{ $pump->created_at->diffForHumans() }}</td>

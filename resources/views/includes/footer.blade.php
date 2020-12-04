@@ -259,18 +259,34 @@
         data: {fromDate: fromDate, toDate: toDate, user: user,company:company, last_payment:last_payment,inc_transactions:inc_transactions,bonus_user:bonus_user},
         url: "{{ URL('/export')}}",
         dataType: "JSON",
+        beforeSend:function(){
+            document.getElementById("exportEXCEL").disabled = true;
+            showHideSpinner('show');
+        },
         success: function(response, textStatus, request){
-          var a = document.createElement("a");
-          a.href = response.file;
-          a.download = response.name;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          }
+            document.getElementById("exportEXCEL").disabled = false;
+            showHideSpinner('hide');
+            var a = document.createElement("a");
+                a.href = response.file;
+                a.download = response.name;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            }
       });
 
     });
   });
+
+    function showHideSpinner(x){
+        if(x == 'show'){
+            document.getElementById("btn-logo").style.display = "none";
+            document.getElementById("spiner").style.display = "inline-block";
+        }else{
+            document.getElementById("spiner").style.display = "none";
+            document.getElementById("btn-logo").style.display = "inline-block";
+        }
+    }
 
   $(document).ready(function(){
     $('#exportPDF').click(function(){

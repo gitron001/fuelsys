@@ -42,10 +42,10 @@
   <div class="col-md-6">
       <div class="box box-primary" style="height: 550px;">
       <div class="box-header with-border">
-          <h3 class="box-title">Dispanesers</h3>
+          <h3 class="box-title">{{ trans('adminlte::adminlte.homepage.dispanesers') }}</h3>
 
           <div class="box-tools pull-right">
-          <span class="label label-primary">Total: {{count($dispanesers)}}</span>
+          <span class="label label-primary">{{ trans('adminlte::adminlte.homepage.total') }}: {{count($dispanesers)}}</span>
           </div>
       </div>
 
@@ -123,7 +123,7 @@
 <div class="col-md-6 table-wrapper-scroll-y my-custom-scrollbar scrollStyle" id="loadTransaction">
   <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Live Feed</h3>
+        <h3 class="box-title">{{ trans('adminlte::adminlte.homepage.live_feed') }}</h3>
         <span class="pulse"></span>
     </div>
 

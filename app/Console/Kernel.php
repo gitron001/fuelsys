@@ -84,6 +84,9 @@ class Kernel extends ConsoleKernel
         // BACKUP DAILY
         $schedule->command('app:backup')->daily();
         $schedule->command('app:backup --clean')->weekly();
+
+        // Check tanks state
+        $schedule->command('check:tanks')->hourly();
     }
 
     /**

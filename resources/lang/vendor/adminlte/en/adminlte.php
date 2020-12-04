@@ -1,7 +1,29 @@
 <?php
 
 return [
-
+    'homepage' => [
+        'dispanesers' => 'Dispanesers',
+        'total'       => 'Total',
+        'live_feed'   => 'Live Feed',
+    ],
+    'menu' => [
+        'company'                       => 'Company',
+        'tank'                          => 'Tank',
+        'transaction'                   => 'Transactions',
+        'products'                      => 'Products',
+        'dispanesers'                   => 'Dispanesers',
+        'branches'                      => 'Branches',
+        'users'                         => 'Users',
+        'payments'                      => 'Payments',
+        'pfc'                           => 'PFC',
+        'home'                          => 'Home',
+        'settings'                      => 'Settings',
+        'report'                        => 'Reports',
+        'products_group'                => 'Products Group',
+        'staff'                         => 'Staff',
+        'stock'                         => 'Stock',
+        'nozzle'                        => 'Nozzle'
+    ],
     'full_name'                     => 'Full name',
     'email'                         => 'Email',
     'password'                      => 'Password',
@@ -19,21 +41,5 @@ return [
     'password_reset_message'        => 'Reset Password',
     'reset_password'                => 'Reset Password',
     'send_password_reset_link'      => 'Send Password Reset Link',
-    'company'                       => 'Company',
-    'tank'                          => 'Tank',
-    'transaction'                   => 'Transactions',
-    'products'                      => 'Products',
-    'dispanesers'                   => 'Dispanesers',
-    'branches'                      => 'Branches',
-    'users'                         => 'Users',
     'companyName'                   => 'Company name',
-    'payments'                      => 'Payments',
-    'pfc'                           => 'PFC',
-    'home'                          => 'Home',
-    'settings'                      => 'Settings',
-    'report'                        => 'Reports',
-    'products_group'                => 'Products Group',
-    'staff'                         => 'Staff',
-    'stock'                         => 'Stock',
-    'nozzle'                        => 'Nozzle'
 ];

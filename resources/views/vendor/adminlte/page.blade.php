@@ -60,40 +60,36 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                              <i class="fa fa-language" aria-hidden="true"></i>
+                                <i class="fas fa-globe-europe"></i>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu" style="width: 60%;">
                               <li class="header">Change language</li>
                                 <li>
-                                <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
-                                  <li><!-- start message -->
+                                  <li>
                                     <a href="{{ URL('locale/en') }}">
                                       <div class="pull-left">
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <i class="fas fa-language"></i>
                                       </div>
                                       <h4>
                                         English
                                       </h4>
                                     </a>
                                   </li>
-                                  <!-- end message -->
                                 </ul>
                               </li>
                               <li>
-                                <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
-                                  <li><!-- start message -->
+                                  <li>
                                     <a href="{{ URL('locale/al') }}">
                                     <div class="pull-left">
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <i class="fas fa-language"></i>
                                     </div>
                                       <h4>
                                         Albanian
                                       </h4>
                                     </a>
                                   </li>
-                                  <!-- end message -->
                                 </ul>
                               </li>
                             </ul>
@@ -102,7 +98,7 @@
                             @if($user = Auth::user())
                                 @if(config('adminlte.logout_method') == 'GET' || !config('adminlte.logout_method') && version_compare(\Illuminate\Foundation\Application::VERSION, '5.3.0', '<'))
                                     <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}">
-                                        <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
+                                        <i class="fas fa-sign-out-alt"></i> {{ trans('adminlte::adminlte.log_out') }}
                                     </a>
                                 @else
                                     <a href="#"
@@ -170,6 +166,12 @@
             @endif
         </div>
         <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+              <b>Version</b> 1.0
+            </div>
+            <strong>Copyright © {{ date('Y') }} <a href="#">FuelSystem</a>.</strong> All rights reserved.
+        </footer>
 
     </div>
     <!-- ./wrapper -->

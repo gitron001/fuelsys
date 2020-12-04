@@ -726,7 +726,6 @@ class TransactionController extends Controller
             $company_details = Company::find($request->company);
 
         }
-
 		if(count($payments) == 0){
 			return false;
 		}
