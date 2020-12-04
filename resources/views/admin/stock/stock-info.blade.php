@@ -21,8 +21,9 @@
             </div>
             <div id="tank">
                 @php ($percentage = ($data / $tank->capacity) * 100 ) @endphp
-                    <div class="fuel" @if(number_format($percentage,0) <= 5) style="background:rgb(202, 48, 48);" @endif></div>
-                <p class="tank-text">{{ number_format(abs($percentage),0) }}%</p>
+                @php ($percentage = number_format(abs($percentage),0))@endphp
+                <div class="fuel" style="height:{{ $percentage }}%; {{ $percentage <= 15 ? 'background:red;' : 'background:rgb(60, 141, 188)'}}"></div>
+                <p class="tank-text">{{ $percentage }}%</p>
             </div>
         </div>
     @endforeach
