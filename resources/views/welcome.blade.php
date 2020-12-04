@@ -186,7 +186,7 @@
             $('#loadTransaction').load('{{ url('/transactions-info')}}').fadeIn('slow');
         },60000);
 
-		$('#loadTanks').load('{{ url('/stock-info')}}').fadeIn('slow');
+		//$('#loadTanks').load('{{ url('/stock-info')}}').fadeIn('slow');
         /*setInterval(function(){
 
         },10000);*/
