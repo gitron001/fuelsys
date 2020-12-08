@@ -9,21 +9,21 @@ use App\Models\Company;
 use App\Models\Transaction;
 use Illuminate\Console\Command;
 
-class CheckTanksState extends Command
+class CheckTanksStateEvery6Hours extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'check:tanks';
+    protected $signature = 'check:tanksEvery6Hours';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This will check tanks state';
+    protected $description = 'This will check tanks state every 6 hours';
 
     /**
      * Create a new command instance.
@@ -53,7 +53,7 @@ class CheckTanksState extends Command
                     ->get();
 
         foreach($tanks as $tank) {
-            if($tank->low_limit == 0) {
+            if($tank->low_limit == 1) {
                 $total_sales = 0;
                 foreach($sales as $sale){
                     if($sale->tank_id == $tank->id){
@@ -70,11 +70,11 @@ class CheckTanksState extends Command
                 $stockPerTank = $tank->totalStock()[0]['amount'];
 
                 if($present <= 25000){
-                    Tank::where('id', $tank->id)->update(array('low_limit' => 1));
-
                     Mail::send('emails.checkTanksState',['tankName' => $tankName, 'present' => $present, 'salesPerTank' => $salesPerTank, 'stockPerTank' => $stockPerTank, 'tankProductName' => $tankProductName, 'tankCapacity' => $tankCapacity],function($m) use($company){
                         $m->to($company->email)->subject('Fuel System - Low Limit ALARM');
                     });
+                } else {
+                    Tank::where('id', $tank->id)->update(array('low_limit' => 0));
                 }
             }
         }

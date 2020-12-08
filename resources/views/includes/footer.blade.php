@@ -61,7 +61,7 @@
         title: "A jeni të sigurt?",
         text: "Nëse të dhënat fshihen nuk do të mund te kthehen prap!",
         icon: "warning",
-        buttons: true,
+        buttons: ["Anulo","Vazhdo"],
         dangerMode: true,
       })
       .then((willDelete) => {
@@ -467,7 +467,7 @@
                 title: "A jeni të sigurt?",
                 text: "Nëse të dhënat fshihen nuk do të mund te kthehen prap!",
                 icon: "warning",
-                buttons: true,
+                buttons: ["Anulo","Vazhdo"],
                 dangerMode: true,
             })
             .then((willDelete) => {
