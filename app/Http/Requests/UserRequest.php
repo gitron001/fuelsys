@@ -24,10 +24,10 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-          'rfid'  => 'required',
-          'name'  => 'required',
-          'type'  => 'required',
-
+            'rfid'  => 'required',
+            'name'  => 'required',
+            'type'  => 'required',
+            'company_id' => 'required_if:type,2',
         ];
     }
 
@@ -37,6 +37,7 @@ class UserRequest extends FormRequest
             'rfid.required'   => 'The rfid field is required !',
             'name.required'   => 'The name field is required !',
             'type.required'   => 'The type field is required !',
+            'company_id.required_if'   => 'The company field is required !',
         ];
     }
 }

@@ -62,17 +62,20 @@
         var e = document.getElementById("showHide");
         var value = e.options[e.selectedIndex].value;
 
-        if(value == 2 || value == 4 || value == 9){
-            $("#company").show();
-            $("#one_time_limit").show();
-            $("#plates").show();
-            $("#vehicle").show();
-        }else {
-            $("#company").hide();
-            $("#one_time_limit").hide();
-            $("#plates").hide();
-            $("#vehicle").hide();
+        if(value !== "") {
+            if(value == 2 || value == 4 || value == 9){
+                $("#company").show();
+                $("#one_time_limit").show();
+                $("#plates").show();
+                $("#vehicle").show();
+            }else {
+                $("#company").hide();
+                $("#one_time_limit").hide();
+                $("#plates").hide();
+                $("#vehicle").hide();
+            }
         }
+
     });
 
     $(document).on('click','#showHideEmail',function(){

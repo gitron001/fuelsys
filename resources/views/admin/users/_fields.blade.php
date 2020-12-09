@@ -36,10 +36,10 @@
                     {!! $errors->first('type','<span class="help-block">:message</span>') !!}
                 </div>
 
-                <div class="form-group {{ $errors->has('one_time_limit') ? 'has-error' :'' }}" id="one_time_limit">
-                    {!! Form::label('one_time_limit', 'One_Time_Limit:'); !!}
-                    {!! Form::number('one_time_limit',null,['class'=>'form-control']); !!}
-                    {!! $errors->first('one_time_limit','<span class="help-block">:message</span>') !!}
+                <div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company" style="display: none">
+                    {!! Form::label('company_id', 'Company:'); !!}
+					{!! Form::select('company_id',['' => 'Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
+                    {!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
@@ -48,10 +48,10 @@
                     {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
 
-                <div class="form-group {{ $errors->has('vehicle') ? 'has-error' :'' }}" id="vehicle" style="display: none">
-                    {!! Form::label('vehicle', 'Vehicle:'); !!}
-                    {!! Form::text('vehicle',null,['class'=>'form-control']); !!}
-                    {!! $errors->first('vehicle','<span class="help-block">:message</span>') !!}
+                <div class="form-group {{ $errors->has('one_time_limit') ? 'has-error' :'' }}" id="one_time_limit">
+                    {!! Form::label('one_time_limit', 'One_Time_Limit:'); !!}
+                    {!! Form::number('one_time_limit',null,['class'=>'form-control', 'id'=> 'one_time_limit']); !!}
+                    {!! $errors->first('one_time_limit','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
@@ -111,10 +111,10 @@
                     {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
 
-                <div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company" style="display: none">
-                    {!! Form::label('company_id', 'Company:'); !!}
-					{!! Form::select('company_id',['' => 'Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
-                    {!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
+                <div class="form-group {{ $errors->has('vehicle') ? 'has-error' :'' }}" id="vehicle" style="display: none">
+                    {!! Form::label('vehicle', 'Vehicle:'); !!}
+                    {!! Form::text('vehicle',null,['class'=>'form-control']); !!}
+                    {!! $errors->first('vehicle','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
