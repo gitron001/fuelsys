@@ -28,5 +28,5 @@ class Tank extends Model
     public function totalStock(){
         return $this->belongsTo('App\Models\Stock', 'id', 'tank_id')->select(DB::raw("SUM(amount) as amount"),'tank_id')->where('tank_id', $this->id)->get();
     }
-	
+
 }

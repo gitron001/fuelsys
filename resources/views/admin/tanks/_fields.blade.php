@@ -16,7 +16,13 @@
 					{!! Form::label('product_id','Product:'); !!}
 					{!! Form::select('product_id',['' => 'Choose Product'] + $products,null,['class'=>'form-control']); !!}
 					{!! $errors->first('product_id','<span class="help-block">:message</span>') !!}
-				</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Excel File:</label>
+                    <input type="file" name="excel_file">
+                    @if($excel_file)<i class="fa fa-file-excel" aria-hidden="true"></i>@endif
+                </div>
 			</div>
 
 			<div class="col-md-6">

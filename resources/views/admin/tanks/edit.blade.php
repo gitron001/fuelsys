@@ -4,7 +4,7 @@
 
 @include('includes/alert_info')
 
-{{ Form::model( $tank, ['route' => ['tanks.update', $tank->id], 'method' => 'put', 'role' => 'form'] ) }}
+{{ Form::model( $tank, ['route' => ['tanks.update', $tank->id], 'method' => 'put', 'role' => 'form', 'enctype'=>'multipart/form-data'] ) }}
     @include('admin.tanks._fields')
 {{ Form::close() }}
 

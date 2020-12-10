@@ -16,11 +16,7 @@ class TankController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $sort_by    = $request->get('sortby');
@@ -46,81 +42,54 @@ class TankController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $products = Products::pluck('name',DB::RAW('pfc_pr_id as id'))->all();
         return view('/admin/tanks/create',compact('products'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(TankRequest $request)
     {
-        $tank = Tank::create($request->all());
+        $tank = new Tank();
+        $tank->name = $request->input('name');
+        $tank->product_id = $request->input('product_id');
+        $tank->capacity = $request->input('capacity');
+        $tank->status = $request->input('status');
+        $tank->save();
+
+        if(!empty($request->file('excel_file'))){
+            $this->importExcelFileToDatabase($request->file('excel_file'), $tank->id);
+        }
 
         session()->flash('info','Success');
-
         return redirect('admin/tanks/' . $tank->id . '/edit');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $tank = Tank::findOrFail($id);
         $products = Products::pluck('name',DB::RAW('pfc_pr_id as id'))->all();
+        $excel_file = TankDetails::where('tank_id',$id)->first();
 
-        return view('/admin/tanks/edit',compact('tank','products'));
+        return view('/admin/tanks/edit',compact('tank','products','excel_file'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(TankRequest $request, $id)
     {
         $tank = Tank::findOrFail($id);
-
         $tank->update($request->all());
+
+        if(!empty($request->file('excel_file'))){
+            TankDetails::where('tank_id', $id)->delete();
+
+            $this->importExcelFileToDatabase($request->file('excel_file'), $tank->id);
+        }
 
         session()->flash('info','Success');
 
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $tank = Tank::findOrFail($id);
@@ -139,16 +108,11 @@ class TankController extends Controller
         }
     }
 
-    public function import_excel_file_view(){
-        $tanks = Tank::where('status',1)->get();
-        return view('import_excel_file',compact('tanks'));
-    }
-
-    public function import_excel_file(Request $request){
+    private function importExcelFileToDatabase($excelFile, $tankID) {
         $cm = '';
-        $path = $request->file('select_file')->getRealPath();
+        $path = $excelFile->getRealPath();
         $data = Excel::load($path)->get();
-        $tank_id = $request->input('tank_id');
+        $tank_id = $tankID;
 
         if($data->count() > 0) {
             foreach($data->toArray() as $key => $value) {
@@ -172,8 +136,5 @@ class TankController extends Controller
                 }
             }
         }
-
-        session()->flash('info','Success');
-        return redirect('/tanks_details');
     }
 }

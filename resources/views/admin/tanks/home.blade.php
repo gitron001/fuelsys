@@ -15,7 +15,6 @@
                   @include('includes.search_filter')
                   <a href="{{ url('admin/tanks/create') }}" data-toggle="tooltip" class="btn btn-success pull-right" style="margin-left: 0.5em;" title="Create new tank"><i class="fa fa-plus"></i> New</a>
                   <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="Delete all selected tanks"><i class="fa fa-trash"></i> Delete</a>
-                  <a href="{{ url('/tanks_details') }}" data-toggle="tooltip" class="btn btn-warning" title="Upload Excel"><i class="fa fa-upload"></i></a>
                 </form>
 
               </div>

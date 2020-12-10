@@ -4,7 +4,7 @@
 
 @include('includes/alert_info')
 
-{{ Form::open( array( 'route' => ['tanks.index'], 'role' => 'form' ) ) }}
+{{ Form::open( array( 'route' => ['tanks.index'], 'role' => 'form', 'enctype'=>'multipart/form-data' ) ) }}
     @include('admin.tanks._fields')
 {{ Form::close() }}
 
