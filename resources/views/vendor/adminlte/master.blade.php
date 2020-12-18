@@ -20,6 +20,7 @@
 
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/plugins/iCheck/square/blue.css') }}">
 
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/ajax/libs/bootstrap-select/1.13.9/dist/css/bootstrap-select.min.css') }}">
@@ -62,7 +63,6 @@
 <body class="hold-transition @yield('body_class')">
 
 @yield('body')
-
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-1.10.2.js') }}"></script>

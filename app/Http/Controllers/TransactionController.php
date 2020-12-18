@@ -217,7 +217,7 @@ class TransactionController extends Controller
 
 
                     $sheet->appendRow(array(
-                        date("Y-m-d h:i:s", $row->date),
+                        date("Y-m-d H:i:s", $row->date),
                         $row->description == NULL  ? $row->type : $row->description,
                         $user,
                         $bonus_user,

@@ -1,68 +1,67 @@
-@extends('adminlte::master')
+<!DOCTYPE html>
+<html>
 
-@section('adminlte_css')
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte/plugins/iCheck/square/blue.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/auth.css') }}">
-    @yield('css')
-@stop
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fuel System</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-@section('body_class', 'login-page')
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/5.15.1/css/all.min.css') }}">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet" type="text/css" >
+</head>
 
-@section('body')
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
-        </div>
-        <!-- /.login-logo -->
-        <div class="login-box-body">
-            <p class="login-box-msg">{{ trans('adminlte::adminlte.login_message') }}</p>
-            <form action="{{ url(config('adminlte.login_url', 'login')) }}" method="post">
-                {!! csrf_field() !!}
+<body>
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin">
+                <form action="{{ url(config('adminlte.login_url', 'login')) }}" method="post">
+                    {!! csrf_field() !!}
 
-                <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}"
-                           placeholder="{{ trans('adminlte::adminlte.email') }}" required>
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <input type="password" name="password" class="form-control"
-                           placeholder="{{ trans('adminlte::adminlte.password') }}" required>
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    @if ($errors->has('password'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </span>
-                    @endif
-                </div>
-                <div class="row">
-                    <!-- /.col -->
-                    <div class="col-xs-12">
-                        <button type="submit"
-                                class="btn btn-primary btn-block btn-flat">{{ trans('adminlte::adminlte.sign_in') }}</button>
+                    <div class="logo_img">
+                        <img src="{{ asset('images/petrol-pump.png')}}" class="logo-pic">
                     </div>
-                    <!-- /.col -->
-                </div>
-            </form>
-        </div>
-        <!-- /.login-box-body -->
-    </div><!-- /.login-box -->
-@stop
 
-@section('adminlte_js')
-    <script src="{{ asset('vendor/adminlte/plugins/iCheck/icheck.min.js') }}"></script>
-    <script>
-        $(function () {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' // optional
-            });
-        });
-    </script>
-    @yield('js')
-@stop
+                    <h2 class="title">Fuel System</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="email" placeholder="{{ trans('adminlte::adminlte.email') }}" value="{{ old('email') }}" required/>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="{{ trans('adminlte::adminlte.password') }}" required />
+                    </div>
+                    <div>
+                        @if ($errors->any())
+                            <ul>
+                            @foreach ($errors->all() as $error)
+                                <li style="color: red;">{{$error}}</li>
+                            @endforeach
+                            </ul>
+                        @endif
+                    </div>
+                    <div class="message"></div>
+
+                    <input type="submit" value="{{ trans('adminlte::adminlte.sign_in') }}" class="btn solid" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    const password = document.querySelector('#password');
+    const message = document.querySelector('.message');
+
+    password.addEventListener('keyup', function(e) {
+        if(e.getModifierState('CapsLock')) {
+            message.textContent = '• Caps lock është aktiv.';
+        }else {
+            message.textContent = '';
+        }
+    })
+</script>
+
+</html>

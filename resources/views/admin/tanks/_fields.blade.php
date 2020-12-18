@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label>Excel File:</label>
                     <input type="file" name="excel_file">
-                    @if($excel_file)<i class="fa fa-file-excel" aria-hidden="true"></i>@endif
+                    @if(isset($excel_file))<i class="fa fa-file-excel" aria-hidden="true"></i>@endif
                 </div>
 			</div>
 
