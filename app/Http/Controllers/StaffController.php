@@ -400,7 +400,7 @@ class StaffController extends Controller
             );
 
             Shifts::insert(
-                ['start_date' => now()->timestamp, 'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
+                ['start_date' => now()->addSeconds(1)->timestamp, 'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
             );
         }else{
 
@@ -410,7 +410,7 @@ class StaffController extends Controller
                 );
 
             Shifts::insert(
-                ['start_date' => now()->timestamp, 'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
+                ['start_date' => now()->addSeconds(1)->timestamp, 'created_at' => now()->timestamp, 'updated_at' => now()->timestamp]
             );
 
         }

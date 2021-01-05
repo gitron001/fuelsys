@@ -27,11 +27,11 @@
                     <option value="">Select shift</option>
                     @foreach($shift as $shift)
                         <option value="{{ $shift->id }}" @if($shift->id == request()->get("shift")) selected @endif>
-                            {{ date('m/d/Y H:i', $shift->start_date) }} -
+                            {{ date('m/d/Y H:i:s', $shift->start_date) }} -
                             @if($shift->end_date == NULL)
                                NOW
                             @else
-                                {{ date('m/d/Y H:i', $shift->end_date) }}
+                                {{ date('m/d/Y H:i:s', $shift->end_date) }}
                             @endif
                         </option>
                     @endforeach
