@@ -10,7 +10,7 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="{{ file_exists(asset('/images/company/'.$company->images)) ? asset('/images/company/'.$company->images) : ''}}" alt="User profile picture">
+                <img class="profile-user-img img-responsive img-circle" src="{{ (asset('/images/company/'.$company->images)) ? (asset('/images/company/'.$company->images)) : (asset('/images/company/fs-icon_1610107943.ico')) }}" alt="User profile picture">
 
               <h3 class="profile-username text-center">{{ $company->name}}</h3>
 
@@ -150,7 +150,7 @@
 
 						<div class="form-group">
 							{!! Form::label('photo', 'Photo:'); !!}
-							@if (file_exists(asset('/images/company/'.$company->images)))
+							@if (asset('/images/company/'.$company->images))
 								<br>
 								<img class="img-responsive img-thumbnail" src="{{asset('/images/company/'.$company->images)}}" height="100" width="100">
 							@else

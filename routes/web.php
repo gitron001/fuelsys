@@ -107,7 +107,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 	//Route::get('/admin/transactions','TransactionController@searchWithPagination');
 	Route::get('/dailyReport','TransactionController@generateDailyReport');
 
-	Route::get('/pdf','TransactionController@exportPDF')->name('generate_pdf/pdf');
+    Route::get('/pdf','TransactionController@exportPDF')->name('generate_pdf/pdf');
+
+    Route::get('/invoice','TransactionController@invoice')->name('generate_invoice/invoice');
 
 	// Email
 	Route::get('/sendemail','HomeController@email');

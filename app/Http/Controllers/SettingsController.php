@@ -71,7 +71,7 @@ class SettingsController extends Controller
         }
 
         if($request->hasFile('image')){
-            $company->images = $fileNameToStore;
+            $request['images'] = $fileNameToStore;
         }
 
         if($request->direct_login == 1){

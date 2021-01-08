@@ -318,6 +318,43 @@ class TransactionController extends Controller
         }
     }
 
+    public static function invoice(Request $request){
+        $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+
+        $from_company       = Company::where('status', 4)->first();
+        $to_company         = Company::where('id',$request->input('company'))->first();
+
+        $from_date          = strtotime($request->input('fromDate'));
+        $to_date            = strtotime($request->input('toDate'));
+
+        $products = Transactions::select(DB::RAW('products.pfc_pr_id as product_id'), DB::raw('MAX(products.name) as product_name'), DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'),DB::raw('transactions.price as price'))
+            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
+            ->groupBy('products.pfc_pr_id')
+            ->groupBy('transactions.price');
+
+        if ($request->input('user') && empty($request->input('company'))) {
+            $products = $products->whereIn('user_id',$request->input('user'));
+        }
+
+        if ($request->input('company') && empty($request->input('user'))) {
+            $products = $products->where('companies.id','=',$request->input('company'));
+        }
+
+        if($request->input('user') && $request->input('company')){
+            $products = $products->whereIn('user_id',$request->input('user'))->where('companies.id','=',$request->input('company'));
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
+
+        $total_transactions = $products->get();
+
+        return view('/admin/transactions/invoice',compact('from_company','to_company','total_transactions','companies'));
+    }
+
     public static function generate_data($request){
         $from_date      = strtotime($request->input('fromDate'));
         $to_date        = strtotime($request->input('toDate'));

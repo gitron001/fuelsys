@@ -40,7 +40,7 @@
 	<br>
 	<table width="100%">
 	<tr>
-		<td valign="top"><img src="{{ public_path().'/images/company/'.$company->images }}" alt="" width="80"/></td>
+		<td valign="top"><img src="{{ public_path('images/company/'.$company->images) }}" alt="" width="80"/></td>
 	</tr>
 	<tr>
 		<td align="left">
