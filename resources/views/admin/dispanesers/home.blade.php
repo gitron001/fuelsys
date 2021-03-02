@@ -8,7 +8,7 @@
 		<div class="row">
 			   <div class="box box-primary">
             <div class="box-header">
-              <div class="col-md-6"><h3 class="box-title">Dispanesers</h3></div>
+              <div class="col-md-6"><h3 class="box-title">Dispenesers</h3></div>
               <div class="col-md-6">
 
                 <form class="form-inline text-center pull-right" method="GET" action="{{ URL::to('/admin/dispanesers') }}">

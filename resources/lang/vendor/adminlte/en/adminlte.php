@@ -11,7 +11,7 @@ return [
         'tank'                          => 'Tank',
         'transaction'                   => 'Transactions',
         'products'                      => 'Products',
-        'dispanesers'                   => 'Dispanesers',
+        'dispanesers'                   => 'Dispenesers',
         'branches'                      => 'Branches',
         'users'                         => 'Users',
         'payments'                      => 'Payments',

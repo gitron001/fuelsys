@@ -1,6 +1,6 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">{{!isset($dispaneser) ? 'Create new dispaneser' : 'Edit dispaneser'}}</h3>
+		<h3 class="box-title">{{!isset($dispaneser) ? 'Create new dispeneser' : 'Edit dispeneser'}}</h3>
 	</div>
 
 	<div class="box-body">
@@ -28,7 +28,7 @@
 					{!! Form::label('pfc_id', 'PFC:'); !!}
 					{!! Form::select('pfc_id',['Choose PFC'] + $pfc,null,['class'=>'form-control']); !!}
 					{!! $errors->first('pfc_id','<span class="help-block">:message</span>') !!}
-				</div>			
+				</div>
 				<div class="form-group {{ $errors->has('money_division') ? 'has-error' :'' }}">
 					{!! Form::label('money_division', 'Money Division:'); !!}
 					{!! Form::select('money_division',[1=>'1', 10=>'10',100=>'100',1000=>'1000',10000=>'10000'],null,['class'=>'form-control']); !!}

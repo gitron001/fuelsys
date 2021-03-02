@@ -4,7 +4,7 @@
 
 @include('includes/alert_info')
 
-<form action="/admin/payments/multiple" method="post">
+<form action="/admin/payments/multiple" method="post" class="payment-form">
 {{ csrf_field() }}
 <div class="box box-primary">
 	<div class="box-header with-border">
@@ -58,7 +58,7 @@
 
 
 	<div class="box-footer">
-		<button type="submit" class="btn btn-primary">
+		<button type="submit" class="btn btn-primary" id="payment-save-btn">
             <i class="fas fa-save"></i> Save
         </button>
 		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
@@ -77,6 +77,13 @@
 @section('js')
 
 <script>
+
+    $(document).ready(function(){
+        $("form.payment-form").submit(function () {
+            const button = document.getElementById('payment-save-btn');
+            button.disabled = true;
+        });
+    });
 
 	$(function() {
 		$(".datepicker" ).datepicker();
