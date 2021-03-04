@@ -161,7 +161,7 @@ class UsersController extends Controller
 						'headers' =>  [
 							'Authorization'          => $access_token
 						]]);
-						$url = 'http://fuelsystem.alba-petrol.com/api/save/rfid';
+						$url = 'http://fitorjapetrol.idealbakija.biz/api/save/rfid';
 
 
 						$response = $client->request('POST', $url, [

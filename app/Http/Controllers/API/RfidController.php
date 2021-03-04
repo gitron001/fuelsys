@@ -27,7 +27,7 @@ class RfidController extends Controller
 
         return response($user_discount,201);
     }
-    
+
     public function importRFID(Request $request)
     {
         $users          = Users::where('created_at','>=',$request->created_at)->limit(1000)->get()->toArray();
@@ -36,16 +36,16 @@ class RfidController extends Controller
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
             $response[]         = array_merge($u,$rfid);
         }
-        
+
         return response($response,201);
     }
 
-    // Insert RFID(without company) from local DB to Server (Export RFID) 
+    // Insert RFID(without company) from local DB to Server (Export RFID)
     public function getAllRfids()
     {
 		ini_set("memory_limit", "-1");
 		set_time_limit(0);
-		
+
         $users          = Users::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
@@ -66,7 +66,7 @@ class RfidController extends Controller
                     'Accept'                 => "application/json"
                 ]]);
             $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
-            
+
             $response = $client->request('POST', $url, [
                 'json' => $response
             ]);
@@ -79,15 +79,15 @@ class RfidController extends Controller
 
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
-        
-        // Update new exported user 
+
+        // Update new exported user
 		$new_ids = implode(',', $id->new);
 		Users::whereIn('id',$id->new)->update(['exported'=> 1]);
-		
-        // Update old exported user 
+
+        // Update old exported user
 		$old_ids = implode(',', $id->old);
         Users::whereIn('id',$id->old)->update(['exported'=> 1]);
-        
+
         return view('/admin/api/response', compact('users', 'old_ids'));
     }
 
@@ -96,18 +96,18 @@ class RfidController extends Controller
 
         ini_set("memory_limit", "-1");
 		set_time_limit(0);
-		
+
         $users_info     = Users::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
                         })->where('company_id','!=',0)->limit(1000)->get();
-        
+
         // Convert CompanyId to MasterId
         foreach($users_info as $key => $value){
             if($value->company->master_id == NULL){
                 unset($users_info[$key]);
             }
-            
+
             if($value->company_id != NULL || $value->company_id != 0){
                 $value->company_id = $value->company->master_id;
                 unset($value['company']);
@@ -130,7 +130,7 @@ class RfidController extends Controller
                     'Accept'                 => "application/json"
                 ]]);
             $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
-            
+
             $response = $client->request('POST', $url, [
                 'json' => $response
             ]);
@@ -143,15 +143,15 @@ class RfidController extends Controller
 
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
-        
-        // Update new exported user 
+
+        // Update new exported user
 		$new_ids = implode(',', $id->new);
 		Users::whereIn('id',$id->new)->update(['exported'=> 1]);
-		
-        // Update old exported user 
+
+        // Update old exported user
 		$old_ids = implode(',', $id->old);
         Users::whereIn('id',$id->old)->update(['exported'=> 1]);
-        
+
         return view('/admin/api/response', compact('users', 'old_ids'));
     }
 
@@ -178,17 +178,17 @@ class RfidController extends Controller
                 ]]);
 
             $url = 'http://fuelsystem.alba-petrol.com/api/rfids/import_server';
-			
+
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted
             ]);
 
             $online_response = $response->getBody()->getContents();
             $data            = json_decode($online_response);
-	
+
             foreach($data as $user){
                 $rfid = Users::firstOrCreate([
-                    'rfid' => $user->rfid], 
+                    'rfid' => $user->rfid],
                     [
                     'branch_user_id'    => $user->id,
                     'branch_id'         => $user->branch_id,
@@ -214,14 +214,14 @@ class RfidController extends Controller
                     'created_at'        => $user->created_at,
                     'updated_at'        => $user->updated_at,
                 ]);
-    
+
                 if ($rfid->wasRecentlyCreated) {
-                    
+
                     RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
                     foreach($user->discount as $discount){
                         RFID_Discounts::insert([
-                            'rfid_id'       => $rfid->id, 
+                            'rfid_id'       => $rfid->id,
                             'product_id'    => $discount->product_id,
                             'discount'      => $discount->discount,
                             'created_at'    => $discount->created_at,
@@ -233,13 +233,13 @@ class RfidController extends Controller
                     $old[] = $rfid->branch_user_id;
                 }
             }
-    
+
             return response()->json([
                 'response'  => 'Success',
                 'new'       => $new,
                 'old'       => $old,
             ], 201);
-            
+
 
         } catch (\Exception $e) {
             return response()->json([
@@ -249,15 +249,15 @@ class RfidController extends Controller
         }
     }
 
-    public function createUser(Request $request) 
-    {   
+    public function createUser(Request $request)
+    {
         $response = $request->all();
         $new      = array();
         $old      = array();
-        
+
         foreach($response as $user){
             $rfid = Users::firstOrCreate([
-                'rfid' => $user['rfid']], 
+                'rfid' => $user['rfid']],
                 [
                 'branch_user_id'    => $user['id'],
                 'branch_id'         => Session::get('branch_id'),
@@ -282,10 +282,10 @@ class RfidController extends Controller
                 'created_at'        => now()->timestamp,
                 'updated_at'        => $user['updated_at'],
             ]);
-            
+
             if ($rfid->wasRecentlyCreated) {
                 $new[] = $user['id'];
-                
+
                 RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
                 foreach($user['discount'] as $discount){
@@ -297,7 +297,7 @@ class RfidController extends Controller
                         'updated_at'    => $discount['updated_at']
                     ]);
                 }
-                    
+
             }else {
                 $old[] = $user['id'];
             }
@@ -308,7 +308,7 @@ class RfidController extends Controller
             'new'       => $new,
             'old'       => $old,
         ], 201);
-    
+
     }
 
     public function saveRFID(Request $request){
@@ -322,7 +322,7 @@ class RfidController extends Controller
             $user = Users::firstOrCreate([
                 'rfid' => $rfid['rfid']],
                 [
-                'branch_user_id'    => $user['id'],
+                'branch_user_id'    => '',
                 'branch_id'         => Session::get('branch_id'),
                 'name'              => $rfid['name'],
                 'surname'           => !empty($rfid['surname']) ? $rfid['surname'] : NULL,
@@ -347,6 +347,11 @@ class RfidController extends Controller
             ]);
 
             $insertedId = $user->id;
+
+            Users::where('rfid', $rfid['rfid'])
+                    ->update([
+                        'branch_user_id' => $insertedId
+                    ]);
 
             if(!empty($rfid['discount'])) {
                 foreach(array_combine($rfid['product'], $rfid['discount']) as $product => $discount){
