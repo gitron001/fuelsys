@@ -27,55 +27,55 @@ class Kernel extends ConsoleKernel
         $schedule->command('card:reader 1')->appendOutputTo(storage_path() . "/logs/cron.log")
                  ->everyMinute();
 
-        $schedule->command('export:transactions')->everyFiveMinutes();
+        //$schedule->command('export:transactions')->everyFiveMinutes();
 
         // Send daily email to companies
 
-        $schedule->command('send:daily')->hourlyAt(18);
+        //$schedule->command('send:daily')->hourlyAt(18);
 
         //$schedule->command('send:dailyEmail')
           //    ->hourly();
 
         //Send monthly email to companies
-        $schedule->command('send:monthlyEmail')
-                 ->monthly();
+        //$schedule->command('send:monthlyEmail')
+        //         ->monthly();
 
         // Send transactions to server
-        $schedule->command('send:transactions')
-                 ->everyFifteenMinutes();
+        //$schedule->command('send:transactions')
+        //         ->everyFifteenMinutes();
 
 
         // Export RFID to server
-        $schedule->command('export:rfid')
-                 ->everyFifteenMinutes();
+        //$schedule->command('export:rfid')
+        //         ->everyFifteenMinutes();
 
         // Import RFID from server
-        $schedule->command('import:rfid')
-                 ->everyFifteenMinutes();
+        //$schedule->command('import:rfid')
+        //         ->everyFifteenMinutes();
 
         // Export RFID without company to server
-        $schedule->command('export:rfid')
-                 ->everyFifteenMinutes();
+        //$schedule->command('export:rfid')
+        //         ->everyFifteenMinutes();
 
         // Export RFID with company to server
-        $schedule->command('rfid:withcompany')
-                 ->everyFifteenMinutes();
+        //$schedule->command('rfid:withcompany')
+        //         ->everyFifteenMinutes();
 
         // Import RFID from server
-        $schedule->command('import:rfid')
-                 ->everyFifteenMinutes();
+        //$schedule->command('import:rfid')
+        //         ->everyFifteenMinutes();
 
         // Export Payments to server
-        $schedule->command('export:payments')
-                   ->everyFifteenMinutes();
+        //$schedule->command('export:payments')
+        //           ->everyFifteenMinutes();
 
         // Import Company from Server to local DB
-        $schedule->command('import:company')
-                   ->everyFifteenMinutes();
+        //$schedule->command('import:company')
+        //           ->everyFifteenMinutes();
 
         // Export Company from local DB to Server
-        $schedule->command('export:company')
-                   ->everyFifteenMinutes();
+        //$schedule->command('export:company')
+        //           ->everyFifteenMinutes();
 
         // RUN BACKUP EVERY 15 MINUTES AND DELETE OLD BACKUPS AFTER 3 HOURS
         $schedule->command('backup:run')->everyFifteenMinutes();

@@ -21,8 +21,8 @@ class RfidAuth
         $token = $request->header('Authorization');
 
         if(isset($token)){
-            $access_token_db = Branch::select('remember_token','id')->where('remember_token',$token)->get();
-            if(count($access_token_db) > 0){ Session::put('branch_id', $access_token_db->id); };
+            $access_token_db = Branch::select('remember_token','id')->where('remember_token',$token)->first();
+            if(!empty($access_token_db) > 0){ Session::put('branch_id', $access_token_db->id); };
                 if($token != $access_token_db->remember_token){
                     return response()->json(['message'=>'Token not found / Incorrect token'],401);
                 }
