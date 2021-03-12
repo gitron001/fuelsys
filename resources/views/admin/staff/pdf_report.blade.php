@@ -52,12 +52,14 @@
 </head>
 <body>
 
-    <table width="100%" class="information">
+    <table width="100%" class="information" id="table_design">
+        <thead>
         <tr>
-            <td align="center" style="width: 50%;">
+            <th align="center" style="width: 50%;">
                 RAPORT - {{ $company->name }}   &nbsp;&nbsp; &nbsp;| &nbsp;&nbsp;  {{ date('d-m-Y H:i:s', time()) }}
-            </td>
+            </th>
         </tr>
+        </thead>
     </table>
 	<br>
 	<table width="100%">
@@ -273,7 +275,9 @@
 			</thead>
 
 			<tbody>
-				<?php $total_sales = 0; ?>
+			<?php
+            $total_lit = 0;
+            $total_sales = 0; ?>
             @foreach($products as $product)
             <tr>
                 <td>{{ $product['p_name'] .' - '. $product['product_price'] }} </td>
@@ -281,15 +285,18 @@
                 <td>{{ $product['totalLit'] }} litra</td>
                 <td>{{ number_format($product['totalLit'] * $product['product_price'], 2)  }} litra</td>
             </tr>
-				<?php $total_sales += $product['totalLit'] * $product['product_price']; ?>
+				<?php
+                $total_lit += $product['totalLit'];
+                $total_sales += $product['totalLit'] * $product['product_price']; ?>
             @endforeach
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan='2'>
+					<td colspan='1'>
 					</td>
 					<td><b>TOTAL</b></td>
-					<td><b>{{ number_format($total_sales, 2) }} <b></td>
+                    <td><b>{{ number_format($total_lit, 2) }} litra<b></td>
+					<td><b>{{ number_format($total_sales, 2) }} Euro<b></td>
 				</tr>
 			</tfoot>
         </table>
@@ -304,7 +311,10 @@
                 </tr>
             </thead>
             <tbody>
-            <?php $total_sales = 0; ?>
+            <?php
+            $total_lit = 0;
+            $total_sales = 0;
+            ?>
             @foreach($products_average as $product)
                 <tr>
                     <td>{{ $product['p_name'] .' - '. number_format($product['product_price'], 3) }} </td>
@@ -312,15 +322,18 @@
                     <td>{{ number_format($product['totalLit'], 2) }} litra</td>
                     <td>{{ number_format($product['totalLit'] * $product['product_price'], 2)  }} litra</td>
                 </tr>
-                <?php $total_sales += $product['totalLit'] * $product['product_price']; ?>
+                <?php
+                $total_lit += $product['totalLit'];
+                $total_sales += $product['totalLit'] * $product['product_price']; ?>
             @endforeach
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan='2'>
+                    <td colspan='1'>
                     </td>
                     <td><b>TOTAL</b></td>
-                    <td><b>{{ number_format($total_sales, 2) }}</b></td>
+                    <td><b>{{ number_format($total_lit, 2) }} litra</b></td>
+                    <td><b>{{ number_format($total_sales, 2) }} Euro</b></td>
                 </tr>
             </tfoot>
         </table>
