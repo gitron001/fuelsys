@@ -90,6 +90,9 @@ class Kernel extends ConsoleKernel
 
         // We use this command to send email if tank is in low levelk
         $schedule->command('check:tanksEvery6Hours')->cron('0 */6 * * *');
+
+        // Insert Running Process
+        $schedule->command('running:processes')->everyFifteenMinutes();
     }
 
     /**
