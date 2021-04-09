@@ -47,7 +47,7 @@ class PumpsController extends Controller
     public function create()
     {
         $tanks = Tank::pluck('name','id')->all();
-        $dispanesers = Dispaneser::pluck('name','id')->all();
+        $dispanesers = Dispaneser::pluck('name','channel_id as id')->all();
 
         return view('/admin/nozzle/create',compact('tanks','dispanesers'));
     }
@@ -65,7 +65,7 @@ class PumpsController extends Controller
     {
         $pump = Pump::findOrFail($id);
         $tanks = Tank::pluck('name','id')->all();
-        $dispanesers = Dispaneser::pluck('name','id')->all();
+        $dispanesers = Dispaneser::pluck('name','channel_id as id')->all();
 
         return view('/admin/nozzle/edit',compact('pump','tanks','dispanesers'));
     }

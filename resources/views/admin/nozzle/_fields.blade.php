@@ -24,9 +24,9 @@
 			</div>
 			<div class="col-md-6">
                 <div class="form-group {{ $errors->has('dispaneser_id') ? 'has-error' : '' }}">
-					{!! Form::label('dispaneser_id','Dispaneser:'); !!}
-					{!! Form::select('dispaneser_id',['' => 'Choose Dispaneser'] + $dispanesers,null,['class'=>'form-control']); !!}
-					{!! $errors->first('dispaneser_id','<span class="help-block">:message</span>') !!}
+					{!! Form::label('channel_id','Dispaneser:'); !!}
+					{!! Form::select('channel_id',['' => 'Choose Dispaneser'] + $dispanesers,null,['class'=>'form-control']); !!}
+					{!! $errors->first('channel_id','<span class="help-block">:message</span>') !!}
                 </div>
 
 				<div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">

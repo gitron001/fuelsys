@@ -15,12 +15,17 @@
             <div style="margin-top: 8px; line-height:10px;">
                 @php ($data = 0) @endphp
                 <p class="text-center"><b>{{ $tank->name }} ( {{ $tank->product->name }} )  </b></p>
-				<p>Current tank level: {{  round(($tank->totalStock()[0]['amount'] - $total_sales),2)  }}
+				
+				<p>Current tank level: {{  round(($tank->totalStockSensor()),2)  }}
 					@php ($data = $tank->totalStock()[0]['amount'] - $total_sales ) @endphp
 				</p>
+				@if($total_sales != 0)
+				<p>Calculated tank level: {{  round(($tank->totalStock()[0]['amount'] - $total_sales),2)  }}</p>
+				<p>Difference: {{  round(($tank->totalStock()[0]['amount'] - $total_sales) - $tank->totalStockSensor(),2)  }}</p>
+				@endif
             </div>
             <div id="tank">
-                @php ($percentage = ($data / $tank->capacity) * 100 ) @endphp
+                @php ($percentage = ($tank->totalStockSensor() / $tank->capacity) * 100 ) @endphp
                 @php ($percentage = number_format(abs($percentage),0))@endphp
                 <div class="fuel" style="height:{{ $percentage }}%; {{ $percentage <= 15 ? 'background:red;' : 'background:rgb(60, 141, 188)'}}"></div>
                 <p class="tank-text">{{ $percentage }}%</p>
