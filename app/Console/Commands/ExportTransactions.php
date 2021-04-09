@@ -61,7 +61,7 @@ class ExportTransactions extends Command
 
                 foreach($transactions as $transaction){
 
-                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['channel_id'].';'.$transaction['product_id'].';'.$transaction['product'].';'.(!empty($transaction['bonus_rfid']) ? $transaction['bonus_rfid'] : 0).';'.$transaction['staff_rfid'].';'.$transaction['staff_name'].';'.$transaction['lit'].';'.($transaction['product_price'] / 1000).';'.$transaction['price'].';'.$transaction['money'].PHP_EOL);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s",strtotime($transaction['created_at'])).';'.$transaction['channel_id'].';'.$transaction['product_id'].';'.$transaction['product'].';'.(!empty($transaction['bonus_rfid']) ? $transaction['bonus_rfid'] : 0).';'.$transaction['staff_rfid'].';'.$transaction['staff_name'].';'.$transaction['lit'].';'.($transaction['product_price'] / 1000).';'.$transaction['price'].';'.$transaction['money'].PHP_EOL);
 
                     Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
                 }
@@ -72,7 +72,7 @@ class ExportTransactions extends Command
 
                 foreach($transactions as $transaction){
 
-                    fwrite($fp, $transaction['id'].';'.date("d.m.Y h:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['channel_id'].';'.$transaction['product_id'].';'.$transaction['product'].';'.(!empty($transaction['bonus_rfid']) ? $transaction['bonus_rfid'] : 0).';'.$transaction['staff_rfid'].';'.$transaction['staff_name'].';'.$transaction['lit'].';'.($transaction['product_price'] / 1000).';'.$transaction['price'].';'.$transaction['money'].PHP_EOL);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['channel_id'].';'.$transaction['product_id'].';'.$transaction['product'].';'.(!empty($transaction['bonus_rfid']) ? $transaction['bonus_rfid'] : 0).';'.$transaction['staff_rfid'].';'.$transaction['staff_name'].';'.$transaction['lit'].';'.($transaction['product_price'] / 1000).';'.$transaction['price'].';'.$transaction['money'].PHP_EOL);
 
                     Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
                 }
