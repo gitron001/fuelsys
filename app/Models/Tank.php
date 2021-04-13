@@ -38,4 +38,14 @@ class Tank extends Model
 		$value = $lower_value->value + $difference;
 		return $value; 
     }
+	
+	public function totalWaterSensor(){
+		$fuel_level = intval(($this->water_level/100));
+		$decimal 	= ($this->fuel_level/100) - $fuel_level;
+		$upper_value = DB::table('tank_details')->select('value')->where('tank_id', $this->id)->where('cm', '>', $fuel_level)->orderBy('cm', 'ASC')->first();
+		$lower_value = DB::table('tank_details')->select('value')->where('tank_id', $this->id)->where('cm', $fuel_level)->first();
+		$difference  = ($upper_value->value - $lower_value->value); 
+		$value = $lower_value->value + $difference;
+		return $value; 
+    }
 }

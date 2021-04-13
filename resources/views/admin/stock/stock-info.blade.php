@@ -16,14 +16,17 @@
                 @php ($data = 0) @endphp
                 <p class="text-center"><b>{{ $tank->name }} ( {{ $tank->product->name }} )  </b></p>
 				
-				<p>Current tank level: {{  round(($tank->totalStockSensor()),2)  }}
+				<p>Tank level: {{  round(($tank->totalStockSensor()),2)  }}
 					@php ($data = $tank->totalStock()[0]['amount'] - $total_sales ) @endphp
 				</p>
 				@if($total_sales != 0)
 				<p>Calculated tank level: {{  round(($tank->totalStock()[0]['amount'] - $total_sales),2)  }}</p>
 				<p>Difference: {{  round(($tank->totalStock()[0]['amount'] - $total_sales) - $tank->totalStockSensor(),2)  }}</p>
 				@endif
+				<p>Water level: {{  round(($tank->totalWaterSensor()),2)  }}
+				</p>
             </div>
+			
             <div id="tank">
                 @php ($percentage = ($tank->totalStockSensor() / $tank->capacity) * 100 ) @endphp
                 @php ($percentage = number_format(abs($percentage),0))@endphp
