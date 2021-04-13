@@ -34,7 +34,7 @@ class Tank extends Model
 		$decimal 	= ($this->fuel_level/100) - $fuel_level;
 		$upper_value = DB::table('tank_details')->select('value')->where('tank_id', $this->id)->where('cm', '>', $fuel_level)->orderBy('cm', 'ASC')->first();
 		$lower_value = DB::table('tank_details')->select('value')->where('tank_id', $this->id)->where('cm', $fuel_level)->first();
-		$difference  = ($upper_value->value - $lower_value->value); 
+		$difference  = ($upper_value->value - $lower_value->value)* $decimal; 
 		$value = $lower_value->value + $difference;
 		return $value; 
     }
@@ -44,7 +44,10 @@ class Tank extends Model
 		$decimal 	= ($this->fuel_level/100) - $fuel_level;
 		$upper_value = DB::table('tank_details')->select('value')->where('tank_id', $this->id)->where('cm', '>', $fuel_level)->orderBy('cm', 'ASC')->first();
 		$lower_value = DB::table('tank_details')->select('value')->where('tank_id', $this->id)->where('cm', $fuel_level)->first();
-		$difference  = ($upper_value->value - $lower_value->value); 
+		//dd($upper_value->value);
+		
+		//if(!isset(
+		$difference  = ($upper_value->value - $lower_value->value) * $decimal; 
 		$value = $lower_value->value + $difference;
 		return $value; 
     }
