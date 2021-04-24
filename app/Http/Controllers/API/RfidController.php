@@ -65,7 +65,7 @@ class RfidController extends Controller
                     'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
-            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
+            $url = 'https://elpetrol-ks.com/allClients/E2E9E683715F847BEA2018D4FA7C3AF5B3384AF3C9A638E4516102135FA7890A';
 
             $response = $client->request('POST', $url, [
                 'json' => $response
@@ -161,7 +161,6 @@ class RfidController extends Controller
         ini_set("memory_limit", "-1");
 		set_time_limit(0);
 
-        $access_token   = config('token.access_token');
         $new            = array();
         $old            = array();
         //$last_inserted  = Users::where('exported',1)->orderBy('created_at','DESC')->first();
@@ -173,11 +172,10 @@ class RfidController extends Controller
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
-                    'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
 
-            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/import_server';
+            $url = 'https://elpetrol-ks.com/allClients/E2E9E683715F847BEA2018D4FA7C3AF5B3384AF3C9A638E4516102135FA7890A';
 
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted
@@ -190,42 +188,45 @@ class RfidController extends Controller
                 $rfid = Users::firstOrCreate([
                     'rfid' => $user->rfid],
                     [
-                    'branch_user_id'    => $user->id,
-                    'branch_id'         => $user->branch_id,
-                    'name'              => $user->name,
+                    'branch_user_id'    => $user->client_id,
+                    'branch_id'         => 0,
+                    'name'              => !empty($user->name) ? $user->name : NULL,
                     'surname'           => !empty($user->surname) ? $user->surname : NULL,
                     'residence'         => !empty($user->residence) ? $user->residence : NULL,
                     'contact_number'    => !empty($user->contact_number) ? $user->contact_number : NULL,
                     'application_date'  => !empty($user->application_date) ? $user->application_date : NULL,
-                    'business_type'     => !empty($user->business_type) ? $user->business_type : NULL,
+                    'business_type'     => NULL,
                     'email'             => !empty($user->email) ? $user->email : NULL,
-                    'password'          => !empty($user->password) ? $user->password : NULL,
-                    'company_id'        => !empty($user->company_id) ? $user->company_id : 0,
+                    'password'          => NULL,
+                    'company_id'        => 0,
                     'exported'          => 1,
-                    'one_time_limit'    => !empty($user->one_time_limit) ? $user->one_time_limit : 0,
-                    'plates'            => !empty($user->plates) ? $user->plates : 0,
-                    'vehicle'           => !empty($user->vehicle) ? $user->vehicle : 0,
-                    'status'            => !empty($user->status) ? $user->status : 1,
-                    'type'              => !empty($user->type) ? $user->type : 1,
-                    'starting_balance'  => !empty($user->starting_balance) ? $user->starting_balance : 0,
-                    'limits'            => !empty($user->limits) ? $user->limits : 0,
-                    'limit_left'        => !empty($user->limit_left) ? $user->limit_left : 0,
-                    'remember_token'    => $user->remember_token,
-                    'created_at'        => $user->created_at,
-                    'updated_at'        => $user->updated_at,
+                    'one_time_limit'    => 0,
+                    'plates'            => 0,
+                    'vehicle'           => 0,
+                    'status'            => 1,
+                    'type'              => 6,
+                    'has_limit'         => 0,
+                    'send_email'        => 0,
+                    'on_transaction'    => 0,
+                    'starting_balance'  => 0,
+                    'limits'            => 0,
+                    'limit_left'        => 0,
+                    'remember_token'    => 0,
+                    'created_at'        => strtotime($user->created_at),
+                    'updated_at'        => strtotime($user->created_at),
                 ]);
 
                 if ($rfid->wasRecentlyCreated) {
 
                     RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
-                    foreach($user->discount as $discount){
+                    foreach($user->discounts as $discount){
                         RFID_Discounts::insert([
                             'rfid_id'       => $rfid->id,
                             'product_id'    => $discount->product_id,
                             'discount'      => $discount->discount,
-                            'created_at'    => $discount->created_at,
-                            'updated_at'    => $discount->updated_at
+                            'created_at'    => now()->timestamp,
+                            'updated_at'    => now()->timestamp,
                         ]);
                     }
                     $new[] = $rfid->branch_user_id;
@@ -233,7 +234,6 @@ class RfidController extends Controller
                     $old[] = $rfid->branch_user_id;
                 }
             }
-
             return response()->json([
                 'response'  => 'Success',
                 'new'       => $new,
