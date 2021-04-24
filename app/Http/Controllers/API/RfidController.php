@@ -212,8 +212,8 @@ class RfidController extends Controller
                     'limits'            => 0,
                     'limit_left'        => 0,
                     'remember_token'    => 0,
-                    'created_at'        => strtotime($user->created_at),
-                    'updated_at'        => strtotime($user->created_at),
+                    'created_at'        => now()->timestamp,
+                    'updated_at'        => now()->timestamp,
                 ]);
 
                 if ($rfid->wasRecentlyCreated) {
