@@ -18,7 +18,7 @@ class TransactionsController extends Controller
     public function importTransactions(Request $request) {
        $response = $request->all();
        $inserted_transaction = array();
-       
+
        foreach($response as $data) {
            $user_id = Users::select('id')->where('branch_id',Session::get('branch_id'))->where('branch_user_id',$data['user_id'])->first();
            $transaction = Transaction::where('branch_transaction_id', $data['id'])->where('branch_id', Session::get('branch_id'))->first();
@@ -50,37 +50,37 @@ class TransactionsController extends Controller
 						'updated_at'    => $data['updated_at'],
 					]);
 				}
-            
+
                 $inserted_transaction[] = $data['id'];
            }
-           
-        } 
-       
+
+        }
+
         return response()->json([
             'response'  => 'Success',
             'inserted_transaction' => $inserted_transaction,
         ], 201);
-       
+
     }
-    
+
     public function getAllTransactions() {
 
         $transactions = Transaction::where('exported',0)->limit(1000)->get();
-		
+
         $access_token = config('token.access_token');
-		
+
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
                     'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
-            $url = 'http://fuelsystem.alba-petrol.com/api/transactions/create';
-            
+            $url = '';
+
             $response = $client->request('POST', $url, [
                 'json' => $transactions
             ]);
-            
+
             $inserted_id = json_decode($response->getBody()->getContents());
             /*$data = json_decode($inserted_id);
             foreach($data->inserted_transaction as $key){
@@ -88,7 +88,7 @@ class TransactionsController extends Controller
                     Transaction::where('id',$value)->update(['exported'=> 1]);
                 }
             }*/
-			
+
 			Transaction::whereIn('id',$inserted_id->inserted_transaction)->update(['exported'=> 1]);
 			dd($inserted_id->inserted_transaction);
             return $response->getBody();
@@ -99,6 +99,6 @@ class TransactionsController extends Controller
                 "message" => $e->getMessage()
             ]);
         }
-        
+
     }
 }

@@ -110,6 +110,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/pdf','TransactionController@exportPDF')->name('generate_pdf/pdf');
 
     Route::get('/invoice','TransactionController@invoice')->name('generate_invoice/invoice');
+    Route::get('/invoice_pdf','TransactionController@invoice_pdf')->name('generate_invoice_pdf/invoice_pdf');
 
 	// Email
 	Route::get('/sendemail','HomeController@email');

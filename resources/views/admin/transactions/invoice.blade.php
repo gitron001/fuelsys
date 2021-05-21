@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="invoice">
+<!--<div class="invoice">
     <div class="dataTables_wrapper form-inline dt-bootstrap text-center">
         <div class="form-group">
             <label for="Start Date:">Start Date:</label>
@@ -31,16 +31,15 @@
         </div>
         &nbsp;
 
-        <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i class="fa fa-search"></i> Search</button>
+        <a href="{{ route('generate_invoice/invoice', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance"),'bonus_user' => request()->get("bonus_user")] ) }}" data-toggle="tooltip" class="btn btn-primary" title="Show Invoice"><i class="fas fa-search"></i> Search</a>
     </div>
-</div>
+</div>-->
 
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
         Invoice
-        <small>#007612</small>
     </h1>
 </section>
 
@@ -59,8 +58,7 @@
     </div>
     <!-- info row -->
     <div class="row invoice-info">
-        <div class="col-sm-4 invoice-col">
-            From
+        <div class="col-sm-6 invoice-col">
             <address>
                 <strong>{{ $from_company->name }}</strong><br>
                 {{ $from_company->address .', '. $from_company->city .', '. $from_company->country }}<br>
@@ -72,8 +70,7 @@
             </address>
         </div>
         <!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-            To
+        <div class="col-sm-6 invoice-col" style="text-align: right">
             <address>
                 <strong>{{ $to_company->name }}</strong><br>
                 {{ $to_company->address .', '. $to_company->city .', '. $to_company->country }}<br>
@@ -82,15 +79,6 @@
                 Fiscal Nr.: {{ $from_company->fis_number }}
             </address>
         </div>
-        <!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-            <b>Invoice #007612</b><br>
-            <br>
-            <b>Order ID:</b> 4F3S8J<br>
-            <b>Payment Due:</b> 2/22/2014<br>
-            <b>Account:</b> 968-34567
-        </div>
-        <!-- /.col -->
     </div>
     <!-- /.row -->
 
@@ -170,12 +158,10 @@
     <!-- this row will not appear when printing -->
     <div class="row no-print">
         <div class="col-xs-12">
-            <a href="#" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-            <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-            </button>
-            <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-                <i class="fa fa-download"></i> Generate PDF
-            </button>
+            <!--<a href="#" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>-->
+            <!--<button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+            </button>-->
+            <a href="{{ route('generate_invoice_pdf/invoice_pdf', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance"),'bonus_user' => request()->get("bonus_user")] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-primary pull-right" style="margin-right: 5px;" onclick="return confirmation(event)"><i class="fa fa-download"></i> Generate PDF</a>
         </div>
     </div>
 </section>

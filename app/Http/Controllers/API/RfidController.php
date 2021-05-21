@@ -65,7 +65,7 @@ class RfidController extends Controller
                     'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
-            $url = 'https://elpetrol-ks.com/allClients/E2E9E683715F847BEA2018D4FA7C3AF5B3384AF3C9A638E4516102135FA7890A';
+            $url = '';
 
             $response = $client->request('POST', $url, [
                 'json' => $response
@@ -129,7 +129,7 @@ class RfidController extends Controller
                     'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
-            $url = 'http://fuelsystem.alba-petrol.com/api/rfids/create';
+            $url = '';
 
             $response = $client->request('POST', $url, [
                 'json' => $response
@@ -175,7 +175,7 @@ class RfidController extends Controller
                     'Accept'                 => "application/json"
                 ]]);
 
-            $url = 'https://elpetrol-ks.com/allClients/E2E9E683715F847BEA2018D4FA7C3AF5B3384AF3C9A638E4516102135FA7890A';
+            $url = '';
 
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted

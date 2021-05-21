@@ -32,16 +32,16 @@ class PaymentsController extends Controller
                     'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
-            $url = 'http://fuelsystem.alba-petrol.com/api/payments/create';
-            
+            $url = '';
+
             $response = $client->request('POST', $url, [
                 'json' => $payments
             ]);
-            
+
             $inserted_id = json_decode($response->getBody()->getContents());
-			
+
 			Payments::whereIn('id',$inserted_id->inserted_payment)->update(['exported'=> 1]);
-			
+
             return $response->getBody();
 
         } catch (\Exception $e) {
@@ -56,7 +56,7 @@ class PaymentsController extends Controller
     public function createPayment(Request $request){
         $response = $request->all();
         $inserted_payment = array();
-       
+
         foreach($response as $data) {
 
             $user_id = Users::select('id')->where('branch_id',Session::get('branch_id'))->where('branch_user_id',$data['user_id'])->first();
@@ -81,18 +81,18 @@ class PaymentsController extends Controller
                         'branch_id'   => Session::get('branch_id'),
 						'branch_payment_id' => $data['id'],
                     ]);
-                    
+
                     $inserted_payment[] = $data['id'];
 				}
            }
-        
+
         }
 
         return response()->json([
             'response'  => 'Success',
             'inserted_payment' => $inserted_payment,
         ], 201);
-          
+
     }
     /***  END EXPORT FUNCTIONS ***/
 
@@ -106,7 +106,7 @@ class PaymentsController extends Controller
                             ->where('created_at', Payments::max('created_at'))
                             ->orderBy('created_at','desc')
                             ->first();
-        
+
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
@@ -114,8 +114,8 @@ class PaymentsController extends Controller
                     'Accept'                 => "application/json"
                 ]]);
 
-            $url = 'http://fuelsystem.alba-petrol.com/api/payments/export_server';
-			
+            $url = '';
+
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted
             ]);
@@ -133,7 +133,7 @@ class PaymentsController extends Controller
         foreach($data as $payment){
 
             Payments::firstOrCreate([
-                'id' => $payment->branch_payment_id], 
+                'id' => $payment->branch_payment_id],
                 [
                 'date'              => $payment->date,
                 'amount'            => $payment->amount,
@@ -164,7 +164,7 @@ class PaymentsController extends Controller
                             ->where('branch_id',Session::get('branch_id'))
                             ->where('exported','!=',1)
                             ->get();
-        
+
         return response($payments,201);
     }
 

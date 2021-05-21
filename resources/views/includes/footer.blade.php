@@ -515,6 +515,28 @@
 
   // ***  END SELECT ALL CHECKBOX *** //
 
+    function confirmation(ev) {
+        ev.preventDefault();
+        var url = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+        swal({
+            title: "Are you sure?",
+            text: "Once printed, you will not be able to change the invoice!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Please wait!", {
+                    icon: "info",
+                    showConfirmButton: false,
+                    buttons: false,
+                });
+                window.location.href = url;
+            }
+        });
+    }
+
 </script>
 
 @endsection

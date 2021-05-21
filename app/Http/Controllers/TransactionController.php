@@ -13,6 +13,8 @@ use App\Models\Company;
 use App\Models\Payments;
 use App\Models\Products;
 use App\Services\TransactionService;
+use App\Models\InvoiceModel as Invoice;
+use App\Models\InvoiceDetailsModel as InvoiceDetails;
 use Excel;
 use Auth;
 use DB;
@@ -319,6 +321,57 @@ class TransactionController extends Controller
     }
 
     public static function invoice(Request $request){
+        $data = self::invoice_data($request);
+
+        $from_company = $data['from_company'];
+        $to_company = $data['to_company'];
+        $total_transactions = $data['total_transactions'];
+        $companies = $data['companies'];
+
+        return view('/admin/transactions/invoice',compact('from_company','to_company','total_transactions','companies'));
+    }
+
+    public function invoice_pdf(Request $request){
+        $data = self::invoice_data($request);
+        $company            = $data['from_company'];
+        $to_company         = $data['to_company'];
+        $total_transactions = $data['total_transactions'];
+        $companies          = $data['companies'];
+        $from_date          = $request->input('fromDate');
+        $to_date            = $request->input('toDate');
+
+        $invoice_id = Invoice::insertGetId([
+            'date'          => now()->timestamp,
+            'user_id'       => auth()->user()->id,
+            'paid'          => 1,
+            'status'        => 1,
+            'created_at'    => now()->timestamp,
+            'updated_at'    => now()->timestamp
+        ]);
+
+        foreach ($total_transactions as $transactions) {
+            $invoice = new InvoiceDetails();
+
+            $invoice->invoice_id         = $invoice_id;
+            $invoice->product_id         = $transactions['product_id'];
+            $invoice->quantity           = $transactions['lit'];
+            $invoice->price_without_tvsh = number_format(($transactions['price'] / (1 + 0.18)), 2);
+            $invoice->tvsh               = number_format(( $transactions['price'] - ( $transactions['price'] / (1 + 0.18) ) ), 2);
+            $invoice->price              = $transactions['price'];
+            $invoice->total              = $transactions['money'];
+            $invoice->created_at         = now()->timestamp;
+            $invoice->updated_at         = now()->timestamp;
+            $invoice->save();
+        }
+
+
+
+        $pdf = PDF::loadView('admin.transactions.invoice_pdf',compact('company','to_company','total_transactions','companies','from_date','to_date','invoice_id'));
+        $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
+        return $pdf->stream($file_name);
+    }
+
+    public static function invoice_data(Request $request){
         $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_company       = Company::where('status', 4)->first();
@@ -352,7 +405,7 @@ class TransactionController extends Controller
 
         $total_transactions = $products->get();
 
-        return view('/admin/transactions/invoice',compact('from_company','to_company','total_transactions','companies'));
+        return ['from_company' => $from_company,'to_company' => $to_company,'total_transactions' => $total_transactions,'companies' => $companies];
     }
 
     public static function generate_data($request){

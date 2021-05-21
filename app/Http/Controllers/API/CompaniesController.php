@@ -33,7 +33,7 @@ class CompaniesController extends Controller
             'Authorization'          => $access_token,
             'Accept'                 => "application/json"
         ]]);
-        $url = 'http://fuelsystem.alba-petrol.com/api/companies/create';
+        $url = '';
 
         $response = $client->request('POST', $url, [
             'json' => $response
@@ -47,13 +47,13 @@ class CompaniesController extends Controller
 
         $online_response_data = $response->getBody()->getContents();
         $id = json_decode($online_response_data);
-        
-        // Update new exported company 
+
+        // Update new exported company
         foreach($id->new as $value){
             Company::where('id',$value->branch_id)->update(['exported'=> 1, 'master_id' => $value->master_id->id]);
         }
 
-        // Update old exported company 
+        // Update old exported company
         foreach($id->old as $value){
             Company::where('id',$value->branch_id)->update(['exported'=> 1, 'master_id' => $value->master_id->id]);
         }
@@ -64,15 +64,15 @@ class CompaniesController extends Controller
     }
 
     // Server response (Export Companies from local DB to Server)
-    public function createCompany(Request $request) 
-    {   
+    public function createCompany(Request $request)
+    {
         $response = $request->all();
         $new      = array();
         $old      = array();
-        
+
         foreach($response as $company){
             $company_id = Company::firstOrCreate([
-                'bis_number' => $company['bis_number']], 
+                'bis_number' => $company['bis_number']],
                 [
                 'name'              => $company['name'],
                 'fis_number'        => !empty($company['fis_number']) ? $company['fis_number'] : NULL,
@@ -99,10 +99,10 @@ class CompaniesController extends Controller
                 'created_at'        => now()->timestamp,
                 'updated_at'        => $company['updated_at'],
             ]);
-            
+
             if ($company_id->wasRecentlyCreated) {
                 $new[] = array('master_id' => $company_id, 'branch_id' => $company['id']);
-                
+
                 CompanyDiscount::where('company_id',$company_id->id)->delete();
 
                 foreach($company['discount'] as $discount){
@@ -114,7 +114,7 @@ class CompaniesController extends Controller
                         'updated_at'    => $discount['updated_at']
                     ]);
                 }
-                    
+
             }else {
                 $old[] = array('master_id' => $company_id, 'branch_id' => $company['id']);
             }
@@ -125,7 +125,7 @@ class CompaniesController extends Controller
             'new'       => $new,
             'old'       => $old,
         ], 201);
-    
+
     }
     /***  END EXPORT FUNCTIONS ***/
 
@@ -135,7 +135,7 @@ class CompaniesController extends Controller
     public function getCompanyFromServer(){
         ini_set("memory_limit", "-1");
         set_time_limit(0);
-        
+
         $access_token   = config('token.access_token');
         $new            = array();
         $old            = array();
@@ -143,7 +143,7 @@ class CompaniesController extends Controller
                             ->where('created_at', Company::max('created_at'))
                             ->orderBy('created_at','desc')
                             ->first();
-        
+
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
@@ -151,18 +151,18 @@ class CompaniesController extends Controller
                     'Accept'                 => "application/json"
                 ]]);
 
-            $url = 'http://fuelsystem.alba-petrol.com/api/company/import';
-			
+            $url = '';
+
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted
             ]);
 
             $online_response = $response->getBody()->getContents();
             $data            = json_decode($online_response);
-	
+
             foreach($data as $company){
                 $company_id = Company::firstOrCreate([
-                    'bis_number' => $company->bis_number], 
+                    'bis_number' => $company->bis_number],
                     [
                     'name'              => $company->name,
                     'master_id'         => $company->id,
@@ -191,12 +191,12 @@ class CompaniesController extends Controller
                     'created_at'        => $company->created_at,
                     'updated_at'        => $company->updated_at,
                 ]);
-                
+
                 if ($company_id->wasRecentlyCreated) {
                     $new[] = array('id' => $company_id->id,'company_name' => $company_id->name);
-                    
+
                     CompanyDiscount::where('company_id',$company_id->id)->delete();
-    
+
                     foreach($company->discount as $discount){
                         CompanyDiscount::insert([
                             'company_id'    => $company_id->id,
@@ -206,15 +206,15 @@ class CompaniesController extends Controller
                             'updated_at'    => $discount->updated_at
                         ]);
                     }
-                        
+
                 }
             }
-    
+
             return response()->json([
                 'response'      => 'Success',
                 'inserted_ids'  => $new,
             ], 201);
-            
+
 
         } catch (\Exception $e) {
             return response()->json([
@@ -229,12 +229,12 @@ class CompaniesController extends Controller
     {
         $company        = Company::where('created_at','>=',$request->created_at)->limit(500)->get()->toArray();
         $response       = array();
-        
+
         foreach($company as $c){
             $rfid['discount']   = CompanyDiscount::where('company_id',$c['id'])->get()->toArray();
             $response[]         = array_merge($c,$rfid);
         }
-        
+
         return response($response,201);
     }
 
