@@ -22,7 +22,8 @@ return [
         'products_group'                => 'Products Group',
         'staff'                         => 'Staff',
         'stock'                         => 'Stock',
-        'nozzle'                        => 'Nozzle'
+        'nozzle'                        => 'Nozzle',
+        'expenses'                      => 'Expenses',
     ],
     'full_name'                     => 'Full name',
     'email'                         => 'Email',

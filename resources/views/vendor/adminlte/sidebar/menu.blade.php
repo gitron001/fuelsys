@@ -100,6 +100,13 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('admin/expenses') || request()->is('admin/expenses/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/expenses') }}">
+            <i class="fa fa-book" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.expenses') }}</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('admin/staff') || request()->is('admin/staff/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/staff') }}">
             <i class="fa fa-users" aria-hidden="true"></i>

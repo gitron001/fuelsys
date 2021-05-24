@@ -86,6 +86,11 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::post('/admin/pfc/import_data/{pfc_id}/{command_id}', 'PFCController@import_data')->name('admin/pfc/import_data');
     Route::get('/admin/pfc-delete-all', 'PFCController@delete_all');
 
+    //Expenses
+    Route::resource('/admin/expenses', 'ExpensesController');
+    Route::get('expenses/{id}/delete', ['as' => 'expenses.delete', 'uses' => 'ExpensesController@destroy']);
+    Route::get('/admin/expenses-delete-all', 'ExpensesController@delete_all');
+
 	// Settings
     Route::resource('/admin/settings', 'SettingsController');
     Route::get('/delete_process', 'SettingsController@delete_process');

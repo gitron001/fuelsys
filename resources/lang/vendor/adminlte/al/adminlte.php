@@ -23,6 +23,7 @@ return [
         'nozzle'                        => 'Nozzle',
         'products_group'                => 'Grupi i produkteve',
         'settings'                      => 'Preferencat',
+        'expenses'                      => 'Shpenzimet',
     ],
     'full_name'                     => 'Emri',
     'email'                         => 'Email',
