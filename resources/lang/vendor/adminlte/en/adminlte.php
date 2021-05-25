@@ -24,6 +24,7 @@ return [
         'stock'                         => 'Stock',
         'nozzle'                        => 'Nozzle',
         'expenses'                      => 'Expenses',
+        'totalizers'                    => 'Totalizers',
     ],
     'full_name'                     => 'Full name',
     'email'                         => 'Email',

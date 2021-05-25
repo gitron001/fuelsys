@@ -101,6 +101,8 @@ Route::group(['middleware' => 'authenticated'], function () {
     // Transactions - Genrate bill
     Route::get('/transaction-email/{id}','CompaniesController@send_email');
     Route::get('/transaction-receipt','TransactionController@printFunction');
+    // Totalizers
+    Route::get('/admin/totalizers','TransactionController@totalizers');
 
 	// Transactions - Generate EXCEL & PDF
 	Route::post('/transaction/excel_export', 'TransactionController@excel_export');

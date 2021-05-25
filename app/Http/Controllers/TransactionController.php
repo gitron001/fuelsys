@@ -842,10 +842,20 @@ class TransactionController extends Controller
 		return $payments->date+1;
 	}
 
-    public static function printFunction(Request $request)
-    {
+    public static function printFunction(Request $request) {
 		$recepit = new PrintFuelRecept($request->input('id'));
         dispatch($recepit);
 		return json_encode(array('response'=>true));
+    }
+
+    public function totalizers(Request $request) {
+        $totalizers = DB::table('transactions')
+                        ->select('id','sl_no','channel_id','dis_tot_last')
+                        ->whereRaw('id IN (SELECT MAX(id) FROM transactions GROUP BY sl_no,channel_id)')
+                        ->orderBy('channel_id','ASC')
+                        ->orderBy('sl_no','ASC')
+                        ->get();
+
+        return view('/admin/settings/totalizers',compact('totalizers'));
     }
 }

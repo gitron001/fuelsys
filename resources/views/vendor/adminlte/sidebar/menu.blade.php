@@ -114,6 +114,13 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('admin/totalizers') || request()->is('admin/totalizers/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/totalizers') }}">
+            <i class="fa fa-list-ul" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.totalizers') }}</span>
+        </a>
+    </li>
+
     <li class="header">Settings</li>
 
     <li class="{{ request()->is('admin/settings') || request()->is('admin/settings/*') ? 'active' : '' }}">

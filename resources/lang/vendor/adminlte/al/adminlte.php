@@ -24,6 +24,7 @@ return [
         'products_group'                => 'Grupi i produkteve',
         'settings'                      => 'Preferencat',
         'expenses'                      => 'Shpenzimet',
+        'totalizers'                    => 'Totalizeret',
     ],
     'full_name'                     => 'Emri',
     'email'                         => 'Email',
