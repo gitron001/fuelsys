@@ -7,19 +7,19 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
-					{!! Form::label('name', 'Name:'); !!}
+					{!! Form::label('name', trans('adminlte::adminlte.product_fields.name')); !!}
 					{!! Form::text('name',null,['class'=>'form-control']); !!}
 					{!! $errors->first('name','<span class="help-block">:message</span>') !!}
 				</div>
 
 				<div class="form-group {{ $errors->has('price') ? 'has-error' :'' }}">
-					{!! Form::label('price', 'Price:'); !!}
+					{!! Form::label('price', trans('adminlte::adminlte.product_fields.price')); !!}
 					{!! Form::number('price',null,['class'=>'form-control','step'=>'any']); !!}
 					{!! $errors->first('price','<span class="help-block">:message</span>') !!}
 				</div>
 
 				<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
-					{!! Form::label('product_group', 'Product Group:'); !!}
+					{!! Form::label('product_group', trans('adminlte::adminlte.product_fields.product_group')); !!}
 					{!! Form::select('product_group_id',['Select product group'] + $product_group,null,['class'=>'form-control','id'=>'user']); !!}
 					{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 				</div>
@@ -27,19 +27,19 @@
 
 			<div class="col-md-6">
 				<div class="form-group {{ $errors->has('pfc_id') ? 'has-error' :'' }}">
-					{!! Form::label('pfc_id', 'PFC:'); !!}
+					{!! Form::label('pfc_id', trans('adminlte::adminlte.product_fields.pfc')); !!}
 					{!! Form::select('pfc_id',['' => 'Choose PFC'] + $pfc,null,['class'=>'form-control']); !!}
 					{!! $errors->first('pfc_id','<span class="help-block">:message</span>') !!}
 				</div>
 
 				<div class="form-group {{ $errors->has('vat') ? 'has-error' :'' }}">
-					{!! Form::label('vat', 'Vat:'); !!}
+					{!! Form::label('vat', trans('adminlte::adminlte.product_fields.vat')); !!}
 					{!! Form::number('vat',null,['class'=>'form-control','step'=>'any']); !!}
 					{!! $errors->first('vat','<span class="help-block">:message</span>') !!}
 				</div>
 
 				<div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
-					{!! Form::label('status', 'Status:'); !!}
+					{!! Form::label('status', trans('adminlte::adminlte.product_fields.status')); !!}
 					{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('status','<span class="help-block">:message</span>') !!}
 				</div>

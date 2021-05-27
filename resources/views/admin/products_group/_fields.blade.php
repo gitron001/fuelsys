@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
-					{!! Form::label('name', 'Name:'); !!}
+					{!! Form::label('name', trans('adminlte::adminlte.product_group.name')); !!}
 					{!! Form::text('name',null,['class'=>'form-control']); !!}
 					{!! $errors->first('name','<span class="help-block">:message</span>') !!}
 				</div>
@@ -15,7 +15,7 @@
 
 			<div class="col-md-6">
 				<div class="form-group {{ $errors->has('state_code') ? 'has-error' :'' }}">
-					{!! Form::label('state_code', 'State Code:'); !!}
+					{!! Form::label('state_code', trans('adminlte::adminlte.product_group.state_code')); !!}
 					{!! Form::number('state_code',null,['class'=>'form-control']); !!}
 					{!! $errors->first('state_code','<span class="help-block">:message</span>') !!}
 				</div>

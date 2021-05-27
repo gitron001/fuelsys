@@ -33,7 +33,7 @@
     <table width="100%" class="information">
         <tr>
             <td align="center" style="width: 50%;">
-                RAPORT - {{ $company->name }}   &nbsp;&nbsp; &nbsp;| &nbsp;&nbsp;  {{ date('d-m-Y H:i:s', time()) }}
+                {{ trans('adminlte::adminlte.transactions_pdf.report') }} - {{ $company->name }}   &nbsp;&nbsp; &nbsp;| &nbsp;&nbsp;  {{ date('d-m-Y H:i:s', time()) }}
             </td>
         </tr>
     </table>
@@ -46,12 +46,12 @@
 		<td align="left">
             <p style="line-height:1.2">
                 <span style="font-size: 16px;"><b> {{ $company->name }} </b></span><br/>
-				<span><b>Lokacioni :</b> {{ $company->city }}, {{ $company->country }}</span><br/>
-				<span><b>Email :</b> {{ $company->email }}</span><br/>
-                <span><b>Tel. :</b> {{ $company->tel_number }}</span><br/>
-                <span><b>Nr. Biz. :</b> {{ $company->bis_number }}</span><br/>
-                <span><b>Tax. Nr. :</b> {{ $company->tax_number }}</span><br/>
-                <span><b>Nr. Fis. :</b> {{ $company->fis_number }}</span><br/>
+				<span><b>{{ trans('adminlte::adminlte.transactions_pdf.location') }} :</b> {{ $company->city }}, {{ $company->country }}</span><br/>
+				<span><b>{{ trans('adminlte::adminlte.transactions_pdf.email') }} :</b> {{ $company->email }}</span><br/>
+                <span><b>{{ trans('adminlte::adminlte.transactions_pdf.tel') }} :</b> {{ $company->tel_number }}</span><br/>
+                <span><b>{{ trans('adminlte::adminlte.transactions_pdf.nr_biz') }} :</b> {{ $company->bis_number }}</span><br/>
+                <span><b>{{ trans('adminlte::adminlte.transactions_pdf.tax_nr') }} :</b> {{ $company->tax_number }}</span><br/>
+                <span><b>{{ trans('adminlte::adminlte.transactions_pdf.nr_fis') }} :</b> {{ $company->fis_number }}</span><br/>
             </p>
         </td>
 
@@ -79,7 +79,7 @@
 			@endforeach
         @endif
         <p align="center">
-            <span>Datat e zgjedhur për paraqitjen e të dhënave: <b>{{ $date }} - {{ $date_to ? $date_to : $to_date}}</b></span>
+            <span>{{ trans('adminlte::adminlte.transactions_pdf.selected_dates') }}: <b>{{ $date }} - {{ $date_to ? $date_to : $to_date}}</b></span>
         </p>
 	</tr>
 
@@ -88,9 +88,9 @@
 	<table width="100%">
 		<thead style="background-color: lightgray;">
 		  <tr>
-			<th align="center">PRODUKTI</th>
-			<th align="center">SASIA</th>
-			<th align="center">TOTALI</th>
+			<th align="center">{{ trans('adminlte::adminlte.transactions_pdf.products') }}</th>
+			<th align="center">{{ trans('adminlte::adminlte.transactions_pdf.quantity') }}</th>
+			<th align="center">{{ trans('adminlte::adminlte.transactions_pdf.total') }}</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -109,20 +109,20 @@
 	<table width="100%">
 	<thead style="background-color: lightgray;">
 	  <tr>
-	    <th align="center">DATA</th>
-	    <th align="center">LLOJI</th>
-        <th align="center">PERSONI</th>
-        @if($bonus_user != NULL) <th align="center">BONUS PERSONI</th> @endif
-	    <th align="center">MBUSHJA</th>
-	    <th align="center">PAGESA</th>
-	    <th align="center">GJENDJA</th>
+	    <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.date') }}</th>
+	    <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.type') }}</th>
+        <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.user') }}</th>
+        @if($bonus_user != NULL) <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.bonus_user') }}</th> @endif
+	    <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.price') }}</th>
+	    <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.payment') }}</th>
+	    <th align="center">{{ strtoupper(trans('adminlte::adminlte.transactions_pdf.state')) }}</th>
 	  </tr>
 	</thead>
 	<tbody>
 	@if(!$exc_balance)
 	<tr>
 		<th align="center" scope="row">{{ date('Y-m-d H:i',strtotime($date)) }}</th>
-	    <td align="center">Gjendja</td>
+	    <td align="center">{{ ucfirst(trans('adminlte::adminlte.transactions_pdf.state')) }}</td>
 	    <td align="right"></td>
 	    <td align="right"></td>
         <td align="right"></td>
@@ -214,12 +214,12 @@
 	<!-- Show only last row (TOTAL row) -->
 		<tr>
 	        @if($bonus_user != NULL) <td colspan="5"></td> @else <td colspan="4"></td> @endif
-	        <td align="right">Sub Totali €</td>
+	        <td align="right">Sub Total €</td>
 	        <td align="right" class="gray"> {{ number_format($total - $balance, 2) }} €</td>
 		</tr>
 	    <tr>
 	        @if($bonus_user != NULL) <td colspan="5"></td> @else <td colspan="4"></td> @endif
-	        <td align="right">Totali €</td>
+	        <td align="right">Total €</td>
 	        <td align="right" class="gray"> {{ number_format($total, 2) }} €</td>
 		</tr>
 	<!-- END Show only last row (TOTAL row) -->
