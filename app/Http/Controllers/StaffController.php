@@ -39,12 +39,12 @@ class StaffController extends Controller
 
         $staffData          = self::show_staff_info($request)['staffData'];
         $product_name       = self::show_staff_info($request)['product_name'];
-        array_unshift($product_name , 'Perdoruesi'); // Append "Perdoruesi" in the beginning of the array
+        array_unshift($product_name , trans('adminlte::adminlte.user')); // Append "Perdoruesi" in the beginning of the array
         array_push($product_name,'Euro'); // Append "Euro" in the end of the array
 
         $companyData            = self::show_companies_info($request)['companyData'];
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
-        array_unshift($product_name_company , 'Kompania'); // Append "Kompania" in the beginning of the array
+        array_unshift($product_name_company , trans('adminlte::adminlte.company')); // Append "Kompania" in the beginning of the array
         array_push($product_name_company,'Euro'); // Append "Euro" in the end of the array
 
 
@@ -65,11 +65,11 @@ class StaffController extends Controller
                 });
 
                 $sheet->appendRow(array(
-                    'Produkti',
-                    'Cmimi',
-                    'Sasia',
-                    'Sasia Me Numra',
-                    'Ndryshimi',
+                    trans('adminlte::adminlte.product'),
+                    trans('adminlte::adminlte.price'),
+                    trans('adminlte::adminlte.amount'),
+                    trans('adminlte::adminlte.staff_details.quantity_with_numbers'),
+                    trans('adminlte::adminlte.change'),
                 ));
 
                 $totalizer_sales = array();

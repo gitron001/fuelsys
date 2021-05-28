@@ -1,6 +1,6 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">{{ !isset($pump) ? 'Create new nozzle' : 'Edit nozzle'}}</h3>
+		<h3 class="box-title">{{ !isset($pump) ? trans('adminlte::adminlte.nozzle_details.create_new') : trans('adminlte::adminlte.nozzle_details.edit') }}</h3>
 	</div>
 
 	<div class="box-body">
@@ -40,9 +40,9 @@
 
 	<div class="box-footer">
 		<button type="submit" class="btn btn-primary">
-			<i class="fas fa-save"></i> Save
+			<i class="fas fa-save"></i> {{ trans('adminlte::adminlte.save') }}
 		</button>
-		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
+		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> {{ trans('adminlte::adminlte.cancel') }} </a>
 	</div>
 
 </div>

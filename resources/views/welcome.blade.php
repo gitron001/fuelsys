@@ -42,10 +42,10 @@
   <div class="col-md-6">
       <div class="box box-primary" style="height: 550px;">
       <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('adminlte::adminlte.homepage.dispanesers') }}</h3>
+          <h3 class="box-title">{{ trans('adminlte::adminlte.dispensers') }}</h3>
 
           <div class="box-tools pull-right">
-          <span class="label label-primary">{{ trans('adminlte::adminlte.homepage.total') }}: {{count($dispanesers)}}</span>
+          <span class="label label-primary">{{ trans('adminlte::adminlte.total') }}: {{count($dispanesers)}}</span>
           </div>
       </div>
 
@@ -123,7 +123,7 @@
 <div class="col-md-6 table-wrapper-scroll-y my-custom-scrollbar scrollStyle" id="loadTransaction">
   <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">{{ trans('adminlte::adminlte.homepage.live_feed') }}</h3>
+        <h3 class="box-title">{{ trans('adminlte::adminlte.transactions') }}</h3>
         <span class="pulse"></span>
     </div>
 
@@ -132,10 +132,10 @@
         <table class="table no-margin">
             <thead>
             <tr>
-            <th class="text-center">Name</th>
-            <th class="text-center">Product</th>
-            <th class="text-center">Amount</th>
-            <th class="text-center">Date</th>
+            <th class="text-center">{{ trans('adminlte::adminlte.user') }}</th>
+            <th class="text-center">{{ trans('adminlte::adminlte.product') }}</th>
+            <th class="text-center">{{ trans('adminlte::adminlte.amount') }}</th>
+            <th class="text-center">{{ trans('adminlte::adminlte.date') }}</th>
             </tr>
             </thead>
             <tbody>

@@ -18,31 +18,31 @@
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Phone Number</b> <a class="pull-right">{{ $company->tel_number }}</a>
+                  <b>{{ trans('adminlte::adminlte.phone') }}</b> <a class="pull-right">{{ $company->tel_number }}</a>
 				</li>
 				<li class="list-group-item">
-                  <b>Email</b> <a class="pull-right">{{ $company->email }}</a>
+                  <b>{{ trans('adminlte::adminlte.email') }}</b> <a class="pull-right">{{ $company->email }}</a>
 				</li>
 				<li class="list-group-item">
-                  <b>Address</b> <a class="pull-right">{{ $company->address }}</a>
+                  <b>{{ trans('adminlte::adminlte.address') }}</b> <a class="pull-right">{{ $company->address }}</a>
 				</li>
 				<li class="list-group-item">
-                  <b>Country</b> <a class="pull-right">{{ $company->country }}</a>
+                  <b>{{ trans('adminlte::adminlte.country') }}</b> <a class="pull-right">{{ $company->country }}</a>
 				</li>
 				<li class="list-group-item">
-                  <b>Fis.Number</b> <a class="pull-right">{{ $company->fis_number }}</a>
+                  <b>{{ trans('adminlte::adminlte.fis_number') }}</b> <a class="pull-right">{{ $company->fis_number }}</a>
 				</li>
 				<li class="list-group-item">
-                  <b>Contact Person</b> <a class="pull-right">{{ $company->contact_person }}</a>
+                  <b>{{ trans('adminlte::adminlte.contact_person') }}</b> <a class="pull-right">{{ $company->contact_person }}</a>
 				</li>
                 <li class="list-group-item">
-                  <b>Starting Balance</b> <a class="pull-right">{{ $company->starting_balance }}</a>
+                  <b>{{ trans('adminlte::adminlte.settings_details.starting_balance') }}</b> <a class="pull-right">{{ $company->starting_balance }}</a>
 				</li>
 				<li class="list-group-item">
-                  <b>Tax.Number</b> <a class="pull-right">{{ $company->tax_number }}</a>
+                  <b>{{ trans('adminlte::adminlte.tax_number') }}</b> <a class="pull-right">{{ $company->tax_number }}</a>
 				</li>
 				<li class="list-group-item">
-                  <b>Res.Number</b> <a class="pull-right">{{ $company->res_number }}</a>
+                  <b>{{ trans('adminlte::adminlte.res_number') }}</b> <a class="pull-right">{{ $company->res_number }}</a>
 				</li>
 				<li class="list-group-item">
 				  <b>Export RFID</b> <a href="{{ url('/api/rfids') }}" class="pull-right">
@@ -87,8 +87,8 @@
         <div class="col-md-9">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
-              <li ><a href="#running_process" data-toggle="tab">Running Process</a></li>
+              <li class="active"><a href="#settings" data-toggle="tab">{{ trans('adminlte::adminlte.settings') }}</a></li>
+              <li ><a href="#running_process" data-toggle="tab">{{ trans('adminlte::adminlte.settings_details.running_process') }}</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="settings">
@@ -97,36 +97,36 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							{!! Form::label('name', 'Name'); !!}
+							{!! Form::label('name', trans('adminlte::adminlte.name')); !!}
 							{!! Form::text('name',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('fis_number', 'Fis.Number'); !!}
+							{!! Form::label('fis_number', trans('adminlte::adminlte.fis_number')); !!}
 							{!! Form::text('fis_number',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('bis_number', 'Bis.Number'); !!}
+							{!! Form::label('bis_number', trans('adminlte::adminlte.bis_number')); !!}
 							{!! Form::text('bis_number',null,['class'=>'form-control']); !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('tax_number', 'Tax.Number'); !!}
+							{!! Form::label('tax_number', trans('adminlte::adminlte.tax_number')); !!}
 							{!! Form::text('tax_number',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('contact_person', 'Contact Person:'); !!}
+							{!! Form::label('contact_person', trans('adminlte::adminlte.contact_person')); !!}
 							{!! Form::text('contact_person',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('printer_id', 'Printer IP'); !!}
+							{!! Form::label('printer_id', trans('adminlte::adminlte.settings_details.printer_ip')); !!}
 							{!! Form::text('printer_id',null,['class'=>'form-control']); !!}
                         </div>
 
                         <div class="form-group ">
-                            <label for="print">Print transaction: </label>
+                            <label for="print">{{ trans('adminlte::adminlte.settings_details.print_transaction') }} </label>
                             <div class="input-radio">
                                 <input type="radio" name="print_transaction" value="1" @if (isset($company) && $company->print_transaction == 1) checked @endif> Yes &nbsp;
                                 <input type="radio" name="print_transaction" value="0" @if (isset($company) && $company->print_transaction == 0) checked @endif> No<br>
@@ -134,7 +134,7 @@
                         </div>
 
                         <div class="form-group ">
-                            <label for="print">Hide all views (Direct login): </label>
+                            <label for="print">{{ trans('adminlte::adminlte.settings_details.hide_views') }} </label>
                             <div class="input-radio">
                                 <input type="radio" name="direct_login" value="1" @if (isset($company) && $company->direct_login == 1) checked @endif> Yes &nbsp;
                                 <input type="radio" name="direct_login" value="0" @if (isset($company) && $company->direct_login == 0) checked @endif> No<br>
@@ -142,14 +142,14 @@
                         </div>
 
                         <div class="form-group" id="show_transaction_time_div" @if (isset($company) && $company->show_transaction == 0) style="display:none;" @endif>
-							{!! Form::label('show_transaction_time', 'Transactions date'); !!}
+							{!! Form::label('show_transaction_time', trans('adminlte::adminlte.settings_details.transactions_date')); !!}
 							{!! Form::select('show_transaction_time',$time,$company->show_transaction_time,['class'=>'form-control']); !!}
                         </div>
 
 
 
 						<div class="form-group">
-							{!! Form::label('photo', 'Photo:'); !!}
+							{!! Form::label('photo', trans('adminlte::adminlte.photo')); !!}
 							@if (asset('/images/company/'.$company->images))
 								<br>
 								<img class="img-responsive img-thumbnail" src="{{asset('/images/company/'.$company->images)}}" height="100" width="100">
@@ -162,42 +162,42 @@
 
 					<div class="col-md-6">
 						<div class="form-group">
-							{!! Form::label('res_number', 'Res.Number'); !!}
+							{!! Form::label('res_number', trans('adminlte::adminlte.res_number')); !!}
 							{!! Form::text('res_number',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('tel_number', 'Phone'); !!}
+							{!! Form::label('tel_number', trans('adminlte::adminlte.phone')); !!}
 							{!! Form::text('tel_number',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('email', 'Email'); !!}
+							{!! Form::label('email', trans('adminlte::adminlte.email')); !!}
 							{!! Form::text('email',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('address', 'Address'); !!}
+							{!! Form::label('address', trans('adminlte::adminlte.address')); !!}
 							{!! Form::text('address',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('city', 'City'); !!}
+							{!! Form::label('city', trans('adminlte::adminlte.city')); !!}
 							{!! Form::text('city',null,['class'=>'form-control']); !!}
 						</div>
 
 						<div class="form-group">
-							{!! Form::label('country', 'Country'); !!}
+							{!! Form::label('country', trans('adminlte::adminlte.country')); !!}
 							{!! Form::text('country',null,['class'=>'form-control']); !!}
                         </div>
 
                         <div class="form-group">
-							{!! Form::label('transaction_location', 'Transaction file location'); !!}
+							{!! Form::label('transaction_location', trans('adminlte::adminlte.settings_details.transaction_file_location')); !!}
 							{!! Form::text('transaction_location',null,['class'=>'form-control','placeholder'=>'Example: D:\FuelSystem']); !!}
                         </div>
 
                         <div class="form-group ">
-                            <label for="print">Show transaction if user is not logged in: </label>
+                            <label for="print">{{ trans('adminlte::adminlte.settings_details.show_transactions_if_loggedin')}} </label>
                             <div class="input-radio">
                                 <input type="radio" name="show_transaction" id="show_transaction_yes" value="1" @if (isset($company) && $company->show_transaction == 1) checked @endif> Yes &nbsp;
                                 <input type="radio" name="show_transaction" id="show_transaction_no" value="0" @if (isset($company) && $company->show_transaction == 0) checked @endif> No<br>
@@ -209,7 +209,7 @@
 
 				<div class="form-group">
 					<button type="submit" class="btn btn-block btn-primary">
-						<i class="fas fa-save"></i> Save
+						<i class="fas fa-save"></i> {{ trans('adminlte::adminlte.save') }}
 					</button>
 				</div>
 

@@ -5,25 +5,25 @@
 @include('includes/alert_info')
 <div class="box box-primary">
     <div class="box-header">
-        <h3 class="box-title">Expenses</h3>
+        <h3 class="box-title">{{ trans('adminlte::adminlte.expenses') }}</h3>
     </div>
     <div class="box-body">
         <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
             <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/expenses') }}">
                 <div class="form-group">
-                    <label for="Start Date:">Start Date:</label>
+                    <label for="Start Date:">{{ trans('adminlte::adminlte.start_date') }}:</label>
                     <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate"
                         value="{{ request()->get('fromDate')}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="End Date:">End Date:</label>
+                    <label for="End Date:">{{ trans('adminlte::adminlte.end_date') }}:</label>
                     <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate"
                         value="{{ request()->get('toDate')}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="User:">User:</label>
+                    <label for="User:">{{ trans('adminlte::adminlte.user') }}:</label>
                     <select class="users-dropdown form-control" name="user[]" multiple="multiple" id="user">
                         @foreach($users as $id => $name)
                         <option value="{{ $id }}" @if(!empty( request()->get("user")))
@@ -37,9 +37,9 @@
 
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i
                         class="fa fa-search"></i> Search</button>
-                <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="Delete all selected payments"><i
-                        class="fa fa-trash"></i> Delete</a>
-                <a href="{{ url('admin/expenses/create') }}" data-toggle="tooltip" class="btn btn-success" title="Create new expense"><i class="fa fa-plus"></i> New</a>
+                <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="{{ trans('adminlte::adminlte.expenses_details.delete_all') }}"><i
+                        class="fa fa-trash"></i> {{ trans('adminlte::adminlte.delete') }}</a>
+                <a href="{{ url('admin/expenses/create') }}" data-toggle="tooltip" class="btn btn-success" title="{{ trans('adminlte::adminlte.expenses_details.create_new') }}"><i class="fa fa-plus"></i> {{ trans('adminlte::adminlte.new') }}</a>
             </form>
 
             <br>
@@ -49,25 +49,25 @@
                     <thead>
                         <th style="text-align:center;"><input type="checkbox" id="checkall" class="checkbox-select-all">
                         </th>
-                        <th class="sorting" data-sorting_type="asc" data-column_name="date">Date <span id="date_icon"
+                        <th class="sorting" data-sorting_type="asc" data-column_name="date">{{ trans('adminlte::adminlte.date') }} <span id="date_icon"
                                 class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                        <th class="sorting" data-sorting_type="asc" data-column_name="user_id">User <span
+                        <th class="sorting" data-sorting_type="asc" data-column_name="user_id">{{ trans('adminlte::adminlte.user') }} <span
                                 id="user_id_icon" class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                        <th class="sorting" data-sorting_type="asc" data-column_name="amount">Amount <span
+                        <th class="sorting" data-sorting_type="asc" data-column_name="amount">{{ trans('adminlte::adminlte.amount') }} <span
                                 id="amount_icon" class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                        <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created By <span
+                        <th class="sorting" data-sorting_type="asc" data-column_name="created_by">{{ trans('adminlte::adminlte.expenses_details.created_by') }} <span
                                 id="created_at_icon" class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                        <th class="sorting" data-sorting_type="asc" data-column_name="created_at">Created At <span
+                        <th class="sorting" data-sorting_type="asc" data-column_name="created_at">{{ trans('adminlte::adminlte.created_at') }} <span
                                 id="created_at_icon" class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                        <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">Updated At <span
+                        <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">{{ trans('adminlte::adminlte.updated_at') }} <span
                                 id="updated_at_icon" class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                        <th class="text-center">Options</th>
+                        <th class="text-center">{{ trans('adminlte::adminlte.options') }}</th>
                     </thead>
                     <tbody>
                         @include('admin.expenses.table_data')

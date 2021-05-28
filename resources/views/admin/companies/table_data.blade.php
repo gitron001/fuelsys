@@ -11,8 +11,8 @@
     <td>{{ $company->created_at->diffForHumans() }}</td>
     <td>{{ $company->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">
-        <a href="{{ url('admin/companies/'.$company->id.'/edit') }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.company.edit') }}"><i class="fa fa-edit"></i></a>&nbsp;
-        <a href="{{ route('company.delete', $company->id) }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.company.delete') }}" class="delete-item"><i class="fa fa-trash"></i></a>
+        <a href="{{ url('admin/companies/'.$company->id.'/edit') }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.edit') }}"><i class="fa fa-edit"></i></a>&nbsp;
+        <a href="{{ route('company.delete', $company->id) }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.delete') }}" class="delete-item"><i class="fa fa-trash"></i></a>
     </td>
 </tr>
 @endforeach

@@ -148,12 +148,12 @@ class TransactionController extends Controller
         $startDate = $request->fromDate;
         $from_to_date = $request->fromDate . ' - ' . $request->toDate;
 
-        $dataArray[] = array('PRODUKTI','SASIA','TOTALI');
+        $dataArray[] = array(strtoupper(trans('adminlte::adminlte.product')),strtoupper(trans('adminlte::adminlte.amount')),strtoupper(trans('adminlte::adminlte.total')));
         foreach($data as $d) {
             $dataArray[] = array(
-                'PRODUKTI'  => $d['product_name'],
-                'SASIA'     => $d['lit'] . ' litra',
-                'TOTALI'    => $d['money'] . ' Euro',
+                strtoupper(trans('adminlte::adminlte.product'))  => $d['product_name'],
+                strtoupper(trans('adminlte::adminlte.amount'))    => $d['lit'] . ' litra',
+                strtoupper(trans('adminlte::adminlte.total'))    => $d['money'] . ' Euro',
             );
         }
 
@@ -170,15 +170,15 @@ class TransactionController extends Controller
                 $totalPayed = 0;
 
                 $sheet->appendRow(array(
-                    'DATA',
-                    'LLOJI',
-                    'PERSONI',
-                    'BONUS PERSONI',
-                    'MBUSHJA',
-                    'PAGESA',
-                    'GJENDJA',
+                    strtoupper(trans('adminlte::adminlte.date')),
+                    strtoupper(trans('adminlte::adminlte.type')),
+                    strtoupper(trans('adminlte::adminlte.user')),
+                    strtoupper(trans('adminlte::adminlte.bonus_user')),
+                    strtoupper(trans('adminlte::adminlte.fill')),
+                    strtoupper(trans('adminlte::adminlte.payments')),
+                    strtoupper(trans('adminlte::adminlte.state')),
                     '       ',
-                    'Datat e zgjedhura për paraqitjen e të dhënave',
+                    strtoupper(trans('adminlte::adminlte.selected_date_to_show_data')),
                 ));
 
                 $sheet->cell('A2', function($cell) use( $startDate ){
@@ -186,7 +186,7 @@ class TransactionController extends Controller
                 });
 
                 $sheet->cell('B2', function($cell) use( $totalAmount ){
-                        $cell->setValue('GJENDJA');
+                        $cell->setValue(strtoupper(trans('adminlte::adminlte.state')));
                 });
 
                 $sheet->cell('F2', function($cell) use( $totalAmount ){

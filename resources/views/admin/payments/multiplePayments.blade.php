@@ -15,7 +15,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group {{ $errors->has('date') ? 'has-error' :'' }}">
-					{!! Form::label('date', 'Date:'); !!}
+					{!! Form::label('date', trans('adminlte::adminlte.date')); !!}
 						{!! Form::text('date',null,['class'=>'form-control','autocomplete'=>'off','id' => 'datetimepicker']); !!}
 					{!! $errors->first('date','<span class="help-block">:message</span>') !!}
 				</div>
@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('type', 'Type:'); !!}
+                    {!! Form::label('type', trans('adminlte::adminlte.type')); !!}
 					{!! Form::select('type',[''=>'Choose type','1'=>'Pagese','2'=>'Hyrje'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('type','<span class="help-block">:message</span>') !!}
                 </div>
@@ -32,7 +32,7 @@
 		</div>
 
         <div class="form-group" id="another_payment">
-            {!! Form::label('another_payment', 'Add payment:'); !!}
+            {!! Form::label('another_payment', trans('adminlte::adminlte.payments_fields.add_payment')); !!}
 
             <div class="row">
                 <div class="col-md-1">
@@ -49,7 +49,7 @@
 
         <div class="col-12">
             <div class="form-group {{ $errors->has('description') ? 'has-error' :'' }}">
-                {!! Form::label('description', 'Description:'); !!}
+                {!! Form::label('description', trans('adminlte::adminlte.description')); !!}
                 {!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!}
                 {!! $errors->first('description','<span class="help-block">:message</span>') !!}
             </div>
@@ -59,9 +59,9 @@
 
 	<div class="box-footer">
 		<button type="submit" class="btn btn-primary" id="payment-save-btn">
-            <i class="fas fa-save"></i> Save
+            <i class="fas fa-save"></i> {{ trans('adminlte::adminlte.save') }}
         </button>
-		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
+		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> {{ trans('adminlte::adminlte.cancel') }} </a>
 	</div>
 
 </div>

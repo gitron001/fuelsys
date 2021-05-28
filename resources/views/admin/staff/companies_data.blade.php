@@ -4,13 +4,13 @@
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-building" aria-hidden="true"></i>
-        <h3 class="box-title">Companies</h3>
+        <h3 class="box-title">{{ trans('adminlte::adminlte.companies') }}</h3>
     </div>
     <div class="box-body">
         <table class="table table-bordered table-hover table-responsive text-center">
             <thead>
                 <tr>
-                    <th>Kompania</th>
+                    <th>{{ trans('adminlte::adminlte.company') }}</th>
                     @foreach($product_name_company as $value)
                         <th>{{ $value }}</th>
                     @endforeach

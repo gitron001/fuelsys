@@ -3,13 +3,13 @@
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-user" aria-hidden="true"></i>
-        <h3 class="box-title">Staff</h3>
+        <h3 class="box-title">{{ trans('adminlte::adminlte.staff') }}</h3>
     </div>
     <div class="box-body">
         <table class="table table-bordered table-hover table-responsive text-center">
             <thead>
                 <tr>
-                    <th>Perdoruesi</th>
+                    <th>{{ trans('adminlte::adminlte.user') }}</th>
                     @foreach($product_name as $value)
                         <th>{{ $value }}</th>
                     @endforeach
