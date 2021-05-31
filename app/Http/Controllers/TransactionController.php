@@ -850,7 +850,7 @@ class TransactionController extends Controller
 
     public function totalizers(Request $request) {
         $totalizers = DB::table('transactions')
-                        ->select('id','sl_no','channel_id','dis_tot_last')
+                        ->select('id','sl_no','channel_id','dis_tot as dis_tot_last')
                         ->whereRaw('id IN (SELECT MAX(id) FROM transactions GROUP BY sl_no,channel_id)')
                         ->orderBy('channel_id','ASC')
                         ->orderBy('sl_no','ASC')
