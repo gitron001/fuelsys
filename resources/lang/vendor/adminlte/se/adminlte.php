@@ -55,6 +55,7 @@ return [
         'exc_balance'           => 'Izuzmi ravnotežu',
         'all_day'               => 'Ceo dan',
         'bonus_driver_card'     => 'Bonus/Vozačka kartica',
+        'edit'                  => 'Promenite transakciju',
     ],
     'transactions_pdf' => [
         'report'            => 'IZVEŠTAJ',

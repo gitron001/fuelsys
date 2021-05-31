@@ -15,6 +15,7 @@ use App\Models\Products;
 use App\Services\TransactionService;
 use App\Models\InvoiceModel as Invoice;
 use App\Models\InvoiceDetailsModel as InvoiceDetails;
+use App\Models\TransactionChangeHistory;
 use Excel;
 use Auth;
 use DB;
@@ -80,24 +81,15 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id) {
-        $transaction = Transactions::findOrFail($id);
-        $dispanesers = Dispaneser::pluck('name','id')->all();
-        $users       = Users::pluck('name','id')->all();
-        $products    = Products::pluck('name','id')->all();
-        $pfc         = PFC::pluck('name','id')->all();
+        $transaction    = Transactions::findOrFail($id);
+        $users          = Users::where('status',1)->where(function ($users) {
+                            $users->where('company_id', 0)
+                            ->orWhereNull('company_id');
+                        })->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
 
-        return view('/admin/transactions/edit',compact('transaction','dispanesers','users','products','pfc'));
+        return view('/admin/transactions/edit',compact('transaction','users'));
     }
 
     /**
@@ -109,9 +101,20 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id) {
         $transaction = Transactions::findOrFail($id);
-        $transaction->update($request->all());
-        session()->flash('info','Success');
+        $transaction->user_id = $request->input('user_id');
+        $transaction->save();
 
+        // Save transaction changes
+        $history                    = new TransactionChangeHistory();
+        $history->transaction_id    = $request->input('transaction_id');
+        $history->previous_user_id  = $request->input('previous_user_id');
+        $history->current_user_id   = $request->input('user_id');
+        $history->updated_by        = Auth::user()->id;
+        $history->created_at        = now()->timestamp;
+        $history->updated_at        = now()->timestamp;
+        $history->save();
+
+        session()->flash('info','Success');
         return redirect('/admin/transactions');
     }
 

@@ -98,6 +98,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 
     // Transactions
     Route::get('/admin/transactions','TransactionController@searchWithPagination');
+    Route::get('/admin/transactions/{id}/edit','TransactionController@edit');
+    Route::put('/admin/transactions/{id}','TransactionController@update')->name('transactions.update');
     // Transactions - Genrate bill
     Route::get('/transaction-email/{id}','CompaniesController@send_email');
     Route::get('/transaction-receipt','TransactionController@printFunction');
