@@ -19,7 +19,7 @@ return [
         'products_group'                => 'Grupi i produkteve',
         'settings'                      => 'Preferencat',
         'expenses'                      => 'Shpenzimet',
-        'totalizers'                    => 'Totalizeret',
+        'totalizers'                    => 'Totalizerët',
     ],
 
     'company_details' => [
@@ -280,6 +280,7 @@ return [
     'fill'              => 'Mbushja',
     'state'             => 'Gjendja',
     'history'           => 'Historia',
+    'created_by'        => 'Krijuar nga',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',

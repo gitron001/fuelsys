@@ -5,6 +5,8 @@
       <li @if(Request::path() == 'admin/staff/dispensers') class="active" @endif><a href="{{ URL::to('/admin/staff/dispensers'.$url) }}">{{ trans('adminlte::adminlte.staff_details.totalizers') }}</a></li>
       <li @if(Request::path() == 'admin/staff/products') class="active" @endif><a href="{{ URL::to('/admin/staff/products'.$url) }}">{{ trans('adminlte::adminlte.products') }}</a></li>
       <li @if(Request::path() == 'admin/staff/companies') class="active" @endif><a href="{{ URL::to('/admin/staff/companies'.$url) }}">{{ trans('adminlte::adminlte.companies') }}</a></li>
+      <li @if(Request::path() == 'admin/staff/payments') class="active" @endif><a href="{{ URL::to('/admin/staff/payments'.$url) }}">{{ trans('adminlte::adminlte.payments') }}</a></li>
+      <li @if(Request::path() == 'admin/staff/expenses') class="active" @endif><a href="{{ URL::to('/admin/staff/expenses'.$url) }}">{{ trans('adminlte::adminlte.expenses') }}</a></li>
     </ul>
     <br>
     <form class="form-inline text-center" method="GET" action="{{ URL::to(Request::path()) }}" role="form">

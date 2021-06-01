@@ -106,6 +106,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/transaction-receipt','TransactionController@printFunction');
     // Totalizers
     Route::get('/admin/totalizers','TransactionController@totalizers');
+    Route::get('/totalizers-export-pdf','TransactionController@export_totalizers_to_pdf');
 
 	// Transactions - Generate EXCEL & PDF
 	Route::post('/transaction/excel_export', 'TransactionController@excel_export');
@@ -137,6 +138,8 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/admin/staff','StaffController@staff_view');
     Route::get('/admin/staff/dispensers','StaffController@dispensers');
     Route::get('/admin/staff/companies','StaffController@companies');
+    Route::get('/admin/staff/expenses','StaffController@expenses');
+    Route::get('/admin/staff/payments','StaffController@payments');
     Route::get('/admin/staff/products','StaffController@products');
     Route::get('/excel_export_staff_view','StaffController@export_excel');
 

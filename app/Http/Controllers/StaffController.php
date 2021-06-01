@@ -9,6 +9,8 @@ use Excel;
 use App\Models\Users;
 use App\Models\Shifts;
 use App\Models\Company;
+use App\Models\Expenses;
+use App\Models\Payments;
 use App\Jobs\SendShiftEmail;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
@@ -240,11 +242,32 @@ class StaffController extends Controller
 
         $products               = self::show_products_info($request);
 
+        $expenses               = self::show_expenses_info($request);
+
+        $payments               = self::show_payments_info($request);
+
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company'));
+        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments'));
     }
 
+    public function expenses(Request $request){
+        $request                = self::setDates($request);
+
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
+        $expenses               = self::show_expenses_info($request);
+
+        return view('admin.staff.staff_view',compact('shift','expenses'));
+    }
+
+    public function payments(Request $request){
+        $request                = self::setDates($request);
+
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
+        $payments               = self::show_payments_info($request);
+
+        return view('admin.staff.staff_view',compact('shift','payments'));
+    }
 
     public function dispensers(Request $request){
         $request                = self::setDates($request);
@@ -278,6 +301,36 @@ class StaffController extends Controller
         return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals','products_average'));
 
 	}
+
+    public static function show_payments_info($request, $view_type = null){
+        $payments = Payments::select(DB::raw('SUM(amount) as total'),DB::RAW('companies.name as company'), DB::RAW('created_by'), DB::RAW('u1.name as user'),DB::RAW('u2.name as created_by'),'date','description')
+            ->leftJoin( DB::RAW('users u1'), 'u1.id', '=', 'payments.user_id')
+            ->leftJoin( DB::RAW('users u2'), 'u2.id', '=', 'payments.created_by')
+            ->leftJoin('companies', 'companies.id', '=', 'payments.company_id')
+            ->groupBy('payments.id');
+
+        $payments = $payments->whereBetween('payments.date',[$request->input('fromDate'), $request->input('toDate')]);
+
+        $payments = $payments->orderBy('payments.date');
+
+        $payments = $payments->get();
+
+        return $payments;
+    }
+
+    public static function show_expenses_info($request, $view_type = null){
+        $expenses = Expenses::select(DB::raw('SUM(amount) as total'), DB::RAW('user_id as user'), DB::RAW('users.name as name'),'description','date')
+            ->leftJoin('users', 'users.id', '=', 'expenses.user_id')
+            ->groupBy('expenses.id');
+
+        $expenses = $expenses->whereBetween('expenses.date',[$request->input('fromDate'), $request->input('toDate')]);
+
+        $expenses = $expenses->orderBy('expenses.user_id');
+
+        $expenses = $expenses->get();
+
+        return $expenses;
+    }
 
     public static function show_products_info($request, $view_type = null){
 
@@ -568,9 +621,13 @@ class StaffController extends Controller
 		if($request->input('url') == 'staff'){
 			$staffData              = self::show_staff_info($request)['staffData'];
 			$product_name           = self::show_staff_info($request)['product_name'];
+            $expenses               = self::show_expenses_info($request, 'expenses_data');
+            $payments               = self::show_payments_info($request, 'payments_data');
 		}else{
 			$staffData              = null;
 			$product_name           = null;
+            $expenses               = null;
+            $payments               = null;
 		}
 
 		if($request->input('url') == 'staff' || $request->input('url') == 'companies'){
@@ -596,9 +653,15 @@ class StaffController extends Controller
             $products_average       = self::show_products_average_info($request);
 		}
 
+        if($request->input('url') == 'expenses'){
+            $expenses               = self::show_expenses_info($request, 'expenses_data');
+		}
 
+        if($request->input('url') == 'payments'){
+            $payments               = self::show_payments_info($request, 'payments_data');
+		}
 
-        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','products_average'));
+        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','products_average','expenses','payments'));
         $file_name  = 'Staff-PDF - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
 

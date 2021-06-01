@@ -72,9 +72,9 @@
                 <span style="font-size: 16px;"><b> {{ $company->name }} </b></span><br/>
                 <?php
                 if(isset($_GET['fromDate']) || isset($_GET['toDate'])) {
-                    echo trans('adminlte::adminlte.staff.selected_date') .': '. $_GET['fromDate'] .' - '. $_GET['toDate'];
+                    echo trans('adminlte::adminlte.staff_details.selected_date') .': '. $_GET['fromDate'] .' - '. $_GET['toDate'];
                 }else {
-                    echo trans('adminlte::adminlte.staff.selected_date') .': '. date('d-m-Y H:i:s', $request->fromDate) .' - '. date('d-m-Y H:i:s', $request->toDate);
+                    echo trans('adminlte::adminlte.staff_details.selected_date') .': '. date('d-m-Y H:i:s', $request->fromDate) .' - '. date('d-m-Y H:i:s', $request->toDate);
                 } ?>
             </p>
         </td>
@@ -152,11 +152,11 @@
 
     <!-- STAFF SECTION -->
     @if (Request::input('url') == 'staff' || $request->url == 'staff')
-    <h4>{{ trans('adminlte::adminlte.staff.staff') }}</h4>
+    <h4>{{ trans('adminlte::adminlte.staff') }}</h4>
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
 		  <tr>
-            <th>{{ trans('adminlte::adminlte.staff.user') }}</th>
+            <th>{{ trans('adminlte::adminlte.user') }}</th>
             @foreach($product_name as $value)
                 <th>{{ $value }}</th>
             @endforeach
@@ -339,6 +339,82 @@
         </table>
 
 	@endif
-	  <!-- START PRODUCTS SECTION -->
+	<!-- END PRODUCTS SECTION -->
+
+    <!-- START PAYMENTS SECTION -->
+    @if (Request::input('url') == 'staff' || Request::input('url') == 'payments' || $request->url == 'staff')
+        @if(count($payments) != 0)
+        <h4>{{ trans('adminlte::adminlte.payments') }}</h4>
+        <table width="100%" id="table_design">
+            <thead style="background-color: lightgray;">
+                <tr>
+                    <th>{{ trans('adminlte::adminlte.date') }}</th>
+                    <th>{{ trans('adminlte::adminlte.description') }}</th>
+                    <th>{{ trans('adminlte::adminlte.user') }}</th>
+                    <th>{{ trans('adminlte::adminlte.company') }}</th>
+                    <th>{{ trans('adminlte::adminlte.created_by') }}</th>
+                    <th>{{ trans('adminlte::adminlte.amount') }}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @php ($total = 0) @endphp
+                @foreach($payments as $payment)
+                <tr>
+                    <td>{{ date('m/d/Y H:i', $payment->date) }}</td>
+                    <td>{{ $payment->description ? $payment->description : '-' }}</td>
+                    <td>{{ $payment->user ? $payment->user : '-' }}</td>
+                    <td>{{ $payment->company ? $payment->company : '-' }}</td>
+                    <td>{{ $payment->created_by }}</td>
+                    <td>{{ number_format($payment->total,2) }} Euro</td>
+                </tr>
+                @php ($total += number_format($payment->total,2)) @endphp
+                @endforeach
+                <tr>
+                    <td colspan="5" style="text-align:right"><b>TOTAL:</b></td>
+                    <td><b>{{ number_format($total,2) }} Euro</b></td>
+                </tr>
+            </tbody>
+
+        </table>
+        @endif
+    @endif
+    <!-- END PAYMENTS SECTION -->
+
+    <!-- START EXPENSES SECTION -->
+    @if (Request::input('url') == 'staff' || Request::input('url') == 'expenses' || $request->url == 'staff')
+        @if(count($expenses) != 0)
+        <h4>{{ trans('adminlte::adminlte.expenses') }}</h4>
+        <table width="100%" id="table_design">
+            <thead style="background-color: lightgray;">
+                <tr>
+                    <th>{{ trans('adminlte::adminlte.date') }}</th>
+                    <th>{{ trans('adminlte::adminlte.description') }}</th>
+                    <th>{{ trans('adminlte::adminlte.user') }}</th>
+                    <th>{{ trans('adminlte::adminlte.amount') }}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @php ($total = 0) @endphp
+                @foreach($expenses as $expense)
+                <tr>
+                    <td>{{ date('m/d/Y H:i', $expense->date) }}</td>
+                    <td>{{ !empty($expense->description) ? $expense->description : '-'}}</td>
+                    <td>{{ $expense->name }}</td>
+                    <td>{{ number_format($expense->total,2) }} Euro</td>
+                </tr>
+                @php ($total += number_format($expense->total,2)) @endphp
+                @endforeach
+                <tr>
+                    <td colspan="3" align="right"><b>TOTAL:</b></td>
+                    <td><b>{{ number_format($total,2) }} Euro</b></td>
+                </tr>
+            </tbody>
+
+        </table>
+        @endif
+    @endif
+    <!-- END EXPENSES SECTION -->
 </body>
 </html>

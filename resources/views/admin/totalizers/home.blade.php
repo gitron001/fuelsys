@@ -8,7 +8,10 @@
 	<div class="row">
 		<div class="box box-primary">
             <div class="box-header">
-              <div class="col-md-8"><h3 class="box-title">Totalizers</h3></div>
+                <div class="col-md-6"><h3 class="box-title">{{ trans('adminlte::adminlte.staff_details.totalizers') }}</h3></div>
+                <div class="col-md-6" style="text-align: right">
+                    <a href="{{ url('/totalizers-export-pdf') }}" target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i class="fas fa-file-pdf"></i> PDF</a>
+                </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

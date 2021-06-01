@@ -27,6 +27,17 @@
     @include('admin.staff.companies_data')
 @endif
 
+@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/payments')
+    <!-- inlcude payments data -->
+    @include('admin.staff.payments_data')
+@endif
+
+@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/expenses')
+    <!-- inlcude expenses data -->
+    @include('admin.staff.expenses_data')
+@endif
+
+
 @endsection
 
 

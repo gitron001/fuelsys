@@ -821,7 +821,7 @@ class TransactionController extends Controller
 		return json_encode(array('response'=>true));
     }
 
-    public function totalizers(Request $request) {
+    public static function totalizers(Request $request) {
         $totalizers = DB::table('transactions')
                         ->select('id','sl_no','channel_id','dis_tot as dis_tot_last')
                         ->whereRaw('id IN (SELECT MAX(id) FROM transactions GROUP BY sl_no,channel_id)')
@@ -829,6 +829,14 @@ class TransactionController extends Controller
                         ->orderBy('sl_no','ASC')
                         ->get();
 
-        return view('/admin/settings/totalizers',compact('totalizers'));
+        return view('/admin/totalizers/home',compact('totalizers'));
+    }
+
+    public function export_totalizers_to_pdf(Request $request){
+        $totalizers = self::totalizers($request)['totalizers'];
+
+        $pdf = PDF::loadView('admin.totalizers.export_to_pdf',compact('totalizers'));
+        $file_name  = 'Totalizers - '.date('Y-m-d', time()).'.pdf';
+        return $pdf->stream($file_name);
     }
 }
