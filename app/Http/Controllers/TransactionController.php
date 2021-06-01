@@ -15,6 +15,7 @@ use App\Models\Products;
 use App\Services\TransactionService;
 use App\Models\InvoiceModel as Invoice;
 use App\Models\InvoiceDetailsModel as InvoiceDetails;
+use App\Models\TransactionChangeHistory;
 use Excel;
 use Auth;
 use DB;
@@ -26,18 +27,12 @@ use App\Jobs\PrintFuelRecept;
 
 class TransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()  {
         $transactions   = Transactions::orderBy('created_at', 'desc')->paginate(15);
         $users          = Users::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->where('status', 1)->all();
         return view('/admin/transactions/home',compact('transactions','users','companies'));
     }
-
 
     public function info(){
 
@@ -46,11 +41,7 @@ class TransactionController extends Controller
         return view('admin.transactions.transactions-info',compact('transactions'));
 
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create() {
         $users       = Users::pluck('name','id')->all();
         $products    = Products::pluck('name','id')->all();
@@ -60,12 +51,6 @@ class TransactionController extends Controller
         return view('/admin/transactions/create',compact('users','dispanesers','products','pfc'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         Transaction::create($request->all());
 
@@ -74,53 +59,35 @@ class TransactionController extends Controller
         return redirect('/admin/transactions');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id) {
-        $transaction = Transactions::findOrFail($id);
-        $dispanesers = Dispaneser::pluck('name','id')->all();
-        $users       = Users::pluck('name','id')->all();
-        $products    = Products::pluck('name','id')->all();
-        $pfc         = PFC::pluck('name','id')->all();
+        $transaction    = Transactions::findOrFail($id);
+        $users          = Users::where('status',1)->where(function ($users) {
+                            $users->where('company_id', 0)
+                            ->orWhereNull('company_id');
+                        })->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
 
-        return view('/admin/transactions/edit',compact('transaction','dispanesers','users','products','pfc'));
+        return view('/admin/transactions/edit',compact('transaction','users'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id) {
         $transaction = Transactions::findOrFail($id);
-        $transaction->update($request->all());
-        session()->flash('info','Success');
+        $transaction->user_id = $request->input('user_id');
+        $transaction->save();
 
+        // Save transaction changes
+        $history                    = new TransactionChangeHistory();
+        $history->transaction_id    = $request->input('transaction_id');
+        $history->previous_user_id  = $request->input('previous_user_id');
+        $history->current_user_id   = $request->input('user_id');
+        $history->updated_by        = Auth::user()->id;
+        $history->created_at        = now()->timestamp;
+        $history->updated_at        = now()->timestamp;
+        $history->save();
+
+        session()->flash('info','Success');
         return redirect('/admin/transactions');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id) {
         $transaction = Transactions::findOrFail($id);
         $transaction->delete();
@@ -131,6 +98,12 @@ class TransactionController extends Controller
 
     public function read() {
         TransactionService::read();
+    }
+
+    public function history($id) {
+        $history = TransactionChangeHistory::where('transaction_id',$id)->orderBy('created_at','DESC')->get();
+
+        return view('/admin/transactions/transaction_history',compact('history'))->render();
     }
 
     public function excel_export(Request $request) {
@@ -148,12 +121,12 @@ class TransactionController extends Controller
         $startDate = $request->fromDate;
         $from_to_date = $request->fromDate . ' - ' . $request->toDate;
 
-        $dataArray[] = array('PRODUKTI','SASIA','TOTALI');
+        $dataArray[] = array(strtoupper(trans('adminlte::adminlte.product')),strtoupper(trans('adminlte::adminlte.amount')),strtoupper(trans('adminlte::adminlte.total')));
         foreach($data as $d) {
             $dataArray[] = array(
-                'PRODUKTI'  => $d['product_name'],
-                'SASIA'     => $d['lit'] . ' litra',
-                'TOTALI'    => $d['money'] . ' Euro',
+                strtoupper(trans('adminlte::adminlte.product'))  => $d['product_name'],
+                strtoupper(trans('adminlte::adminlte.amount'))    => $d['lit'] . ' litra',
+                strtoupper(trans('adminlte::adminlte.total'))    => $d['money'] . ' Euro',
             );
         }
 
@@ -170,15 +143,15 @@ class TransactionController extends Controller
                 $totalPayed = 0;
 
                 $sheet->appendRow(array(
-                    'DATA',
-                    'LLOJI',
-                    'PERSONI',
-                    'BONUS PERSONI',
-                    'MBUSHJA',
-                    'PAGESA',
-                    'GJENDJA',
+                    strtoupper(trans('adminlte::adminlte.date')),
+                    strtoupper(trans('adminlte::adminlte.type')),
+                    strtoupper(trans('adminlte::adminlte.user')),
+                    strtoupper(trans('adminlte::adminlte.bonus_user')),
+                    strtoupper(trans('adminlte::adminlte.fill')),
+                    strtoupper(trans('adminlte::adminlte.payments')),
+                    strtoupper(trans('adminlte::adminlte.state')),
                     '       ',
-                    'Datat e zgjedhura për paraqitjen e të dhënave',
+                    strtoupper(trans('adminlte::adminlte.selected_date_to_show_data')),
                 ));
 
                 $sheet->cell('A2', function($cell) use( $startDate ){
@@ -186,7 +159,7 @@ class TransactionController extends Controller
                 });
 
                 $sheet->cell('B2', function($cell) use( $totalAmount ){
-                        $cell->setValue('GJENDJA');
+                        $cell->setValue(strtoupper(trans('adminlte::adminlte.state')));
                 });
 
                 $sheet->cell('F2', function($cell) use( $totalAmount ){

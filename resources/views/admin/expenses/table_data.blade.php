@@ -8,9 +8,9 @@
     <td>{{ $expense->created_at->diffForHumans() }}</td>
     <td>{{ $expense->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">
-        <a href="{{ url('admin/expenses/'.$expense->id.'/edit') }}" data-toggle="tooltip" title="Edit"><i
+        <a href="{{ url('admin/expenses/'.$expense->id.'/edit') }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.edit') }}"><i
                 class="fa fa-edit"></i></a>&nbsp;
-        <a href="{{ route('expenses.delete', $expense->id) }}" data-toggle="tooltip" title="Delete"
+        <a href="{{ route('expenses.delete', $expense->id) }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.delete') }}"
             class="delete-item"><i class="fa fa-trash"></i></a>
     </td>
 </tr>

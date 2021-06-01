@@ -10,7 +10,9 @@
         <td>{{ $transaction->money }}</td>
         <td>{{ $transaction->created_at }}</td>
         <td class="text-center" width="8%">
-        <a href="#" data-transaction="{{ $transaction->id }}" data-toggle="tooltip" title="Generate bill" id="print_receipt"><i class="fa fa-print"></i></a>&nbsp;
+            @auth<a href="{{ url('admin/transactions/'.$transaction->id.'/edit') }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.edit') }}"><i class="fa fa-edit"></i></a>&nbsp;@endauth
+            <a href="#" data-toggle="modal" data-target="#show-transaction-history" data-target-id="{{ $transaction->id }}"><i class="fa fa-history" title="{{ trans('adminlte::adminlte.history') }}"></i></a>&nbsp;
+            <a href="#" data-transaction="{{ $transaction->id }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.generate_bill') }}" id="print_receipt"><i class="fa fa-print"></i></a>&nbsp;
         </td>
     </tr>
 @endforeach
@@ -25,7 +27,9 @@
     <td>{{ $transaction->money }}</td>
     <td>{{ $transaction->created_at }}</td>
     <td class="text-center" width="8%">
-        <a href="#" data-transaction="{{ $transaction->id }}" data-toggle="tooltip" title="Generate bill" id="print_receipt"><i class="fa fa-print"></i></a>&nbsp;
+        @auth<a href="{{ url('admin/transactions/'.$transaction->id.'/edit') }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.edit') }}"><i class="fa fa-edit"></i></a>&nbsp;@endauth
+        <a href="#" data-toggle="modal" data-target="#show-transaction-history" data-target-id="{{ $transaction->id }}"><i class="fa fa-history" title="{{ trans('adminlte::adminlte.history') }}"></i></a>&nbsp;
+        <a href="#" data-transaction="{{ $transaction->id }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.generate_bill') }}" id="print_receipt"><i class="fa fa-print"></i></a>&nbsp;
     </td>
 @endforeach
 @endif

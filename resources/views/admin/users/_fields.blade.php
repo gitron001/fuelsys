@@ -1,67 +1,67 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-		<h3 class="box-title">{{!isset($user) ? 'Create new user' : 'Edit user'}}</h3>
+		<h3 class="box-title">{{!isset($user) ? trans('adminlte::adminlte.users_details.create_new') : trans('adminlte::adminlte.users_details.edit') }}</h3>
 	</div>
 
     <div class="box-body">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group {{ $errors->has('rfid') ? 'has-error' :'' }}">
-                    {!! Form::label('rfid', 'RFID:'); !!}
+                    {!! Form::label('rfid', trans('adminlte::adminlte.users_fields.rfid')); !!}
                     {!! Form::number('rfid',null,['class'=>'form-control']); !!}
                     {!! $errors->first('rfid','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
-                    {!! Form::label('name', 'Name:'); !!}
+                    {!! Form::label('name', trans('adminlte::adminlte.name')); !!}
                     {!! Form::text('name',null,['class'=>'form-control']); !!}
                     {!! $errors->first('name','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('surname') ? 'has-error' :'' }}">
-                    {!! Form::label('surname', 'Surname:'); !!}
+                    {!! Form::label('surname', trans('adminlte::adminlte.surname')); !!}
                     {!! Form::text('surname',null,['class'=>'form-control']); !!}
                     {!! $errors->first('surname','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
-                    {!! Form::label('status', 'Status:'); !!}
+                    {!! Form::label('status', trans('adminlte::adminlte.status')); !!}
                     {!! Form::select('status',[1=>'Active',2=>'No Active'],null,['class'=>'form-control']); !!}
                     {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
-                    {!! Form::label('type', 'Type:'); !!}
+                    {!! Form::label('type', trans('adminlte::adminlte.type')); !!}
                     {!! Form::select('type',['' => 'Select', 1 => 'Staff',2=> 'Company',3=> 'Administrator', 4=>'Double Authorization', 9=>'Driver',5=>'Manager',6=>'Bonus Member',7=>'Bonus Klient',8=>'Bonus Korporate'],null,['class'=>'form-control', 'id' => 'showHide']); !!}
                     {!! $errors->first('type','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('company_id') ? 'has-error' :'' }}" id="company" style="display: none">
-                    {!! Form::label('company_id', 'Company:'); !!}
+                    {!! Form::label('company_id', trans('adminlte::adminlte.company')); !!}
 					{!! Form::select('company_id',['' => 'Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
                     {!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('has_limit') ? 'has-error' :'' }}">
-                    {!! Form::label('has_limit', 'Has Limit:'); !!}
+                    {!! Form::label('has_limit', trans('adminlte::adminlte.users_fields.has_limit')); !!}
                     {!! Form::select('has_limit',[0=>'No',1=>'Yes',],null,['class'=>'form-control','id'=>'showHideLimits']); !!}
                     {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('one_time_limit') ? 'has-error' :'' }}" id="one_time_limit">
-                    {!! Form::label('one_time_limit', 'One_Time_Limit:'); !!}
+                    {!! Form::label('one_time_limit', trans('adminlte::adminlte.users_fields.one_time_limit')); !!}
                     {!! Form::number('one_time_limit',null,['class'=>'form-control', 'id'=> 'one_time_limit']); !!}
                     {!! $errors->first('one_time_limit','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('starting_balance') ? 'has-error' :'' }}" id="starting_balance" style="display: none">
-                    {!! Form::label('starting_balance', 'Starting Balance:'); !!}
+                    {!! Form::label('starting_balance', trans('adminlte::adminlte.users_fields.starting_balance')); !!}
                     {!! Form::number('starting_balance',null,['class'=>'form-control']); !!}
                     {!! $errors->first('starting_balance','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group email_settings {{ $errors->has('on_transaction') ? 'has-error' :'' }}">
-					{!! Form::label('on_transaction', 'On Transaction:'); !!}
+					{!! Form::label('on_transaction', trans('adminlte::adminlte.users_fields.on_transaction')); !!}
 					{!! Form::select('on_transaction',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('on_transaction','<span class="help-block">:message</span>') !!}
 				</div>
@@ -70,55 +70,55 @@
 
             <div class="col-md-6">
                 <div class="form-group {{ $errors->has('email') ? 'has-error' :'' }}">
-                    {!! Form::label('email', 'Email:'); !!}
+                    {!! Form::label('email', trans('adminlte::adminlte.email')); !!}
                     {!! Form::text('email',null,['class'=>'form-control']); !!}
                     {!! $errors->first('email','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('password') ? 'has-error' :'' }}">
-                    {!! Form::label('password', 'Password:'); !!}
+                    {!! Form::label('password', trans('adminlte::adminlte.password')); !!}
                     {!! Form::password('password',['class'=>'form-control','autocomplete'=>'new-password']); !!}
                     {!! $errors->first('password','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('contact_number') ? 'has-error' :'' }}">
-                    {!! Form::label('contact_number', 'Contact Number:'); !!}
+                    {!! Form::label('contact_number', trans('adminlte::adminlte.users_fields.contact_number')); !!}
                     {!! Form::text('contact_number',null,['class'=>'form-control']); !!}
                     {!! $errors->first('contact_number','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('application_date') ? 'has-error' :'' }}">
-                    {!! Form::label('application_date', 'Application Date:'); !!}
+                    {!! Form::label('application_date', trans('adminlte::adminlte.users_fields.application_date')); !!}
                     {!! Form::text('application_date',null,['class'=>'form-control','autocomplete'=>'off','id'=>'datetimepicker']); !!}
                     {!! $errors->first('application_date','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('residence') ? 'has-error' :'' }}">
-                    {!! Form::label('residence', 'Residence:'); !!}
+                    {!! Form::label('residence', trans('adminlte::adminlte.users_fields.residence')); !!}
                     {!! Form::text('residence',null,['class'=>'form-control']); !!}
                     {!! $errors->first('residence','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('plates') ? 'has-error' :'' }}" id="plates">
-                    {!! Form::label('plates', 'Plates:'); !!}
+                    {!! Form::label('plates', trans('adminlte::adminlte.users_fields.plates')); !!}
                     {!! Form::text('plates',null,['class'=>'form-control']); !!}
                     {!! $errors->first('plates','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('send_email') ? 'has-error' :'' }}">
-                    {!! Form::label('send_email', 'Send Email:'); !!}
+                    {!! Form::label('send_email', trans('adminlte::adminlte.users_fields.send_email')); !!}
                     {!! Form::select('send_email',[0=>'No',1=>'Yes',],null,['class'=>'form-control','id' => 'showHideEmail']); !!}
                     {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('vehicle') ? 'has-error' :'' }}" id="vehicle" style="display: none">
-                    {!! Form::label('vehicle', 'Vehicle:'); !!}
+                    {!! Form::label('vehicle', trans('adminlte::adminlte.users_fields.vehicle')); !!}
                     {!! Form::text('vehicle',null,['class'=>'form-control']); !!}
                     {!! $errors->first('vehicle','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('limits') ? 'has-error' :'' }}" id="has_limits" style="display: none">
-                    {!! Form::label('limits', 'Limit:'); !!}
+                    {!! Form::label('limits', trans('adminlte::adminlte.users_fields.limit')); !!}
                     {!! Form::number('limits',null,['class'=>'form-control']); !!}
                     {!! $errors->first('limits','<span class="help-block">:message</span>') !!}
                 </div>
@@ -129,7 +129,7 @@
         @if(!isset($user))
 
 		<div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}" id="discounts">
-            {!! Form::label('discounts', 'Discounts:'); !!}
+            {!! Form::label('discounts', trans('adminlte::adminlte.discounts')); !!}
 
             <div class="row">
                 <div class="col-md-1">
@@ -172,7 +172,7 @@
 		-->
         @else
         <!-- *** DISCOUNT *** -->
-        {!! Form::label('discount', 'Discounts'); !!}
+        {!! Form::label('discount', trans('adminlte::adminlte.discounts')); !!}
         <div class="form-group"  id="discounts">
         @if(count($rfid_discounts) > 0)
 
@@ -204,7 +204,7 @@
         <div class="form-group {{ $errors->has('ffid') ? 'has-error' :'' }}">
         <div class="row">
             <div class="col-md-1">
-                <button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i> Add discount</button>
+                <button type="button" class="btn btn-success btn-circle" id="addProduct"><i class="glyphicon glyphicon-plus"></i> {{ trans('adminlte::adminlte.users_fields.add_discount') }}</button>
             </div>
         </div>
         <br>
@@ -273,9 +273,9 @@
 
     <div class="box-footer">
 		<button type="submit" class="btn btn-primary">
-			<i class="fas fa-save"></i> Save
+			<i class="fas fa-save"></i> {{ trans('adminlte::adminlte.save') }}
 		</button>
-		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
+		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> {{ trans('adminlte::adminlte.cancel') }} </a>
 	</div>
 
 </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>{{ $company->name }} - STAFF PDF</title>
+<title>{{ $company->name }} - Staff</title>
 
 <style type="text/css">
     * {
@@ -56,7 +56,7 @@
         <thead>
         <tr>
             <th align="center" style="width: 50%;">
-                RAPORT - {{ $company->name }}   &nbsp;&nbsp; &nbsp;| &nbsp;&nbsp;  {{ date('d-m-Y H:i:s', time()) }}
+                {{ trans('adminlte::adminlte.staff_details.report') }} - {{ $company->name }}   &nbsp;&nbsp; &nbsp;| &nbsp;&nbsp;  {{ date('d-m-Y H:i:s', time()) }}
             </th>
         </tr>
         </thead>
@@ -64,7 +64,7 @@
 	<br>
 	<table width="100%">
 	<tr>
-		<td valign="top"><img src="{{ public_path().'/images/company/'.$company->images }}" alt="" width="80"/></td>
+		<td valign="top"><img src="{{ public_path().'/images/gas-pump.png' }}" alt="" width="60"/></td>
 	</tr>
 	<tr>
 		<td align="left">
@@ -72,9 +72,9 @@
                 <span style="font-size: 16px;"><b> {{ $company->name }} </b></span><br/>
                 <?php
                 if(isset($_GET['fromDate']) || isset($_GET['toDate'])) {
-                    echo "Data e zgjedhur: " . $_GET['fromDate'] .' - '. $_GET['toDate'];
+                    echo trans('adminlte::adminlte.staff.selected_date') .': '. $_GET['fromDate'] .' - '. $_GET['toDate'];
                 }else {
-                    echo "Data e zgjedhur: " . date('d-m-Y H:i:s', $request->fromDate) .' - '. date('d-m-Y H:i:s', $request->toDate);
+                    echo trans('adminlte::adminlte.staff.selected_date') .': '. date('d-m-Y H:i:s', $request->fromDate) .' - '. date('d-m-Y H:i:s', $request->toDate);
                 } ?>
             </p>
         </td>
@@ -86,13 +86,13 @@
     <table width="100%" id="table_design" @if (Request::input('url') != 'dispensers') style="display: none;" @endif>
         <thead>
             <tr>
-                <th>Produkti</th>
-                <th>Nozzle</th>
+                <th>{{ trans('adminlte::adminlte.product') }}</th>
+                <th>{{ trans('adminlte::adminlte.nozzle') }}</th>
                 <th>MIN</th>
                 <th>MAX</th>
-                <th>Totalizatori</th>
-                <th>Litrat</th>
-                <th>Ndryshimi</th>
+                <th>{{ trans('adminlte::adminlte.staff_details.totalizator') }}</th>
+                <th>{{ trans('adminlte::adminlte.quantity') }}</th>
+                <th>{{ trans('adminlte::adminlte.change') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -125,10 +125,10 @@
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
             <tr>
-                <th>Produkti</th>
-                <th>Sasia</th>
-                <th>Sasia Me Numra</th>
-                <th>Ndryshimi</th>
+                <th>{{ trans('adminlte::adminlte.product') }}</th>
+                <th>{{ trans('adminlte::adminlte.quantity') }}</th>
+                <th>{{ trans('adminlte::adminlte.staff_details.quantity_with_numbers') }}</th>
+                <th>{{ trans('adminlte::adminlte.change') }}</th>
             </tr>
         </thead>
 
@@ -152,11 +152,11 @@
 
     <!-- STAFF SECTION -->
     @if (Request::input('url') == 'staff' || $request->url == 'staff')
-    <h4>Staff</h4>
+    <h4>{{ trans('adminlte::adminlte.staff.staff') }}</h4>
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
 		  <tr>
-            <th>Perdoruesi</th>
+            <th>{{ trans('adminlte::adminlte.staff.user') }}</th>
             @foreach($product_name as $value)
                 <th>{{ $value }}</th>
             @endforeach
@@ -207,11 +207,11 @@
 		<!-- COMPANIES SECTION -->
 		@if(count($companies) != 0)
 			@if (Request::input('url') == 'staff' || Request::input('url') == 'companies' || $request->url == 'staff')
-			<h4>Company</h4>
+			<h4>{{ trans('adminlte::adminlte.company') }}</h4>
 			<table width="100%" id="table_design">
 				<thead style="background-color: lightgray;">
 					<tr>
-						<th>Kompania</th>
+						<th>{{ trans('adminlte::adminlte.company') }}</th>
 						@foreach($product_name_company as $value)
 							<th>{{ $value }}</th>
 						@endforeach
@@ -263,14 +263,14 @@
 
 	 <!-- START PRODUCTS SECTION -->
 	@if (Request::input('url') == 'products')
-		<h4>Products by Price</h4>
+		<h4>{{ trans('adminlte::adminlte.staff.products_by_price') }}</h4>
 		<table width="100%" id="table_design">
 			<thead style="background-color: lightgray;">
                 <tr>
-                    <th>Produkti</th>
-                    <th>Cmimi</th>
-                    <th>Sasia</th>
-					<th>Totali</th>
+                    <th>{{ trans('adminlte::adminlte.product') }}</th>
+                    <th>{{ trans('adminlte::adminlte.price') }}</th>
+                    <th>{{ trans('adminlte::adminlte.quantity') }}</th>
+					<th>Total</th>
                 </tr>
 			</thead>
 
@@ -300,14 +300,14 @@
 				</tr>
 			</tfoot>
         </table>
-        <h4>Average</h4>
+        <h4>{{ trans('adminlte::adminlte.staff.average') }}</h4>
         <table width="100%" id="table_design">
             <thead>
                 <tr>
-                    <th>Produkti</th>
-                    <th>Cmimi</th>
-                    <th>Sasia</th>
-                    <th>Totali</th>
+                    <th>{{ trans('adminlte::adminlte.product') }}</th>
+                    <th>{{ trans('adminlte::adminlte.price') }}</th>
+                    <th>{{ trans('adminlte::adminlte.quantity') }}</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>

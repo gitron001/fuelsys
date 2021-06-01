@@ -8,19 +8,19 @@
 @endif
     <div class="box-header">
         <i class="fa fa-calculator" aria-hidden="true"></i>
-        <h3 class="box-title">Total</h3>
+        <h3 class="box-title">{{ trans('adminlte::adminlte.dispensers') }}</h3>
     </div>
     <div class="box-body">
         <table class="table table-bordered table-hover table-responsive text-center">
             <thead>
                 <tr>
-                    <th>Produkti</th>
-                    <th>Nozzle</th>
+                    <th>{{ trans('adminlte::adminlte.product') }}</th>
+                    <th>{{ trans('adminlte::adminlte.nozzle') }}</th>
                     <th>MIN</th>
                     <th>MAX</th>
-                    <th>Litrat</th>
-                    <th>Totalizatori</th>
-                    <th>Ndryshimi</th>
+                    <th>{{ trans('adminlte::adminlte.quantity') }}</th>
+                    <th>{{ trans('adminlte::adminlte.staff_details.totalizator') }}</th>
+                    <th>{{ trans('adminlte::adminlte.change') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,10 +59,10 @@
         <table class="table table-bordered table-hover table-responsive text-center">
             <thead>
                 <tr>
-                    <th>Produkti</th>
-                    <th>Sasia</th>
-                    <th>Sasia Me Numra</th>
-                    <th>Ndryshimi</th>
+                    <th>{{ trans('adminlte::adminlte.product') }}</th>
+                    <th>{{ trans('adminlte::adminlte.quantity') }}</th>
+                    <th>{{ trans('adminlte::adminlte.staff_details.quantity_with_numbers') }}</th>
+                    <th>{{ trans('adminlte::adminlte.change') }}</th>
                 </tr>
             </thead>
             <tbody>

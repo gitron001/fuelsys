@@ -1,13 +1,13 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">{{!isset($payment) ? 'Create new payment' : 'Edit payment'}}</h3>
+		<h3 class="box-title">{{!isset($payment) ? trans('adminlte::adminlte.payments_details.create_new') : trans('adminlte::adminlte.payments_details.edit') }}</h3>
 	</div>
 
 	<div class="box-body">
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group {{ $errors->has('date') ? 'has-error' :'' }}">
-					{!! Form::label('date', 'Date:'); !!}
+					{!! Form::label('date', trans('adminlte::adminlte.date')); !!}
 					@if(!isset($payment))
 						{!! Form::text('date',null,['class'=>'form-control','autocomplete'=>'off','id' => 'datetimepicker']); !!}
 					@else
@@ -17,7 +17,7 @@
 				</div>
 
 				<div class="form-group {{ $errors->has('select') ? 'has-error' :'' }}">
-					<label for="">Company / User: </label>
+					<label for="">{{ trans('adminlte::adminlte.payments_fields.company_user')}} </label>
 					<br>
 					@if (!isset($payment))
 					<label class="checkbox-inline" style="margin-top: 15px;"><input type="checkbox" class="check_class checkbox-select-all" name="checkbox"
@@ -34,13 +34,13 @@
 				</div>
 
 				<div class="form-group">
-                    {!! Form::label('type', 'Type:'); !!}
+                    {!! Form::label('type', trans('adminlte::adminlte.type')); !!}
 					{!! Form::select('type',[''=>'Choose type','1'=>'Pagese','2'=>'Hyrje'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('type','<span class="help-block">:message</span>') !!}
                 </div>
 
                 <div class="form-group {{ $errors->has('print') ? 'has-error' :'' }}">
-                    <label for="print">Print the bill: </label>
+                    <label for="print">{{ trans('adminlte::adminlte.payments_fields.print_bill') }} </label>
                     <br>
                     @if (!isset($payment))
                         <input type="radio" name="print" value="1"> Yes &nbsp;
@@ -57,7 +57,7 @@
 			<div class="col-md-6">
 
 				<div class="form-group {{ $errors->has('amount') ? 'has-error' :'' }}">
-					{!! Form::label('amount', 'Amount:'); !!}
+					{!! Form::label('amount', trans('adminlte::adminlte.amount')); !!}
 					{!! Form::number('amount',null,['class'=>'form-control','step'=>'any']); !!}
 					{!! $errors->first('amount','<span class="help-block">:message</span>') !!}
 				</div>
@@ -67,7 +67,7 @@
 				@else
 					<div class="form-group" id="company" @if ($payment->company_id == 0) echo style="display: none" @endif>
 				@endif
-					{!! Form::label('company_id', 'Company:'); !!}
+					{!! Form::label('company_id', trans('adminlte::adminlte.company')); !!}
 					{!! Form::select('company_id',['' => 'Select a Company'] + $companies,null,['class'=>'selectpicker form-control','id'=>'companyDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
 					{!! $errors->first('company_id','<span class="help-block">:message</span>') !!}
 				</div>
@@ -77,14 +77,14 @@
 				@else
 					<div class="form-group" id="user" @if ($payment->user_id == 0) echo style="display: none" @endif>
 				@endif
-					{!! Form::label('user_id', 'User:'); !!}
+					{!! Form::label('user_id', trans('adminlte::adminlte.user')); !!}
 					{!! Form::select('user_id',['' => 'Select a User'] + $users,null,['class'=>'selectpicker form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
 					{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 				</div>
 
 				@if(count($branches) > 0)
 				<div class="form-group">
-                    {!! Form::label('branch_id', 'Branch:'); !!}
+                    {!! Form::label('branch_id', trans('adminlte::adminlte.branch')); !!}
 					{!! Form::select('branch_id',['Choose Branch'] + $branches,null,['class'=>'form-control']); !!}
 					{!! $errors->first('branch_id','<span class="help-block">:message</span>') !!}
 				</div>
@@ -94,7 +94,7 @@
 		</div>
 		<div class="col-12">
             <div class="form-group {{ $errors->has('description') ? 'has-error' :'' }}">
-                {!! Form::label('description', 'Description:'); !!}
+                {!! Form::label('description', trans('adminlte::adminlte.description')); !!}
                 {!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!}
                 {!! $errors->first('description','<span class="help-block">:message</span>') !!}
             </div>
@@ -104,9 +104,9 @@
 
 	<div class="box-footer">
 		<button type="submit" class="btn btn-primary" id="payment-save-btn">
-            <i class="fas fa-save"></i> Save
+            <i class="fas fa-save"></i> {{ trans('adminlte::adminlte.save') }}
         </button>
-		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> Cancel </a>
+		<a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> {{ trans('adminlte::adminlte.cancel') }} </a>
 	</div>
 
 </div>

@@ -64,7 +64,7 @@
                                     <i class="fas fa-globe-europe"></i>
                                 </a>
                                 <ul class="dropdown-menu" style="width: 60%;">
-                                    <li class="header">Change language</li>
+                                    <li class="header">{{ trans('adminlte::adminlte.change_language') }}</li>
                                     <li>
                                         <ul class="menu">
                                             <li>

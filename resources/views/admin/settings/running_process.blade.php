@@ -5,11 +5,11 @@
       <table class="table table-bordered" style="text-align:center">
         <tr>
           <th style="text-align:center">PFC ID</th>
-          <th style="text-align:center">START TIME</th>
-          <th style="text-align:center">REFRESH TIME</th>
-          <th style="text-align:center">CREATED AT</th>
-          <th style="text-align:center">UPDATED AT</th>
-          <th style="text-align:center">DELETE</th>
+          <th style="text-align:center">{{ strtoupper(trans('adminlte::adminlte.settings_details.start_time')) }}</th>
+          <th style="text-align:center">{{ strtoupper(trans('adminlte::adminlte.settings_details.refresh_time')) }}</th>
+          <th style="text-align:center">{{ strtoupper(trans('adminlte::adminlte.created_at')) }}</th>
+          <th style="text-align:center">{{ strtoupper(trans('adminlte::adminlte.updated_at')) }}</th>
+          <th style="text-align:center">{{ strtoupper(trans('adminlte::adminlte.delete')) }}</th>
         </tr>
         <tbody id="table_data">
         <tr>
