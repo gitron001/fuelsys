@@ -23,7 +23,8 @@
 				<p>Calculated tank level: {{  round(($tank->totalStock()[0]['amount'] - $total_sales),2)  }}</p>
 				<p>Difference: {{  round(($tank->totalStock()[0]['amount'] - $total_sales) - $tank->totalStockSensor(),2)  }}</p>
 				@endif
-				<p>Water level: {{  round(($tank->totalWaterSensor()),2)  }}
+				<p>Water level:
+					{{  round($tank->totalWaterSensor(),2)  }}
 				</p>
             </div>
 			

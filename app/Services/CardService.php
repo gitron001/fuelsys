@@ -472,8 +472,8 @@ class CardService extends ServiceProvider
 		$row = 5 + (($channel_used-1) * 4);
 		$totalizer = pack('c', $responseTot[$row+3]).pack('c', $responseTot[$row+2]).pack('c', $responseTot[$row+1]).pack('c', $responseTot[$row]);
 		$totalizer = unpack('i', $totalizer)[1];
-		print_r($totalizer);
-		echo '  -  ';
+		//print_r($totalizer);
+		//echo '  -  ';
 		if($totalizer == 0){
 			$the_dispanser->status			   		= 1;
 			$the_dispanser->data_updated_at   		= time();
