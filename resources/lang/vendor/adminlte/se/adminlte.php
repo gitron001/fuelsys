@@ -56,6 +56,11 @@ return [
         'all_day'               => 'Ceo dan',
         'bonus_driver_card'     => 'Bonus/Vozačka kartica',
         'edit'                  => 'Promenite transakciju',
+        'transaction_history'   => 'Istorija e transakcije',
+        'prev_user'             => 'Prethodni korisnik',
+        'current_user'          => 'Trenutni korisnik',
+        'updated_by'            => 'Modifikovana',
+        'nothing_to_show'       => 'Ova transakcija nikada nije promenjena.'
     ],
     'transactions_pdf' => [
         'report'            => 'IZVEŠTAJ',
@@ -266,6 +271,7 @@ return [
     'generate_bill'     => 'Generišite fakturu',
     'fill'              => 'Napuniti',
     'state'             => 'Stanje',
+    'history'           => 'Istorija',
     'retype_password'               => 'Prepišite lozinku',
     'remember_me'                   => 'Sećam se',
     'register'                      => 'Registrovati',

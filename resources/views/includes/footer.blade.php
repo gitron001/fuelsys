@@ -53,6 +53,14 @@
       });
     });
 
+    $("#show-transaction-history").on("show.bs.modal", function (e) {
+        var id = $(e.relatedTarget).data('target-id');
+        $.get("/admin/transactions/history/" + id, function (data) {
+            $(".modal-title").html('FuelSystem | Transaction #' + id);
+            $(".modal-body").html(data);
+        });
+    });
+
   // Sweet Alert confirmation before delete
   $(document).on('click', '.delete-item', function(e){
     e.preventDefault();

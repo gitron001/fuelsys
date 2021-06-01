@@ -27,18 +27,12 @@ use App\Jobs\PrintFuelRecept;
 
 class TransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()  {
         $transactions   = Transactions::orderBy('created_at', 'desc')->paginate(15);
         $users          = Users::pluck('name','id')->all();
         $companies      = Company::pluck('name','id')->where('status', 1)->all();
         return view('/admin/transactions/home',compact('transactions','users','companies'));
     }
-
 
     public function info(){
 
@@ -47,11 +41,7 @@ class TransactionController extends Controller
         return view('admin.transactions.transactions-info',compact('transactions'));
 
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create() {
         $users       = Users::pluck('name','id')->all();
         $products    = Products::pluck('name','id')->all();
@@ -61,12 +51,6 @@ class TransactionController extends Controller
         return view('/admin/transactions/create',compact('users','dispanesers','products','pfc'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         Transaction::create($request->all());
 
@@ -74,13 +58,6 @@ class TransactionController extends Controller
 
         return redirect('/admin/transactions');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     public function edit($id) {
         $transaction    = Transactions::findOrFail($id);
@@ -92,13 +69,6 @@ class TransactionController extends Controller
         return view('/admin/transactions/edit',compact('transaction','users'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id) {
         $transaction = Transactions::findOrFail($id);
         $transaction->user_id = $request->input('user_id');
@@ -118,12 +88,6 @@ class TransactionController extends Controller
         return redirect('/admin/transactions');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id) {
         $transaction = Transactions::findOrFail($id);
         $transaction->delete();
@@ -134,6 +98,12 @@ class TransactionController extends Controller
 
     public function read() {
         TransactionService::read();
+    }
+
+    public function history($id) {
+        $history = TransactionChangeHistory::where('transaction_id',$id)->orderBy('created_at','DESC')->get();
+
+        return view('/admin/transactions/transaction_history',compact('history'))->render();
     }
 
     public function excel_export(Request $request) {

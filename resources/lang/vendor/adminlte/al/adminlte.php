@@ -56,6 +56,11 @@ return [
         'all_day'               => 'Gjithë ditën',
         'bonus_driver_card'     => 'Bonus/Shofer kartela',
         'edit'                  => 'Ndrysho transaksionin',
+        'transaction_history'   => 'Historia e transaksionit',
+        'prev_user'             => 'Përdoruesi i mëparshëm',
+        'current_user'          => 'Përdoruesi aktual',
+        'updated_by'            => 'Ndryshuar nga',
+        'nothing_to_show'       => 'Ky transaksion nuk është ndryshuar asnjëherë.'
     ],
     'transactions_pdf' => [
         'report'            => 'RAPORT',
@@ -274,6 +279,7 @@ return [
     'delete'            => 'Fshij',
     'fill'              => 'Mbushja',
     'state'             => 'Gjendja',
+    'history'           => 'Historia',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',

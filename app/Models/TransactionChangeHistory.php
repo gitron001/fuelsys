@@ -18,4 +18,16 @@ class TransactionChangeHistory extends Model
     public function getDateFormat(){
         return 'U';
     }
+
+    public function previous_user(){
+        return $this->belongsTo('App\Models\Users', 'previous_user_id', 'id');
+    }
+
+    public function current_user(){
+        return $this->belongsTo('App\Models\Users', 'current_user_id', 'id');
+    }
+
+    public function updated_by_user(){
+        return $this->belongsTo('App\Models\Users', 'updated_by', 'id');
+    }
 }

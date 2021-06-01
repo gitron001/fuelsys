@@ -56,6 +56,11 @@ return [
         'all_day'               => 'All day',
         'bonus_driver_card'     => 'Bonus/Driver card',
         'edit'                  => 'Edit transaction',
+        'transaction_history'   => 'Transaction history',
+        'prev_user'             => 'Previous user',
+        'current_user'          => 'Current user',
+        'updated_by'            => 'Updated by',
+        'nothing_to_show'       => 'This transaction has never been changed.'
     ],
     'transactions_pdf' => [
         'report'            => 'REPORT',
@@ -267,6 +272,7 @@ return [
     'generate_bill'     => 'Generate bill',
     'fill'              => 'Fill',
     'state'             => 'State',
+    'history'           => 'History',
     'retype_password'               => 'Retype password',
     'remember_me'                   => 'Remember Me',
     'register'                      => 'Register',
