@@ -523,11 +523,13 @@ class StaffController extends Controller
         $companies              = self::show_companies_info($request)['companies'];
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
         $companyData            = self::show_companies_info($request)['companyData'];
+        $payments               = self::show_payments_info($request, 'payments_data');
+        $expenses               = self::show_expenses_info($request, 'expenses_data');
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
         $company                = Company::where('status',4)->first();
 
         if(!empty($company->email)){
-            $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company'));
+            $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','payments','expenses'));
 
             $file_name  = 'Raport - '.date('Y-m-d', time()).'.pdf';
 
