@@ -8,6 +8,7 @@ Route::group(['middleware' => 'checkLogin'], function () {
     Route::resource('/', 'HomeController');
     Route::get('transactions-info', 'TransactionController@info');
     Route::get('stock-info', 'StockController@info');
+    Route::get('/update-dispensers-status','HomeController@update_dispensers_status');
 
     //Change language
     Route::get('locale/{locale}',function($locale){
@@ -186,5 +187,4 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/tracking_command-delete-all', 'SettingsController@delete_all_tracking_commands');
 
     Route::get('/insertRecord','UsersController@insertRecord');
-
 });

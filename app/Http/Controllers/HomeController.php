@@ -16,8 +16,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         $transactions       = Transaction::orderBy('created_at', 'DESC')->limit(15)->get();
         $company_low_limit  = Company::where('limit_left', '<' , 50)
                                         ->where('status',1)
@@ -36,6 +35,11 @@ class HomeController extends Controller
 							  ->get();
 
         return view('welcome',compact('dispanesers','transactions','company_low_limit','tanks','stock_data','sales'));
+    }
+
+    public function update_dispensers_status(Request $request){
+        $dispanesers = Dispaneser::all();
+        return view('/dispensers',compact('dispanesers'))->render();
     }
 
 }

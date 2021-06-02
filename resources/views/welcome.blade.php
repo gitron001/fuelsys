@@ -36,52 +36,35 @@
     width: 50%;
     padding: 30%;
 }
+.dot {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
 </style>
 
 <div class='row'>
-  <div class="col-md-6">
-      <div class="box box-primary" style="height: 550px;">
-      <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('adminlte::adminlte.dispensers') }}</h3>
+    <div class="col-md-6">
+        <div class="box box-primary" style="height: 550px;">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ trans('adminlte::adminlte.dispensers') }}</h3>
 
-          <div class="box-tools pull-right">
-          <span class="label label-primary">{{ trans('adminlte::adminlte.total') }}: {{count($dispanesers)}}</span>
-          </div>
-      </div>
-
-      @foreach($dispanesers as $dispaneser)
-      <div class="col-sm-3" id="wrapper">
-        <div class="box-body">
-
-            <ul style="list-style:none; margin:0; padding:0">
-            <li class="text-center">
-				<p class="text-center users-list-name">{{ $dispaneser->name }}</p>
-				@if($dispaneser->status == 2)
-					<i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:#ffea00"></i>
-				@elseif($dispaneser->status == 3)
-					<i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:#009d00"></i>
-				@elseif($dispaneser->status == 4)
-					<i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:#f8001a"></i>
-				@else
-					<i class="fas fa-gas-pump channel_{{ $dispaneser->channel_id }}" style="font-size:80px;color:"></i>
-				@endif
-				@if( $dispaneser->user->name  != "")
-					<p class="text-center text_{{ $dispaneser->channel_id }}">{{ $dispaneser->user->name }} - {{ number_format($dispaneser->current_amount/100, 2) }}</p>
-				@else
-					<p class="text-center text_{{ $dispaneser->channel_id }}"></p>
-				@endif
-            </li>
-            </ul>
-
+            <div class="box-tools pull-right">
+                <span class="label label-primary">{{ trans('adminlte::adminlte.total') }}: {{count($dispanesers)}}</span>
+                <a href="#" class="update_dispensers_status"><span class="label label-primary" id="span-text">Update <i id="spiner" class="fa fa-spinner fa-spin" style="font-size:12px; display:none;"></i>
+                </span></a>
+            </div>
         </div>
-      </div>
-      @endforeach
+
+        <div class="dispensers">
+            @include('dispensers')
+        </div>
 
       <div class="box-footer"></div>
 
       </div>
   </div>
-
 <!-- Companies with low limit Area -->
 @if(count($company_low_limit) != 0)
 <div class="col-md-3 table-wrapper-scroll-y my-custom-scrollbar scrollStyle">
@@ -186,10 +169,23 @@
             $('#loadTransaction').load('{{ url('/transactions-info')}}').fadeIn('slow');
         },60000);
 
+        // Refresh dispensers status
+        setInterval(function(){
+            $('.dispensers').load('{{ url('/update-dispensers-status')}}').fadeIn('slow');
+        },60000);
+
 		//$('#loadTanks').load('{{ url('/stock-info')}}').fadeIn('slow');
         /*setInterval(function(){
 
         },10000);*/
+    });
+
+    $(document).on('click', '.update_dispensers_status', function(e) {
+        document.getElementById("spiner").style.display = "inline-block";
+        $.get("/update-dispensers-status", function (data) {
+            document.getElementById("spiner").style.display = "none";
+            $(".dispensers").html(data);
+        });
     });
 
 </script>
