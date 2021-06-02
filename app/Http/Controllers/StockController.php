@@ -59,12 +59,14 @@ class StockController extends Controller
 
     public function update(Request $request, $id) {
         $stock = Stock::findOrFail($id);
-        $stock['date'] = strtotime($request->input('date'));
 
-        $stock->update($request->all());
+        $stock->date        = strtotime($request->input('date'));
+        $stock->tank_id     = $request->input('tank');
+        $stock->amount      = $request->input('amount');
+        $stock->updated_at  = now()->timestamp;
+        $stock->save();
 
         session()->flash('info','Success');
-
         return redirect()->back();
     }
 
@@ -90,11 +92,11 @@ class StockController extends Controller
 		$sales 				= Transaction::select(DB::RAW('sum(lit) as total_lit'), DB::RAW('max(tank_id) as tank_id'))
 							 ->join('pumps', function ($join) {
 									$join->on('transactions.sl_no', '=', 'pumps.nozzle_id')
-									->on('transactions.channel_id', '=', 'pumps.channel_id');	 
+									->on('transactions.channel_id', '=', 'pumps.channel_id');
 							   })
 							  ->groupBy('pumps.tank_id')
 							  ->get();
-		
+
         return view('admin.stock.stock-info',compact('tanks','sales'));
 
     }
