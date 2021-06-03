@@ -53,9 +53,10 @@
                         </option>
                         @endforeach
                     </select>
-                </div>
+                </div>&nbsp;
+                <a href="#" class="show_hide_transactions_filters"><i id="button-hide-show" class="fa fa-chevron-down"></i></a>
                 <br>
-
+                <div id="show_hide_filters" style="display: none;">
                 <div class="form-group">
                     <input type="checkbox" name="last_payment" id="last_payment"
                         {{ request()->get("last_payment") == 'Yes' ? 'checked' : ''}}>
@@ -79,7 +80,7 @@
                         {{ request()->get("all_day") == 'Yes' ? 'checked' : ''}}>
                     {{ trans('adminlte::adminlte.transactions_details.all_day') }}<br>
                 </div>&nbsp;
-
+                </div>
                 <div class="form-group" style="padding-top: 5px;">
                     <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i
                             class="fa fa-search"></i></button>

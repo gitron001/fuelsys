@@ -43,6 +43,9 @@ return [
         'create_new'    => 'Napravite novi rezervoar',
         'edit'          => 'Promenite rezervoar',
         'delete_all'    => 'Izbrišite sve izabrane rezervoare',
+        'alarm_email_water_level' => 'Pošaljite e-poštu o visokom nivou vode u rezervoaru',
+        'high_level_water'  => 'Viši nivo vode',
+        'current_level_water' => 'Trenutni nivo vode'
     ],
     'tank_fields' => [
         'excel_file'    => 'Excel file',

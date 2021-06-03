@@ -18,11 +18,18 @@
 					{!! $errors->first('product_id','<span class="help-block">:message</span>') !!}
                 </div>
 
+                <div class="form-group {{ $errors->has('high_level_water') ? 'has-error' : '' }}">
+					{!! Form::label('high_level_water',trans('adminlte::adminlte.tank_details.high_level_water')); !!}
+					{!! Form::number('high_level_water',isset($tank) ? null : 7,['class'=>'form-control']); !!}
+					{!! $errors->first('high_level_water','<span class="help-block">:message</span>') !!}
+				</div>
+
                 <div class="form-group">
                     <label>{{ trans('adminlte::adminlte.tank_fields.excel_file') }}</label>
                     <input type="file" name="excel_file">
                     @if(isset($excel_file))<i class="fa fa-file-excel" aria-hidden="true"></i>@endif
                 </div>
+
 			</div>
 
 			<div class="col-md-6">
@@ -37,6 +44,13 @@
 					{!! Form::select('status',[0=>'No Active',1=>'Active'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('status','<span class="help-block">:message</span>') !!}
 				</div>
+
+                <div class="form-group {{ $errors->has('alarm_email_water_level') ? 'has-error' : '' }}">
+					{!! Form::label('alarm_email_water_level',trans('adminlte::adminlte.tank_details.alarm_email_water_level')); !!}
+					{!! Form::select('alarm_email_water_level',[0=>'No',1=>'Yes'],null,['class'=>'form-control']); !!}
+					{!! $errors->first('alarm_email_water_level','<span class="help-block">:message</span>') !!}
+				</div>
+
 			</div>
 		</div>
 	</div>

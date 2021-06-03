@@ -55,6 +55,8 @@ class TankController extends Controller
         $tank->product_id = $request->input('product_id');
         $tank->capacity = $request->input('capacity');
         $tank->status = $request->input('status');
+        $tank->high_level_water = $request->input('high_level_water');
+        $tank->alarm_email_water_level = $request->input('alarm_email_water_level');
         $tank->save();
 
         if(!empty($request->file('excel_file'))){

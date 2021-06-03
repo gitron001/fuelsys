@@ -43,6 +43,9 @@ return [
         'create_new'    => 'Krijo një rezervuar të ri',
         'edit'          => 'Ndrysho rezervuarin',
         'delete_all'    => 'Fshini të gjitha rezervuaret e zgjedhura',
+        'alarm_email_water_level' => 'Dërgo email për nivelin e lartë të ujit në rezervuar',
+        'high_level_water'  => 'Niveli më i lartë i ujit',
+        'current_level_water' => 'Niveli aktual i ujit'
     ],
     'tank_fields' => [
         'excel_file'    => 'Excel file',

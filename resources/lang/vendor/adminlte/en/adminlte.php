@@ -43,6 +43,9 @@ return [
         'create_new'    => 'Create new tank',
         'edit'          => 'Edit tank',
         'delete_all'    => 'Delete all selected tanks',
+        'alarm_email_water_level' => 'Send email about the high water level in the tank',
+        'high_level_water'  => 'High level water',
+        'current_level_water' => 'Current level water'
     ],
     'tank_fields' => [
         'excel_file'    => 'Excel file',

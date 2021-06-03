@@ -546,5 +546,17 @@
     }
 
 </script>
-
+<script>
+    $(document).on('click', '.show_hide_transactions_filters', function(e) {
+        var x = document.getElementById("show_hide_filters");
+        if (x.style.display === "none") {
+            $("#button-hide-show").attr('class', 'fa-chevron-up');
+            x.style.display = "block";
+        } else {
+            $("#button-hide-show").attr('class', 'fa-chevron-down');
+            x.style.display = "none";
+        }
+    });
+</script>
 @endsection
+
