@@ -49,6 +49,9 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('product/{id}/delete', ['as' => 'product.delete', 'uses' => 'ProductController@destroy']);
     Route::get('/admin/products-delete-all', 'ProductController@delete_all');
 
+    // Invoices
+	Route::resource('/admin/invoices', 'InvoicesController');
+
 	// Products Group
 	Route::resource('/admin/products_group', 'ProductGroupController');
     Route::get('product_group/{id}/delete', ['as' => 'product_group.delete', 'uses' => 'ProductGroupController@destroy']);

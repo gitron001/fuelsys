@@ -38,6 +38,7 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('user_id')->nullable()->index();
             $table->bigInteger('driver_id')->nullable()->index();
             $table->bigInteger('bonus_user_id')->nullable()->index();
+            $table->integer('invoice_id')->default(0);
             $table->char('ctype')->nullable();
             $table->char('method')->nullable();
             $table->integer('type')->nullable();

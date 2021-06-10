@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class InvoiceModel extends Model
 {
-    protected $table = 'invoice_models';
+    protected $table = 'invoices';
 
     protected $fillable = [
         'date',

@@ -20,6 +20,7 @@ return [
         'settings'                      => 'Postavke',
         'expenses'                      => 'Izdatak',
         'totalizers'                    => 'Totalizeret',
+        'invoices'                      => 'Računi',
     ],
 
     'company_details' => [
@@ -276,6 +277,8 @@ return [
     'state'             => 'Stanje',
     'history'           => 'Istorija',
     'created_by'        => 'Created bi',
+    'invoices'          => 'Računi',
+    'paid'              => 'Platiti',
     'retype_password'               => 'Prepišite lozinku',
     'remember_me'                   => 'Sećam se',
     'register'                      => 'Registrovati',

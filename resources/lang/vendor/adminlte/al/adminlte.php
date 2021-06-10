@@ -20,6 +20,7 @@ return [
         'settings'                      => 'Preferencat',
         'expenses'                      => 'Shpenzimet',
         'totalizers'                    => 'Totalizerët',
+        'invoices'                      => 'Faturat',
     ],
 
     'company_details' => [
@@ -284,6 +285,8 @@ return [
     'state'             => 'Gjendja',
     'history'           => 'Historia',
     'created_by'        => 'Krijuar nga',
+    'invoices'          => 'Faturat',
+    'paid'              => 'Paguar',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',

@@ -61,10 +61,7 @@ class TransactionController extends Controller
 
     public function edit($id) {
         $transaction    = Transactions::findOrFail($id);
-        $users          = Users::where('status',1)->where(function ($users) {
-                            $users->where('company_id', 0)
-                            ->orWhereNull('company_id');
-                        })->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
+        $users          = Users::where('status',1)->where('branch_id',NULL)->get();
 
         return view('/admin/transactions/edit',compact('transaction','users'));
     }
@@ -306,6 +303,37 @@ class TransactionController extends Controller
 
     public function invoice_pdf(Request $request){
         $data = self::invoice_data($request);
+        $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+
+        $from_company       = Company::where('status', 4)->first();
+        $to_company         = Company::where('id',$request->input('company'))->first();
+
+        $from_date          = strtotime($request->input('fromDate'));
+        $to_date            = strtotime($request->input('toDate'));
+
+        $products = Transactions::select(DB::RAW('transactions.id as tr_id'),DB::RAW('transactions.created_at as date'),DB::RAW('products.pfc_pr_id as product_id'), DB::raw('MAX(products.name) as product_name'), DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'),DB::raw('transactions.price as price'))
+            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
+            ->groupBy('tr_id');
+
+        if ($request->input('user') && empty($request->input('company'))) {
+            $products = $products->whereIn('user_id',$request->input('user'));
+        }
+
+        if ($request->input('company') && empty($request->input('user'))) {
+            $products = $products->where('companies.id','=',$request->input('company'));
+        }
+
+        if($request->input('user') && $request->input('company')){
+            $products = $products->whereIn('user_id',$request->input('user'))->where('companies.id','=',$request->input('company'));
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
+
+        $all_transactions   = $products->get();
         $company            = $data['from_company'];
         $to_company         = $data['to_company'];
         $total_transactions = $data['total_transactions'];
@@ -313,7 +341,7 @@ class TransactionController extends Controller
         $from_date          = $request->input('fromDate');
         $to_date            = $request->input('toDate');
 
-        $invoice_id = Invoice::insertGetId([
+        /*$invoice_id = Invoice::insertGetId([
             'date'          => now()->timestamp,
             'user_id'       => auth()->user()->id,
             'paid'          => 1,
@@ -335,11 +363,11 @@ class TransactionController extends Controller
             $invoice->created_at         = now()->timestamp;
             $invoice->updated_at         = now()->timestamp;
             $invoice->save();
-        }
+        }*/
 
 
 
-        $pdf = PDF::loadView('admin.transactions.invoice_pdf',compact('company','to_company','total_transactions','companies','from_date','to_date','invoice_id'));
+        $pdf = PDF::loadView('admin.transactions.invoice_pdf',compact('company','to_company','total_transactions','companies','from_date','to_date','invoice_id','all_transactions'));
         $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
     }

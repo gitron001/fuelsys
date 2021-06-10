@@ -20,6 +20,7 @@ return [
         'nozzle'                        => 'Nozzle',
         'expenses'                      => 'Expenses',
         'totalizers'                    => 'Totalizers',
+        'invoices'                      => 'Invoices',
     ],
 
     'company_details' => [
@@ -277,6 +278,8 @@ return [
     'state'             => 'State',
     'history'           => 'History',
     'created_by'        => 'Created by',
+    'invoices'          => 'Invoices',
+    'paid'              => 'Paid',
     'retype_password'               => 'Retype password',
     'remember_me'                   => 'Remember Me',
     'register'                      => 'Register',

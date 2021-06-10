@@ -30,6 +30,13 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('admin/invoices') || request()->is('admin/invoices/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/invoices') }}">
+            <i class="fa fas fa-file-invoice" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.invoices') }}</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/products') }}">
             <i class="fa fa-align-justify" aria-hidden="true"></i>

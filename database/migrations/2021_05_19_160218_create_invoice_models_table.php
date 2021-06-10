@@ -13,7 +13,7 @@ class CreateInvoiceModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_models', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('date');
             $table->integer('user_id');
@@ -31,6 +31,6 @@ class CreateInvoiceModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_models');
+        Schema::dropIfExists('invoices');
     }
 }

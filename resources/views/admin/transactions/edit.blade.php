@@ -17,9 +17,11 @@
             <div class="col-md-12">
                 <div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
                     {!! Form::label('user_id', trans('adminlte::adminlte.user')); !!}
-                    {!! Form::select('user_id',['' => 'Select a User'] + $users,null,['class'=>'selectpicker
-                    form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']);
-                    !!}
+                    <select name="user_id" class="selectpicker form-control" id="userDropdown" data-live-search="true" data-style="btn-dropdownSelectNew">
+                        @foreach ($users as $user)
+                        <option value="{{ $user->id }}" {{ $user->id == $transaction->user_id ? 'selected' : '' }}>{{ $user->name }} {{ $user->surname }} @if($user->company->name) ({{ $user->company->name }})@endif</option>
+                        @endforeach
+                    </select>
                     {{ Form::hidden('transaction_id', $transaction->id) }}
                     {{ Form::hidden('previous_user_id', $transaction->user_id) }}
                 </div>
@@ -28,7 +30,8 @@
                     <button type="submit" class="btn btn-primary" id="transaction-save-btn">
                         <i class="fas fa-save"></i> {{ trans('adminlte::adminlte.save') }}
                     </button>
-                    <a href="{{ URL::previous() }}" class="btn btn-danger pull-right"> {{ trans('adminlte::adminlte.cancel') }} </a>
+                    <a href="{{ URL::previous() }}" class="btn btn-danger pull-right">
+                        {{ trans('adminlte::adminlte.cancel') }} </a>
                 </div>
             </div>
         </div>
@@ -44,11 +47,12 @@
 
 @section('js')
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("form.transaction-form").submit(function () {
             const button = document.getElementById('transaction-save-btn');
             button.disabled = true;
         });
     });
+
 </script>
 @endsection

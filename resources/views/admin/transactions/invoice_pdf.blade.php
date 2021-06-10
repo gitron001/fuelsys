@@ -59,7 +59,7 @@
                     <h1 class="page-header">INVOICE</h1>
                     <p style="line-height:1.2; font-size: 13px;">
                         <span><b>Data </b> {{ date('Y-m-d') }}</span><br />
-                        <span><b>Invoice #</b> {{ $invoice_id }}</span><br />
+                        <span><b>Invoice #</b></span><br />
                         <span></span>
                         <span></span>
                         <span></span>
@@ -146,6 +146,85 @@
             </td>
         </tr>
     </table>
+
+    <!-- PAGE 2 -->
+    <div style="page-break-before: always;"></div>
+
+    <table width="100%">
+        <thead style="background-color:#122E57;">
+            <tr>
+                <th align="center">Data</th>
+                <th align="center">Artikulli</th>
+                <th align="center">Sasia</th>
+                <th align="center">Çmimi pa TVSH</th>
+                <th align="center">TVSH</th>
+                <th align="center">Çmimi</th>
+                <th align="center">Shuma me TVSH</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php $total = 0 @endphp
+            @foreach($all_transactions as $transactions)
+            <tr>
+                <td align="center">{{ date('m/d/Y H:i', $transactions['date']) }}</td>
+                <td align="center">{{ $transactions['product_name'] }}</td>
+                <td align="center">{{ $transactions['lit'] }} litra</td>
+                <td align="center">€ {{ number_format(($transactions['price'] / (1 + 0.18)), 2) }}</td>
+                <td align="center">€
+                    {{ number_format(( $transactions['price'] - ( $transactions['price'] / (1 + 0.18) ) ), 2) }}
+                </td>
+                <td align="center">€ {{ $transactions['price'] }}</td>
+                <td align="right">€ {{ $transactions['money'] }}</td>
+            </tr>
+            @php $total += $transactions['money'] @endphp
+            @endforeach
+            <tr>
+                <td colspan="5"></td>
+                <td align="right">Vlera e Tatueshme:</td>
+                <td align="right" class="blue font-color"> <b>€
+                    {{ number_format(($total / (1 + 0.18)), 2) }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+                <td align="right">TVSH (18%)</td>
+                <td align="right" class="blue font-color"> <b>€
+                    {{ number_format(( $total - ( $total / (1 + 0.18) ) ), 2) }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+                <td align="right">Shuma:</td>
+                <td align="right" class="blue font-color"> <b>€ {{ $total }}</b></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table width="50%;border: 1px black solid;margin-top:-4%;">
+        <thead style="background-color: #122E57">
+            <tr>
+                <th align="left;">KOMENT</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <p style="line-height:1.2">
+                    <p style="line-height:1.2; font-size: 12px;"">
+                    <span>1.Payment due in 30 days</span><br/>
+                    <span>2.Please note the invoice number in your payment method</span><br/>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                <p style="line-height:1.2">
+                    <p style="line-height:1.2; font-size: 12px;"">
+                    <span><b>BKT :</b> 100200300400</span><br/>
+                    <span><b>RBKO :</b> 100200300400</span><br/>
+                    <span><b>PBC :</b> 100200300400</span><br/>
+                </p>
+            </td>
+        </tr>
+    </table>
+
 
 </body>
 </html>
