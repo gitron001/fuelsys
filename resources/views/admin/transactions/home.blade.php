@@ -97,7 +97,7 @@
                     <button type="button" data-toggle="tooltip" class="btn bg-purple" id="sendReportToEmail"
                         title="Send raport to email"><i class="fas fa-paper-plane"></i></button>
                     <a href="{{ route('generate_invoice/invoice', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance"),'bonus_user' => request()->get("bonus_user"),'last_payment' => request()->get("last_payment")] ) }}"
-                        target="_blank" data-toggle="tooltip" class="btn bg-maroon" title="Show Invoice"><i
+                        target="_blank" data-toggle="tooltip" class="btn bg-maroon" title="Create Invoice"><i
                             class="fas fa-file-invoice"></i></a>
                 </div>
 
@@ -137,6 +137,10 @@
                                             class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                                 <th class="sorting" data-sorting_type="asc" data-column_name="money">
                                     {{ trans('adminlte::adminlte.total') }} <span id="money_icon"
+                                        class="removePrevIcon sortIcon"><span
+                                            class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                                <th class="sorting" data-sorting_type="asc" data-column_name="invoice_id">
+                                    {{ trans('adminlte::adminlte.invoice') }} <span id="invoice_id_icon"
                                         class="removePrevIcon sortIcon"><span
                                             class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                                 <th class="sorting" data-sorting_type="asc" data-column_name="created_at">

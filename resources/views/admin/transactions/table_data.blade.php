@@ -8,6 +8,11 @@
         <td>{{ $transaction->price }}</td>
         <td>{{ $transaction->lit }}</td>
         <td>{{ $transaction->money }}</td>
+        <td>
+            @if($transaction->invoice_id !== 0)
+                <a href="{{ route('invoice.pdf', [$transaction->invoice_id]) }}" target="_blank">Fatura #{{$transaction->invoice_id}}</a>
+            @else - @endif
+        </td>
         <td>{{ $transaction->created_at }}</td>
         <td class="text-center" width="8%">
             @auth<a href="{{ url('admin/transactions/'.$transaction->id.'/edit') }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.edit') }}"><i class="fa fa-edit"></i></a>&nbsp;@endauth
@@ -25,6 +30,11 @@
     <td>{{ $transaction->price }}</td>
     <td>{{ $transaction->lit }}</td>
     <td>{{ $transaction->money }}</td>
+    <td>
+        @if($transaction->invoice_id !== 0)
+            <a href="{{ route('invoice.pdf', [$transaction->invoice_id]) }}" target="_blank">Fatura #{{$transaction->invoice_id}}}</a>
+        @else - @endif
+    </td>
     <td>{{ $transaction->created_at }}</td>
     <td class="text-center" width="8%">
         @auth<a href="{{ url('admin/transactions/'.$transaction->id.'/edit') }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.edit') }}"><i class="fa fa-edit"></i></a>&nbsp;@endauth

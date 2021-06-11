@@ -278,7 +278,10 @@ return [
     'history'           => 'Istorija',
     'created_by'        => 'Created bi',
     'invoices'          => 'Računi',
+    'invoice'           => 'Bill',
     'paid'              => 'Platiti',
+    'unpaid'            => 'Neplaćeno',
+    'view'              => 'Gledaj',
     'retype_password'               => 'Prepišite lozinku',
     'remember_me'                   => 'Sećam se',
     'register'                      => 'Registrovati',
@@ -297,4 +300,6 @@ return [
     'delete'                        => 'Trljati',
     'edit'                          => 'Ndrysho',
     'selected_date_to_show_data'    => 'Odabrani datumi za podnošenje podataka',
+    'payment_due_in_30_days'        => 'Rok plaćanja u roku od 30 dana',
+    'invoice_number_payment_method' => 'Unesite broj fakture na uplati',
 ];

@@ -547,6 +547,17 @@
 
 </script>
 <script>
+    window.onload = function(e) {
+        var url = new URL(window.location.href);
+        var x = document.getElementById("show_hide_filters");
+
+        if (url.searchParams.get('inc_transactions') || url.searchParams.get('exc_balance') || url.searchParams.get('last_payment')) {
+            $("#button-hide-show").attr('class', 'fa-chevron-up');
+            x.style.display = "block";
+        }
+    };
+
+
     $(document).on('click', '.show_hide_transactions_filters', function(e) {
         var x = document.getElementById("show_hide_filters");
         if (x.style.display === "none") {

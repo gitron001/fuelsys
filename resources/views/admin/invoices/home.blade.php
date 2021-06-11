@@ -16,9 +16,6 @@
                     <form class="form-inline text-center pull-right" method="GET"
                         action="{{ URL::to('/admin/invoices') }}">
                         @include('includes.search_filter')
-                        <a data-toggle="tooltip" class="btn btn-danger" id="delsel"
-                            title="{{ trans('adminlte::adminlte.nozzle_details.delete_all') }}"><i
-                                class="fa fa-trash"></i> {{ trans('adminlte::adminlte.delete') }}</a>
                     </form>
 
                 </div>
@@ -28,8 +25,10 @@
                 <table id="example2" class="table table-bordered table-hover text-center">
                     <thead>
                         <tr>
-                            <th style="text-align:center;"><input type="checkbox" id="checkall"
-                                    class="checkbox-select-all"></th>
+                            <th class="sorting" data-sorting_type="asc" data-column_name="id">
+                                ID <span id="id_icon"
+                                    class="removePrevIcon sortIcon"><span
+                                        class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                             <th class="sorting" data-sorting_type="asc" data-column_name="date">
                                 {{ trans('adminlte::adminlte.date') }} <span id="date_icon"
                                     class="removePrevIcon sortIcon"><span
@@ -38,12 +37,12 @@
                                 {{ trans('adminlte::adminlte.user') }} <span id="user_id_icon"
                                     class="removePrevIcon sortIcon"><span
                                         class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                            <th class="sorting" data-sorting_type="asc" data-column_name="paid">
-                                {{ trans('adminlte::adminlte.paid') }} <span id="paid_icon"
+                            <th class="sorting" data-sorting_type="asc" data-column_name="company_id">
+                                {{ trans('adminlte::adminlte.company') }} <span id="company_id_icon"
                                     class="removePrevIcon sortIcon"><span
                                         class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                            <th class="sorting" data-sorting_type="asc" data-column_name="status">
-                                {{ trans('adminlte::adminlte.status') }} <span id="status_icon"
+                            <th class="sorting" data-sorting_type="asc" data-column_name="paid">
+                                {{ trans('adminlte::adminlte.paid') }} <span id="paid_icon"
                                     class="removePrevIcon sortIcon"><span
                                         class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                             <th class="sorting" data-sorting_type="asc" data-column_name="created_at">

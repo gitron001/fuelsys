@@ -67,9 +67,8 @@ class TransactionController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $transaction = Transactions::findOrFail($id);
-        $transaction->user_id = $request->input('user_id');
-        $transaction->save();
+        // Update transaction
+        Transactions::where('id', $id)->update(array('user_id' => $request->input('user_id'), 'updated_at' => now()->timestamp));
 
         // Save transaction changes
         $history                    = new TransactionChangeHistory();
@@ -301,73 +300,30 @@ class TransactionController extends Controller
         return view('/admin/transactions/invoice',compact('from_company','to_company','total_transactions','companies'));
     }
 
-    public function invoice_pdf(Request $request){
-        $data = self::invoice_data($request);
-        $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+    public function generate_invoice_pdf(Request $request){
+        $data               = self::invoice_data($request); // Display transactions group by PRICE
+        $all_transactions   = self::invoice_all_transactions($request); // Display all transactions(Second page of PDF)
 
-        $from_company       = Company::where('status', 4)->first();
-        $to_company         = Company::where('id',$request->input('company'))->first();
-
-        $from_date          = strtotime($request->input('fromDate'));
-        $to_date            = strtotime($request->input('toDate'));
-
-        $products = Transactions::select(DB::RAW('transactions.id as tr_id'),DB::RAW('transactions.created_at as date'),DB::RAW('products.pfc_pr_id as product_id'), DB::raw('MAX(products.name) as product_name'), DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'),DB::raw('transactions.price as price'))
-            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
-            ->groupBy('tr_id');
-
-        if ($request->input('user') && empty($request->input('company'))) {
-            $products = $products->whereIn('user_id',$request->input('user'));
-        }
-
-        if ($request->input('company') && empty($request->input('user'))) {
-            $products = $products->where('companies.id','=',$request->input('company'));
-        }
-
-        if($request->input('user') && $request->input('company')){
-            $products = $products->whereIn('user_id',$request->input('user'))->where('companies.id','=',$request->input('company'));
-        }
-
-        if ($request->input('fromDate') && $request->input('toDate')) {
-            $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        }
-
-        $all_transactions   = $products->get();
         $company            = $data['from_company'];
         $to_company         = $data['to_company'];
         $total_transactions = $data['total_transactions'];
         $companies          = $data['companies'];
-        $from_date          = $request->input('fromDate');
-        $to_date            = $request->input('toDate');
 
-        /*$invoice_id = Invoice::insertGetId([
+        $invoice_id = Invoice::insertGetId([
             'date'          => now()->timestamp,
             'user_id'       => auth()->user()->id,
+            'company_id'    => $request->input('company'),
             'paid'          => 1,
             'status'        => 1,
             'created_at'    => now()->timestamp,
             'updated_at'    => now()->timestamp
         ]);
 
-        foreach ($total_transactions as $transactions) {
-            $invoice = new InvoiceDetails();
+        foreach ($all_transactions as $transaction) {
+            Transactions::where('id', $transaction->tr_id)->update(['invoice_id' => $invoice_id, 'updated_at' => now()->timestamp]);
+        }
 
-            $invoice->invoice_id         = $invoice_id;
-            $invoice->product_id         = $transactions['product_id'];
-            $invoice->quantity           = $transactions['lit'];
-            $invoice->price_without_tvsh = number_format(($transactions['price'] / (1 + 0.18)), 2);
-            $invoice->tvsh               = number_format(( $transactions['price'] - ( $transactions['price'] / (1 + 0.18) ) ), 2);
-            $invoice->price              = $transactions['price'];
-            $invoice->total              = $transactions['money'];
-            $invoice->created_at         = now()->timestamp;
-            $invoice->updated_at         = now()->timestamp;
-            $invoice->save();
-        }*/
-
-
-
-        $pdf = PDF::loadView('admin.transactions.invoice_pdf',compact('company','to_company','total_transactions','companies','from_date','to_date','invoice_id','all_transactions'));
+        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','invoice_id','all_transactions'));
         $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
     }
@@ -407,6 +363,42 @@ class TransactionController extends Controller
         $total_transactions = $products->get();
 
         return ['from_company' => $from_company,'to_company' => $to_company,'total_transactions' => $total_transactions,'companies' => $companies];
+    }
+
+    public static function invoice_all_transactions(Request $request){
+        $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+
+        $from_company       = Company::where('status', 4)->first();
+        $to_company         = Company::where('id',$request->input('company'))->first();
+
+        $from_date          = strtotime($request->input('fromDate'));
+        $to_date            = strtotime($request->input('toDate'));
+
+        $products = Transactions::select(DB::RAW('transactions.id as tr_id'),DB::RAW('transactions.created_at as date'),DB::RAW('products.pfc_pr_id as product_id'), DB::raw('MAX(products.name) as product_name'), DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'),DB::raw('transactions.price as price'))
+            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
+            ->groupBy('tr_id');
+
+        if ($request->input('user') && empty($request->input('company'))) {
+            $products = $products->whereIn('user_id',$request->input('user'));
+        }
+
+        if ($request->input('company') && empty($request->input('user'))) {
+            $products = $products->where('companies.id','=',$request->input('company'));
+        }
+
+        if($request->input('user') && $request->input('company')){
+            $products = $products->whereIn('user_id',$request->input('user'))->where('companies.id','=',$request->input('company'));
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
+        }
+
+        $all_transactions   = $products->get();
+
+        return $all_transactions;
     }
 
     public static function generate_data($request){
@@ -764,7 +756,7 @@ class TransactionController extends Controller
             $sort_type       = $request->get('sorttype');
         }
         $query = Transactions::select(DB::RAW('user1.name as user_name'),DB::RAW('user2.name as bonus_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
-           'transactions.price', 'transactions.lit','transactions.money','transactions.created_at','transactions.id')
+           'transactions.price', 'transactions.lit','transactions.money','transactions.created_at','transactions.id','transactions.invoice_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('users as user1', 'user1.id', '=', 'transactions.user_id')
             ->leftJoin('users as user2', 'user2.id', '=', 'transactions.bonus_user_id')

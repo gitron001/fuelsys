@@ -46,24 +46,21 @@
                 <td align="left">
                     <h1 class="page-header">{{ $company->name }}</h1>
                     <p style="line-height:1.2; font-size: 13px;">
-                        <span><b>Lokacioni :</b> {{ $company->city }}, {{ $company->country }}</span><br />
-                        <span><b>Email :</b> {{ $company->email }}</span><br />
-                        <span><b>Tel. :</b> {{ $company->tel_number }}</span><br />
-                        <span><b>Nr. Biz. :</b> {{ $company->bis_number }}</span><br />
-                        <span><b>Tax. Nr. :</b> {{ $company->tax_number }}</span><br />
-                        <span><b>Nr. Fis. :</b> {{ $company->fis_number }}</span><br />
+                        <span><b>Lokacioni:</b> {{ $company->city }}, {{ $company->country }}</span><br />
+                        <span><b>Email:</b> {{ $company->email }}</span><br />
+                        <span><b>Tel.:</b> {{ $company->tel_number }}</span><br />
+                        <span><b>Nr.Biz.:</b> {{ $company->bis_number }}</span><br />
+                        <span><b>Tax.Nr.:</b> {{ $company->tax_number }}</span><br />
+                        <span><b>Nr.Fis.:</b> {{ $company->fis_number }}</span><br />
                     </p>
                 </td>
 
                 <td align="right">
-                    <h1 class="page-header">INVOICE</h1>
+                    <h1 class="page-header">INVOICE {{ isset($invoice_id) ? '#'.$invoice_id : ''}}</h1>
                     <p style="line-height:1.2; font-size: 13px;">
-                        <span><b>Data </b> {{ date('Y-m-d') }}</span><br />
-                        <span><b>Invoice #</b></span><br />
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <span><b>Data: </b> {{ isset($date) ? date('d-m-Y H:i', $date) : date('d-m-Y H:i') }}</span><br />
+                        <span><b>Kompania:</b> {{ $to_company->name }}</span><br/>
+                        <span><b>Tel.:</b> {{ $to_company->tel_number }}</span>
                     </p>
                 </td>
             </tr>
@@ -130,8 +127,8 @@
             <td>
                 <p style="line-height:1.2">
                     <p style="line-height:1.2; font-size: 12px;"">
-                    <span>1.Payment due in 30 days</span><br/>
-                    <span>2.Please note the invoice number in your payment method</span><br/>
+                    <span>1.{{ trans('adminlte::adminlte.payment_due_in_30_days') }}</span><br/>
+                    <span>2.{{ trans('adminlte::adminlte.invoice_number_payment_method') }}</span><br/>
                 </p>
             </td>
         </tr>
@@ -139,9 +136,9 @@
             <td align="left">
                 <p style="line-height:1.2">
                     <p style="line-height:1.2; font-size: 12px;"">
-                    <span><b>BKT :</b> 100200300400</span><br/>
-                    <span><b>RBKO :</b> 100200300400</span><br/>
-                    <span><b>PBC :</b> 100200300400</span><br/>
+                    <span><b>BKT :</b> 00000000000</span><br/>
+                    <span><b>RBKO :</b> 00000000000</span><br/>
+                    <span><b>PBC :</b> 00000000000</span><br/>
                 </p>
             </td>
         </tr>
@@ -208,8 +205,8 @@
             <td>
                 <p style="line-height:1.2">
                     <p style="line-height:1.2; font-size: 12px;"">
-                    <span>1.Payment due in 30 days</span><br/>
-                    <span>2.Please note the invoice number in your payment method</span><br/>
+                    <span>1.{{ trans('adminlte::adminlte.payment_due_in_30_days') }}</span><br/>
+                    <span>2.{{ trans('adminlte::adminlte.invoice_number_payment_method') }}</span><br/>
                 </p>
             </td>
         </tr>
@@ -217,9 +214,9 @@
             <td align="left">
                 <p style="line-height:1.2">
                     <p style="line-height:1.2; font-size: 12px;"">
-                    <span><b>BKT :</b> 100200300400</span><br/>
-                    <span><b>RBKO :</b> 100200300400</span><br/>
-                    <span><b>PBC :</b> 100200300400</span><br/>
+                    <span><b>BKT :</b> 00000000000</span><br/>
+                    <span><b>RBKO :</b> 00000000000</span><br/>
+                    <span><b>PBC :</b> 00000000000</span><br/>
                 </p>
             </td>
         </tr>

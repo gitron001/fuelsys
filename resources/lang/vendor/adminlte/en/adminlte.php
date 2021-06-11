@@ -279,7 +279,10 @@ return [
     'history'           => 'History',
     'created_by'        => 'Created by',
     'invoices'          => 'Invoices',
+    'invoice'           => 'Invoice',
     'paid'              => 'Paid',
+    'unpaid'            => 'Unpaid',
+    'view'              => 'View',
     'retype_password'               => 'Retype password',
     'remember_me'                   => 'Remember Me',
     'register'                      => 'Register',
@@ -297,4 +300,6 @@ return [
     'new'                           => 'New',
     'delete'                        => 'Delete',
     'selected_date_to_show_data'    => 'Selected dates for data submisson',
+    'payment_due_in_30_days'        => 'Payment due in 30 days',
+    'invoice_number_payment_method' => 'Please note the invoice number in your payment method',
 ];

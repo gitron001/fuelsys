@@ -17,6 +17,7 @@ class CreateInvoiceModelsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('date');
             $table->integer('user_id');
+            $table->integer('company_id')->default(0);
             $table->integer('paid')->default(0);
             $table->integer('status');
             $table->integer('created_at');

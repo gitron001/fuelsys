@@ -51,6 +51,8 @@ Route::group(['middleware' => 'authenticated'], function () {
 
     // Invoices
 	Route::resource('/admin/invoices', 'InvoicesController');
+    Route::get('/admin/invoice-pdf/{id}', 'InvoicesController@invoice_to_pdf')->name('invoice.pdf');
+
 
 	// Products Group
 	Route::resource('/admin/products_group', 'ProductGroupController');
@@ -124,8 +126,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 
     Route::get('/pdf','TransactionController@exportPDF')->name('generate_pdf/pdf');
 
+    // Invoices at transactions section
     Route::get('/invoice','TransactionController@invoice')->name('generate_invoice/invoice');
-    Route::get('/invoice_pdf','TransactionController@invoice_pdf')->name('generate_invoice_pdf/invoice_pdf');
+    Route::get('/invoice_pdf','TransactionController@generate_invoice_pdf')->name('generate_invoice_pdf/invoice_pdf');
 
 	// Email
 	Route::get('/sendemail','HomeController@email');

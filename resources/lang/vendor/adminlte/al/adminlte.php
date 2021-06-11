@@ -286,7 +286,10 @@ return [
     'history'           => 'Historia',
     'created_by'        => 'Krijuar nga',
     'invoices'          => 'Faturat',
+    'invoice'           => 'Fatura',
     'paid'              => 'Paguar',
+    'unpaid'            => 'E papaguar',
+    'view'              => 'Shiko',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',
@@ -302,4 +305,6 @@ return [
     'reset_password'                => 'Rikthe fjalëkalimin',
     'send_password_reset_link'      => 'Dërgo linkun për rikthim të fjalëkalimit',
     'selected_date_to_show_data'    => 'Datat e zgjedhura për paraqitjen e të dhënave',
+    'payment_due_in_30_days'        => 'Afati i pagesës brenda 30 ditëve',
+    'invoice_number_payment_method' => 'Ju lutem vendosni numrin e faturës në pagesë',
 ];
