@@ -352,11 +352,9 @@ class StaffController extends Controller
     }
 
     public static function show_products_average_info($request, $view_type = null){
-
-        $products 	= Transactions::select(DB::raw('avg(money) as totalMoney'),DB::raw('AVG(lit) as totalLit'), DB::raw('count(transactions.id) as transNR'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('avg(transactions.price) as product_price'))
-            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-            ->groupBy('products.pfc_pr_id')
-            ->groupBy('product_id');
+        $products 	= Transactions::select(DB::RAW('products.name as p_name'), DB::RAW('AVG(transactions.price) as product_price'), DB::RAW('SUM(transactions.lit) as totalLit'), DB::RAW('products.pfc_pr_id as product_id'), DB::raw('count(transactions.id) as transNR'),DB::RAW('MAX(products.pfc_pr_id) as product_id'),DB::raw('avg(money) as totalMoney'))
+                ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+                ->groupBy('products.pfc_pr_id');
 
         if($view_type == 'products_view'){
             $products = $products->groupBy('transactions.price');
@@ -367,8 +365,6 @@ class StaffController extends Controller
         $products = $products->orderBy('products.pfc_pr_id');
 
         $products = $products->get();
-
-        //dd($products);exit();
 
         return $products;
     }
