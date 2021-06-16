@@ -120,11 +120,17 @@ class PFCController extends Controller
     public function import_data($pfc_id, $type = null)
     {
 		if($type == 6){
-			$type = 1;	
+			$type = 1;
 			Process::where('pfc_id', $pfc_id)->where('type_id', 5)->delete();
-			$recepit = new StartPFC($pfc_id);
-			dispatch($recepit);
-		}else{		
+
+            // Stop Task Scheduler(Queue Work task)
+            $stop = public_path('/').'TaskScheduler/StopQueueWork.lnk';
+            exec("START ".$stop);
+
+            // Start Task Scheduler(Queue Work task)
+            $start = public_path('/').'TaskScheduler/StartQueueWork.lnk';
+            exec("START ".$start);
+		}else{
 			Process::insert(array('start_time'=> time(),
 				'refresh_time' => time(),
 				'faild_attempt'=> 0,
