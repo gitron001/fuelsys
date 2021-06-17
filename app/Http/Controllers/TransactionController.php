@@ -19,6 +19,7 @@ use App\Models\TransactionChangeHistory;
 use Excel;
 use Auth;
 use DB;
+use App\Models\Banks;
 use DateTime;
 use PDF;
 use Carbon\Carbon;
@@ -291,16 +292,18 @@ class TransactionController extends Controller
 
     public static function invoice(Request $request){
         $data = self::invoice_data($request);
+        $banks = Banks::where('status',1)->orderBy('name','ASC')->get();
 
         $from_company = $data['from_company'];
         $to_company = $data['to_company'];
         $total_transactions = $data['total_transactions'];
         $companies = $data['companies'];
 
-        return view('/admin/transactions/invoice',compact('from_company','to_company','total_transactions','companies'));
+        return view('/admin/transactions/invoice',compact('from_company','to_company','total_transactions','companies','banks'));
     }
 
     public function generate_invoice_pdf(Request $request){
+        $banks              = Banks::where('status',1)->orderBy('name','ASC')->get();
         $data               = self::invoice_data($request); // Display transactions group by PRICE
         $all_transactions   = self::invoice_all_transactions($request); // Display all transactions(Second page of PDF)
 
@@ -323,7 +326,7 @@ class TransactionController extends Controller
             Transactions::where('id', $transaction->tr_id)->update(['invoice_id' => $invoice_id, 'updated_at' => now()->timestamp]);
         }
 
-        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','invoice_id','all_transactions'));
+        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','invoice_id','all_transactions','banks'));
         $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
     }

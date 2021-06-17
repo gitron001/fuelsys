@@ -34,6 +34,11 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('nozzle/{id}/delete', ['as' => 'nozzle.delete', 'uses' => 'PumpsController@destroy']);
     Route::get('/admin/nozzle-delete-all', 'PumpsController@delete_all');
 
+    // Banks
+	Route::resource('/admin/banks', 'BankController');
+    Route::get('banks/{id}/delete', ['as' => 'banks.delete', 'uses' => 'BankController@destroy']);
+    Route::get('/admin/banks-delete-all', 'BankController@delete_all');
+
     // Stock
     Route::resource('/admin/stock', 'StockController');
     Route::get('stock/{id}/delete', ['as' => 'stock.delete', 'uses' => 'StockController@destroy']);

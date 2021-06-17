@@ -21,6 +21,7 @@ return [
         'expenses'                      => 'Shpenzimet',
         'totalizers'                    => 'Totalizerët',
         'invoices'                      => 'Faturat',
+        'banks'                         => 'Bankat',
     ],
 
     'company_details' => [
@@ -91,6 +92,12 @@ return [
         'create_new'        => 'Krijo një produkt të ri',
         'edit'              => 'Ndrysho produktin',
         'delete_all'        => 'Fshini të gjitha produktet e zgjedhura',
+    ],
+
+    'banks_details' => [
+        'create_new'        => 'Krijo një bank të re',
+        'edit'              => 'Ndrysho bankën',
+        'delete_all'        => 'Fshini të gjitha bankat e zgjedhura',
     ],
 
     'product_group_details' => [
@@ -290,6 +297,8 @@ return [
     'paid'              => 'Paguar',
     'unpaid'            => 'E papaguar',
     'view'              => 'Shiko',
+    'banks'             => 'Bankat',
+    'bank_number'       => 'Numri i xhirollogarisë',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',

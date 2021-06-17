@@ -136,9 +136,9 @@
             <td align="left">
                 <p style="line-height:1.2">
                     <p style="line-height:1.2; font-size: 12px;"">
-                    <span><b>BKT :</b> 00000000000</span><br/>
-                    <span><b>RBKO :</b> 00000000000</span><br/>
-                    <span><b>PBC :</b> 00000000000</span><br/>
+                    @foreach($banks as $bank)
+                        <span><b>{{ $bank->name }}:</b> {{ $bank->bank_number }}</span><br>
+                    @endforeach
                 </p>
             </td>
         </tr>
@@ -214,9 +214,9 @@
             <td align="left">
                 <p style="line-height:1.2">
                     <p style="line-height:1.2; font-size: 12px;"">
-                    <span><b>BKT :</b> 00000000000</span><br/>
-                    <span><b>RBKO :</b> 00000000000</span><br/>
-                    <span><b>PBC :</b> 00000000000</span><br/>
+                    @foreach($banks as $bank)
+                        <span><b>{{ $bank->name }}:</b> {{ $bank->bank_number }}</span><br>
+                    @endforeach
                 </p>
             </td>
         </tr>

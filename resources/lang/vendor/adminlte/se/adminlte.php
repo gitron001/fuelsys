@@ -21,6 +21,7 @@ return [
         'expenses'                      => 'Izdatak',
         'totalizers'                    => 'Totalizeret',
         'invoices'                      => 'Računi',
+        'banks'                         => 'Banke',
     ],
 
     'company_details' => [
@@ -91,6 +92,12 @@ return [
         'create_new'        => 'Napravite novu proizvod',
         'edit'              => 'Promenite proizvod',
         'delete_all'        => 'Izbrišite sve izabrane proizvode',
+    ],
+
+    'banks_details' => [
+        'create_new'        => 'Napravite novu banku',
+        'edit'              => 'Promenite banku',
+        'delete_all'        => 'Izbrišite sve izabrane banke',
     ],
 
     'product_group_details' => [
@@ -282,6 +289,8 @@ return [
     'paid'              => 'Platiti',
     'unpaid'            => 'Neplaćeno',
     'view'              => 'Gledaj',
+    'banks'             => 'Banke',
+    'bank_number'       => 'Broj računa',
     'retype_password'               => 'Prepišite lozinku',
     'remember_me'                   => 'Sećam se',
     'register'                      => 'Registrovati',

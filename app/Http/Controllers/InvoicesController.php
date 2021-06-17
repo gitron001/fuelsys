@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use PDF;
 use App\Models\Company;
+use App\Models\Banks;
 use Illuminate\Http\Request;
 use App\Models\InvoiceModel as Invoice;
 use App\Models\Transaction as Transactions;
@@ -41,17 +42,19 @@ class InvoicesController extends Controller {
 
     public function show($id) {
         $invoice = Invoice::findOrFail($id);
+        $banks = Banks::where('status',1)->orderBy('name','ASC')->get();
 
         $from_company = Company::where('status', 4)->first();
         $to_company   = Company::where('id',5)->first();
 
         $transactions = self::invoice_data($id);
 
-        return view('/admin/invoices/show_invoice', compact('invoice','from_company','to_company','transactions'));
+        return view('/admin/invoices/show_invoice', compact('invoice','from_company','to_company','transactions','banks'));
     }
 
     public function invoice_to_pdf($id){
         $invoice = Invoice::findOrFail($id);
+        $banks = Banks::where('status',1)->orderBy('name','ASC')->get();
 
         $from_company = Company::where('status', 4)->first();
         $to_company   = Company::where('id',5)->first();
@@ -65,7 +68,7 @@ class InvoicesController extends Controller {
         $invoice_id         = $id;
         $date               = $invoice->date;
 
-        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','date','invoice_id','all_transactions'));
+        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','date','invoice_id','all_transactions','banks'));
         $file_name  = 'Invoice#'.$id.' - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
     }

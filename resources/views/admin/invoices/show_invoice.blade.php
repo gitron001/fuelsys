@@ -88,9 +88,9 @@
         <!-- accepted payments column -->
         <div class="col-xs-6">
             <p class="lead">Bankat:</p>
-            <p>BKT: 00000000000</p>
-            <p>RBKO: 00000000000</p>
-            <p>PBC: 00000000000</p>
+            @foreach($banks as $bank)
+                <p>{{ $bank->name }}: {{ $bank->bank_number }}</p>
+            @endforeach
 
             <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                 PAGUAR

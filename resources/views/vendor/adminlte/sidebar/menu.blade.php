@@ -37,6 +37,13 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('admin/banks') || request()->is('admin/banks/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/banks') }}">
+            <i class="fa fa-university" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.banks') }}</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/products') }}">
             <i class="fa fa-align-justify" aria-hidden="true"></i>
@@ -60,7 +67,7 @@
 
     <li class="{{ request()->is('admin/branches') || request()->is('admin/branches/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/branches') }}">
-            <i class="fa fa-university" aria-hidden="true"></i>
+            <i class="fa fa-sitemap" aria-hidden="true"></i>
             <span>{{ trans('adminlte::adminlte.menu.branches') }}</span>
         </a>
     </li>

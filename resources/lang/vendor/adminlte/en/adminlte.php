@@ -21,6 +21,7 @@ return [
         'expenses'                      => 'Expenses',
         'totalizers'                    => 'Totalizers',
         'invoices'                      => 'Invoices',
+        'banks'                         => 'Banks',
     ],
 
     'company_details' => [
@@ -91,6 +92,12 @@ return [
         'create_new'        => 'Create new product',
         'edit'              => 'Edit product',
         'delete_all'        => 'Delete all selected products',
+    ],
+
+    'banks_details' => [
+        'create_new'        => 'Create new bank',
+        'edit'              => 'Edit bank',
+        'delete_all'        => 'Delete all selected banks',
     ],
 
     'product_group_details' => [
@@ -283,6 +290,8 @@ return [
     'paid'              => 'Paid',
     'unpaid'            => 'Unpaid',
     'view'              => 'View',
+    'banks'             => 'Banks',
+    'bank_number'       => 'Account number',
     'retype_password'               => 'Retype password',
     'remember_me'                   => 'Remember Me',
     'register'                      => 'Register',
