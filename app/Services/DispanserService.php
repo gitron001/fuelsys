@@ -31,8 +31,8 @@ class DispanserService extends ServiceProvider
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
 
-		if(!$response){ return false; } 
-		
+		if(!$response){ return false; }
+
         $length = count($response) - 4;
         $j = 1;
         //Products::where('pfc_id',$pfc_id)->delete();
@@ -45,7 +45,7 @@ class DispanserService extends ServiceProvider
 				$product->price = $price;
 				$product->updated_at = time();
 				$product->save();
-			}else{			
+			}else{
 				$data['price'] = $price;
 				$data['pfc_id'] = $pfc_id;
 				$data['pfc_pr_id'] = $j;
@@ -53,7 +53,7 @@ class DispanserService extends ServiceProvider
 				$data['updated_at'] = time();
 				Products::insert($data);
 			}
-           
+
             $j++;
         }
 
@@ -79,8 +79,8 @@ class DispanserService extends ServiceProvider
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
 
-		if(!$response){ return false; } 
-		
+		if(!$response){ return false; }
+
         $length = count($response) - 4;
         $j = 1;
 
@@ -106,17 +106,17 @@ class DispanserService extends ServiceProvider
         if($socket === null) {
             $socket = PFC::create_socket();
         }
-		
+
 		$products = Products::where('status', 1)->orderBy('pfc_pr_id')->get();
-		
-		
+
+
 		$all_prices = array();
 		$prices		= "";
-		
+
 		foreach($products as $p){
 				$all_prices[$p->pfc_pr_id] = str_replace('.', '', $p->price);
 		}
-		
+
 		for($i = 1; $i <= 16; $i++){
 			if(!isset($all_prices[$i])){
 				$all_prices[$i] = 0;
@@ -125,9 +125,9 @@ class DispanserService extends ServiceProvider
 		for($i = 1; $i <= 16; $i++){
             $prices    .= strrev(pack('s', str_replace('.', '', $all_prices[$i])));
         }
-		
+
         $message = "\x1\x24\x81".$prices;
-		
+
         $the_crc = PFC::crc16($message);
 		//Start of message
         $binarydata = pack("c*", 0x01);
@@ -140,13 +140,13 @@ class DispanserService extends ServiceProvider
 			$price = $all_prices[$i];
 			$binarydata .= strrev(pack('s', str_replace('.', '', $price)));
         }
-        
+
 		$binarydata .= strrev(pack("s",$the_crc));
-        
+
 		$binarydata .= pack("c*",02);
-        
+
 		$response = PFC::send_message($socket, $binarydata, $message);
-		
+
 	}
     /**
      * Bootstrap services.
@@ -162,8 +162,8 @@ class DispanserService extends ServiceProvider
             .strrev(pack("s",$the_crc))
             .pack("c*",02);
         $response = PFC::send_message($socket, $binarydata, $message);
-		
-		if(!$response){ return false; } 
+
+		if(!$response){ return false; }
 
         $length = count($response) - 3;
         Dispaneser::where('pfc_id',$pfc_id)->delete();
@@ -178,9 +178,9 @@ class DispanserService extends ServiceProvider
                 Dispaneser::insert($data);
             }
         }
-		
+
 		self::ImportNozzles($socket, $pfc_id = 1);
-		
+
 		return true;
     }
 
@@ -200,46 +200,46 @@ class DispanserService extends ServiceProvider
         $stopCommand = Process::where('type_id', 4)->where('pfc_id', $pfc_id)->count();
         if($stopCommand != 0){
 			self::UpdatePFCfuelPrices($socket, $pfc_id);
-            Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();		
-        }				
+            Process::where('type_id', 4)->where('pfc_id', $pfc_id)->delete();
+        }
 
         $stopCommand = Process::where('type_id', 5)->where('pfc_id', $pfc_id)->count();
-        if($stopCommand != 0){      	  	     	 
+        if($stopCommand != 0){
 			if(Process::where('type_id', 1)->where('pfc_id', $pfc_id)->count() != 0){
-				Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete(); 
+				Process::where('type_id', 1)->where('pfc_id', $pfc_id)->delete();
 				socket_close($socket);
 				exit();
 			}
 			return false;
         }
-        $stopCommand = Process::where('type_id', 6)->where('pfc_id', $pfc_id)->count();		
+        $stopCommand = Process::where('type_id', 6)->where('pfc_id', $pfc_id)->count();
         if($stopCommand != 0){
-            Process::where('type_id', 5)->where('pfc_id', $pfc_id)->delete();	  	
-            Process::where('type_id', 6)->where('pfc_id', $pfc_id)->delete();	
+            Process::where('type_id', 5)->where('pfc_id', $pfc_id)->delete();
+            Process::where('type_id', 6)->where('pfc_id', $pfc_id)->delete();
 		}
-		
-		$stopCommand = Process::where('type_id', 7)->where('pfc_id', $pfc_id)->count();		
+
+		$stopCommand = Process::where('type_id', 7)->where('pfc_id', $pfc_id)->count();
         if($stopCommand != 0){
 			self::CheckTankLevel($socket, $pfc_id);
-            Process::where('type_id', 7)->where('pfc_id', $pfc_id)->delete();		
-		}		
-		
-		$stopCommand = Process::where('type_id', 8)->where('pfc_id', $pfc_id)->count();		
+            Process::where('type_id', 7)->where('pfc_id', $pfc_id)->delete();
+		}
+
+		$stopCommand = Process::where('type_id', 8)->where('pfc_id', $pfc_id)->count();
         if($stopCommand != 0){
 			self::ImportNozzles($socket, $pfc_id);
-            Process::where('type_id', 8)->where('pfc_id', $pfc_id)->delete();		
+            Process::where('type_id', 8)->where('pfc_id', $pfc_id)->delete();
 		}
 		return true;
     }
     /**
      * Message 4 - Dispenser Totalizers
-     * 
+     *
      * Read Totalizers from channel
      */
 	public static function checkChannelTotalizers($socket, $channel_id, $pfc_id = 1){
 
         $bin_channel = pack("C*", $channel_id);
-	
+
         //Generate CRC for the Transaction Message
         $message = "\x1\x5\x4" .$bin_channel;
         $the_crc = PFC::crc16($message);
@@ -250,25 +250,25 @@ class DispanserService extends ServiceProvider
             .pack("c*", 0x04)
             .pack("C*", $channel_id)
             .strrev(pack("s", $the_crc))
-            .pack("c*", 02);				
+            .pack("c*", 02);
 		PFC::storeLogs($channel_id, null, 17, unpack('c*', $binarydata));
-        $response = PFC::send_message($socket, $binarydata);		
+        $response = PFC::send_message($socket, $binarydata);
 		PFC::storeLogs($channel_id, null, 18, $response);
-        return $response;		
-		
+        return $response;
+
 	}
-	
+
 	/**
      * Message 4 - Dispenser Totalizers
-     * 
+     *
      * Read Totalizers from channel
      */
 	public static function ImportNozzles($socket, $pfc_id = 1){
 
 		Pump::where('pfc_id',$pfc_id)->delete();
-		
+
         $dispansers = Dispaneser::All();
-		
+
 		foreach($dispansers as $dispanser){
 			$j = 1;
 			$responseTot = self::checkChannelTotalizers($socket, $dispanser->channel_id, $pfc_id);
@@ -279,15 +279,15 @@ class DispanserService extends ServiceProvider
 			Pump::where('pfc_id', $pfc_id)->where('channel_id', $dispanser->channel_id)->delete();
 			for($i = 5; $i <= $length; $i++ ){
 				$totalizer = pack('c', $responseTot[$i+3]).pack('c', $responseTot[$i+2]).pack('c', $responseTot[$i+1]).pack('c', $responseTot[$i]);
-				
+
 				$totalizer = (int)unpack('i', $totalizer)[1];
 
 				if($totalizer != 0){
-					$nozzle_nr 		   				= $j; 
+					$nozzle_nr 		   				= $j;
 					$data['name']      				= 'Nozzle - '.$nozzle_nr;
 					$data['nozzle_id'] 				= $nozzle_nr;
 					$data['channel_id'] 			= $dispanser->channel_id;
-					$data['status'] 				= 1;					
+					$data['status'] 				= 1;
 					$data['pfc_id'] 				= $pfc_id;
 					$data['starting_totalizer'] 	= $totalizer;
 					$data['created_at'] 			= time();
@@ -297,28 +297,28 @@ class DispanserService extends ServiceProvider
 					echo ' - Totalizer start -';
 					echo $totalizer;
 					echo ' - ' . $j. ' - '.  $dispanser->channel_id;
-					echo ' - Totalizer end -';					
+					echo ' - Totalizer end -';
 				}
 				$i+= 7;
 				$j++;
 			}
-			
+
 		}
-		return true;		
+		return true;
 	}
     /**
      * Check Tank Level Command
-     * 
+     *
      * Read Totalizers from channel
      */
 	public static function CheckTankLevel($socket, $pfc_id = 1){
-	
+
 		$tanks = Tank::where('status', 1)->get();
-		
+
 		foreach($tanks as $t){
-		
+
 			$tank_id = pack("C*", $t->pfc_tank_id);
-		
+
 			//Generate CRC for the Transaction Message
 			$message = "\x1\x5\x0F" .$tank_id;
 			$the_crc = PFC::crc16($message);
@@ -329,28 +329,28 @@ class DispanserService extends ServiceProvider
 				.pack("c*", 0x0F)
 				.pack("C*", $t->pfc_tank_id)
 				.strrev(pack("s", $the_crc))
-				.pack("c*", 02);				
+				.pack("c*", 02);
 			PFC::storeLogs($t->id, null, 19, unpack('c*', $binarydata));
 			//print_r(unpack('c*', $binarydata));
-			$response = PFC::send_message($socket, $binarydata);	
+			$response = PFC::send_message($socket, $binarydata);
 			//print_r($response);
 			$fuel_level = pack('c', $response[6]).pack('c', $response[5]);
 			$fuel_level = unpack('s', $fuel_level)[1];
 			$tank = Tank::find($t->id);
-			
+
 			$tank->fuel_level = $fuel_level;
 
 			$water_level = pack('c', $response[12]).pack('c', $response[11]);
-			$water_level = unpack('s', $water_level)[1];			
-			
+			$water_level = unpack('s', $water_level)[1];
+
 			$tank->water_level = $water_level;
-			
+
 			$tank->save();
-			
+
 			PFC::storeLogs($t->id, null, 20, $response);
-			//return $response;	
+			//return $response;
 		}
-		
+
 	}
 
 }

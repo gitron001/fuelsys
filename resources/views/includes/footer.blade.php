@@ -535,12 +535,12 @@
         })
         .then((willDelete) => {
             if (willDelete) {
-                swal("Please wait!", {
-                    icon: "info",
+                swal("Invoice Created Succesfully!", {
+                    icon: "success",
                     showConfirmButton: false,
                     buttons: false,
                 });
-                window.location.href = url;
+                window.open(url, '_blank');
             }
         });
     }

@@ -46,21 +46,23 @@
                 <td align="left">
                     <h1 class="page-header">{{ $company->name }}</h1>
                     <p style="line-height:1.2; font-size: 13px;">
-                        <span><b>Lokacioni:</b> {{ $company->city }}, {{ $company->country }}</span><br />
-                        <span><b>Email:</b> {{ $company->email }}</span><br />
-                        <span><b>Tel.:</b> {{ $company->tel_number }}</span><br />
-                        <span><b>Nr.Biz.:</b> {{ $company->bis_number }}</span><br />
-                        <span><b>Tax.Nr.:</b> {{ $company->tax_number }}</span><br />
-                        <span><b>Nr.Fis.:</b> {{ $company->fis_number }}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.address') }}:</b> {{ $company->city }}, {{ $company->country }}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $company->email }}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $company->tel_number }}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.bis_number') }}:</b> {{ $company->bis_number }}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.tax_number') }}:</b> {{ $company->tax_number }}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.fis_number') }}:</b> {{ $company->fis_number }}</span><br />
                     </p>
                 </td>
 
                 <td align="right">
-                    <h1 class="page-header">INVOICE {{ isset($invoice_id) ? '#'.$invoice_id : ''}}</h1>
+                    <h1 class="page-header">{{ strtoupper(trans('adminlte::adminlte.invoice')) }} {{ isset($invoice_id) ? '#'.$invoice_id : ''}}</h1>
                     <p style="line-height:1.2; font-size: 13px;">
-                        <span><b>Data: </b> {{ isset($date) ? date('d-m-Y H:i', $date) : date('d-m-Y H:i') }}</span><br />
-                        <span><b>Kompania:</b> {{ $to_company->name }}</span><br/>
-                        <span><b>Tel.:</b> {{ $to_company->tel_number }}</span>
+                        <span><b>{{ trans('adminlte::adminlte.date') }}: </b> {{ isset($date) ? date('d-m-Y H:i', $date) : date('d-m-Y H:i') }}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.company') }}:</b> {{ $to_company ? $to_company->name : '_________________________' }}</span><br/>
+                        <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $to_company ? $to_company->email : '_________________________'}}</span><br/>
+                        <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $to_company ? $to_company->tel_number : '_________________________'}}</span><br/>
+                        <span><b>{{ trans('adminlte::adminlte.fis_number') }}:</b> {{ $to_company ? $to_company->fis_number : '_________________________'}}</span>
                     </p>
                 </td>
             </tr>
@@ -74,12 +76,12 @@
 	<table width="100%">
         <thead style="background-color:#122E57;">
             <tr>
-                <th align="center">Artikulli</th>
-                <th align="center">Sasia</th>
-                <th align="center">Çmimi pa TVSH</th>
-                <th align="center">TVSH</th>
-                <th align="center">Çmimi</th>
-                <th align="center">Shuma me TVSH</th>
+                <th align="center">{{ trans('adminlte::adminlte.product') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.lit') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.price_without_tax') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.tax') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.price') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.total_with_tax') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -99,19 +101,19 @@
             @endforeach
             <tr>
                 <td colspan="4"></td>
-                <td align="right">Vlera e Tatueshme:</td>
+                <td align="right">{{ trans('adminlte::adminlte.taxable_value') }}:</td>
                 <td align="right" class="blue font-color"> <b>€
                     {{ number_format(($total / (1 + 0.18)), 2) }}</b></td>
             </tr>
             <tr>
                 <td colspan="4"></td>
-                <td align="right">TVSH (18%)</td>
+                <td align="right">{{ trans('adminlte::adminlte.tax') }} (18%)</td>
                 <td align="right" class="blue font-color"> <b>€
                     {{ number_format(( $total - ( $total / (1 + 0.18) ) ), 2) }}</b></td>
             </tr>
             <tr>
                 <td colspan="4"></td>
-                <td align="right">Shuma:</td>
+                <td align="right">{{ trans('adminlte::adminlte.total') }}:</td>
                 <td align="right" class="blue font-color"> <b>€ {{ $total }}</b></td>
             </tr>
         </tbody>
@@ -120,7 +122,7 @@
     <table width="50%;border: 1px black solid;margin-top:-4%;">
         <thead style="background-color: #122E57">
             <tr>
-                <th align="left;">KOMENT</th>
+                <th align="left;">{{ strtoupper(trans('adminlte::adminlte.comment')) }}</th>
             </tr>
         </thead>
         <tr>
@@ -150,13 +152,13 @@
     <table width="100%">
         <thead style="background-color:#122E57;">
             <tr>
-                <th align="center">Data</th>
-                <th align="center">Artikulli</th>
-                <th align="center">Sasia</th>
-                <th align="center">Çmimi pa TVSH</th>
-                <th align="center">TVSH</th>
-                <th align="center">Çmimi</th>
-                <th align="center">Shuma me TVSH</th>
+                <th align="center">{{ trans('adminlte::adminlte.date') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.product') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.lit') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.price_without_tax') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.tax') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.price') }}</th>
+                <th align="center">{{ trans('adminlte::adminlte.total_with_tax') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -177,19 +179,19 @@
             @endforeach
             <tr>
                 <td colspan="5"></td>
-                <td align="right">Vlera e Tatueshme:</td>
+                <td align="right">{{ trans('adminlte::adminlte.taxable_value') }}:</td>
                 <td align="right" class="blue font-color"> <b>€
                     {{ number_format(($total / (1 + 0.18)), 2) }}</b></td>
             </tr>
             <tr>
                 <td colspan="5"></td>
-                <td align="right">TVSH (18%)</td>
+                <td align="right">{{ trans('adminlte::adminlte.tax') }} (18%)</td>
                 <td align="right" class="blue font-color"> <b>€
                     {{ number_format(( $total - ( $total / (1 + 0.18) ) ), 2) }}</b></td>
             </tr>
             <tr>
                 <td colspan="5"></td>
-                <td align="right">Shuma:</td>
+                <td align="right">{{ trans('adminlte::adminlte.total') }}:</td>
                 <td align="right" class="blue font-color"> <b>€ {{ $total }}</b></td>
             </tr>
         </tbody>
@@ -198,7 +200,7 @@
     <table width="50%;border: 1px black solid;margin-top:-4%;">
         <thead style="background-color: #122E57">
             <tr>
-                <th align="left;">KOMENT</th>
+                <th align="left;">{{ strtoupper(trans('adminlte::adminlte.comment')) }}</th>
             </tr>
         </thead>
         <tr>

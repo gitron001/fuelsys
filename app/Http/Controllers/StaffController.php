@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use DB;
 use PDF;
+use Auth;
 use Mail;
 use Excel;
 use App\Models\Users;
+use App\Models\Banks;
 use App\Models\Shifts;
 use App\Models\Company;
 use App\Models\Expenses;
 use App\Models\Payments;
+use App\Models\POSPayments;
 use App\Jobs\SendShiftEmail;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
@@ -227,6 +230,8 @@ class StaffController extends Controller
     }
 
     public function staff_view(Request $request){
+        $users          = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $banks          = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $request      = self::setDates($request);
         //echo $request->input('fromDate'); echo '<br>';
@@ -248,7 +253,7 @@ class StaffController extends Controller
 
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments'));
+        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks'));
     }
 
     public function expenses(Request $request){
@@ -481,6 +486,70 @@ class StaffController extends Controller
 
         return json_encode($data);
 
+    }
+
+    public function close_shift_additional_data() {
+        $users          = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $banks          = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+
+        return view('/admin/staff/shift_additional_data',compact('users','banks'))->render();
+    }
+
+    public function save_additional_data(Request $request){
+        $users = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $banks = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $shift = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
+
+        // Save expenses
+        if(array_values($request->input('expense_user_id'))[0] !== NULL && array_values($request->input('expense_amount'))[0] !== NULL){
+            for($i = 0; $i < count($request->input('expense_user_id')); $i++) {
+                $expenses   = new Expenses();
+
+                $expenses->date         = now()->timestamp;
+                $expenses->amount       = $request->input('expense_amount')[$i];
+                $expenses->description  = $request->input('expense_description')[$i];
+                $expenses->user_id      = $request->input('expense_user_id')[$i];
+                $expenses->created_at   = now()->timestamp;
+                $expenses->created_by   = Auth::user()->id;
+                $expenses->updated_at   = now()->timestamp;
+                $expenses->save();
+            }
+        }
+
+        // Save paymets
+        if(array_values($request->input('payment_user_id'))[0] !== NULL && array_values($request->input('payment_amount'))[0] !== NULL){
+            for($i = 0; $i < count($request->input('payment_user_id')); $i++) {
+                $payments   = new Payments();
+
+                $payments->date         = now()->timestamp;
+                $payments->amount       = $request->input('payment_amount')[$i];
+                $payments->description  = $request->input('description');
+                $payments->user_id      = $request->input('payment_user_id')[$i];
+                $payments->type         = 1;
+                $payments->created_at   = now()->timestamp;
+                $payments->created_by   = Auth::user()->id;
+                $payments->updated_at   = now()->timestamp;
+                $payments->save();
+            }
+        }
+
+
+        // Save banks
+        if(array_values($request->input('bank_id'))[0] !== NULL && array_values($request->input('bank_amount'))[0] !== NULL){
+            for($i = 0; $i < count($request->input('payment_user_id')); $i++) {
+                $payments   = new POSPayments();
+
+                $payments->date         = now()->timestamp;
+                $payments->amount       = $request->input('bank_amount')[$i];
+                $payments->bank_id      = $request->input('bank_id')[$i];
+                $payments->created_by   = Auth::user()->id;
+                $payments->created_at   = now()->timestamp;
+                $payments->updated_at   = now()->timestamp;
+                $payments->save();
+            }
+        }
+
+        return redirect('/admin/staff');
     }
 
     public function send_shift_email(Request $request){
