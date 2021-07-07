@@ -305,6 +305,8 @@ return [
     'taxable_value'     => 'Vlera e Tatueshme',
     'print_invoice'     => 'Printo faturën',
     'comment'           => 'Koment',
+    'signature'         => 'Nënshkrimi',
+    'seal'              => 'Vula',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',

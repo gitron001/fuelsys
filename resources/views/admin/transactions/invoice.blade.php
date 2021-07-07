@@ -29,9 +29,9 @@
                 {{ trans('adminlte::adminlte.address') }}: {{ $from_company->address .', '. $from_company->city .', '. $from_company->country }}<br>
                 {{ trans('adminlte::adminlte.phone') }}: {{ $from_company->tel_number }}<br>
                 {{ trans('adminlte::adminlte.email') }}: {{ $from_company->email }}<br>
-                {{ trans('adminlte::adminlte.bis_number') }}: {{ $from_company->bis_number }}<br>
-                {{ trans('adminlte::adminlte.fis_number') }}: {{ $from_company->fis_number }}<br>
-                {{ trans('adminlte::adminlte.tax_number') }}: {{ $from_company->tax_number }}
+                @if($from_company->bis_number != 0){{ trans('adminlte::adminlte.bis_number') }}: {{ $from_company->bis_number }}<br>@endif
+                @if($from_company->fis_number != 0){{ trans('adminlte::adminlte.fis_number') }}: {{ $from_company->fis_number }}<br>@endif
+                @if($from_company->tax_number != 0){{ trans('adminlte::adminlte.tax_number') }}: {{ $from_company->tax_number }}@endif
             </address>
         </div>
         <!-- /.col -->
@@ -41,7 +41,6 @@
                 {{ trans('adminlte::adminlte.address') }}: {{ $to_company ? $to_company->address .', '. $to_company->city .', '. $to_company->country : '_________________________'}}<br>
                 {{ trans('adminlte::adminlte.phone') }}: {{ $to_company ? $to_company->tel_number : '_________________________' }}<br>
                 {{ trans('adminlte::adminlte.email') }}: {{ $to_company ? $to_company->email : '_________________________' }}<br>
-                {{ trans('adminlte::adminlte.fis_number') }}: {{ $to_company ? $to_company->fis_number : '_________________________' }}
             </address>
         </div>
     </div>

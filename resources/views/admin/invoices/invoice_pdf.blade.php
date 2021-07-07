@@ -35,6 +35,13 @@
             color: white;
         }
 
+        #footer{
+            height: 20px;
+            position:fixed;
+            margin:0px;
+            bottom:0px;
+        }
+
     </style>
 
 </head>
@@ -49,9 +56,9 @@
                         <span><b>{{ trans('adminlte::adminlte.address') }}:</b> {{ $company->city }}, {{ $company->country }}</span><br />
                         <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $company->email }}</span><br />
                         <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $company->tel_number }}</span><br />
-                        <span><b>{{ trans('adminlte::adminlte.bis_number') }}:</b> {{ $company->bis_number }}</span><br />
-                        <span><b>{{ trans('adminlte::adminlte.tax_number') }}:</b> {{ $company->tax_number }}</span><br />
-                        <span><b>{{ trans('adminlte::adminlte.fis_number') }}:</b> {{ $company->fis_number }}</span><br />
+                        @if($company->bis_number != 0){{ trans('adminlte::adminlte.bis_number') }}: {{ $company->bis_number }}<br>@endif
+                        @if($company->fis_number != 0){{ trans('adminlte::adminlte.fis_number') }}: {{ $company->fis_number }}<br>@endif
+                        @if($company->tax_number != 0){{ trans('adminlte::adminlte.tax_number') }}: {{ $company->tax_number }}@endif
                     </p>
                 </td>
 
@@ -62,7 +69,6 @@
                         <span><b>{{ trans('adminlte::adminlte.company') }}:</b> {{ $to_company ? $to_company->name : '_________________________' }}</span><br/>
                         <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $to_company ? $to_company->email : '_________________________'}}</span><br/>
                         <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $to_company ? $to_company->tel_number : '_________________________'}}</span><br/>
-                        <span><b>{{ trans('adminlte::adminlte.fis_number') }}:</b> {{ $to_company ? $to_company->fis_number : '_________________________'}}</span>
                     </p>
                 </td>
             </tr>
@@ -73,7 +79,7 @@
 
 	<br>
 
-	<table width="100%">
+	<!--<table width="100%">
         <thead style="background-color:#122E57;">
             <tr>
                 <th align="center">{{ trans('adminlte::adminlte.product') }}</th>
@@ -119,7 +125,7 @@
         </tbody>
     </table>
 
-    <table width="50%;border: 1px black solid;margin-top:-4%;">
+    <!--<table width="50%;border: 1px black solid;margin-top:-4%;">
         <thead style="background-color: #122E57">
             <tr>
                 <th align="left;">{{ strtoupper(trans('adminlte::adminlte.comment')) }}</th>
@@ -144,60 +150,61 @@
                 </p>
             </td>
         </tr>
-    </table>
+    </table>-->
 
     <!-- PAGE 2 -->
-    <div style="page-break-before: always;"></div>
+    <!--<div style="page-break-before: always;"></div>-->
+    <div>
+        <table width="100%">
+            <thead style="background-color:#122E57;">
+                <tr>
+                    <th align="center">{{ trans('adminlte::adminlte.date') }}</th>
+                    <th align="center">{{ trans('adminlte::adminlte.product') }}</th>
+                    <th align="center">{{ trans('adminlte::adminlte.lit') }}</th>
+                    <th align="center">{{ trans('adminlte::adminlte.price_without_tax') }}</th>
+                    <th align="center">{{ trans('adminlte::adminlte.tax') }}</th>
+                    <th align="center">{{ trans('adminlte::adminlte.price') }}</th>
+                    <th align="center">{{ trans('adminlte::adminlte.total_with_tax') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php $total = 0 @endphp
+                @foreach($all_transactions as $transactions)
+                <tr>
+                    <td align="center">{{ date('m/d/Y H:i', $transactions['date']) }}</td>
+                    <td align="center">{{ $transactions['product_name'] }}</td>
+                    <td align="center">{{ $transactions['lit'] }} litra</td>
+                    <td align="center">€ {{ number_format(($transactions['price'] / (1 + 0.18)), 2) }}</td>
+                    <td align="center">€
+                        {{ number_format(( $transactions['price'] - ( $transactions['price'] / (1 + 0.18) ) ), 2) }}
+                    </td>
+                    <td align="center">€ {{ $transactions['price'] }}</td>
+                    <td align="right">€ {{ $transactions['money'] }}</td>
+                </tr>
+                @php $total += $transactions['money'] @endphp
+                @endforeach
+                <tr>
+                    <td colspan="5"></td>
+                    <td align="right">{{ trans('adminlte::adminlte.taxable_value') }}:</td>
+                    <td align="right" class="blue font-color"> <b>€
+                        {{ number_format(($total / (1 + 0.18)), 2) }}</b></td>
+                </tr>
+                <tr>
+                    <td colspan="5"></td>
+                    <td align="right">{{ trans('adminlte::adminlte.tax') }} (18%)</td>
+                    <td align="right" class="blue font-color"> <b>€
+                        {{ number_format(( $total - ( $total / (1 + 0.18) ) ), 2) }}</b></td>
+                </tr>
+                <tr>
+                    <td colspan="5"></td>
+                    <td align="right">{{ trans('adminlte::adminlte.total') }}:</td>
+                    <td align="right" class="blue font-color"> <b>€ {{ $total }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <table width="100%">
-        <thead style="background-color:#122E57;">
-            <tr>
-                <th align="center">{{ trans('adminlte::adminlte.date') }}</th>
-                <th align="center">{{ trans('adminlte::adminlte.product') }}</th>
-                <th align="center">{{ trans('adminlte::adminlte.lit') }}</th>
-                <th align="center">{{ trans('adminlte::adminlte.price_without_tax') }}</th>
-                <th align="center">{{ trans('adminlte::adminlte.tax') }}</th>
-                <th align="center">{{ trans('adminlte::adminlte.price') }}</th>
-                <th align="center">{{ trans('adminlte::adminlte.total_with_tax') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php $total = 0 @endphp
-            @foreach($all_transactions as $transactions)
-            <tr>
-                <td align="center">{{ date('m/d/Y H:i', $transactions['date']) }}</td>
-                <td align="center">{{ $transactions['product_name'] }}</td>
-                <td align="center">{{ $transactions['lit'] }} litra</td>
-                <td align="center">€ {{ number_format(($transactions['price'] / (1 + 0.18)), 2) }}</td>
-                <td align="center">€
-                    {{ number_format(( $transactions['price'] - ( $transactions['price'] / (1 + 0.18) ) ), 2) }}
-                </td>
-                <td align="center">€ {{ $transactions['price'] }}</td>
-                <td align="right">€ {{ $transactions['money'] }}</td>
-            </tr>
-            @php $total += $transactions['money'] @endphp
-            @endforeach
-            <tr>
-                <td colspan="5"></td>
-                <td align="right">{{ trans('adminlte::adminlte.taxable_value') }}:</td>
-                <td align="right" class="blue font-color"> <b>€
-                    {{ number_format(($total / (1 + 0.18)), 2) }}</b></td>
-            </tr>
-            <tr>
-                <td colspan="5"></td>
-                <td align="right">{{ trans('adminlte::adminlte.tax') }} (18%)</td>
-                <td align="right" class="blue font-color"> <b>€
-                    {{ number_format(( $total - ( $total / (1 + 0.18) ) ), 2) }}</b></td>
-            </tr>
-            <tr>
-                <td colspan="5"></td>
-                <td align="right">{{ trans('adminlte::adminlte.total') }}:</td>
-                <td align="right" class="blue font-color"> <b>€ {{ $total }}</b></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <table width="50%;border: 1px black solid;margin-top:-4%;">
+    <!--<table width="50%;border: 1px black solid;margin-top:-4%;">
         <thead style="background-color: #122E57">
             <tr>
                 <th align="left;">{{ strtoupper(trans('adminlte::adminlte.comment')) }}</th>
@@ -222,8 +229,16 @@
                 </p>
             </td>
         </tr>
-    </table>
+    </table>-->
 
 
+    <div id="footer">
+        <p style="text-align:left;">
+            {{ trans('adminlte::adminlte.signature') }}: _______________
+            <span style="float:right;">
+            {{ trans('adminlte::adminlte.seal') }}: _________________
+            </span>
+        </p>
+    </div>
 </body>
 </html>

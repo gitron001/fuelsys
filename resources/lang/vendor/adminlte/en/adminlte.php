@@ -298,6 +298,8 @@ return [
     'taxable_value'     => 'Taxable Value',
     'print_invoice'     => 'Print Invoice',
     'comment'           => 'Comment',
+    'signature'         => 'Signature',
+    'seal'              => 'Seal',
     'retype_password'               => 'Retype password',
     'remember_me'                   => 'Remember Me',
     'register'                      => 'Register',
