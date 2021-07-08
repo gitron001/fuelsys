@@ -1,9 +1,9 @@
 <!Doctype html>
-<?php if(!isset($bonus_user)){ $bonus_user = NULL; } ?>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+
     <title>{{ $company->name }}</title>
 
     <style type="text/css">
@@ -17,6 +17,7 @@
 
         th {
             color: white;
+            border: 1px solid black;
         }
 
         tfoot tr td {
@@ -28,15 +29,16 @@
         }
 
         .blue {
-            background-color: #122E57;
+            background-color: white;
+            border: 1px solid black;
         }
 
         .font-color {
-            color: white;
+            color: black;
         }
 
         #footer{
-            height: 20px;
+            height: 50px;
             position:fixed;
             margin:0px;
             bottom:0px;
@@ -66,7 +68,7 @@
                     <h1 class="page-header">{{ strtoupper(trans('adminlte::adminlte.invoice')) }} {{ isset($invoice_id) ? '#'.$invoice_id : ''}}</h1>
                     <p style="line-height:1.2; font-size: 13px;">
                         <span><b>{{ trans('adminlte::adminlte.date') }}: </b> {{ isset($date) ? date('d-m-Y H:i', $date) : date('d-m-Y H:i') }}</span><br />
-                        <span><b>{{ trans('adminlte::adminlte.company') }}:</b> {{ $to_company ? $to_company->name : '_________________________' }}</span><br/>
+                        <span><b>{{ trans('adminlte::adminlte.address') }}:</b> {{ $to_company ? $to_company->city .','. $to_company->country : '_________________________'}}</span><br />
                         <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $to_company ? $to_company->email : '_________________________'}}</span><br/>
                         <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $to_company ? $to_company->tel_number : '_________________________'}}</span><br/>
                     </p>
@@ -156,15 +158,15 @@
     <!--<div style="page-break-before: always;"></div>-->
     <div>
         <table width="100%">
-            <thead style="background-color:#122E57;">
-                <tr>
-                    <th align="center">{{ trans('adminlte::adminlte.date') }}</th>
-                    <th align="center">{{ trans('adminlte::adminlte.product') }}</th>
-                    <th align="center">{{ trans('adminlte::adminlte.lit') }}</th>
-                    <th align="center">{{ trans('adminlte::adminlte.price_without_tax') }}</th>
-                    <th align="center">{{ trans('adminlte::adminlte.tax') }}</th>
-                    <th align="center">{{ trans('adminlte::adminlte.price') }}</th>
-                    <th align="center">{{ trans('adminlte::adminlte.total_with_tax') }}</th>
+            <thead>
+                <tr style="border: 1pt solid black;">
+                    <th align="center" style="color:black;">{{ trans('adminlte::adminlte.date') }}</th>
+                    <th align="center" style="color:black;">{{ trans('adminlte::adminlte.product') }}</th>
+                    <th align="center" style="color:black;">{{ trans('adminlte::adminlte.lit') }}</th>
+                    <th align="center" style="color:black;">{{ trans('adminlte::adminlte.price_without_tax') }}</th>
+                    <th align="center" style="color:black;">{{ trans('adminlte::adminlte.tax') }}</th>
+                    <th align="center" style="color:black;">{{ trans('adminlte::adminlte.price') }}</th>
+                    <th align="center" style="color:black;">{{ trans('adminlte::adminlte.total_with_tax') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -233,10 +235,20 @@
 
 
     <div id="footer">
+        <p style="text-align:left; padding-left: 3%;">
+            {{ trans('adminlte::adminlte.signature') }}
+            <span style="float:right; padding-right: 4%;">
+            {{ trans('adminlte::adminlte.seal') }}
+            </span>
+        </p>
+
         <p style="text-align:left;">
-            {{ trans('adminlte::adminlte.signature') }}: _______________
+            _______________
+            <span style="text-align:center; padding-left: 25%;">
+                M.P.
+            </span>
             <span style="float:right;">
-            {{ trans('adminlte::adminlte.seal') }}: _________________
+            _______________
             </span>
         </p>
     </div>
