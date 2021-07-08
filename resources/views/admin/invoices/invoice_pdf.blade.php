@@ -41,7 +41,7 @@
             height: 50px;
             position:fixed;
             margin:0px;
-            bottom:0px;
+            bottom:10px;
         }
 
     </style>
@@ -68,6 +68,7 @@
                     <h1 class="page-header">{{ strtoupper(trans('adminlte::adminlte.invoice')) }} {{ isset($invoice_id) ? '#'.$invoice_id : ''}}</h1>
                     <p style="line-height:1.2; font-size: 13px;">
                         <span><b>{{ trans('adminlte::adminlte.date') }}: </b> {{ isset($date) ? date('d-m-Y H:i', $date) : date('d-m-Y H:i') }}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.company') }}:</b> {{ $to_company ? $to_company->name : '_________________________' }}</span><br/>
                         <span><b>{{ trans('adminlte::adminlte.address') }}:</b> {{ $to_company ? $to_company->city .','. $to_company->country : '_________________________'}}</span><br />
                         <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $to_company ? $to_company->email : '_________________________'}}</span><br/>
                         <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $to_company ? $to_company->tel_number : '_________________________'}}</span><br/>
@@ -237,6 +238,9 @@
     <div id="footer">
         <p style="text-align:left; padding-left: 3%;">
             {{ trans('adminlte::adminlte.signature') }}
+            <span style="text-align:center; padding-left: 32%;">
+                M.P.
+            </span>
             <span style="float:right; padding-right: 4%;">
             {{ trans('adminlte::adminlte.seal') }}
             </span>
@@ -244,9 +248,6 @@
 
         <p style="text-align:left;">
             _______________
-            <span style="text-align:center; padding-left: 25%;">
-                M.P.
-            </span>
             <span style="float:right;">
             _______________
             </span>
