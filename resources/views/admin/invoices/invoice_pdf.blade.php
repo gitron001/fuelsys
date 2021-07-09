@@ -41,7 +41,7 @@
             height: 50px;
             position:fixed;
             margin:0px;
-            bottom:10px;
+            bottom:100px;
         }
 
     </style>
@@ -54,7 +54,7 @@
             <tr>
                 <td align="left">
                     <h1 class="page-header">{{ $company->name }}</h1>
-                    <p style="line-height:1.2; font-size: 13px;">
+                    <p style="line-height:1.2; font-size: 16px;">
                         <span><b>{{ trans('adminlte::adminlte.address') }}:</b> {{ $company->city }}, {{ $company->country }}</span><br />
                         <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $company->email }}</span><br />
                         <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $company->tel_number }}</span><br />
@@ -66,12 +66,12 @@
 
                 <td align="right">
                     <h1 class="page-header">{{ strtoupper(trans('adminlte::adminlte.invoice')) }} {{ isset($invoice_id) ? '#'.$invoice_id : ''}}</h1>
-                    <p style="line-height:1.2; font-size: 13px;">
+                    <p style="line-height:2.5; font-size: 15px;">
                         <span><b>{{ trans('adminlte::adminlte.date') }}: </b> {{ isset($date) ? date('d-m-Y H:i', $date) : date('d-m-Y H:i') }}</span><br />
-                        <span><b>{{ trans('adminlte::adminlte.company') }}:</b> {{ $to_company ? $to_company->name : '_________________________' }}</span><br/>
-                        <span><b>{{ trans('adminlte::adminlte.address') }}:</b> {{ $to_company ? $to_company->city .','. $to_company->country : '_________________________'}}</span><br />
-                        <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $to_company ? $to_company->email : '_________________________'}}</span><br/>
-                        <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $to_company ? $to_company->tel_number : '_________________________'}}</span><br/>
+                        <span><b>{{ trans('adminlte::adminlte.company') }}:</b> {{ $to_company ? $to_company->name : '_______________________' }}</span><br/>
+                        <span><b>{{ trans('adminlte::adminlte.address') }}:</b> {{ $to_company ? $to_company->city .','. $to_company->country : '_______________________'}}</span><br />
+                        <span><b>{{ trans('adminlte::adminlte.email') }}:</b> {{ $to_company ? $to_company->email : '_______________________'}}</span><br/>
+                        <span><b>{{ trans('adminlte::adminlte.phone') }}:</b> {{ $to_company ? $to_company->tel_number : '_______________________'}}</span><br/>
                     </p>
                 </td>
             </tr>
@@ -158,7 +158,7 @@
     <!-- PAGE 2 -->
     <!--<div style="page-break-before: always;"></div>-->
     <div>
-        <table width="100%">
+        <table width="100%" style="padding-top: 25px;">
             <thead>
                 <tr style="border: 1pt solid black;">
                     <th align="center" style="color:black;">{{ trans('adminlte::adminlte.date') }}</th>

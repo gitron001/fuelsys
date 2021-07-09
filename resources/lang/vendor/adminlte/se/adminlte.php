@@ -242,7 +242,7 @@ return [
     'edit'              => 'Urediti',
     'delete'            => 'Trljati',
     'discounts'         => 'Odbitci',
-    'product'           => 'Proizvoda',
+    'product'           => 'Proizvod',
     'capacity'          => 'Kapacitet',
     'start_date'        => 'Datum početka',
     'end_date'          => 'Datum završetka',
