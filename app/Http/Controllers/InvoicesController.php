@@ -45,7 +45,7 @@ class InvoicesController extends Controller {
         $banks = Banks::where('status',1)->orderBy('name','ASC')->get();
 
         $from_company = Company::where('status', 4)->first();
-        $to_company   = Company::where('id',5)->first();
+        $to_company   = Company::where('id',$invoice->company_id)->first();
 
         $transactions = self::invoice_data($id);
 
@@ -57,7 +57,7 @@ class InvoicesController extends Controller {
         $banks = Banks::where('status',1)->orderBy('name','ASC')->get();
 
         $from_company = Company::where('status', 4)->first();
-        $to_company   = Company::where('id',5)->first();
+        $to_company   = Company::where('id',$invoice->company_id)->first();
 
         $data               = self::invoice_data($id); // Display transactions group by PRICE
         $all_transactions   = self::invoice_all_transactions($id); // Display all transactions(Second page of PDF)

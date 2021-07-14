@@ -16,9 +16,12 @@ class CreatePumpsTable extends Migration
         Schema::create('pumps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+			$table->integer('tank_id')->nullable();
+			$table->integer('nozzle_id')->nullable();
+			$table->integer('channel_id')->nullable();
+			$table->integer('starting_totalizer')->nullable();
+			$table->integer('pfc_id')->nullable();
             $table->integer('status');
-            $table->integer('tank_id');
-            $table->integer('dispaneser_id');
             $table->integer('created_at');
             $table->integer('updated_at');
         });

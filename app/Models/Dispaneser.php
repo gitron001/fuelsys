@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dispaneser extends Model
 {
     protected $table = 'dispanesers';
-    
+
     protected $fillable = [
         'name',
         'pfc_id', 
@@ -21,7 +21,7 @@ class Dispaneser extends Model
     public function getDateFormat(){
         return 'U';
     }
-    
+
     public function transaction(){
         return $this->hasMany('App\Models\Transaction');
     }

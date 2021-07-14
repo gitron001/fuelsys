@@ -157,6 +157,9 @@ Route::group(['middleware' => 'authenticated'], function () {
 
     // Staff
     Route::post('/close_shift','StaffController@close_shift');
+    Route::get('/admin/close_shift_additional_data','StaffController@close_shift_additional_data');
+    Route::post('/admin/save-additional-data','StaffController@save_additional_data')->name('save.save_additional_data');
+
     // Create Shift
 	Route::get('/create_shift/{hours}/{start}','StaffController@create_shift');
     // Export PDF

@@ -53,7 +53,7 @@
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-calculator" aria-hidden="true"></i>
-        <h3 class="box-title">Total</h3>
+        <h3 class="box-title">{{ trans('adminlte::adminlte.products') }}</h3>
     </div>
     <div class="box-body">
         <table class="table table-bordered table-hover table-responsive text-center">

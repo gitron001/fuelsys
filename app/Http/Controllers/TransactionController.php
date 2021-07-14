@@ -315,7 +315,7 @@ class TransactionController extends Controller
         $invoice_id = Invoice::insertGetId([
             'date'          => now()->timestamp,
             'user_id'       => auth()->user()->id,
-            'company_id'    => $request->input('company'),
+            'company_id'    => $request->input('company') ? $request->input('company') : 0,
             'paid'          => 1,
             'status'        => 1,
             'created_at'    => now()->timestamp,
@@ -346,6 +346,10 @@ class TransactionController extends Controller
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->groupBy('products.pfc_pr_id')
             ->groupBy('transactions.price');
+
+        if ($request->input('id')) {
+            $products = $products->where('transactions.id',$request->input('id'));
+        }
 
         if ($request->input('user') && empty($request->input('company'))) {
             $products = $products->whereIn('user_id',$request->input('user'));
@@ -382,6 +386,10 @@ class TransactionController extends Controller
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->groupBy('tr_id');
+
+        if ($request->input('id')) {
+            $products = $products->where('transactions.id',$request->input('id'));
+        }
 
         if ($request->input('user') && empty($request->input('company'))) {
             $products = $products->whereIn('user_id',$request->input('user'));
@@ -758,7 +766,7 @@ class TransactionController extends Controller
             $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "transactions".".".$request->get('sortby'));
             $sort_type       = $request->get('sorttype');
         }
-        $query = Transactions::select(DB::RAW('user1.name as user_name'),DB::RAW('user2.name as bonus_name'), DB::RAW('companies.name as comp_name'), DB::RAW('products.name as product'),
+        $query = Transactions::select(DB::RAW('user1.name as user_name'),DB::RAW('user2.name as bonus_name'), DB::RAW('companies.name as comp_name'), DB::RAW('companies.id as comp_id'), DB::RAW('products.name as product'),
            'transactions.price', 'transactions.lit','transactions.money','transactions.created_at','transactions.id','transactions.invoice_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('users as user1', 'user1.id', '=', 'transactions.user_id')

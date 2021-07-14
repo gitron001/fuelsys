@@ -55,24 +55,24 @@ class ExportTransactions extends Command
                 ->get();
 
 
-            if(!file_exists($tr_location."/export.txt")){
-                $fp = fopen($tr_location."/export.txt", "a");
-                fwrite($fp, 'ID;KOHA;IDDISPENSER;IDARTIKULLI;EMRIARTIKULLI;IDKLIENTI;IDSHITESI;EMRISHITESI;SASIA;CMIMI;CMIMIZBRITJE;TOTALI' .PHP_EOL);
+            if(!file_exists($tr_location."/export-transactions.txt")){
+                $fp = fopen($tr_location."/export-transactions.txt", "a");
+                fwrite($fp, 'ID_PERSHT;DATAORA;KODART;ARTIKULLI;SASIA;CMIMI;TOTAL;RFID;discount;originalprice' .PHP_EOL);
 
                 foreach($transactions as $transaction){
 
-                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s",strtotime($transaction['created_at'])).';'.$transaction['channel_id'].';'.$transaction['product_id'].';'.$transaction['product'].';'.(!empty($transaction['bonus_rfid']) ? $transaction['bonus_rfid'] : 0).';'.$transaction['staff_rfid'].';'.$transaction['staff_name'].';'.$transaction['lit'].';'.($transaction['product_price'] / 1000).';'.$transaction['price'].';'.$transaction['money'].PHP_EOL);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';'.$transaction['money'].';'.$transaction['staff_rfid'].';'.(($transaction['product_price'] / 1000) - $transaction['price']).';'.($transaction['product_price'] / 1000).PHP_EOL);
 
                     Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
                 }
 
                 fclose($fp);
             }else{
-                $fp = fopen($tr_location."/export.txt", "a");
+                $fp = fopen($tr_location."/export-transactions.txt", "a");
 
                 foreach($transactions as $transaction){
 
-                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s.u",strtotime($transaction['created_at'])).';'.$transaction['channel_id'].';'.$transaction['product_id'].';'.$transaction['product'].';'.(!empty($transaction['bonus_rfid']) ? $transaction['bonus_rfid'] : 0).';'.$transaction['staff_rfid'].';'.$transaction['staff_name'].';'.$transaction['lit'].';'.($transaction['product_price'] / 1000).';'.$transaction['price'].';'.$transaction['money'].PHP_EOL);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';'.$transaction['money'].';'.$transaction['staff_rfid'].';'.(($transaction['product_price'] / 1000) - $transaction['price']).';'.($transaction['product_price'] / 1000).PHP_EOL);
 
                     Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
                 }
