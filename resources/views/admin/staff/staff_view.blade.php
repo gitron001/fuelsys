@@ -37,6 +37,11 @@
     @include('admin.staff.expenses_data')
 @endif
 
+@if (Request::path() == 'admin/staff')
+    <!-- inlcude expenses data -->
+    @include('admin.staff.total')
+@endif
+
 <div class="modal fade" id="close_shift_additional_data">
     <div class="modal-dialog" style="width: 900px;">
         <div class="modal-content">
