@@ -48,10 +48,10 @@ class Tank extends Model
 
 	public function totalWaterSensor(){
         $company = Company::select('email')->where('status',4)->first();
-        $tank = Tank::select('tanks.id','tanks.name','tanks.alarm_email_water_level','tanks.high_level_water',DB::raw('products.name as product'))
+        /*$tank = Tank::select('tanks.id','tanks.name','tanks.alarm_email_water_level','tanks.high_level_water',DB::raw('products.name as product'))
                     ->join('products', 'products.id', '=', 'tanks.product_id')
                     ->where('tanks.id',$this->id)
-                    ->first();
+                    ->first();*/
 
 		$fuel_level = intval(($this->water_level/100));
 		$decimal 	= ($this->water_level/100) - $fuel_level;
@@ -64,8 +64,8 @@ class Tank extends Model
 
 		$value = $lower_value->value + $difference;
 
-        if($tank->alarm_email_water_level == 1 && $value > $tank->high_level_water){
-            $data = array('tank' => $tank->name, 'product' => $tank->product ,'high_leve_water' => $tank->high_level_water, 'current_level_water' => $value);
+        if($this->alarm_email_water_level == 1 && $value > $this->high_level_water){
+            $data = array('tank' => $this->name, 'product' => $this->product ,'high_leve_water' => $this->high_level_water, 'current_level_water' => $value);
 
             Mail::send('admin.tanks.tank-water-level',$data,function($m) use($company){
                 $email = array_map('trim', explode(',',$company->email) );

@@ -52,7 +52,14 @@ class CardService extends ServiceProvider
         //Get all transaction by channel
         $length = count($response) - 3;
         for($i = 3; $i <= $length; $i++){
-            if($response[$i] == 2){
+            if($response[$i] == 0){
+				$channel = ($i - 3);
+				$the_channel = Dispaneser::where('channel_id', $channel)->first();
+				if(isset($the_channel->id)){
+					$the_channel->cardreader_status = 0;
+					$the_channel->save();
+				}
+			}elseif($response[$i] == 2){
                 $channel = ($i - 3);
                 self::check_card($socket, $channel, $pfc_id);
             }elseif($response[$i] == 4){

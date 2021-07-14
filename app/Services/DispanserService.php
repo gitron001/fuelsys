@@ -166,17 +166,35 @@ class DispanserService extends ServiceProvider
 		if(!$response){ return false; } 
 
         $length = count($response) - 3;
-        Dispaneser::where('pfc_id',$pfc_id)->delete();
+        //Dispaneser::where('pfc_id',$pfc_id)->delete();
         for($i = 3; $i <= $length; $i++){
             if($response[$i] == 1){
-                $channel = ($i - 3);
-                $data['name']      = 'Pump - '.$channel;
-                $data['created_at'] = time();
-                $data['channel_id'] = $channel;
-                $data['pfc_id'] 	= $pfc_id;
-                $data['updated_at'] = time();
-                Dispaneser::insert($data);
-            }
+                $channel = ($i - 3);                
+			
+				$data['name']      			= 'Pump - '.$channel;
+                $data['created_at'] 		= time();
+                $data['channel_id'] 		= $channel;
+                $data['pfc_id'] 			= $pfc_id;
+                $data['cardreader_status']  = $response[$i];
+                $data['updated_at'] 		= time();
+				$channel_insert = Dispaneser::updateOrCreate(
+					['channel_id' =>  $channel ],
+					$data
+				);
+            }elseif($response[$i] == 0){
+                $channel = ($i - 3);                
+			
+				$data['name']      			= 'Pump - '.$channel;
+                $data['created_at'] 		= time();
+                $data['channel_id'] 		= $channel;
+                $data['pfc_id'] 			= $pfc_id;
+                $data['cardreader_status']  = $response[$i];
+                $data['updated_at'] 		= time();
+				$channel_insert = Dispaneser::updateOrCreate(
+					['channel_id' =>  $channel ],
+					$data
+				);				
+			}
         }
 		
 		self::ImportNozzles($socket, $pfc_id = 1);
@@ -265,7 +283,7 @@ class DispanserService extends ServiceProvider
      */
 	public static function ImportNozzles($socket, $pfc_id = 1){
 
-		Pump::where('pfc_id',$pfc_id)->delete();
+		//Pump::where('pfc_id',$pfc_id)->delete();
 		
         $dispansers = Dispaneser::All();
 		
@@ -276,14 +294,16 @@ class DispanserService extends ServiceProvider
 			if($responseTot == '-2'){ return false; }
 			$length = count($responseTot) - 3;
 			//print_r($responseTot);
-			Pump::where('pfc_id', $pfc_id)->where('channel_id', $dispanser->channel_id)->delete();
+			//Pump::where('pfc_id', $pfc_id)->where('channel_id', $dispanser->channel_id)->delete();
 			for($i = 5; $i <= $length; $i++ ){
 				$totalizer = pack('c', $responseTot[$i+3]).pack('c', $responseTot[$i+2]).pack('c', $responseTot[$i+1]).pack('c', $responseTot[$i]);
 				
 				$totalizer = (int)unpack('i', $totalizer)[1];
 
-				if($totalizer != 0){
-					$nozzle_nr 		   				= $j; 
+				//if($totalizer != 0){
+				
+					
+					$nozzle_nr 		   				= (int)$j; 					
 					$data['name']      				= 'Nozzle - '.$nozzle_nr;
 					$data['nozzle_id'] 				= $nozzle_nr;
 					$data['channel_id'] 			= $dispanser->channel_id;
@@ -292,13 +312,19 @@ class DispanserService extends ServiceProvider
 					$data['starting_totalizer'] 	= $totalizer;
 					$data['created_at'] 			= time();
 					$data['updated_at'] 			= time();
-					Pump::insert($data);
-				}else{
+					
+					$pump = Pump::updateOrCreate(
+						['channel_id' =>  $dispanser->channel_id, 'nozzle_id' => $nozzle_nr ],
+						$data
+					);
+					
+					//Pump::insert($data);
+				/*}else{
 					echo ' - Totalizer start -';
 					echo $totalizer;
 					echo ' - ' . $j. ' - '.  $dispanser->channel_id;
 					echo ' - Totalizer end -';					
-				}
+				}*/
 				$i+= 7;
 				$j++;
 			}

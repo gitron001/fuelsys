@@ -368,7 +368,7 @@
                     <td>{{ $payment->created_by }}</td>
                     <td>{{ number_format($payment->total,2) }} Euro</td>
                 </tr>
-                @php ($total += number_format($payment->total,2)) @endphp
+                @php ($total += $payment->total) @endphp
                 @endforeach
                 <tr>
                     <td colspan="5" style="text-align:right"><b>TOTAL:</b></td>

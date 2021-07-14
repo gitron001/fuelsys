@@ -11,6 +11,8 @@ class Dispaneser extends Model
     protected $fillable = [
         'name',
         'pfc_id', 
+		'channel_id',
+        'cardreader_status',
         'price_division', 
         'lit_division', 
         'money_division', 
