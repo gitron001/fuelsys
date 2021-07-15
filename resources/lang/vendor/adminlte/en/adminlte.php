@@ -300,6 +300,8 @@ return [
     'comment'           => 'Comment',
     'signature'         => 'Signature',
     'seal'              => 'Seal',
+    'water_level'       => 'Water level',
+    'fuel_level'        => 'Fuel level',
     'retype_password'               => 'Retype password',
     'remember_me'                   => 'Remember Me',
     'register'                      => 'Register',

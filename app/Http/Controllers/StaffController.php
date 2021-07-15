@@ -7,6 +7,7 @@ use PDF;
 use Auth;
 use Mail;
 use Excel;
+use App\Models\Tank;
 use App\Models\Users;
 use App\Models\Banks;
 use App\Models\Shifts;
@@ -14,6 +15,7 @@ use App\Models\Company;
 use App\Models\Expenses;
 use App\Models\Payments;
 use App\Models\POSPayments;
+use App\Models\TankHistory;
 use App\Jobs\SendShiftEmail;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
@@ -25,8 +27,7 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class StaffController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
 		set_time_limit(500);
     }
@@ -230,8 +231,8 @@ class StaffController extends Controller
     }
 
     public function staff_view(Request $request){
-        $users          = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
-        $banks          = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $users          = self::additional_data($request)['users'];
+        $banks          = self::additional_data($request)['banks'];
 
         $request      = self::setDates($request);
         //echo $request->input('fromDate'); echo '<br>';
@@ -251,59 +252,71 @@ class StaffController extends Controller
 
         $payments               = self::show_payments_info($request);
 
+        $tank_details           = self::show_tank_info($request);
+
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks'));
+        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks','tank_details'));
     }
 
     public function expenses(Request $request){
         $request                = self::setDates($request);
+        $users                  = self::additional_data($request)['users'];
+        $banks                  = self::additional_data($request)['banks'];
 
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $expenses               = self::show_expenses_info($request);
 
-        return view('admin.staff.staff_view',compact('shift','expenses'));
+        return view('admin.staff.staff_view',compact('shift','expenses','users','banks'));
     }
 
     public function payments(Request $request){
         $request                = self::setDates($request);
+        $users                  = self::additional_data($request)['users'];
+        $banks                  = self::additional_data($request)['banks'];
 
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $payments               = self::show_payments_info($request);
 
-        return view('admin.staff.staff_view',compact('shift','payments'));
+        return view('admin.staff.staff_view',compact('shift','payments','users','banks'));
     }
 
     public function dispensers(Request $request){
         $request                = self::setDates($request);
+        $users                  = self::additional_data($request)['users'];
+        $banks                  = self::additional_data($request)['banks'];
 
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $products               = self::show_products_info($request);
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals'));
+        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals','users','banks'));
     }
 
     public function companies(Request $request){
         $request                = self::setDates($request);
+        $users                  = self::additional_data($request)['users'];
+        $banks                  = self::additional_data($request)['banks'];
 
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $companyData            = self::show_companies_info($request)['companyData'];
         $product_name_company   = self::show_companies_info($request)['product_name_company'];
         $companies              = self::show_companies_info($request)['companies'];
 
-        return view('admin.staff.staff_view',compact('shift','companyData', 'product_name_company', 'companies'));
+        return view('admin.staff.staff_view',compact('shift','companyData', 'product_name_company', 'companies','users','banks'));
     }
 
 	public function products(Request $request){
         $request                = self::setDates($request);
+        $users                  = self::additional_data($request)['users'];
+        $banks                  = self::additional_data($request)['banks'];
 
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $products               = self::show_products_info($request, 'products_view');
         $products_average       = self::show_products_average_info($request);
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals','products_average'));
+        return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals','products_average','users','banks'));
 
 	}
 
@@ -321,6 +334,23 @@ class StaffController extends Controller
         $payments = $payments->get();
 
         return $payments;
+    }
+
+    public static function show_tank_info($request, $view_type = null){
+        $tank_details = TankHistory::select(DB::RAW('products.name as product_name'),DB::RAW('tank_history.name as tank_name'),'capacity','fuel_level','water_level')
+            ->leftJoin('products', 'products.id', '=', 'tank_history.product_id');
+
+        if(!empty($request->shift)){
+            $tank_details = $tank_details->where('tank_history.shift_id',$request->shift);
+        }else{
+            $tank_details = $tank_details->whereBetween('tank_history.date',[$request->input('fromDate'), $request->input('toDate')]);
+        }
+
+        $tank_details = $tank_details->orderBy('tank_history.name');
+
+        $tank_details = $tank_details->get();
+
+        return $tank_details;
     }
 
     public static function show_expenses_info($request, $view_type = null){
@@ -482,6 +512,29 @@ class StaffController extends Controller
             dispatch($email);
         }
 
+        $last_id = Shifts::select('id','start_date')->where('end_date','!=',NULL)->orderBy('created_at', 'desc')->first();
+        $tanks_details = Tank::all();
+
+        foreach($tanks_details as $tank){
+            DB::table('tank_history')->insert(
+                array(
+                    'shift_id'      => $last_id->id,
+                    'name'          => $tank->name,
+                    'product_id'    => $tank->product_id,
+                    'quantity'      => $tank->quantity,
+                    'pfc_tank_id'   => $tank->pfc_tank_id,
+                    'capacity'      => $tank->capacity,
+                    'fuel_level'    => $tank->fuel_level,
+                    'water_level'   => $tank->water_level,
+                    'product_id'    => $tank->product_id,
+                    'status'        => $tank->status,
+                    'date'          => ($last_id->start_date + 1),
+                    'created_at'    => now()->timestamp,
+                    'updated_at'    => now()->timestamp,
+                )
+            );
+        }
+
         $data['response'] = true;
 
         return json_encode($data);
@@ -550,6 +603,13 @@ class StaffController extends Controller
         }
 
         return redirect('/admin/staff');
+    }
+
+    public function additional_data(Request $request){
+        $users          = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $banks          = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+
+        return ['users' => $users, 'banks' => $banks];
     }
 
     public function send_shift_email(Request $request){

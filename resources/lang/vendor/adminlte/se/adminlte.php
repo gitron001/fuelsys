@@ -299,6 +299,8 @@ return [
     'comment'           => 'Komentar',
     'signature'         => 'Izdao racun',
     'seal'              => 'Primio racun',
+    'water_level'       => 'Vodostaj',
+    'fuel_level'        => 'Nivo goriva',
     'retype_password'               => 'Prepišite lozinku',
     'remember_me'                   => 'Sećam se',
     'register'                      => 'Registrovati',

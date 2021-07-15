@@ -307,6 +307,8 @@ return [
     'comment'           => 'Koment',
     'signature'         => 'Nënshkrimi',
     'seal'              => 'Vula',
+    'water_level'       => 'Niveli i ujit',
+    'fuel_level'        => 'Niveli i karburantit',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',
