@@ -18,6 +18,7 @@ class CreateStocksTable extends Migration
             $table->integer('date');
             $table->integer('tank_id');
             $table->double('amount');
+            $table->string('reference_number')->nullable();
             $table->integer('created_at');
             $table->integer('updated_at');
         });

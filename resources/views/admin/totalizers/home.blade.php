@@ -10,7 +10,7 @@
             <div class="box-header">
                 <div class="col-md-6"><h3 class="box-title">{{ trans('adminlte::adminlte.staff_details.totalizers') }}</h3></div>
                 <div class="col-md-6" style="text-align: right">
-                    <a href="{{ url('/totalizers-export-pdf') }}" target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i class="fas fa-file-pdf"></i> PDF</a>
+                    <a href="{{ url('/totalizers-export-pdf') }}" target="_blank" data-toggle="tooltip" class="btn btn-primary" title="Export to PDF"><i class="fas fa-file-pdf"></i></a>
                 </div>
             </div>
             <!-- /.box-header -->

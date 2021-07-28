@@ -11,6 +11,7 @@ class Stock extends Model
     protected $fillable = [
         'tank_id',
         'amount',
+        'reference_number',
     ];
 
     public function getDateFormat(){
