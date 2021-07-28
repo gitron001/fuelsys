@@ -32,6 +32,7 @@
                     <th class="sorting" data-sorting_type="asc" data-column_name="updated_at">{{ trans('adminlte::adminlte.updated_at') }} <span id="updated_at_icon" class="removePrevIcon sortIcon"><span class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                     <th colspan="2" class="text-center">{{ trans('adminlte::adminlte.prices') }}</th>
                     <th class="text-center">{{ trans('adminlte::adminlte.channels') }}</th>
+                    <th class="text-center" style="width: 10px;">{{ trans('adminlte::adminlte.start_stop') }}</th>
                     <th class="text-center">{{ trans('adminlte::adminlte.options') }}</th>
                 </tr>
                 </thead>

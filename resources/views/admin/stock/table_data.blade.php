@@ -4,6 +4,7 @@
     <td>{{ date('m/d/Y H:i', $data->date) }}</td>
     <td>{{ $data->tank->name }} | {{ $data->tank->product->name }}</td>
     <td>{{ $data->amount }}</td>
+    <td>{{ $data->reference_number ? $data->reference_number : '-' }}</td>
     <td>{{ $data->created_at->diffForHumans() }}</td>
     <td>{{ $data->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">

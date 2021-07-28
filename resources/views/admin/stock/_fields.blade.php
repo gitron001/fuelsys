@@ -7,13 +7,17 @@
         <div class="box-body">
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     {!! Form::label('date', trans('adminlte::adminlte.date')); !!}
 					@if(!isset($stock))
 						{!! Form::text('date',null,['class'=>'form-control','autocomplete'=>'off','id' => 'datetimepicker']); !!}
 					@else
 						<input type="text" id="datetimepicker" value="{{ date('m/d/Y H:i:s', $stock->date) }}" name="date" class="form-control" autocomplete="off">
 					@endif
+                </div>
+                <div class="col-md-6">
+                    <label>{{ trans('adminlte::adminlte.reference_number') }}</label>
+                    {!! Form::text('reference_number',null,['class'=>'form-control','placeholder'=>'123456']); !!}
                 </div>
 
                 @if (!isset($stock))

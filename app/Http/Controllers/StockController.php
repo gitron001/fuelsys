@@ -15,8 +15,18 @@ class StockController extends Controller
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
 
         $stock      = new Stock;
+
+        if($request->get('reference_number')){
+            $stock  = $stock->where('reference_number',$request->get('reference_number'));
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $stock = $stock->whereBetween('date',[$from_date, $to_date]);
+        }
 
         if($request->ajax() == false){
             $stock  = $stock->orderBy('date','DESC')
@@ -39,9 +49,10 @@ class StockController extends Controller
             if(!empty($tank) && !empty($amount) && $amount !== 0){
 
                 $stock = new Stock();
-                $stock->date    = strtotime($request->input('date'));
-                $stock->tank_id = $tank;
-                $stock->amount  = $amount;
+                $stock->date             = strtotime($request->input('date'));
+                $stock->tank_id          = $tank;
+                $stock->amount           = $amount;
+                $stock->reference_number = $request->input('reference_number');
                 $stock->save();
             }
         }
@@ -60,10 +71,11 @@ class StockController extends Controller
     public function update(Request $request, $id) {
         $stock = Stock::findOrFail($id);
 
-        $stock->date        = strtotime($request->input('date'));
-        $stock->tank_id     = $request->input('tank');
-        $stock->amount      = $request->input('amount');
-        $stock->updated_at  = now()->timestamp;
+        $stock->date             = strtotime($request->input('date'));
+        $stock->tank_id          = $request->input('tank');
+        $stock->amount           = $request->input('amount');
+        $stock->updated_at       = now()->timestamp;
+        $stock->reference_number = $request->input('reference_number');
         $stock->save();
 
         session()->flash('info','Success');

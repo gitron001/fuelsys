@@ -22,8 +22,8 @@
         </a>
     </td>
 
-    <td class="text-center" width="8%">
-		@if(is_null($p->stopped))
+    <td align="center">
+        @if(is_null($p->stopped))
 			<a href="{{ route('pfc.command', [$p->id, '5']) }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.pfc_details.stop_pfc') }}" onclick="return confirm('Are you sure?');">
 				<i class="fas fa-stop"></i>
 			</a>
@@ -32,6 +32,9 @@
 				<i class="fas fa-play"></i>
 			</a>
 		@endif
+    </td>
+
+    <td class="text-center" width="8%">
         <a href="{{ url('admin/pfc/'.$p->id.'/edit') }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.edit') }}"><i class="fa fa-edit"></i></a>&nbsp;
         <a href="{{ route('pfc.delete', $p->id) }}" data-toggle="tooltip" title="{{ trans('adminlte::adminlte.delete') }}" class="delete-item"><i class="fa fa-trash"></i></a>
     </td>
