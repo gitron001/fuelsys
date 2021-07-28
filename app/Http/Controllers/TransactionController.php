@@ -331,6 +331,10 @@ class TransactionController extends Controller
         return $pdf->stream($file_name);
     }
 
+    public static function generate_invoice_date(Request $request) {
+
+    }
+
     public static function invoice_data(Request $request){
         $companies          = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
