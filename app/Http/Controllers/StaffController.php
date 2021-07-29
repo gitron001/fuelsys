@@ -7,6 +7,7 @@ use PDF;
 use Auth;
 use Mail;
 use Excel;
+use Artisan;
 use App\Models\Tank;
 use App\Models\Users;
 use App\Models\Banks;
@@ -20,8 +21,9 @@ use App\Jobs\SendShiftEmail;
 use Illuminate\Http\Request;
 use App\Models\Transaction as Transactions;
 use App\Models\Dispaneser as Dispaneser;
-use App\Http\Controllers\TransactionController as TransactionController;
+use App\Models\RunninProcessModel as RunningProcessesModel;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use App\Http\Controllers\TransactionController as TransactionController;
 
 
 
@@ -514,6 +516,8 @@ class StaffController extends Controller
 
         $last_id = Shifts::select('id','start_date')->where('end_date','!=',NULL)->orderBy('created_at', 'desc')->first();
         $tanks_details = Tank::all();
+
+        Artisan::call("running:processes");
 
         foreach($tanks_details as $tank){
             DB::table('tank_history')->insert(
