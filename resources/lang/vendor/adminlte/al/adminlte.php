@@ -141,7 +141,9 @@ return [
         'plates'            => 'Targat',
         'send_email'        => 'Dërgo email',
         'on_transaction'    => 'Dërgo email në çdo transaksion',
-        'add_discount'      => 'Shto zbritje'
+        'add_discount'      => 'Shto zbritje',
+        'starting_balance'  => 'Bilanci fillestar',
+        'limit'             => 'Limiti'
     ],
 
     'payments_details' => [
@@ -312,6 +314,7 @@ return [
     'reference_number'  => 'Numri i references',
     'start_stop'        => 'Start/Stop',
     'api'               => 'API',
+    'add_product'       => 'Shto produkt',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',

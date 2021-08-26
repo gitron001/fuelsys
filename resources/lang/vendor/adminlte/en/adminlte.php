@@ -141,7 +141,9 @@ return [
         'plates'            => 'Plates',
         'send_email'        => 'Send email',
         'on_transaction'    => 'On transaction',
-        'add_discount'      => 'Add discount'
+        'add_discount'      => 'Add discount',
+        'starting_balance'  => 'Starting balance',
+        'limit'             => 'Limit'
     ],
 
     'payments_details' => [
@@ -244,6 +246,7 @@ return [
     'delete'            => 'Delete',
     'discounts'         => 'Discounts',
     'product'           => 'Product',
+    'products'          => 'Products',
     'capacity'          => 'Capacity',
     'start_date'        => 'Start date',
     'end_date'          => 'End date',
@@ -305,6 +308,7 @@ return [
     'reference_number'  => 'Reference number',
     'start_stop'        => 'Start/Stop',
     'api'               => 'API',
+    'add_product'       => 'Add product',
     'retype_password'               => 'Retype password',
     'remember_me'                   => 'Remember Me',
     'register'                      => 'Register',

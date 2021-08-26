@@ -4,10 +4,11 @@ namespace App\Http\Controllers\API;
 
 
 use Session;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
-use App\Models\Transaction;
 use App\Models\Users;
+use GuzzleHttp\Client;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use App\Models\ProductBranches;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -18,9 +19,14 @@ class TransactionsController extends Controller
     public function importTransactions(Request $request) {
        $response = $request->all();
        $inserted_transaction = array();
+       $products_branch_id = ProductBranches::select('master_pfc_product_id','branch_pfc_product_id')
+                                            ->where('branch_id',Session::get('branch_id'))
+                                            ->get()
+                                            ->toArray();
 
        foreach($response as $data) {
            $user_id = Users::select('id')->where('branch_id',Session::get('branch_id'))->where('branch_user_id',$data['user_id'])->first();
+           $branch_product = array_search($data['product_id'], array_keys($products_branch_id));
            $transaction = Transaction::where('branch_transaction_id', $data['id'])->where('branch_id', Session::get('branch_id'))->first();
            if($user_id) {
 				if(!$transaction){
@@ -32,7 +38,7 @@ class TransactionsController extends Controller
 						'receipt_no'    => $data['receipt_no'],
 						'sl_no'         => $data['sl_no'],
 						'pfc_id'        => $data['pfc_id'],
-						'product_id'    => $data['product_id'],
+						'product_id'    => $products_branch_id[$branch_product]['master_pfc_product_id'],
 						'dis_status'    => $data['dis_status'],
 						'price'         => $data['price'],
 						'lit'           => $data['lit'],
@@ -90,7 +96,7 @@ class TransactionsController extends Controller
             }*/
 
 			Transaction::whereIn('id',$inserted_id->inserted_transaction)->update(['exported'=> 1]);
-			dd($inserted_id->inserted_transaction);
+
             return $response->getBody();
 
         } catch (\Exception $e) {

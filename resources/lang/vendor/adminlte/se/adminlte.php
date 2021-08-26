@@ -141,7 +141,9 @@ return [
         'plates'            => 'Staza',
         'send_email'        => 'Šalji imejl',
         'on_transaction'    => 'Pošaljite e-poštu o svakoj transakciji',
-        'add_discount'      => 'Dodajte popust'
+        'add_discount'      => 'Dodajte popust',
+        'starting_balance'  => 'Početni bilans stanja',
+        'limit'             => 'Ograničenja'
     ],
 
     'payments_details' => [
@@ -243,6 +245,7 @@ return [
     'delete'            => 'Trljati',
     'discounts'         => 'Odbitci',
     'product'           => 'Proizvod',
+    'products'          => 'Proizvod',
     'capacity'          => 'Kapacitet',
     'start_date'        => 'Datum početka',
     'end_date'          => 'Datum završetka',
@@ -304,6 +307,7 @@ return [
     'reference_number'  => 'Referentni broj',
     'start_stop'        => 'Start/Stop',
     'api'               => 'API',
+    'add_product'       => 'Kakav proizvod',
     'retype_password'               => 'Prepišite lozinku',
     'remember_me'                   => 'Sećam se',
     'register'                      => 'Registrovati',

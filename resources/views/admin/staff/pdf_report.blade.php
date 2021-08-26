@@ -18,11 +18,12 @@
     	text-align: center;
 	}
     .gray {
-        background-color: lightgray
+        background-color: f2f2f2
     }
 
     .information {
-        background-color: lightgray;
+        background-color: #fff;
+        border: 1px solid black;
     }
 
     #table_design {
@@ -33,19 +34,19 @@
     }
 
     #table_design td, #table_design th {
-        border: 1px solid #ddd;
+        border: 1px solid black;
         padding: 2px;
     }
 
-    #table_design tr:nth-child(even){background-color: #f2f2f2;}
+    #table_design tr:nth-child(even){background-color: #fff;}
 
-    #table_design tr:hover {background-color: #ddd;}
+    #table_design tr:hover {background-color: #fff;}
 
     #table_design th {
         padding-top: 2px;
         padding-bottom: 2px;
-        background-color: #3c8dbc;
-        color: white;
+        background-color: white;
+        color: black;
     }
 </style>
 
@@ -63,9 +64,9 @@
     </table>
 	<br>
 	<table width="100%">
-	<tr>
+	<!--<tr>
 		<td valign="top"><img src="{{ public_path().'/images/gas-pump.png' }}" alt="" width="60"/></td>
-	</tr>
+	</tr>-->
 	<tr>
 		<td align="left">
             <p style="line-height:1.2">
@@ -194,7 +195,7 @@
             <tr>
                 <td> <b>TOTAL</b> </td>
                     @foreach($product_name as $key => $value)
-                        <td> {{ $product_totals[$key]['lit'] }} Lit / {{ number_format($product_totals[$key]['money'], 2, '.', '') }} Euro</td>
+                        <td> <b>{{ $product_totals[$key]['lit'] }} Lit / {{ number_format($product_totals[$key]['money'], 2, '.', '') }} Euro</td>
                     @endforeach
                 <td> <b>{{ number_format($total_staff,2) }}</b> </td>
             </tr>
@@ -263,7 +264,7 @@
 
 	 <!-- START PRODUCTS SECTION -->
 	@if (Request::input('url') == 'products')
-		<h4>{{ trans('adminlte::adminlte.staff.products_by_price') }}</h4>
+		<h4>{{ trans('adminlte::adminlte.staff_details.products_by_price') }}</h4>
 		<table width="100%" id="table_design">
 			<thead style="background-color: lightgray;">
                 <tr>
@@ -280,7 +281,7 @@
             $total_sales = 0; ?>
             @foreach($products as $product)
             <tr>
-                <td>{{ $product['p_name'] .' - '. $product['product_price'] }} </td>
+                <td><>{{ $product['p_name'] .' - '. $product['product_price'] }} </td>
                 <td>{{ $product['product_price'] }} Euro</td>
                 <td>{{ $product['totalLit'] }} litra</td>
                 <td>{{ number_format($product['totalLit'] * $product['product_price'], 2)  }} litra</td>
@@ -300,7 +301,7 @@
 				</tr>
 			</tfoot>
         </table>
-        <h4>{{ trans('adminlte::adminlte.staff.average') }}</h4>
+        <h4>{{ trans('adminlte::adminlte.staff_details.average') }}</h4>
         <table width="100%" id="table_design">
             <thead>
                 <tr>

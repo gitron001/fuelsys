@@ -19,18 +19,42 @@
     	text-align: center;
 	}
     .gray {
-        background-color: lightgray
+        background-color: f2f2f2
     }
 
     .information {
-        background-color: lightgray;
+        background-color: #fff;
+        border: 1px solid black;
+    }
+
+    #table_design {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+    }
+
+    #table_design td, #table_design th {
+        border: 1px solid black;
+        padding: 2px;
+    }
+
+    #table_design tr:nth-child(even){background-color: #fff;}
+
+    #table_design tr:hover {background-color: #fff;}
+
+    #table_design th {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        background-color: white;
+        color: black;
     }
 </style>
 
 </head>
 <body>
 
-    <table width="100%" class="information">
+    <table width="100%" class="information" id="table_design">
         <tr>
             <td align="center" style="width: 50%;">
                 {{ trans('adminlte::adminlte.transactions_pdf.report') }} - {{ $company->name }}   &nbsp;&nbsp; &nbsp;| &nbsp;&nbsp;  {{ date('d-m-Y H:i:s', time()) }}
@@ -39,9 +63,9 @@
     </table>
 	<br>
 	<table width="100%">
-	<tr>
+	<!--<tr>
 		<td valign="top"><img src="{{ public_path().'/images/gas-pump.png' }}" alt="" width="60"/></td>
-	</tr>
+	</tr>-->
 	<tr>
 		<td align="left">
             <p style="line-height:1.2">
@@ -85,7 +109,7 @@
 
 	</table>
 
-	<table width="100%">
+	<table width="100%" class="information" id="table_design">
 		<thead style="background-color: lightgray;">
 		  <tr>
 			<th align="center">{{ trans('adminlte::adminlte.transactions_pdf.products') }}</th>
@@ -106,7 +130,7 @@
 
 	<br>
 
-	<table width="100%">
+	<table width="100%" class="information" id="table_design">
 	<thead style="background-color: lightgray;">
 	  <tr>
 	    <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.date') }}</th>
@@ -127,7 +151,7 @@
 	    <td align="right"></td>
         <td align="right"></td>
         @if($bonus_user != NULL) <td align="right"></td> @endif
-	    <td align="right" class="gray">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
+	    <td align="right">@if($balance != 0) {{ number_format($balance, 2) }} @else {{ 0 }}@endif</td>
 	</tr>
 	@endif
 	<?php
@@ -165,7 +189,7 @@
             @if($bonus_user != NULL) <td align="center">{{ $tr->bonus_username }}</td> @endif
 			<td align="center">{{ number_format($tr->money, 2) }} €</td>
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
-			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
+			<td align="right"> {{ number_format($totalTrans, 2) }} €</td>
 		</tr>
 		<?php } } ?>
 		<tr @if($tr->type == 'payment') echo style="display:none;" @endif>
@@ -175,7 +199,7 @@
             @if($bonus_user != NULL) <td align="center">{{ $tr->bonus_username }}</td> @endif
 			<td align="center">{{ number_format($transaction_sum, 2) }} €</td>
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
-			<td align="right" class="gray"> {{ number_format($totalTrans, 2) }} €</td>
+			<td align="right"> {{ number_format($totalTrans, 2) }} €</td>
 		</tr>
 	<?php } }else{ ?>
 	<!-- END Total transactions row -->
@@ -201,7 +225,7 @@
 		?>
 		<tr>
 			<th align="center" scope="row">{{ ( $py->date !== 0 ) ? date('Y-m-d H:i', $py->date) : $py->created_at }}</th>
-			<td align="center" @if($py->type == "P") style="background-color:grey" @endif > {{ $py->description == NULL  ? $py->type : $py->description }} </td>
+			<td align="center" @if($py->type == "P") @endif > {{ $py->description == NULL  ? $py->type : $py->description }} </td>
             <td align="center">@if(trim($py->plates) != "" && $py->plates != 0) {{ $py->plates }} @else {{ $py->username }} @endif</td>
             @if($bonus_user != NULL) <td align="center">{{ $py->bonus_username }}</td> @endif
 			<td align="center">{{ number_format($py->lit, 2) }} L | {{ $py->price }} | {{ number_format($fueling, 2) }} €</td>
@@ -214,13 +238,13 @@
 	<!-- Show only last row (TOTAL row) -->
 		<tr>
 	        @if($bonus_user != NULL) <td colspan="5"></td> @else <td colspan="4"></td> @endif
-	        <td align="right">Sub Total €</td>
-	        <td align="right" class="gray"> {{ number_format($total - $balance, 2) }} €</td>
+	        <td align="right"><b>Sub Total €</b></td>
+	        <td align="right"><b> {{ number_format($total - $balance, 2) }} €</b></td>
 		</tr>
 	    <tr>
 	        @if($bonus_user != NULL) <td colspan="5"></td> @else <td colspan="4"></td> @endif
-	        <td align="right">Total €</td>
-	        <td align="right" class="gray"> {{ number_format($total, 2) }} €</td>
+	        <td align="right"><b>Total €</b></td>
+	        <td align="right"><b> {{ number_format($total, 2) }} €</b></td>
 		</tr>
 	<!-- END Show only last row (TOTAL row) -->
 	</tfoot>
