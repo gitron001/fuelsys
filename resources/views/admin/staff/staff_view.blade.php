@@ -38,6 +38,11 @@
 @endif
 
 @if (Request::path() == 'admin/staff')
+    <!-- inlcude expenses data -->
+    @include('admin.staff.total')
+@endif
+
+@if (Request::path() == 'admin/staff')
     <!-- inlcude tank details data -->
     @include('admin.staff.tank_details')
 @endif
