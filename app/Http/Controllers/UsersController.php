@@ -15,8 +15,10 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\RFID_Discounts;
 use App\Jobs\SendTransactionEmail;
-use Illuminate\Support\Facades\Input;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Input;
+
 
 class UsersController extends Controller
 {
@@ -31,6 +33,10 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $companies  = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
         $types      = Users::pluck('name','id')->all();
         $branches   = Branch::orderBy('name','ASC')->pluck('name','id');
@@ -82,6 +88,10 @@ class UsersController extends Controller
      */
     public function create()
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $products   = Products::select('name','pfc_pr_id')->where('status', 1)->get();
         $branches   = Branch::select('name','id')->where('status', 1)->orderBy('name')->get();
         $companies  = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
@@ -97,6 +107,10 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         if (Users::where('rfid', $request->input('rfid'))->exists()) {
 
             session()->flash('wrong','This RFID exists!');
@@ -161,7 +175,7 @@ class UsersController extends Controller
 						'headers' =>  [
 							'Authorization'          => $access_token
 						]]);
-						$url = 'http://fitorjapetrol.idealbakija.biz/api/save/rfid';
+						$url = '#';
 
 
 						$response = $client->request('POST', $url, [
@@ -225,6 +239,10 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $user           = Users::findOrFail($id);
         $products   = Products::select('name','pfc_pr_id')->where('status', 1)->get();
         $branches   = Branch::select('name','id')->where('status', 1)->orderBy('name')->get();
@@ -244,6 +262,10 @@ class UsersController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $user = Users::findOrFail($id);
 
         $password = $request->input('password');
@@ -309,6 +331,10 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         Users::where('id', $id)->update(['rfid' => 0, 'status' => 3]);
         session()->flash('info','Success');
 
@@ -317,6 +343,10 @@ class UsersController extends Controller
 
     public function delete_all(Request $request)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $user_id_array = $request->input('id');
         $user = Users::whereIn('id',$user_id_array);
         if($user->update(['rfid' => 0, 'status' => 3])){
@@ -325,13 +355,18 @@ class UsersController extends Controller
     }
 
     public function uploadExcel(){
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
 
         $products   = Products::select('name','id', 'pfc_pr_id')->where('status', 1)->get();
-
         return view('/admin/users/upload_excel',compact('products'));
     }
 
     public function importExcel(Request $request){
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
 
         $file       = Input::file('upload_file');
         $file_name  = $file->getRealPath();
@@ -439,6 +474,10 @@ class UsersController extends Controller
     }
 
 	public function updateCard(Request $request) {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         // Get all users with the same type
         $users = Users::select(DB::RAW('id as rfid_id'))->where('type',$request->input('type'))->get()->toArray();
 

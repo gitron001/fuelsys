@@ -32,7 +32,7 @@
 
                 <div class="form-group {{ $errors->has('type') ? 'has-error' :'' }}">
                     {!! Form::label('type', trans('adminlte::adminlte.type')); !!}
-                    {!! Form::select('type',['' => 'Select', 1 => 'Staff',2=> 'Company',3=> 'Administrator', 4=>'Double Authorization', 9=>'Driver',5=>'Manager',6=>'Bonus Member',7=>'Bonus Klient',8=>'Bonus Korporate'],null,['class'=>'form-control', 'id' => 'showHide']); !!}
+                    {!! Form::select('type',['' => 'Select', 1 => 'Staff',2=> 'Company',3=> 'Administrator', 4=>'Double Authorization', 9=>'Driver',10=>'Branch Manager',5=>'Manager',6=>'Bonus Member',7=>'Bonus Klient',8=>'Bonus Korporate'],null,['class'=>'form-control', 'id' => 'showHide']); !!}
                     {!! $errors->first('type','<span class="help-block">:message</span>') !!}
                 </div>
 

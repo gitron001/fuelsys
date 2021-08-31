@@ -175,6 +175,34 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('admin/staff') || request()->is('admin/staff/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/staff') }}">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.staff') }}</span>
+        </a>
+    </li>
+
+@elseif(Auth::check() && Auth::user()->type == 10)
+    <li class="{{ request()->is('/') ? 'active' : '' }}">
+        <a href="{{ URL('/') }}">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.home') }}</span>
+        </a>
+    </li>
+
+    <li class="{{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/transactions') }}">
+            <i class="fa fas fa-exchange-alt" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.transaction') }}</span>
+        </a>
+    </li>
+
+    <li class="{{ request()->is('admin/staff') || request()->is('admin/staff/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/staff') }}">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.staff') }}</span>
+        </a>
+    </li>
 @else
 
     <li class="{{ request()->is('/') ? 'active' : '' }}">

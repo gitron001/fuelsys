@@ -7,6 +7,7 @@ use PDF;
 use App\Models\Company;
 use App\Models\Banks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Models\InvoiceModel as Invoice;
 use App\Models\Transaction as Transactions;
 
@@ -17,6 +18,10 @@ class InvoicesController extends Controller {
     }
 
     public function index(Request $request) {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
@@ -41,6 +46,10 @@ class InvoicesController extends Controller {
     }
 
     public function show($id) {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $invoice = Invoice::findOrFail($id);
         $banks = Banks::where('status',1)->orderBy('name','ASC')->get();
 
@@ -53,6 +62,7 @@ class InvoicesController extends Controller {
     }
 
     public function invoice_to_pdf($id){
+
         $invoice = Invoice::findOrFail($id);
         $banks = Banks::where('status',1)->orderBy('name','ASC')->get();
 
@@ -74,6 +84,7 @@ class InvoicesController extends Controller {
     }
 
     public static function invoice_data($id){
+
         $transactions = Transactions::select(DB::RAW('products.pfc_pr_id as product_id'), DB::raw('MAX(products.name) as product_name'), DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'),DB::raw('transactions.price as price'))
             ->where('transactions.invoice_id',$id)
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')

@@ -16,6 +16,7 @@ use App\Jobs\PrintPayment;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Mike42\Escpos\EscposImage;
+use Illuminate\Support\Facades\Gate;
 use App\Services\PrintPaymentService;
 use App\Http\Requests\PaymentRequest;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
@@ -34,6 +35,10 @@ class PaymentsController extends Controller
      */
     public function index(Request $request)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $users          = Users::where('status',1)->whereIn('type',[1,2,3,4,5])->orderBy('name','asc')->pluck('name','id')->all();
         $companies      = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
@@ -91,6 +96,10 @@ class PaymentsController extends Controller
      */
     public function create()
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $companies  = Company::pluck('name','id')->all();
         $branches   = Branch::orderBy('name','ASC')->pluck('name','id')->all();
 		$users      = Users::where('status',1)->where(function ($users) {
@@ -104,6 +113,10 @@ class PaymentsController extends Controller
 
     public function multiplePaymentsView()
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $users      = Users::where('status',1)->where(function ($users) {
 			$users->where('company_id', 0)
             ->orWhereNull('company_id');
@@ -114,6 +127,10 @@ class PaymentsController extends Controller
 
     public function multiplePaymentsStore(Request $request)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
 		// Another Payment Section
         $firstValueOfArrayUser  = array_values($request->input('another_payment_user'))[0];
         $firstValueOfArrayAmount = array_values($request->input('another_payment_amount'))[0];
@@ -157,6 +174,10 @@ class PaymentsController extends Controller
      */
     public function store(PaymentRequest $request)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $payments   = new Payments();
         $user       = $request->input('user_id');
         $company    = $request->input('company_id');
@@ -244,6 +265,10 @@ class PaymentsController extends Controller
      */
     public function edit($id)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $payment    = Payments::findOrFail($id);
         $companies  = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
         $branches   = Branch::orderBy('name','ASC')->pluck('name','id')->all();
@@ -262,6 +287,10 @@ class PaymentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(PaymentRequest $request, $id) {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $payments = Payments::findOrFail($id);
 
         if($request->input('checkbox') == 'user'){
@@ -342,6 +371,10 @@ class PaymentsController extends Controller
      */
     public function destroy($id)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $payment = Payments::findOrFail($id);
 
         if($payment->user_id != 0){
@@ -361,6 +394,10 @@ class PaymentsController extends Controller
 
     public function delete_all(Request $request)
     {
+        if(Gate::denies('access-gate')){
+            abort(403, 'Unauthorized action.');
+        }
+
         $payment_id_array = $request->input('id');
 
         foreach($payment_id_array as $payment_id) {
