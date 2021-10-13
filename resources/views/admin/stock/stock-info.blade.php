@@ -4,13 +4,14 @@
         <a href="{{ url('/admin/stock/create') }}"><span class="label label-primary">+ Stock</span></a>
     </div>
     @foreach($tanks as $tank)
-		 @php ($total_sales = 0) @endphp
+		@php ($total_sales = 0) @endphp
 		@foreach($sales as $sale)
 			@if($sale->tank_id == $tank->id)
 				 @php ($total_sales = $sale->total_lit)  @endphp
 				 @php  break @endphp
 			@endif
 		@endforeach
+
         <div class="col-xs-6 col-md-4 text-center" style="margin-top: 5px;">
             <div style="margin-top: 8px; line-height:10px;">
                 @php ($data = 0) @endphp

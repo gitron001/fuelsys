@@ -308,6 +308,8 @@ return [
     'start_stop'        => 'Start/Stop',
     'api'               => 'API',
     'add_product'       => 'Kakav proizvod',
+    'addedd_stock'      => 'Added stock',
+    'total_before_shift_open'       => 'Ukupne zalihe pre otvaranja smene',
     'retype_password'               => 'Prepišite lozinku',
     'remember_me'                   => 'Sećam se',
     'register'                      => 'Registrovati',

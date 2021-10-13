@@ -9,6 +9,7 @@ use Mail;
 use Excel;
 use Artisan;
 use App\Models\Tank;
+use App\Models\Stock;
 use App\Models\Users;
 use App\Models\Banks;
 use App\Models\Shifts;
@@ -256,9 +257,13 @@ class StaffController extends Controller
 
         $tank_details           = self::show_tank_info($request);
 
+        $prev_stock_details     = self::show_stock_info($request)['prev_stock_details'];
+        $stock_details          = self::show_stock_info($request)['stock_details'];
+        $sales                  = self::show_stock_info($request)['sales'];
+
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks','tank_details'));
+        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks','tank_details','stock_details','sales','prev_stock_details'));
     }
 
     public function expenses(Request $request){
@@ -353,6 +358,37 @@ class StaffController extends Controller
         $tank_details = $tank_details->get();
 
         return $tank_details;
+    }
+
+    public static function show_stock_info($request, $view_type = null){
+        $prev_stock_details = Stock::select(DB::RAW('tanks.name as tank_name'),DB::raw('SUM(amount) AS amount'),'tank_id','product_id')
+            ->leftJoin('tanks', 'tanks.id', '=', 'stocks.tank_id')
+            ->groupBy('stocks.tank_id');
+
+        $prev_stock_details = $prev_stock_details->where('stocks.date','<',$request->input('fromDate'));
+
+        $prev_stock_details = $prev_stock_details->get();
+
+        $stock_details = Stock::select(DB::RAW('tanks.name as tank_name'),DB::raw('SUM(amount) AS amount'),'tank_id','product_id')
+            ->leftJoin('tanks', 'tanks.id', '=', 'stocks.tank_id')
+            ->groupBy('stocks.tank_id');
+
+        $stock_details = $stock_details->whereBetween('stocks.date',[$request->input('fromDate'), $request->input('toDate')]);
+
+        $stock_details = $stock_details->get();
+
+        $sales  = Transactions::select(DB::RAW('sum(lit) as total_lit'), DB::RAW('max(tank_id) as tank_id'))
+                    ->join('pumps', function ($join) {
+                        $join->on('transactions.sl_no', '=', 'pumps.nozzle_id')
+                        ->on('transactions.channel_id', '=', 'pumps.channel_id');
+                    })
+                    ->groupBy('pumps.tank_id');
+
+        $sales = $sales->where('transactions.created_at','<',$request->input('fromDate'));
+
+        $sales = $sales->get();
+
+        return ['prev_stock_details' => $prev_stock_details, 'stock_details' => $stock_details, 'sales' => $sales];
     }
 
     public static function show_expenses_info($request, $view_type = null){

@@ -146,7 +146,6 @@
 
 <!-- Tanks -->
 <div class="col-md-12" id="loadTanks">
-    @include('admin.stock.stock-info')
 </div>
 <!-- END Tanks -->
 
@@ -162,7 +161,7 @@
 
     $(document).ready(function(){
         // Load tanks after page load
-        //$('#loadTanks').load('{{ url('/stock-info')}}');
+        $('#loadTanks').load('{{ url('/stock-info')}}');
 
         // Refresh transaction and tanks data
         setInterval(function(){

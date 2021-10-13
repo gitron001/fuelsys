@@ -309,6 +309,8 @@ return [
     'start_stop'        => 'Start/Stop',
     'api'               => 'API',
     'add_product'       => 'Add product',
+    'addedd_stock'      => 'Addedd Stock',
+    'total_before_shift_open'       => 'Total stock before opening shift',
     'retype_password'               => 'Retype password',
     'remember_me'                   => 'Remember Me',
     'register'                      => 'Register',

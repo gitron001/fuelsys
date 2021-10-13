@@ -315,6 +315,8 @@ return [
     'start_stop'        => 'Start/Stop',
     'api'               => 'API',
     'add_product'       => 'Shto produkt',
+    'addedd_stock'      => 'Stoku i shtuar',
+    'total_before_shift_open'       => 'Totali i stokut para hapjes së ndërrimit',
     'retype_password'               => 'Rishkruaj fjalëkalimin',
     'remember_me'                   => 'Më mbaj mend',
     'register'                      => 'Regjistrohu',
