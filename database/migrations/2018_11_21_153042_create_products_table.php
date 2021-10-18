@@ -20,10 +20,11 @@ class CreateProductsTable extends Migration
             $table->integer('product_group_id')->nullable();
             $table->integer('pfc_id');
             $table->double('vat')->nullable();
-            $table->double('pfc_pr_id')->nullable();
+            $table->integer('pfc_pr_id')->nullable()->unique();
             $table->tinyInteger('status')->default(1);
             $table->integer('created_at');
             $table->integer('updated_at');
+
         });
     }
 

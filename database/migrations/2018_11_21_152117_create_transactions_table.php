@@ -20,10 +20,10 @@ class CreateTransactionsTable extends Migration
             $table->char('locker');
             $table->integer('tr_no');
 			$table->integer('channel_id')->nullable()->index();
-            $table->char('receipt_no')->nullable()->index();
-            $table->char('sl_no');
+            $table->integer('receipt_no')->nullable()->index();
+            $table->integer('sl_no');
             $table->integer('pfc_id');
-            $table->integer('product_id');
+            $table->integer('product_id')->index();
             $table->integer('printed')->default(0);
             $table->char('dis_status')->nullable();
             $table->double('price');
@@ -43,7 +43,7 @@ class CreateTransactionsTable extends Migration
             $table->char('method')->nullable();
             $table->integer('type')->nullable();
             $table->integer('bill_no')->nullable();
-            $table->integer('created_at');
+            $table->integer('created_at')->index();
             $table->integer('updated_at');
         });
     }
