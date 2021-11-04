@@ -19,12 +19,12 @@
             <tbody>
                 @foreach($tank_details as $tank)
 				<tr>
-					<td>{{ $tank->tank_name }}</td>
-                    <td>{{ $tank->product_name }}</td>
+					<td>{{ $tank->name }}</td>
+                    <td>{{ $tank->tank->product->name }}</td>
                     <td>{{ $tank->capacity }}</td>
                     <td>{{ $tank->quantity }}</td>
                     <td>{{ $tank->water_level }}</td>
-                    <td>{{ $tank->fuel_level }}</td>
+                    <td>{{ round($tank->totalStockSensor(), 2) }} lit - {{ round(($tank->fuel_level/100), 2) }} cm </td>
 				</tr>
                 @endforeach
             </tbody>

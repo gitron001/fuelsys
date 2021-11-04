@@ -35,7 +35,7 @@
 
 				<tr>
 					<td>{{ $stock->tank_name }}</td>
-                    <td>{{ ($total_sales - $prev_total_stock) }} </td>
+                    <td>{{ ($prev_total_stock - $total_sales) }} </td>
                     <td>{{ $stock->amount }}</td>
                     <td>{{ ($stock->amount - ($total_sales - $prev_total_stock) ) }}</td>
 				</tr>

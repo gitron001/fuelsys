@@ -368,9 +368,10 @@ class DispanserService extends ServiceProvider
 			$water_level = unpack('s', $water_level)[1];
 
 			$tank->water_level = $water_level;
-
+			//print_r($tank);
 			$tank->save();
-
+			//dd($tank->save());
+			//print_r($tank);
 			PFC::storeLogs($t->id, null, 20, $response);
 			//return $response;
 		}
