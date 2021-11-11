@@ -69,7 +69,7 @@ class CheckTanksStateEvery6Hours extends Command
                 $salesPerTank = $total_sales;
                 $stockPerTank = $tank->totalStock()[0]['amount'];
 
-                if($present <= 25000){
+                if($present <= 2000){
                     Mail::send('emails.checkTanksState',['tankName' => $tankName, 'present' => $present, 'salesPerTank' => $salesPerTank, 'stockPerTank' => $stockPerTank, 'tankProductName' => $tankProductName, 'tankCapacity' => $tankCapacity],function($m) use($company){
                         $m->to($company->email)->subject('Fuel System - Low Limit ALARM');
                     });

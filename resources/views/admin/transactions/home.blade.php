@@ -123,6 +123,10 @@
                                     {{ trans('adminlte::adminlte.transactions_details.bonus_driver_card') }} <span
                                         id="#" class="removePrevIcon sortIcon"><span
                                             class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                                <th class="sorting" data-sorting_type="asc" data-column_name="#">
+                                    {{ trans('adminlte::adminlte.transactions_details.driver_card') }} <span
+                                        id="#" class="removePrevIcon sortIcon"><span
+                                            class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                                 <th class="sorting" data-sorting_type="asc" data-column_name="product_id">
                                     {{ trans('adminlte::adminlte.product') }} <span id="product_id_icon"
                                         class="removePrevIcon sortIcon"><span

@@ -770,11 +770,12 @@ class TransactionController extends Controller
             $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "transactions".".".$request->get('sortby'));
             $sort_type       = $request->get('sorttype');
         }
-        $query = Transactions::select(DB::RAW('user1.name as user_name'),DB::RAW('user2.name as bonus_name'), DB::RAW('companies.name as comp_name'), DB::RAW('companies.id as comp_id'), DB::RAW('products.name as product'),
+        $query = Transactions::select(DB::RAW('user1.name as user_name'),DB::RAW('user2.name as bonus_name'),DB::RAW('user3.name as driver_name'), DB::RAW('companies.name as comp_name'), DB::RAW('companies.id as comp_id'), DB::RAW('products.name as product'),
            'transactions.price', 'transactions.lit','transactions.money','transactions.created_at','transactions.id','transactions.invoice_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->leftJoin('users as user1', 'user1.id', '=', 'transactions.user_id')
             ->leftJoin('users as user2', 'user2.id', '=', 'transactions.bonus_user_id')
+            ->leftJoin('users as user3', 'user3.id', '=', 'transactions.driver_id')
             ->leftJoin('companies', 'companies.id', '=', 'user1.company_id');
 
         if ($request->input('user')) {

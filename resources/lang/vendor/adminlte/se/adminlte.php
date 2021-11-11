@@ -60,6 +60,7 @@ return [
         'exc_balance'           => 'Izuzmi ravnotežu',
         'all_day'               => 'Ceo dan',
         'bonus_driver_card'     => 'Bonus/Vozačka kartica',
+        'driver_card'           => 'Vozačka kartica',
         'edit'                  => 'Promenite transakciju',
         'transaction_history'   => 'Istorija e transakcije',
         'prev_user'             => 'Prethodni korisnik',

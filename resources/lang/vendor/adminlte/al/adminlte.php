@@ -60,6 +60,7 @@ return [
         'exc_balance'           => 'Përjashto bilancin',
         'all_day'               => 'Gjithë ditën',
         'bonus_driver_card'     => 'Bonus/Shofer kartela',
+        'driver_card'           => 'Shofer kartela',
         'edit'                  => 'Ndrysho transaksionin',
         'transaction_history'   => 'Historia e transaksionit',
         'prev_user'             => 'Përdoruesi i mëparshëm',

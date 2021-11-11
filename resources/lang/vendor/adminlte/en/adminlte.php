@@ -60,6 +60,7 @@ return [
         'exc_balance'           => 'Exc balance',
         'all_day'               => 'All day',
         'bonus_driver_card'     => 'Bonus/Driver card',
+        'driver_card'           => 'Driver card',
         'edit'                  => 'Edit transaction',
         'transaction_history'   => 'Transaction history',
         'prev_user'             => 'Previous user',

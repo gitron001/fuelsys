@@ -69,7 +69,7 @@ class CheckTanksState extends Command
                 $salesPerTank = $total_sales;
                 $stockPerTank = $tank->totalStock()[0]['amount'];
 
-                if($present <= 25000){
+                if($present <= 2000){
                     Tank::where('id', $tank->id)->update(array('low_limit' => 1));
 
                     Mail::send('emails.checkTanksState',['tankName' => $tankName, 'present' => $present, 'salesPerTank' => $salesPerTank, 'stockPerTank' => $stockPerTank, 'tankProductName' => $tankProductName, 'tankCapacity' => $tankCapacity],function($m) use($company){
