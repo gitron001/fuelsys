@@ -16,6 +16,9 @@ class Tank extends Model
         'name',
         'product_id',
         'capacity',
+        'fuel_level',
+        'water_level',
+		'pfc_tank_id',
         'status',
         'alarm_email_water_level',
         'high_level_water'

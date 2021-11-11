@@ -344,8 +344,7 @@ class StaffController extends Controller
     }
 
     public static function show_tank_info($request, $view_type = null){
-        $tank_details = TankHistory::select(DB::RAW('products.name as product_name'),DB::RAW('tank_history.name as tank_name'),'capacity','fuel_level','water_level')
-            ->leftJoin('products', 'products.id', '=', 'tank_history.product_id');
+        $tank_details = TankHistory::select('*');
 
         if(!empty($request->shift)){
             $tank_details = $tank_details->where('tank_history.shift_id',$request->shift);
@@ -387,6 +386,7 @@ class StaffController extends Controller
         $sales = $sales->where('transactions.created_at','<',$request->input('fromDate'));
 
         $sales = $sales->get();
+
 
         return ['prev_stock_details' => $prev_stock_details, 'stock_details' => $stock_details, 'sales' => $sales];
     }
