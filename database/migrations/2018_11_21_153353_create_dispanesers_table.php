@@ -26,6 +26,7 @@ class CreateDispanesersTable extends Migration
             $table->integer('current_bonus_user_id')->nullable();
             $table->integer('data_updated_at')->nullable();
             $table->integer('current_amount')->nullable();
+            $table->integer('cardreader_status')->default('0');
             $table->integer('pump_status')->default('0');
             $table->integer('cardreader_status')->default('0');
             $table->integer('status')->nullable();
