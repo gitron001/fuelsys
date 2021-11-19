@@ -28,7 +28,6 @@ class CreateDispanesersTable extends Migration
             $table->integer('current_amount')->nullable();
             $table->integer('cardreader_status')->default('0');
             $table->integer('pump_status')->default('0');
-            $table->integer('cardreader_status')->default('0');
             $table->integer('status')->nullable();
             $table->integer('created_at');
             $table->integer('updated_at');
