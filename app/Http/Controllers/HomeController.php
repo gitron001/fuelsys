@@ -24,7 +24,7 @@ class HomeController extends Controller
                                         ->orderBy('limit_left', 'ASC')
                                         ->limit(15)
                                         ->get();
-        $dispanesers        = Dispaneser::all();
+        $dispanesers        = Dispaneser::where('status', 1)->get();
         $tanks              = Tank::all();
 		$sales 				= Transaction::select(DB::RAW('sum(lit) as total_lit'), DB::RAW('max(tank_id) as tank_id'))
 							 ->join('pumps', function ($join) {

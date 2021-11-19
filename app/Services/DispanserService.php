@@ -168,20 +168,20 @@ class DispanserService extends ServiceProvider
         $length = count($response) - 3;
         //Dispaneser::where('pfc_id',$pfc_id)->delete();
         for($i = 3; $i <= $length; $i++){
-            if($response[$i] == 1){
+            //if($response[$i] == 1){
                 $channel = ($i - 3);                
 			
 				$data['name']      			= 'Pump - '.$channel;
                 $data['created_at'] 		= time();
                 $data['channel_id'] 		= $channel;
                 $data['pfc_id'] 			= $pfc_id;
-                $data['cardreader_status']  = $response[$i];
+                $data['pump_status']  		= $response[$i];
                 $data['updated_at'] 		= time();
 				$channel_insert = Dispaneser::updateOrCreate(
 					['channel_id' =>  $channel ],
 					$data
 				);
-            }elseif($response[$i] == 0){
+            /*}elseif($response[$i] == 0){
                 $channel = ($i - 3);                
 			
 				$data['name']      			= 'Pump - '.$channel;
@@ -194,7 +194,7 @@ class DispanserService extends ServiceProvider
 					['channel_id' =>  $channel ],
 					$data
 				);				
-			}
+			}*/
         }
 
 		self::ImportNozzles($socket, $pfc_id = 1);

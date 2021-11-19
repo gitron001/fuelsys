@@ -13,6 +13,7 @@ class Dispaneser extends Model
         'pfc_id', 
 		'channel_id',
         'cardreader_status',
+        'pump_status',
         'price_division', 
         'lit_division', 
         'money_division', 

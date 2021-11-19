@@ -52,21 +52,23 @@ class CardService extends ServiceProvider
         //Get all transaction by channel
         $length = count($response) - 3;
         for($i = 3; $i <= $length; $i++){
+			
+			$channel = ($i - 3);	
             if($response[$i] == 0){
-				$channel = ($i - 3);
-				$the_channel = Dispaneser::where('channel_id', $channel)->first();
-				if(isset($the_channel->id)){
-					$the_channel->cardreader_status = 0;
-					$the_channel->save();
-				}
+				//$channel = ($i - 3);				
 			}elseif($response[$i] == 2){
-                $channel = ($i - 3);
+                //$channel = ($i - 3);
                 self::check_card($socket, $channel, $pfc_id);
             }elseif($response[$i] == 4){
-                $channel = ($i - 3);
+                //$channel = ($i - 3);
 				echo 'activete';
                 self::activate_card($socket, $channel, 4);
             }
+			$the_channel = Dispaneser::where('channel_id', $channel)->first();
+			if(isset($the_channel->id)){
+				$the_channel->cardreader_status = $response[$i];
+				$the_channel->save();
+			}
         }
 		
         return true;
@@ -128,6 +130,7 @@ class CardService extends ServiceProvider
 			if(isset($the_dispanser->id)){
 				$the_dispanser->current_driver_id   	= $user->id;
 				$the_dispanser->status			   		= 2;
+				$the_dispanser->cardreader_status		= 1;
 				$the_dispanser->data_updated_at   		= time();
 				$the_dispanser->save();	
 			}
