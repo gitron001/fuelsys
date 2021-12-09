@@ -252,7 +252,6 @@ class TransactionController extends Controller
 
         if(isset($request->user)){
             $user_details = Users::whereIN('id',$request->user)->get();
-			//$payment_date = Payments::where('user_id', $id)->where('status', 1)->first()->pluck('date');
         }
 
         if(isset($request->bonus_user) && !isset($request->user)){
@@ -262,7 +261,6 @@ class TransactionController extends Controller
         if(isset($request->company)){
             $id = $request->company;
             $company_details = Company::where('id',$id)->first();
-			//$payment_date = Payments::where('company_id', $id)->where('status', 1)->first()->pluck('date');
         }
 
         $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','date_to','bonus_user','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
@@ -370,7 +368,6 @@ class TransactionController extends Controller
         if ($request->input('fromDate') && $request->input('toDate')) {
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
-
         $total_transactions = $products->get();
 
         return ['from_company' => $from_company,'to_company' => $to_company,'total_transactions' => $total_transactions,'companies' => $companies];
@@ -449,7 +446,7 @@ class TransactionController extends Controller
         }
 
         if($request->input('user') && $request->input('company')){
-            $transactions->whereIn('user_id',$user)->orWhere('companies.id','=',$company);
+            $transactions->whereIn('user_id',$user)->where('companies.id','=',$company);
         }
 
         if($request->input('bonus_user')){
@@ -605,12 +602,12 @@ class TransactionController extends Controller
             DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'))
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
+            //->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             //->where('users.type','1')
             ->groupBy('products.pfc_pr_id');
 
         if ($request->input('user') && empty($request->input('company'))) {
-            $products = $products->whereIn('user_id',$user);
+            $products = $products->whereIn('transactions.user_id',$user);
         }
 
         if ($request->input('company') && empty($request->input('user'))) {
@@ -618,13 +615,13 @@ class TransactionController extends Controller
         }
 
         if($request->input('user') && $request->input('company')){
-            $products = $products->whereIn('user_id',$user)->where('companies.id','=',$company);
+            $products = $products->whereIn('transactions.user_id',$user)->where('users.company_id','=',$company);
         }
-
+		
         if ($request->input('fromDate') && $request->input('toDate')) {
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
-
+		
         $products = $products->get();
 
         return $products;
@@ -643,56 +640,24 @@ class TransactionController extends Controller
         }
 
         $products = Transactions::select(DB::raw('MAX(products.name) as product_name'), 'transactions.sl_no', 'transactions.channel_id', DB::raw('MAX(products.pfc_pr_id) as product_id'),
-            DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'), DB::raw('Max(CAST(dis_tot as SIGNED)) as max_totalizer'), DB::raw('MIN(CAST(dis_tot_last as SIGNED)) as min_totalizer'))
+            DB::raw('SUM(lit) as lit'),DB::raw('SUM(money) as money'), DB::raw('Max(CAST(dis_tot as SIGNED)) as max_totalizer'), DB::raw('MIN(CAST(dis_tot_last as SIGNED)) as min_totalizer'), 'tanks.name as t_name'
+					, 'tanks.pfc_tank_id as tank_id')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            //->leftJoin('companies', 'companies.id', '=', 'users.company_id')
             ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
-            //->groupBy()
+			->join('pumps', function ($join) {
+				$join->on('transactions.sl_no', '=', 'pumps.nozzle_id')
+				->on('transactions.channel_id', '=', 'pumps.channel_id');
+			})
+			->leftJoin('tanks', 'pumps.tank_id', '=', 'tanks.pfc_tank_id')
 			->orderBy('transactions.channel_id')
 			->orderBy('transactions.sl_no')
             ->groupBy('transactions.sl_no', 'transactions.channel_id');
-
-        //if ($from_date && $request->input('toDate')) {
-
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
-        //}
+     
 
         $products = $products->get();
-		//dd($products);
-		/*
-		$min_totalizers = Transactions::select('t.sl_no', 't.channel_id', DB::raw('MAX(CAST(dis_tot as SIGNED)) as totalizer'))
-			->from(DB::raw('(SELECT * FROM transactions ORDER BY created_at DESC) t'))
-            ->leftJoin('users', 'users.id', '=', 't.user_id')
-            ->leftJoin('products', 'products.pfc_pr_id', '=', 't.product_id')
-            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
-            ->groupBy('t.sl_no')
-            ->groupBy('t.channel_id');
-
-        if ($request->input('user') && empty($request->input('company'))) {
-            $min_totalizers = $min_totalizers->whereIn('user_id',$user);
-        }
-
-        if ($request->input('company') && empty($request->input('user'))) {
-            $min_totalizers = $min_totalizers->where('companies.id','=',$company);
-        }
-
-        if($request->input('user') && $request->input('company')){
-            $min_totalizers = $min_totalizers->whereIn('user_id',$user)->where('companies.id','=',$company);
-        }
-
-        //if ($request->input('fromDate') && $request->input('toDate')) {
-            $min_totalizers = $min_totalizers->where('t.created_at', '<', $from_date);
-        //}
-
-        $min_totalizers = $min_totalizers->get();
-		foreach($products as $p){
-			foreach($min_totalizers as $mt){
-					if($p->channel_id == $mt->channel_id && $p->sl_no == $mt->sl_no){
-							//$p->min_totalizer = $mt->totalizer;
-					}
-			}
-		}
-		*/
         return $products;
     }
 

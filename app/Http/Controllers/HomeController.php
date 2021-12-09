@@ -26,8 +26,8 @@ class HomeController extends Controller
                                         ->limit(15)
                                         ->get();
 		//self::update_dispanser_status();
-        $dispanesers        = Dispaneser::where('status', 1)->get();
-        $tanks              = Tank::where('status', 1)->get();
+        $dispanesers        = Dispaneser::whereIn('status', [1,2,3])->get();
+        //$tanks              = Tank::where('status', 1)->get();
 		
 		/*$sales 				= Transaction::select(DB::RAW('sum(lit) as total_lit'), DB::RAW('max(tank_id) as tank_id'))
 							 ->join('pumps', function ($join) {
@@ -46,7 +46,7 @@ class HomeController extends Controller
         return view('/dispensers',compact('dispanesers'))->render();
     }
 	
-	
+	//Load Updated Dispansers Status 
 	public function update_dispanser_status(){
 		//Add Update Tank Command
 		$rp                 = new RunninProcessModel;

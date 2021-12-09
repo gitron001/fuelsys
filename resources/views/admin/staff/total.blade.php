@@ -13,11 +13,6 @@
     @php $total_expenses += $expense->total @endphp
 @endforeach
 
-@php $total_companies = 0 @endphp
-@foreach ($companyData as $company)
-    @php $total_companies += $company['totalMoney'] @endphp
-@endforeach
-
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-calculator" aria-hidden="true"></i>
@@ -29,7 +24,6 @@
                 <tr>
                     <th>{{ trans('adminlte::adminlte.transactions') }}</th>
                     <th>{{ trans('adminlte::adminlte.payments') }}</th>
-                    <th>{{ trans('adminlte::adminlte.companies') }}</th>
                     <th>{{ trans('adminlte::adminlte.expenses') }}</th>
                     <th>{{ trans('adminlte::adminlte.total') }}</th>
                 </tr>
@@ -38,9 +32,8 @@
 				<tr>
 					<td> {{ number_format($total_transactions,2) }} Euro</td>
                     <td> {{ number_format($total_payments,2) }} Euro</td>
-                    <td> {{ number_format($total_companies,2) }} Euro</td>
                     <td> {{ number_format($total_expenses,2) }} Euro</td>
-                    <td><b> {{ number_format(($total_transactions + $total_payments - $total_companies - $total_expenses),2) }} Euro</b></td>
+                    <td><b> {{ number_format(($total_transactions + $total_payments  - $total_expenses),2) }} Euro</b></td>
 				</tr>
             </tbody>
         </table>

@@ -11,8 +11,15 @@ class Pump extends Model
     protected $table = 'pumps';
 
     protected $fillable = [
+        'name',
+        'nozzle_id',
+        'channel_id',
+        'pfc_id',
+        'starting_totalizer',
         'status',
-        'tank_id'
+        'tank_id',
+        'created_at',
+        'updated_at'
     ];
 
     public function getDateFormat(){

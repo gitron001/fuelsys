@@ -7,9 +7,37 @@
 @include('admin.staff.staff_menu')
 <!-- END box box-primary -->
 
-@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/dispensers')
-    <!-- include dispanser and product data -->
+@if (Request::path() == 'admin/staff')
+    <!-- include staff data -->
+    @include('admin.staff.staff_data')
+@endif
+
+@if (Request::path() == 'admin/staff/stock')
+    <!-- Incoming Stock -->
+    @include('admin.staff.stock')
+@endif    
+
+<!-- inlcude Stock data -->	
+<?php global $totalizer_sales; ?>
+<?php $totalizer_sales = array(); ?>
+<?php global $tank_sales; ?>
+<?php $tank_sales = array(); ?>
+@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/dispensers' || Request::path() == 'admin/staff/stock')
+
     @include('admin.staff.dispanser_data')
+	
+@endif
+<!-- inlcude Stock data -->
+<?php global $sales_by_product; ?>
+<?php $sales_by_product = array(); ?>
+@if (Request::path() == 'admin/staff/stock')
+
+    @include('admin.staff.total_stock')
+@endif
+
+@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/dispensers')
+    <!-- inlcude Stock data -->
+    @include('admin.staff.product_totals')
 @endif
 
 @if (Request::path() == 'admin/staff/products')
@@ -17,12 +45,8 @@
     @include('admin.staff.products_data')
 @endif
 
-@if (Request::path() == 'admin/staff')
-    <!-- include staff data -->
-    @include('admin.staff.staff_data')
-@endif
 
-@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/companies')
+@if (Request::path() == 'admin/staff/companies')
     <!-- inlcude companies data -->
     @include('admin.staff.companies_data')
 @endif
@@ -37,21 +61,11 @@
     @include('admin.staff.expenses_data')
 @endif
 
+
 @if (Request::path() == 'admin/staff')
     <!-- inlcude expenses data -->
     @include('admin.staff.total')
 @endif
-
-@if (Request::path() == 'admin/staff')
-    <!-- inlcude Stock data -->
-    @include('admin.staff.total_stock')
-@endif
-
-@if (Request::path() == 'admin/staff')
-    <!-- inlcude tank details data -->
-    @include('admin.staff.tank_details')
-@endif
-
 
 
 <div class="modal fade" id="close_shift_additional_data">

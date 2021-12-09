@@ -284,7 +284,7 @@ class DispanserService extends ServiceProvider
 	public static function ImportNozzles($socket, $pfc_id = 1){
 
 		//Pump::where('pfc_id',$pfc_id)->delete();
-        $dispansers = Dispaneser::All();
+        $dispansers = Dispaneser::whereIn('status', [1,2,3])->get();
 
 		foreach($dispansers as $dispanser){
 			$j = 1;
@@ -310,12 +310,13 @@ class DispanserService extends ServiceProvider
 					$data['starting_totalizer'] 	= $totalizer;
 					$data['created_at'] 			= time();
 					$data['updated_at'] 			= time();
-					
-					$pump = Pump::updateOrCreate(
-						['channel_id' =>  $dispanser->channel_id, 'nozzle_id' => $nozzle_nr ],
-						$data
-					);
-					
+					if($dispanser->channel_id != NUll && $nozzle_nr != null){
+						$pump = Pump::updateOrCreate(
+							['channel_id' =>  $dispanser->channel_id, 'nozzle_id' => $nozzle_nr ],
+							$data
+						);
+					}					
+					//print_r($data);
 					//Pump::insert($data);
 				/*}else{
 					echo ' - Totalizer start -';
@@ -355,9 +356,9 @@ class DispanserService extends ServiceProvider
 				.strrev(pack("s", $the_crc))
 				.pack("c*", 02);
 			PFC::storeLogs($t->id, null, 19, unpack('c*', $binarydata));
-			//print_r(unpack('c*', $binarydata));
+			
 			$response = PFC::send_message($socket, $binarydata);
-			//print_r($response);
+			
 			$fuel_level = pack('c', $response[6]).pack('c', $response[5]);
 			$fuel_level = unpack('s', $fuel_level)[1];
 			$tank = Tank::find($t->id);
@@ -368,12 +369,8 @@ class DispanserService extends ServiceProvider
 			$water_level = unpack('s', $water_level)[1];
 
 			$tank->water_level = $water_level;
-			//print_r($tank);
 			$tank->save();
-			//dd($tank->save());
-			//print_r($tank);
 			PFC::storeLogs($t->id, null, 20, $response);
-			//return $response;
 		}
 
 	}

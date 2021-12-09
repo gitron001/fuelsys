@@ -81,77 +81,7 @@
         </td>
 	</tr>
     </table>
-    <!-- TOTAL SECTION -->
-    @if (Request::input('url') == 'dispensers' || Request::input('url') == 'staff' || $request->url == 'staff')
-    <h4 @if (Request::input('url') == 'staff' || $request->url == 'staff') style="display: none;" @endif>Total</h4>
-    <table width="100%" id="table_design" @if (Request::input('url') != 'dispensers') style="display: none;" @endif>
-        <thead>
-            <tr>
-                <th>{{ trans('adminlte::adminlte.product') }}</th>
-                <th>{{ trans('adminlte::adminlte.nozzle') }}</th>
-                <th>MIN</th>
-                <th>MAX</th>
-                <th>{{ trans('adminlte::adminlte.staff_details.totalizator') }}</th>
-                <th>{{ trans('adminlte::adminlte.quantity') }}</th>
-                <th>{{ trans('adminlte::adminlte.change') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php $totalizer_sales = array(); ?>
-        @foreach($totalizer_totals as $product)
-        <tr>
-            <td>{{ $product['product_name'] }} </td>
-            <td>{{ $product['channel_id'] . '-' . $product['sl_no'] }}</td>
-            <td>{{ $product['min_totalizer']/100 }} </td>
-            <td>{{ $product['max_totalizer']/100 }} </td>
-            <td>{{ number_format($product['max_totalizer']/100 - $product['min_totalizer']/100, 2 , '.' , '') }}</td>
-            <td>{{ $product['lit'] }} litra</td>
-            <td>{{ number_format( (($product['max_totalizer']/100 - $product['min_totalizer']/100) - $product['lit']) , 2 , '.' , '') }} litra</td>
-
-        </tr>
-        <?php if(isset($totalizer_sales[$product['product_id']])){
-                $totalizer_sales[$product['product_id']] += number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
-              }else{
-                $totalizer_sales[$product['product_id']] = number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
-              }
-        ?>
-        @endforeach
-        </tbody>
-    </table>
-    <!-- END TOTAL SECTION -->
-    @endif
-    <!-- TOTAL SECTION -->
-    @if (Request::input('url') == 'staff' || Request::input('url') == 'dispensers' || $request->url == 'staff')
-    <h4>Total</h4>
-	<table width="100%" id="table_design">
-		<thead style="background-color: lightgray;">
-            <tr>
-                <th>{{ trans('adminlte::adminlte.product') }}</th>
-                <th>{{ trans('adminlte::adminlte.quantity') }}</th>
-                <th>{{ trans('adminlte::adminlte.staff_details.quantity_with_numbers') }}</th>
-                <th>{{ trans('adminlte::adminlte.change') }}</th>
-            </tr>
-        </thead>
-
-		<tbody>
-			<?php $total_sales = 0; ?>
-            @foreach($products as $product)
-            <tr>
-                <td>{{ $product['p_name'] }} </td>
-                <td>{{ $product['totalLit'] }} litra</td>
-                @if(isset($totalizer_sales[$product['product_id']]))
-                <td>{{ $totalizer_sales[$product['product_id']] }} litra</td>
-                <td>{{ number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')  }} litra</td>
-                @endif
-            </tr>
-            @endforeach
-        </tbody>
-
-    </table>
-    @endif
-    <!-- END TOTAL SECTION -->
-
-    <!-- STAFF SECTION -->
+ <!-- STAFF SECTION -->
     @if (Request::input('url') == 'staff' || $request->url == 'staff')
     <h4>{{ trans('adminlte::adminlte.staff') }}</h4>
 	<table width="100%" id="table_design">
@@ -203,8 +133,178 @@
 
     </table>
     @endif
-    <!-- STAFF SECTION -->
-    @if (Request::input('url') == 'staff' || Request::input('url') == 'companies' || $request->url == 'staff')
+    <!-- STAFF SECTION END-->	
+	
+	<!-- Stock SECTION -->
+    @if (Request::input('url') == 'stock')
+		
+		@if(count($stocks) > 0)
+			<h4>{{ trans('adminlte::adminlte.incoming_stock') }}</h4>
+				<table width="100%" id="table_design" >
+				<thead>
+					<tr>
+						<th>{{ trans('adminlte::adminlte.tank') }}</th>
+						<th>{{ trans('adminlte::adminlte.name') }}</th>
+						<th>{{ trans('adminlte::adminlte.total') }}</th>
+						<th>{{ trans('adminlte::adminlte.incoming_date') }}</th>
+					</tr>
+				</thead>
+				<BR> <BR>
+				<tbody>				
+					@foreach($stocks as $s)
+					<tr>
+						<td>{{ $s->tank->name }}</td>
+						<td>{{ $s->reference_number }}</td>
+						<td>{{ $s->liters }} lit.</td>					
+						<td>{{ date('H:i d-M-Y',$s->date) }}  </td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		@endif
+	@endif
+
+
+    <!-- TOTAL SALES PER PRODUCT SECTION -->
+    @if (Request::input('url') == 'stock' || Request::input('url') == 'dispensers' || Request::input('url') == 'staff' || $request->url == 'staff')
+    <h4 @if ( Request::input('url') == 'stock' || Request::input('url') == 'staff' || $request->url == 'staff') style="display: none;" @endif>Total</h4>
+    <table width="100%" id="table_design" @if (Request::input('url') != 'dispensers') style="display: none;" @endif>
+        <thead>
+            <tr>
+                <th>{{ trans('adminlte::adminlte.product') }}</th>
+                <th>{{ trans('adminlte::adminlte.nozzle') }}</th>
+                <th>MIN</th>
+                <th>MAX</th>
+                <th>{{ trans('adminlte::adminlte.staff_details.totalizator') }}</th>
+                <th>{{ trans('adminlte::adminlte.quantity') }}</th>
+                <th>{{ trans('adminlte::adminlte.change') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $totalizer_sales = array(); ?>
+        @foreach($totalizer_totals as $product)
+        <tr>
+            <td>{{ $product['product_name'] }} </td>
+            <td>{{ $product['channel_id'] . '-' . $product['sl_no'] }}</td>
+            <td>{{ $product['min_totalizer']/100 }} </td>
+            <td>{{ $product['max_totalizer']/100 }} </td>
+            <td>{{ number_format($product['max_totalizer']/100 - $product['min_totalizer']/100, 2 , '.' , '') }}</td>
+            <td>{{ $product['lit'] }} litra</td>
+            <td>{{ number_format( (($product['max_totalizer']/100 - $product['min_totalizer']/100) - $product['lit']) , 2 , '.' , '') }} litra</td>
+
+        </tr>
+        <?php if(isset($totalizer_sales[$product['product_id']])){
+                $totalizer_sales[$product['product_id']] += number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
+              }else{
+                $totalizer_sales[$product['product_id']] = number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
+              }
+			  if(isset($tank_sales[$product['tank_id']])){
+				$tank_sales[$product['tank_id']] += number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
+			  }else{
+				$tank_sales[$product['tank_id']] = number_format(($product['max_totalizer'] - $product['min_totalizer'])/100, 2, '.', '');
+			  }
+        ?>
+        @endforeach
+        </tbody>
+    </table>
+    <!-- END TOTAL SECTION -->
+    @endif
+	
+	<!-- SHOW SALES DATA FOR EACH TANKS -->
+	 @if (Request::input('url') == 'stock')
+		@if(count($tanks) > 0)
+			 <h4>{{ trans('adminlte::adminlte.stock') }}</h4>
+				<table  width="100%" id="table_design">
+				<thead style="background-color: lightgray;">
+					<tr>
+						<th>{{ trans('adminlte::adminlte.name') }}</th>
+						<th>{{ trans('adminlte::adminlte.total_before_shift_open') }}</th>
+						<th>{{ trans('adminlte::adminlte.addedd_stock') }}</th>
+						<th>{{ trans('adminlte::adminlte.total_after_shift_close') }}</th>
+						<th>{{ trans('adminlte::adminlte.difference') }}</th>
+						<th>{{ trans('adminlte::adminlte.staff_details.quantity_with_numbers') }}</th>
+						<th>{{ trans('adminlte::adminlte.difference') }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					@foreach($tanks as $t)
+					<tr>
+						<td>{{ $t->name }}</td>
+						@php $starting_stock  = $t->tankLevel(request(), 'ASC') @endphp
+						@php $ending_stock    = $t->tankLevel(request(), 'DESC') @endphp
+						@php $incoming_stock    = $t->incomingFuel(request()) @endphp
+						<td>{{ $starting_stock->liters }} lit. -  {{ $starting_stock->tank_level }}</td>					
+						<td>{{ $incoming_stock->total }} ({{ $incoming_stock->incoming_stock }})  </td>
+						<td>{{ $ending_stock->liters }} lit. - {{ $ending_stock->tank_level }}</td>
+						<td>{{ $starting_stock->liters + $incoming_stock->total - $ending_stock->liters  }} lit. </td>
+						<td>{{ $tank_sales[$t->pfc_tank_id]  }} lit. </td>
+						<td>{{ number_format($tank_sales[$t->pfc_tank_id] - ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters) , 2 , '.' , '')  }} lit. </td>
+					</tr>
+					
+					<?php if(isset($sales_by_product[$t['product_id']])){
+						$sales_by_product[$t['product_id']] += ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters);
+					  }else{
+						$sales_by_product[$t['product_id']] = ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters);
+					  }
+					 
+					?>
+					@endforeach
+				</tbody>
+			</table>		
+			@endif
+	@endif
+	
+	
+    <!-- TOTAL SECTION -->
+    @if (Request::input('url') == 'stock' || Request::input('url') == 'staff' || Request::input('url') == 'dispensers' || $request->url == 'staff')
+	<h4>{{ trans('adminlte::adminlte.products_sales') }}</h4>
+	<table width="100%" id="table_design">
+		<thead style="background-color: lightgray;">
+            <tr>
+                <th>{{ trans('adminlte::adminlte.product') }}</th>
+                <th>{{ trans('adminlte::adminlte.quantity') }}</th>
+                <th>{{ trans('adminlte::adminlte.staff_details.quantity_with_numbers') }}</th>
+                <th>{{ trans('adminlte::adminlte.change') }}</th>
+				@if($tanks != null &&  count($tanks) > 0)
+					<th>{{ trans('adminlte::adminlte.tank_sale') }}</th>
+					<th>{{ trans('adminlte::adminlte.change') }}</th>
+				@endif
+            </tr>
+        </thead>
+
+		<tbody>
+			<?php $total_sales = 0; ?>
+            @foreach($products as $product)
+            <tr>
+                <td>{{ $product['p_name'] }} </td>
+                <td>{{ $product['totalLit'] }} litra</td>
+                @if(isset($totalizer_sales[$product['product_id']]))
+                <td>{{ $totalizer_sales[$product['product_id']] }} litra</td>
+					@if(( number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')) != 0)
+						<td bgcolor="red">{{ number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')  }} litra</td>
+					@else
+						<td>{{ number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')  }} litra</td>					
+					@endif
+                @endif				
+				@if($tanks != null && count($tanks) > 0)
+					<td>{{ number_format($sales_by_product[$product['product_id']], 2, '.', '')  }} litra</td>
+					@if((number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']], 2, '.', '') ) >= 0 )
+						<td bgcolor="green">{{ number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']], 2, '.', '')  }} litra</td>
+					@else
+						<td bgcolor="red">{{ number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']], 2, '.', '')  }} litra</td>					
+					@endif
+				@endif
+            </tr>
+            @endforeach
+        </tbody>
+
+    </table>
+    @endif
+    <!-- END TOTAL SECTION -->
+
+   
+    @if (Request::input('url') == 'companies')
 		<!-- COMPANIES SECTION -->
 		@if(count($companies) != 0)
 			@if (Request::input('url') == 'staff' || Request::input('url') == 'companies' || $request->url == 'staff')
@@ -341,7 +441,7 @@
 
 	@endif
 	<!-- END PRODUCTS SECTION -->
-
+	@php ($total_payments = 0) @endphp
     <!-- START PAYMENTS SECTION -->
     @if (Request::input('url') == 'staff' || Request::input('url') == 'payments' || $request->url == 'staff')
         @if(count($payments) != 0)
@@ -358,8 +458,7 @@
                 </tr>
             </thead>
 
-            <tbody>
-                @php ($total = 0) @endphp
+            <tbody>                
                 @foreach($payments as $payment)
                 <tr>
                     <td>{{ date('m/d/Y H:i', $payment->date) }}</td>
@@ -369,11 +468,11 @@
                     <td>{{ $payment->created_by }}</td>
                     <td>{{ number_format($payment->total,2) }} Euro</td>
                 </tr>
-                @php ($total += $payment->total) @endphp
+                @php ($total_payments += $payment->total) @endphp
                 @endforeach
                 <tr>
                     <td colspan="5" style="text-align:right"><b>TOTAL:</b></td>
-                    <td><b>{{ number_format($total,2) }} Euro</b></td>
+                    <td><b>{{ number_format($total_payments,2) }} Euro</b></td>
                 </tr>
             </tbody>
 
@@ -382,6 +481,7 @@
     @endif
     <!-- END PAYMENTS SECTION -->
 
+     @php ($total_expenses = 0) @endphp
     <!-- START EXPENSES SECTION -->
     @if (Request::input('url') == 'staff' || Request::input('url') == 'expenses' || $request->url == 'staff')
         @if(count($expenses) != 0)
@@ -395,9 +495,7 @@
                     <th>{{ trans('adminlte::adminlte.amount') }}</th>
                 </tr>
             </thead>
-
             <tbody>
-                @php ($total = 0) @endphp
                 @foreach($expenses as $expense)
                 <tr>
                     <td>{{ date('m/d/Y H:i', $expense->date) }}</td>
@@ -405,11 +503,11 @@
                     <td>{{ $expense->name }}</td>
                     <td>{{ number_format($expense->total,2) }} Euro</td>
                 </tr>
-                @php ($total += number_format($expense->total,2)) @endphp
+                @php ($total_expenses += number_format($expense->total,2)) @endphp
                 @endforeach
                 <tr>
                     <td colspan="3" align="right"><b>TOTAL:</b></td>
-                    <td><b>{{ number_format($total,2) }} Euro</b></td>
+                    <td><b>{{ number_format($total_expenses,2) }} Euro</b></td>
                 </tr>
             </tbody>
 
@@ -417,5 +515,31 @@
         @endif
     @endif
     <!-- END EXPENSES SECTION -->
+	
+	
+	<!-- SHOW TOTALS -->
+	@if (Request::input('url') == 'staff' || $request->url == 'staff')		
+        <h4>{{ trans('adminlte::adminlte.total') }}</h4>	
+		<table width="100%" id="table_design">
+            <thead style="background-color: lightgray;">
+                <tr>
+                    <th>{{ trans('adminlte::adminlte.transactions') }}</th>
+                    <th>{{ trans('adminlte::adminlte.payments') }}</th>
+                    <th>{{ trans('adminlte::adminlte.expenses') }}</th>
+                    <th>{{ trans('adminlte::adminlte.total') }}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+				<tr>
+					<td> {{ number_format($total_staff,2) }} Euro</td>
+                    <td> {{ number_format($total_payments,2) }} Euro</td>
+                    <td> {{ number_format($total_expenses,2) }} Euro</td>
+                    <td><b> {{ number_format(($total_staff + $total_payments  - $total_expenses),2) }} Euro</b></td>
+				</tr>
+            </tbody>
+
+        </table>
+	@endif
 </body>
 </html>
