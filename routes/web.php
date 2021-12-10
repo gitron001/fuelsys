@@ -151,6 +151,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/admin/staff/dispensers','StaffController@dispensers');
     Route::get('/admin/staff/companies','StaffController@companies');
     Route::get('/admin/staff/expenses','StaffController@expenses');
+    Route::get('/admin/staff/pos-sales','StaffController@pos_sales');
     Route::get('/admin/staff/payments','StaffController@payments');
     Route::get('/admin/staff/products','StaffController@products');
     Route::get('/admin/staff/stock','StaffController@stock');

@@ -15,9 +15,9 @@
 @if (Request::path() == 'admin/staff/stock')
     <!-- Incoming Stock -->
     @include('admin.staff.stock')
-@endif    
+@endif
 
-<!-- inlcude Stock data -->	
+<!-- inlcude Stock data -->
 <?php global $totalizer_sales; ?>
 <?php $totalizer_sales = array(); ?>
 <?php global $tank_sales; ?>
@@ -25,7 +25,7 @@
 @if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/dispensers' || Request::path() == 'admin/staff/stock')
 
     @include('admin.staff.dispanser_data')
-	
+
 @endif
 <!-- inlcude Stock data -->
 <?php global $sales_by_product; ?>
@@ -61,9 +61,13 @@
     @include('admin.staff.expenses_data')
 @endif
 
+@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/pos-sales')
+    <!-- inlcude pos sales data -->
+    @include('admin.staff.pos_sales')
+@endif
 
 @if (Request::path() == 'admin/staff')
-    <!-- inlcude expenses data -->
+    <!-- inlcude staff total data -->
     @include('admin.staff.total')
 @endif
 

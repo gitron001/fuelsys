@@ -310,6 +310,7 @@ return [
     'api'               => 'API',
     'add_product'       => 'Kakav proizvod',
     'addedd_stock'      => 'Added stock',
+    'pos_sales'                     => 'POS prodaja',
     'total_before_shift_open'       => 'Ukupne zalihe pre otvaranja smene',
     'retype_password'               => 'Prepišite lozinku',
     'remember_me'                   => 'Sećam se',
