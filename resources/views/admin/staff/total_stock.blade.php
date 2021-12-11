@@ -85,7 +85,10 @@
 					<tr>
 						<td>{{ $sp['name'] }}</td>
 						<td>{{ $sp['starting_stock'] }} lit </td>					
-						<td>{{ $sp['incoming_stock'] }} lit </td>				
+						<td>{{ $sp['incoming_stock'] }} lit </td>	
+						@if(!isset( $totalizer_sales[$sp['product_id']]))
+							@php  $totalizer_sales[$sp['product_id']] = 0 @endphp
+						@endif
 						<td>{{ $totalizer_sales[$sp['product_id']] }} lit </td>							
 						<td>{{ $sp['starting_stock'] + $sp['incoming_stock'] -  $totalizer_sales[$sp['product_id']] }} lit </td>							
 						<td>{{ $sp['ending_stock'] }} lit </td>														

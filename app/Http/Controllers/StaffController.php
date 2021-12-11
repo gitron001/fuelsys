@@ -238,7 +238,7 @@ class StaffController extends Controller
         $banks          		= self::additional_data($request)['banks'];
 
         $request      			= self::setDates($request);
-	
+
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
 
         $staffData              = self::show_staff_info($request)['staffData'];
@@ -252,13 +252,15 @@ class StaffController extends Controller
 
         $expenses               = self::show_expenses_info($request);
 
+        $pos_sales              = self::show_pos_sales_info($request);
+
         $payments               = self::show_payments_info($request);
 		$tanks					=  array(); //Tank::where('status', 1)->get();
 		$tank_details			= self::show_tank_info($request);
-	
+
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks','tank_details','stock_details','tanks','prev_stock_details'))->withModel($tanks);;
+        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks','tank_details','stock_details','tanks','prev_stock_details','pos_sales'))->withModel($tanks);;
     }
 
     public function expenses(Request $request){
@@ -291,8 +293,8 @@ class StaffController extends Controller
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
         $products               = self::show_products_info($request);
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
-		$stocks					= self::get_incoming_stock($request); 	
-		$tanks					= Tank::where('status', 1)->get();		
+		$stocks					= self::get_incoming_stock($request);
+		$tanks					= Tank::where('status', 1)->get();
 
         return view('admin.staff.staff_view',compact('shift','products', 'totalizer_totals','stocks','users','banks'));
     }
@@ -358,18 +360,18 @@ class StaffController extends Controller
 
 	public static function stock(Request $request){
         $staffData              = self::show_staff_info($request)['staffData'];
-        $product_name           = self::show_staff_info($request)['product_name'];			
+        $product_name           = self::show_staff_info($request)['product_name'];
         $request                = self::setDates($request);
         $users                  = self::additional_data($request)['users'];
         $banks                  = self::additional_data($request)['banks'];
-		$tanks					= Tank::where('status', 1)->get();			
-		$shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();			
+		$tanks					= Tank::where('status', 1)->get();
+		$shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
 		$totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 		$products               = self::show_products_info($request);
-		$stocks					= self::get_incoming_stock($request); 	
-										
+		$stocks					= self::get_incoming_stock($request);
+
 		return view('admin.staff.staff_view',compact('shift','tanks','totalizer_totals','products','stocks','staffData','product_name','users','banks'));
-			
+
 	}
 
     public static function show_stock_info($request, $view_type = null){
@@ -416,6 +418,20 @@ class StaffController extends Controller
         $expenses = $expenses->get();
 
         return $expenses;
+    }
+
+    public static function show_pos_sales_info($request, $view_type = null){
+        $pos_sales = POSPayments::select(DB::raw('SUM(amount) as total'), DB::RAW('bank_id as bank'), DB::RAW('banks.name as name'),'date')
+            ->leftJoin('banks', 'banks.id', '=', 'pos_payments.bank_id')
+            ->groupBy('pos_payments.id');
+
+        $pos_sales = $pos_sales->whereBetween('pos_payments.date',[$request->input('fromDate'), $request->input('toDate')]);
+
+        $pos_sales = $pos_sales->orderBy('pos_payments.date');
+
+        $pos_sales = $pos_sales->get();
+
+        return $pos_sales;
     }
 
     public static function show_products_info($request, $view_type = null){
@@ -529,7 +545,7 @@ class StaffController extends Controller
         }
         $last_id = Shifts::select('id')->where('end_date',NULL)->orderBy('created_at', 'desc')->first();
 		$current_time = now()->timestamp;
-		
+
         if(empty($last_id)){
             Shifts::insert(
                 ['start_date' => strtotime(date("Y-m-d H:i:s", strtotime('-8 hours', time()))),'end_date' => $current_time,'created_at' => $current_time, 'updated_at' => $current_time]
@@ -643,7 +659,7 @@ class StaffController extends Controller
 
         // Save banks
         if(array_values($request->input('bank_id'))[0] !== NULL && array_values($request->input('bank_amount'))[0] !== NULL){
-            for($i = 0; $i < count($request->input('payment_user_id')); $i++) {
+            for($i = 0; $i < count($request->input('bank_amount')); $i++) {
                 $payments   = new POSPayments();
 
                 $payments->date         = now()->timestamp;
@@ -711,12 +727,14 @@ class StaffController extends Controller
         $companyData            = self::show_companies_info($request)['companyData'];
         $payments               = self::show_payments_info($request, 'payments_data');
         $expenses               = self::show_expenses_info($request, 'expenses_data');
+        $pos_sales              = self::show_pos_sales_info($request, 'pos_sales_data');
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
         $company                = Company::where('status',4)->first();
 		$tanks 					= array();
 		
         if(!empty($company->email)){
             $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','payments','expenses','tanks'));
+
 
             $file_name  = 'Raport - '.date('Y-m-d', time()).'.pdf';
 
@@ -814,7 +832,8 @@ class StaffController extends Controller
 			$product_name           = self::show_staff_info($request)['product_name'];
             $expenses               = self::show_expenses_info($request, 'expenses_data');
             $payments               = self::show_payments_info($request, 'payments_data');
-			$stocks					= self::get_incoming_stock($request); 
+            $pos_sales              = self::show_pos_sales_info($request, 'pos_sales_data');
+			$stocks					= self::get_incoming_stock($request);
 		}else{
 			$staffData              = null;
 			$product_name           = null;
@@ -838,7 +857,7 @@ class StaffController extends Controller
 		}else{
 			$products            = null;
 			$totalizer_totals   = null;
-	
+
 		}
 
 		if($request->input('url') == 'products'){
@@ -850,20 +869,24 @@ class StaffController extends Controller
             $expenses               = self::show_expenses_info($request, 'expenses_data');
 		}
 
+        if($request->input('url') == 'pos-sales'){
+            $pos_sales              = self::show_pos_sales_info($request, 'pos_sales_data');
+		}
+
         if($request->input('url') == 'payments'){
             $payments               = self::show_payments_info($request, 'payments_data');
 		}
-		
+
 		if($request->input('url') == 'stock'){
-			$tanks					= Tank::where('status', 1)->get();		
+			$tanks					= Tank::where('status', 1)->get();
 			$stocks					= self::get_incoming_stock($request);
 			$staffData              = self::show_staff_info($request)['staffData'];
-			$product_name           = self::show_staff_info($request)['product_name']; 	
+			$product_name           = self::show_staff_info($request)['product_name'];
 			$totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
-			$products               = self::show_products_info($request);		
+			$products               = self::show_products_info($request);
 		}
-		
-        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','products_average','expenses','payments','tanks','stocks'));
+
+        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','products_average','expenses','payments','tanks','stocks','pos_sales'));
         $file_name  = 'Staff-PDF - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
 

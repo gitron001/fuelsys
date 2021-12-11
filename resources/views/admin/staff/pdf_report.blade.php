@@ -133,11 +133,11 @@
 
     </table>
     @endif
-    <!-- STAFF SECTION END-->	
-	
+    <!-- STAFF SECTION END-->
+
 	<!-- Stock SECTION -->
     @if (Request::input('url') == 'stock')
-		
+
 		@if(count($stocks) > 0)
 			<h4>{{ trans('adminlte::adminlte.incoming_stock') }}</h4>
 				<table width="100%" id="table_design" >
@@ -150,12 +150,12 @@
 					</tr>
 				</thead>
 				<BR> <BR>
-				<tbody>				
+				<tbody>
 					@foreach($stocks as $s)
 					<tr>
 						<td>{{ $s->tank->name }}</td>
 						<td>{{ $s->reference_number }}</td>
-						<td>{{ $s->liters }} lit.</td>					
+						<td>{{ $s->liters }} lit.</td>
 						<td>{{ date('H:i d-M-Y',$s->date) }}  </td>
 					</tr>
 					@endforeach
@@ -209,7 +209,7 @@
     </table>
     <!-- END TOTAL SECTION -->
     @endif
-	
+
 	<!-- SHOW SALES DATA FOR EACH TANKS -->
 	 @if (Request::input('url') == 'stock')
 		@if(count($tanks) > 0)
@@ -227,37 +227,77 @@
 					</tr>
 				</thead>
 				<tbody>
-					
+
 					@foreach($tanks as $t)
 					<tr>
 						<td>{{ $t->name }}</td>
 						@php $starting_stock  = $t->tankLevel(request(), 'ASC') @endphp
 						@php $ending_stock    = $t->tankLevel(request(), 'DESC') @endphp
 						@php $incoming_stock    = $t->incomingFuel(request()) @endphp
-						<td>{{ $starting_stock->liters }} lit. -  {{ $starting_stock->tank_level }}</td>					
+						<td>{{ $starting_stock->liters }} lit. -  {{ $starting_stock->tank_level }}</td>
 						<td>{{ $incoming_stock->total }} ({{ $incoming_stock->incoming_stock }})  </td>
 						<td>{{ $ending_stock->liters }} lit. - {{ $ending_stock->tank_level }}</td>
 						<td>{{ $starting_stock->liters + $incoming_stock->total - $ending_stock->liters  }} lit. </td>
 						<td>{{ $tank_sales[$t->pfc_tank_id]  }} lit. </td>
 						<td>{{ number_format($tank_sales[$t->pfc_tank_id] - ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters) , 2 , '.' , '')  }} lit. </td>
 					</tr>
-					
-					<?php if(isset($sales_by_product[$t['product_id']])){
-						$sales_by_product[$t['product_id']] += ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters);
-					  }else{
-						$sales_by_product[$t['product_id']] = ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters);
-					  }
-					 
-					?>
+
+						<?php if(isset($sales_by_product[$t['product_id']])){
+							$sales_by_product[$t['product_id']]['sale'] 			+= ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters);
+							$sales_by_product[$t['product_id']]['incoming_stock'] 	+= $incoming_stock->total;					
+							$sales_by_product[$t['product_id']]['starting_stock'] 	+= $starting_stock->liters;
+							$sales_by_product[$t['product_id']]['ending_stock'] 	+= $ending_stock->liters;
+						  }else{
+							$sales_by_product[$t['product_id']]['name'] 			= $t->product->name;
+							$sales_by_product[$t['product_id']]['product_id'] 		= $t['product_id'];
+							$sales_by_product[$t['product_id']]['sale'] 			= ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters);
+							$sales_by_product[$t['product_id']]['incoming_stock'] 	= $incoming_stock->total ;
+							$sales_by_product[$t['product_id']]['starting_stock'] 	= $starting_stock->liters;
+							$sales_by_product[$t['product_id']]['ending_stock'] 	= $ending_stock->liters;
+						  }
+						 
+						?>
 					@endforeach
 				</tbody>
-			</table>		
+			</table>
 			@endif
 	@endif
-	
-	
+	<!-- Total Incoming Stock -->
+	@if (Request::input('url') == 'stock')
+				<h4>{{ trans('adminlte::adminlte.stock') }}</h3>
+				<table width="100%" id="table_design">
+					<thead style="background-color: lightgray;">
+						<tr>
+							<th>{{ trans('adminlte::adminlte.name') }}</th>
+							<th>{{ trans('adminlte::adminlte.total_before_shift_open') }}</th>
+							<th>{{ trans('adminlte::adminlte.addedd_stock') }}</th>
+							<th>{{ trans('adminlte::adminlte.staff_details.quantity_with_numbers') }}</th>
+							<th>{{ trans('adminlte::adminlte.change') }}</th>
+							<th>{{ trans('adminlte::adminlte.total_after_shift_close') }}</th>
+							<th>{{ trans('adminlte::adminlte.change') }}</th>
+						</tr>
+					</thead>
+					<tbody>						
+						@foreach($sales_by_product as $sp)
+						<tr>
+							<td>{{ $sp['name'] }}</td>
+							<td>{{ $sp['starting_stock'] }} lit </td>					
+							<td>{{ $sp['incoming_stock'] }} lit </td>	
+							@if(!isset( $totalizer_sales[$sp['product_id']]))
+								@php  $totalizer_sales[$sp['product_id']] = 0 @endphp
+							@endif
+							<td>{{ $totalizer_sales[$sp['product_id']] }} lit </td>							
+							<td>{{ $sp['starting_stock'] + $sp['incoming_stock'] -  $totalizer_sales[$sp['product_id']] }} lit </td>							
+							<td>{{ $sp['ending_stock'] }} lit </td>														
+							<td>{{ number_format($sp['ending_stock'] - ( $sp['starting_stock'] + $sp['incoming_stock'] -  $totalizer_sales[$sp['product_id']])  , 2, '.', '')}} lit </td>														
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+	@endif
+
     <!-- TOTAL SECTION -->
-    @if (Request::input('url') == 'stock' || Request::input('url') == 'staff' || Request::input('url') == 'dispensers' || $request->url == 'staff')
+    @if (Request::input('url') == 'staff' || Request::input('url') == 'dispensers' || $request->url == 'staff')
 	<h4>{{ trans('adminlte::adminlte.products_sales') }}</h4>
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
@@ -284,15 +324,15 @@
 					@if(( number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')) != 0)
 						<td bgcolor="red">{{ number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')  }} litra</td>
 					@else
-						<td>{{ number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')  }} litra</td>					
+						<td>{{ number_format($totalizer_sales[$product['product_id']] - $product['totalLit'], 2, '.', '')  }} litra</td>
 					@endif
-                @endif				
+                @endif
 				@if($tanks != null && count($tanks) > 0)
-					<td>{{ number_format($sales_by_product[$product['product_id']], 2, '.', '')  }} litra</td>
-					@if((number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']], 2, '.', '') ) >= 0 )
-						<td bgcolor="green">{{ number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']], 2, '.', '')  }} litra</td>
+					<td>{{ number_format($sales_by_product[$product['product_id']]['sale'], 2, '.', '')  }} litra</td>
+					@if((number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']]['sale'], 2, '.', '') ) >= 0 )
+						<td bgcolor="green">{{ number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']]['sale'], 2, '.', '')  }} litra</td>
 					@else
-						<td bgcolor="red">{{ number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']], 2, '.', '')  }} litra</td>					
+						<td bgcolor="red">{{ number_format($totalizer_sales[$product['product_id']] - $sales_by_product[$product['product_id']]['sale'], 2, '.', '')  }} litra</td>
 					@endif
 				@endif
             </tr>
@@ -303,7 +343,7 @@
     @endif
     <!-- END TOTAL SECTION -->
 
-   
+
     @if (Request::input('url') == 'companies')
 		<!-- COMPANIES SECTION -->
 		@if(count($companies) != 0)
@@ -458,7 +498,7 @@
                 </tr>
             </thead>
 
-            <tbody>                
+            <tbody>
                 @foreach($payments as $payment)
                 <tr>
                     <td>{{ date('m/d/Y H:i', $payment->date) }}</td>
@@ -481,8 +521,8 @@
     @endif
     <!-- END PAYMENTS SECTION -->
 
-     @php ($total_expenses = 0) @endphp
-    <!-- START EXPENSES SECTION -->
+    @php ($total_expenses = 0) @endphp
+     <!-- START EXPENSES SECTION -->
     @if (Request::input('url') == 'staff' || Request::input('url') == 'expenses' || $request->url == 'staff')
         @if(count($expenses) != 0)
         <h4>{{ trans('adminlte::adminlte.expenses') }}</h4>
@@ -515,11 +555,42 @@
         @endif
     @endif
     <!-- END EXPENSES SECTION -->
-	
-	
+
+    <!-- START POS SECTION -->
+    @if (Request::input('url') == 'staff' || Request::input('url') == 'pos-sales' || $request->url == 'staff')
+        @if(count($pos_sales) != 0)
+        <h4>{{ trans('adminlte::adminlte.expenses') }}</h4>
+        <table width="100%" id="table_design">
+            <thead style="background-color: lightgray;">
+                <tr>
+                    <th>{{ trans('adminlte::adminlte.date') }}</th>
+                    <th>{{ trans('adminlte::adminlte.banks') }}</th>
+                    <th>{{ trans('adminlte::adminlte.amount') }}</th>
+                </tr>
+            </thead>
+            @php ($total = 0) @endphp
+            @foreach($pos_sales as $pos_sale)
+            <tr>
+                <td>{{ date('m/d/Y H:i', $pos_sale->date) }}</td>
+                <td>{{ $pos_sale->name }}</td>
+                <td>{{ number_format($pos_sale->total,2) }} Euro</td>
+            </tr>
+            @php ($total += number_format($pos_sale->total,2)) @endphp
+            @endforeach
+            <tr>
+                <td colspan="2" style="text-align:right"><b>TOTAL:</b></td>
+                <td><b>{{ number_format($total,2) }} Euro</b></td>
+            </tr>
+            </tbody>
+
+        </table>
+        @endif
+    @endif
+    <!-- END POS SECTION -->
+
 	<!-- SHOW TOTALS -->
-	@if (Request::input('url') == 'staff' || $request->url == 'staff')		
-        <h4>{{ trans('adminlte::adminlte.total') }}</h4>	
+	@if (Request::input('url') == 'staff' || $request->url == 'staff')
+        <h4>{{ trans('adminlte::adminlte.total') }}</h4>
 		<table width="100%" id="table_design">
             <thead style="background-color: lightgray;">
                 <tr>
