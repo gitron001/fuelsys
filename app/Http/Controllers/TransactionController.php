@@ -611,7 +611,7 @@ class TransactionController extends Controller
         }
 
         if ($request->input('company') && empty($request->input('user'))) {
-            $products = $products->where('companies.id','=',$company);
+            $products = $products->where('users.company_id','=',$company);
         }
 
         if($request->input('user') && $request->input('company')){

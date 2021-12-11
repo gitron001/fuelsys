@@ -713,9 +713,10 @@ class StaffController extends Controller
         $expenses               = self::show_expenses_info($request, 'expenses_data');
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
         $company                = Company::where('status',4)->first();
-
+		$tanks 					= array();
+		
         if(!empty($company->email)){
-            $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','payments','expenses'));
+            $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','payments','expenses','tanks'));
 
             $file_name  = 'Raport - '.date('Y-m-d', time()).'.pdf';
 
