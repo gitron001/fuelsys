@@ -49,7 +49,11 @@ class Tank extends Model
 			
 			if($order == 'ASC'){
 				$to_date 	= $request->input('fromDate');
-				$from_date 	= $this->updated_at;
+				$tank_history = TankHistory::where('pfc_tank_id', $this->pfc_tank_id)->where('created_at', '<', $to_date)->orderBy('created_at', 'DESC')->first();
+				
+				if(isset($tank_history->created_at)){
+					$from_date 	= $tank_history->created_at;
+				}				
 			}else{
 				$to_date 	= $request->input('toDate');
 				$from_date 	= $request->input('fromDate');
