@@ -25,16 +25,16 @@
                     @foreach($product_name as $key => $value)
                     <td>
                         {{ !empty($transaction[$key]) ? $transaction[$key][0] : '0' }} litra /
-                        {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][0] *  $transaction[$key][1], 2) : '0'}} Euro
+                        {{ !empty($transaction[$key][0]) ? number_format($transaction[$key][2], 2) : '0'}} Euro
                     </td>
                     <?php
                         if(isset($transaction[$key])){
                             if(isset($product_totals[$key])){
-                            $product_totals[$key]['lit'] += $transaction[$key][0];
-                            $product_totals[$key]['money'] += $transaction[$key][0] * $transaction[$key][1];
+                            $product_totals[$key]['lit'] 	+= $transaction[$key][0];
+                            $product_totals[$key]['money'] 	+=  $transaction[$key][2];
                             }else{
-                            $product_totals[$key]['lit'] = $transaction[$key][0];
-                            $product_totals[$key]['money'] = $transaction[$key][0] * $transaction[$key][1];
+                            $product_totals[$key]['lit'] 	= $transaction[$key][0];
+                            $product_totals[$key]['money'] 	= $transaction[$key][2];
                             }
                         }
                     ?>

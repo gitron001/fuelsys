@@ -499,7 +499,7 @@ class StaffController extends Controller
                 }
                 $staffData[$tr->user_id]['user_name'] = $tr->user_name;
                 //$staffData[$tr->user_id][$tr->product.'_'.$tr->product_price] = [$tr->total,$tr->product_price];
-                $staffData[$tr->user_id][$tr->product] = [$tr->total,$tr->product_price];
+                $staffData[$tr->user_id][$tr->product] = [$tr->total,$tr->product_price,$tr->money];
                 $staffData[$tr->user_id]['totalMoney'] += ($tr->money);
                 $product_name[$tr->product] = $tr->product;
                 //$product_name[$tr->product.'_'.$tr->product_price] = $tr->product;
@@ -826,7 +826,7 @@ class StaffController extends Controller
         //$shift                  = Shifts::select('id', 'start_date','end_date')->get();
 		$shift					= null;
 		$stocks					= null;
-		$tanks   = null;
+		$tanks   				= array();
 		if($request->input('url') == 'staff'){
 			$staffData              = self::show_staff_info($request)['staffData'];
 			$product_name           = self::show_staff_info($request)['product_name'];
