@@ -731,7 +731,7 @@ class StaffController extends Controller
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
         $company                = Company::where('status',4)->first();
 		$tanks 					= array();
-		
+
         if(!empty($company->email)){
             $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','payments','expenses','tanks'));
 

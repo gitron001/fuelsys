@@ -19,4 +19,10 @@ class POSPayments extends Model
     public function getDateFormat(){
         return 'U';
     }
+
+    public function bank(){
+        return $this->belongsTo('App\Models\Banks', 'bank_id', 'id')->withDefault([
+            'name' => ''
+        ]);
+    }
 }

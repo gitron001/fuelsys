@@ -22,6 +22,7 @@ return [
         'totalizers'                    => 'Totalizers',
         'invoices'                      => 'Invoices',
         'banks'                         => 'Banks',
+        'pos_sales'                     => 'POS sales',
     ],
 
     'company_details' => [
@@ -99,6 +100,12 @@ return [
         'create_new'        => 'Create new bank',
         'edit'              => 'Edit bank',
         'delete_all'        => 'Delete all selected banks',
+    ],
+
+    'pos_payment_details' => [
+        'create_new'        => 'Create new payment',
+        'edit'              => 'Edit payment',
+        'delete_all'        => 'Delete all selected payments',
     ],
 
     'product_group_details' => [

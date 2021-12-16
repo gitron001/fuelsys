@@ -39,6 +39,11 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('banks/{id}/delete', ['as' => 'banks.delete', 'uses' => 'BankController@destroy']);
     Route::get('/admin/banks-delete-all', 'BankController@delete_all');
 
+    // Banks
+	Route::resource('/admin/pos-payments', 'POSPaymentsController');
+    Route::get('pos-payments/{id}/delete', ['as' => 'pos-payments.delete', 'uses' => 'POSPaymentsController@destroy']);
+    Route::get('/admin/pos-payments-delete-all', 'POSPaymentsController@delete_all');
+
     // Stock
     Route::resource('/admin/stock', 'StockController');
     Route::get('stock/{id}/delete', ['as' => 'stock.delete', 'uses' => 'StockController@destroy']);
@@ -57,7 +62,6 @@ Route::group(['middleware' => 'authenticated'], function () {
     // Invoices
 	Route::resource('/admin/invoices', 'InvoicesController');
     Route::get('/admin/invoice-pdf/{id}', 'InvoicesController@invoice_to_pdf')->name('invoice.pdf');
-
 
 	// Products Group
 	Route::resource('/admin/products_group', 'ProductGroupController');

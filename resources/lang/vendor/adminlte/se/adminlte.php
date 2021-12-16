@@ -22,6 +22,7 @@ return [
         'totalizers'                    => 'Totalizeret',
         'invoices'                      => 'Računi',
         'banks'                         => 'Banke',
+        'pos_sales'                     => 'POS prodaja',
     ],
 
     'company_details' => [
@@ -99,6 +100,12 @@ return [
         'create_new'        => 'Napravite novu banku',
         'edit'              => 'Promenite banku',
         'delete_all'        => 'Izbrišite sve izabrane banke',
+    ],
+
+    'pos_payment_details' => [
+        'create_new'        => 'Kreirajte novu uplatu',
+        'edit'              => 'Izmenite plaćanje',
+        'delete_all'        => 'Izbrišite sva izabrana plaćanja',
     ],
 
     'product_group_details' => [

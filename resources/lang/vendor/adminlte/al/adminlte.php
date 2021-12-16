@@ -22,6 +22,7 @@ return [
         'totalizers'                    => 'Totalizerët',
         'invoices'                      => 'Faturat',
         'banks'                         => 'Bankat',
+        'pos_sales'                     => 'POS shitjet',
     ],
 
     'company_details' => [
@@ -99,6 +100,12 @@ return [
         'create_new'        => 'Krijo një bank të re',
         'edit'              => 'Ndrysho bankën',
         'delete_all'        => 'Fshini të gjitha bankat e zgjedhura',
+    ],
+
+    'pos_payment_details' => [
+        'create_new'        => 'Krijo një pagesë të re',
+        'edit'              => 'Ndrysho pagesën',
+        'delete_all'        => 'Fshini të gjitha pagesat e zgjedhura',
     ],
 
     'product_group_details' => [
