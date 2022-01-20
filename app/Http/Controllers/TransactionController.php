@@ -616,6 +616,10 @@ class TransactionController extends Controller
 
         if($request->input('user') && $request->input('company')){
             $products = $products->whereIn('transactions.user_id',$user)->where('users.company_id','=',$company);
+        }        
+		
+		if($request->input('bonus_user')){
+            $products = $products->where('transactions.bonus_user_id',$request->input('bonus_user'));
         }
 		
         if ($request->input('fromDate') && $request->input('toDate')) {
