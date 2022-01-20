@@ -59,7 +59,7 @@ class Tank extends Model
 				$from_date 	= $request->input('fromDate');
 			}
 					
-			$startingLevel = Transaction::select('transactions.id', 'transactions.tank_level')->join('pumps', function($join)
+			$startingLevel = Pump::select('transactions.id', 'transactions.tank_level')->join('transactions', function($join)
 							 {
 							   $join->on('transactions.channel_id', '=', 'pumps.channel_id');
 							   $join->on('transactions.sl_no', '=', 'pumps.nozzle_id');
@@ -68,9 +68,18 @@ class Tank extends Model
 							 ->whereBetween('transactions.created_at',[$from_date, $to_date])
 							 ->orderBy('transactions.created_at', 'DESC')
 							 ->first();
+			/*$startingLevel = Transaction::select('transactions.id', 'transactions.tank_level')->join('pumps', function($join)
+							 {
+							   $join->on('transactions.channel_id', '=', 'pumps.channel_id');
+							   $join->on('transactions.sl_no', '=', 'pumps.nozzle_id');
+							 })
+							 ->where('pumps.tank_id', $this->pfc_tank_id)
+							 ->whereBetween('transactions.created_at',[$from_date, $to_date])
+							 ->orderBy('transactions.created_at', 'DESC')
+							 ->first();*/
 							 
 			if(isset($startingLevel->tank_level)){
-				$startingLevel->liters = self::calculateLevel($startingLevel->tank_level);						
+				$startingLevel->liters = self::calculateLevel($startingLevel->tank_level);				
 			}else{
 				$startingLevel  = self::calculateEndShiftData($request, $order);				
 			}
