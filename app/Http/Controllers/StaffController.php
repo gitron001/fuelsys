@@ -732,7 +732,7 @@ class StaffController extends Controller
         $company                = Company::where('status',4)->first();
 		$tanks 					= array();
 		$pos_sales  			= array();
-		
+
         if(!empty($company->email)){
             $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','payments','expenses','tanks','pos_sales'));
 

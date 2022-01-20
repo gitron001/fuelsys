@@ -44,6 +44,13 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('admin/pos-payments') || request()->is('admin/pos-payments/*') ? 'active' : '' }}">
+        <a href="{{ URL('admin/pos-payments') }}">
+            <i class="fa fa-calculator" aria-hidden="true"></i>
+            <span>{{ trans('adminlte::adminlte.menu.pos_sales') }}</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}">
         <a href="{{ URL('admin/products') }}">
             <i class="fa fa-align-justify" aria-hidden="true"></i>
