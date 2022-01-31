@@ -52,6 +52,7 @@ class SendMonthlyCompanyEmail extends Command
                 'fromDate' => $first_day,
                 'toDate'   => $last_day,
                 'inc_transactions' => 'Yes',
+                'inc_per_user' => 'Yes',
             ];
 
             $request = new Request($data);

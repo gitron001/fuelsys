@@ -207,6 +207,7 @@
 
 	<!-- Show all rows except TOTAL row -->
 	<?php $total = $balance; ?>
+	<?php $per_user_array = array(); ?>
 	@foreach($payments as $py)
 		<?php
 
@@ -232,6 +233,19 @@
 			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>
 		</tr>
+		<?php 
+			if(isset($inc_per_user) &&  $inc_per_user == 'YES'){
+				if(isset($inc_per_user[$payments->id])){
+					$inc_per_user[$payments->id]['lit'] 	+=  $py->lit;
+					$inc_per_user[$payments->id]['fueling'] +=  $py->fueling;
+				}else{
+					if(trim($py->plates) != "" && $py->plates != 0) {  $inc_per_user[$payments->id]['name'] = $py->plates; } else { $inc_per_user[$payments->id]['name'] = $py->username; } 
+					$inc_per_user[$payments->id]['lit'] 	=  $py->lit;
+					$inc_per_user[$payments->id]['fueling'] =  $py->fueling;					
+				}
+			}
+		?>
+		
 	@endforeach
 	<!-- END Show all rows except TOTAL row -->
 	<?php } ?>
