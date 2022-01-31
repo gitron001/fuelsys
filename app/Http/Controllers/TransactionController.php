@@ -291,13 +291,14 @@ class TransactionController extends Controller
     public static function invoice(Request $request){
         $data = self::invoice_data($request);
         $banks = Banks::where('status',1)->orderBy('name','ASC')->get();
+        $all_companies = Company::where('status',1)->orderBy('name','ASC')->get();
 
         $from_company = $data['from_company'];
         $to_company = $data['to_company'];
         $total_transactions = $data['total_transactions'];
         $companies = $data['companies'];
 
-        return view('/admin/transactions/invoice',compact('from_company','to_company','total_transactions','companies','banks'));
+        return view('/admin/transactions/invoice',compact('from_company','to_company','total_transactions','companies','banks','all_companies'));
     }
 
     public function generate_invoice_pdf(Request $request){
@@ -313,7 +314,7 @@ class TransactionController extends Controller
         $invoice_id = Invoice::insertGetId([
             'date'          => now()->timestamp,
             'user_id'       => auth()->user()->id,
-            'company_id'    => $request->input('company') ? $request->input('company') : 0,
+            'company_id'    => !empty($request->input('company')) ? $request->input('company') : 0,
             'paid'          => 1,
             'status'        => 1,
             'created_at'    => now()->timestamp,
@@ -392,17 +393,17 @@ class TransactionController extends Controller
             $products = $products->where('transactions.id',$request->input('id'));
         }
 
-        if ($request->input('user') && empty($request->input('company'))) {
+        /*if ($request->input('user') && empty($request->input('company'))) {
             $products = $products->whereIn('user_id',$request->input('user'));
-        }
+        }*/
 
-        if ($request->input('company') && empty($request->input('user'))) {
+        /*if ($request->input('company') && empty($request->input('user'))) {
             $products = $products->where('companies.id','=',$request->input('company'));
-        }
+        }*/
 
-        if($request->input('user') && $request->input('company')){
+        /*if($request->input('user') && $request->input('company')){
             $products = $products->whereIn('user_id',$request->input('user'))->where('companies.id','=',$request->input('company'));
-        }
+        }*/
 
         if ($request->input('fromDate') && $request->input('toDate')) {
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
@@ -616,16 +617,16 @@ class TransactionController extends Controller
 
         if($request->input('user') && $request->input('company')){
             $products = $products->whereIn('transactions.user_id',$user)->where('users.company_id','=',$company);
-        }        
-		
+        }
+
 		if($request->input('bonus_user')){
             $products = $products->where('transactions.bonus_user_id',$request->input('bonus_user'));
         }
-		
+
         if ($request->input('fromDate') && $request->input('toDate')) {
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
         }
-		
+
         $products = $products->get();
 
         return $products;
@@ -659,7 +660,7 @@ class TransactionController extends Controller
 			->orderBy('transactions.sl_no')
             ->groupBy('transactions.sl_no', 'transactions.channel_id');
             $products = $products->whereBetween('transactions.created_at',[$from_date, $to_date]);
-     
+
 
         $products = $products->get();
         return $products;
