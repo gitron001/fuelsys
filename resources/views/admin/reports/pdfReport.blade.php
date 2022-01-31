@@ -1,5 +1,6 @@
 <!Doctype html>
 <?php if(!isset($bonus_user)){ $bonus_user = NULL; } ?>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -201,7 +202,9 @@
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right"> {{ number_format($totalTrans, 2) }} €</td>
 		</tr>
-	<?php } }else{ ?>
+	<?php 
+		
+	} }else{  ?>
 	<!-- END Total transactions row -->
 
 
@@ -232,20 +235,20 @@
 			<td align="center">{{ number_format($py->lit, 2) }} L | {{ $py->price }} | {{ number_format($fueling, 2) }} €</td>
 			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>
-		</tr>
+		
 		<?php 
-			if(isset($inc_per_user) &&  $inc_per_user == 'YES'){
-				if(isset($inc_per_user[$payments->id])){
-					$inc_per_user[$payments->id]['lit'] 	+=  $py->lit;
-					$inc_per_user[$payments->id]['fueling'] +=  $py->fueling;
+			if(isset($inc_per_user) &&  $inc_per_user == 'Yes'){				
+				if(isset($per_user_array[$py->username])){
+					$per_user_array[$py->username]['lit'] 	+=  $py->lit;
+					$per_user_array[$py->username]['fueling'] +=  $fueling;
 				}else{
-					if(trim($py->plates) != "" && $py->plates != 0) {  $inc_per_user[$payments->id]['name'] = $py->plates; } else { $inc_per_user[$payments->id]['name'] = $py->username; } 
-					$inc_per_user[$payments->id]['lit'] 	=  $py->lit;
-					$inc_per_user[$payments->id]['fueling'] =  $py->fueling;					
+					if(trim($py->plates) != "" && $py->plates != 0) {  $per_user_array[$py->username]['name'] = $py->plates; } else { $per_user_array[$py->username]['name'] = $py->username; } 
+					$per_user_array[$py->username]['lit'] 	=  $py->lit;
+					$per_user_array[$py->username]['fueling'] =  $fueling;					
 				}
 			}
 		?>
-		
+		</tr>
 	@endforeach
 	<!-- END Show all rows except TOTAL row -->
 	<?php } ?>
@@ -263,6 +266,28 @@
 	<!-- END Show only last row (TOTAL row) -->
 	</tfoot>
 	</table>
+	
+	<br>
+	<br>
+	<?php if(isset($per_user_array) && count($per_user_array) != 0 ){ ?>
+		<table width="100%" class="information" id="table_design">
+		<thead style="background-color: lightgray;">
+		  <tr>
+			<th align="center">{{ trans('adminlte::adminlte.transactions_pdf.user') }}</th>
+			<th align="center">{{ trans('adminlte::adminlte.transactions_pdf.price') }}</th>
+			<th align="center">{{ strtoupper(trans('adminlte::adminlte.transactions_pdf.total')) }}</th>
+		  </tr>
+		</thead>
+		@foreach($per_user_array as $user)
+			<tr>
+				<td>{{ $user['name'] }}</td>
+				<td>{{ $user['lit'] }}</td>
+				<td>{{ $user['fueling'] }}</td>
+			</tr>
+		
+		@endforeach
+		
+	<?php } ?>
 
 </body>
 </html>

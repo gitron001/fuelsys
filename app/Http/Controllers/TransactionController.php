@@ -241,6 +241,7 @@ class TransactionController extends Controller
         $date_to    = $request->toDate;
         $bonus_user = $request->bonus_user;
         $inc_transactions = $request->input('inc_transactions');
+        $inc_per_user = $request->input('inc_per_user');
         $company_checked  = $request->input('company');
         $exc_balance  	  = $request->input('exc_balance');
 
@@ -262,8 +263,8 @@ class TransactionController extends Controller
             $id = $request->company;
             $company_details = Company::where('id',$id)->first();
         }
-
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','date_to','bonus_user','data','inc_transactions', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
+		
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date','date_to','bonus_user','data','inc_transactions', 'inc_per_user', 'company','user_details','company_details','total_transactions','company_checked', 'exc_balance'));
         $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
 
 
