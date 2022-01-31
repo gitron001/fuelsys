@@ -28,7 +28,7 @@ class HomeController extends Controller
 		//self::update_dispanser_status();
         $dispanesers        = Dispaneser::whereIn('status', [1,2,3])->get();
         //$tanks              = Tank::where('status', 1)->get();
-		
+
 		/*$sales 				= Transaction::select(DB::RAW('sum(lit) as total_lit'), DB::RAW('max(tank_id) as tank_id'))
 							 ->join('pumps', function ($join) {
 									$join->on('transactions.sl_no', '=', 'pumps.nozzle_id')
@@ -36,17 +36,16 @@ class HomeController extends Controller
 							   })
 							  ->groupBy('pumps.tank_id')
 							  ->get();*/
-
         return view('welcome',compact('dispanesers','transactions','company_low_limit','tanks','stock_data','sales'));
     }
 
-    public function update_dispensers_status(Request $request){	
+    public function update_dispensers_status(Request $request){
 		self::update_dispanser_status();
-        $dispanesers = Dispaneser::where('status', 1)->get();
+        $dispanesers        = Dispaneser::whereIn('status', [1,2,3])->get();
         return view('/dispensers',compact('dispanesers'))->render();
     }
-	
-	//Load Updated Dispansers Status 
+
+	//Load Updated Dispansers Status
 	public function update_dispanser_status(){
 		//Add Update Tank Command
 		$rp                 = new RunninProcessModel;
@@ -59,7 +58,7 @@ class HomeController extends Controller
         $rp->created_at     = '1';
         $rp->updated_at     = '1';
         $rp->save();
-		
+
 		//Check if the update Tank Command is RUN
 		while(true){
 			$tank_update_query = RunninProcessModel::where('type_id', 3)->count();
@@ -67,9 +66,9 @@ class HomeController extends Controller
 				break;
 			}
 		}
-		
+
 		return true;
-		
+
 	}
 
 }

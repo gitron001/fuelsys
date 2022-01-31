@@ -37,10 +37,18 @@
         <!-- /.col -->
         <div class="col-sm-6 invoice-col" style="text-align: right">
             <address>
-                <strong>{{ trans('adminlte::adminlte.company') }}:{{ $to_company ? $to_company->name : '_________________________' }}</strong><br>
-                {{ trans('adminlte::adminlte.address') }}: {{ $to_company ? $to_company->address .', '. $to_company->city .', '. $to_company->country : '_________________________'}}<br>
-                {{ trans('adminlte::adminlte.phone') }}: {{ $to_company ? $to_company->tel_number : '_________________________' }}<br>
-                {{ trans('adminlte::adminlte.email') }}: {{ $to_company ? $to_company->email : '_________________________' }}<br>
+                <div class="form-group col-md-4 pull-right">
+                    <label for="User:">{{ trans('adminlte::adminlte.company') }}:</label>
+                    <select class="selectpicker form-control" id="company_id" name="company_id" data-live-search="true"
+                        data-style="btn-dropdownSelectNew" onchange="change_company(this)">
+                        <option value="">Choose a Company</option>
+                        @foreach($all_companies as $company)
+                        <option value="{{ $company->id }}" {{ ( request()->get("company") == $company->id ? "selected":"") }}>
+                            {{ $company->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>&nbsp;
             </address>
         </div>
     </div>

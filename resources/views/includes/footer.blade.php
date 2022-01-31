@@ -525,7 +525,15 @@
 
     function confirmation(ev) {
         ev.preventDefault();
-        var url = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+        const urlParams = new URLSearchParams(window.location.search);
+        const company = urlParams.get('company') ? urlParams.get('company') : 0;
+
+        const current_url = ev.currentTarget.getAttribute('href');
+
+        const url = new URL(current_url);
+        url.searchParams.delete('company');
+        url.searchParams.set('company', company);
+
         swal({
             title: "Are you sure?",
             text: "Once printed, you will not be able to change the invoice!",
@@ -543,6 +551,15 @@
                 window.open(url, '_blank');
             }
         });
+    }
+
+    function change_company(item) {
+        var companyID = item.value;
+
+        const url = new URL(window.location.href);
+        url.searchParams.delete('company');
+        url.searchParams.set('company', companyID);
+        window.history.replaceState(null, null, url);
     }
 
 </script>
