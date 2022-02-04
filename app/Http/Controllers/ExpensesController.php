@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use PDF;
 use Auth;
+use Excel;
 use App\Models\Users;
 use App\Models\Company;
 use App\Models\Expenses;
@@ -125,6 +126,59 @@ class ExpensesController extends Controller
 
     public function exportPDF(Request $request) {
         $company    = Company::where('status', 4)->first();
+
+        $expenses = self::generate_data($request);
+
+        $pdf = PDF::loadView('admin.expenses.pdf_export',compact('expenses','company','from_date','to_date'));
+        $file_name  = 'Expenses - '.date('Y-m-d', time()).'.pdf';
+        return $pdf->stream($file_name);
+    }
+
+    public function exportExcel(Request $request) {
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
+
+        $expenses = self::generate_data($request);
+
+        $file_name  = 'Expenses - '.date('Y-m-d h-i', strtotime("now"));
+        $myFile = Excel::create($file_name, function($excel) use( $expenses ) {
+
+            $excel->sheet('Expenses', function($sheet) use( $expenses ) {
+
+                $sheet->cell('A1:D1', function ($cells) {
+                    $cells->setFontWeight('bold');
+                });
+
+                $sheet->appendRow(array(
+                    trans('adminlte::adminlte.date'),
+                    trans('adminlte::adminlte.user'),
+                    trans('adminlte::adminlte.amount'),
+                    trans('adminlte::adminlte.expenses_details.created_by')
+                ));
+
+                foreach ($expenses as $expense) {
+                    $sheet->appendRow(array(
+                        date('m/d/Y H:i', $expense->date),
+                        $expense->user_name ? $expense->user_name : ' ',
+                        $expense->amount,
+                        $expense->p_creater,
+                    ));
+                }
+
+            });
+
+        });
+
+        $myFile = $myFile->string('xlsx');
+        $response =  array(
+           'name' => $file_name,
+           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
+        );
+
+        return response()->json($response);
+    }
+
+    public static function generate_data($request){
         $from_date      = strtotime($request->input('fromDate'));
         $to_date        = strtotime($request->input('toDate'));
         $user           = $request->input('user');
@@ -143,8 +197,6 @@ class ExpensesController extends Controller
 
         $expenses = $query->orderBy('expenses.date', 'DESC')->get();
 
-        $pdf = PDF::loadView('admin.expenses.pdf_export',compact('expenses','company','from_date','to_date'));
-        $file_name  = 'Expenses - '.date('Y-m-d', time()).'.pdf';
-        return $pdf->stream($file_name);
+        return $expenses;
     }
 }

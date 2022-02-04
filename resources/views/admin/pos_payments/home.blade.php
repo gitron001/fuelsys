@@ -39,11 +39,12 @@
 
                     <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i
                         class="fa fa-search"></i> Search</button>
+                        <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-warning" title="Clear All Filters"><i class="fa fa-recycle"></i> Clear All</a>
                     <a href="{{ route('generate_pos_pdf', ['fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'bank' => request()->get("bank")] ) }}"
                             target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i
-                                class="fas fa-file-pdf"></i></a>
+                                class="fas fa-file-pdf"></i> PDF</a>
                     <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_pos_excel"
-                            title="Export Excel"><i class="fas fa-file-excel"></i></button>
+                            title="Export Excel"><i class="fas fa-file-excel"></i> Excel</button>
 
                     <a href="{{ url('admin/pos-payments/create') }}" data-toggle="tooltip"
                         class="btn btn-success pull-right" style="margin-left: 0.5em;"

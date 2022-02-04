@@ -120,10 +120,11 @@
                 var toDate = $('#datetimepicker5').val();
                 var shift = $('#shift').val();
                 var user = $("#user").val();
+                var search_type = $('input[name="search_type"]:checked').val();
 
                 $.ajax({
                     type: "GET",
-                    data: {fromDate: fromDate, toDate: toDate, user: user,shift:shift},
+                    data: {fromDate: fromDate, toDate: toDate, user: user,shift:shift,search_type:search_type},
                     url: "{{ URL('/excel_export_staff_view')}}",
                     dataType: "JSON",
                     success: function(response, textStatus, request){

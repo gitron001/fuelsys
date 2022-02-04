@@ -111,6 +111,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('expenses/{id}/delete', ['as' => 'expenses.delete', 'uses' => 'ExpensesController@destroy']);
     Route::get('/admin/expenses-delete-all', 'ExpensesController@delete_all');
     Route::get('/expenses-pdf','ExpensesController@exportPDF')->name('generate_expenses_pdf');
+    Route::get('/excel_export_expenses','ExpensesController@exportExcel');
 
 	// Settings
     Route::resource('/admin/settings', 'SettingsController');

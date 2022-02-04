@@ -95,8 +95,8 @@ class StaffController extends Controller
                         $product['p_name'],
                         $product['product_price'],
                         $product['totalLit'],
-                        $totalizer_sales[$product['product_id']],
-                        number_format($totalizer_sales[$product['product_id']], 2, '.', '') - number_format($product['totalLit'], 2, '.', '') . " litra",
+                        $totalizer_sales ? $totalizer_sales[$product['product_id']] : '',
+                        $totalizer_sales ? number_format($totalizer_sales[$product['product_id']], 2, '.', '') - number_format($product['totalLit'], 2, '.', '') . " litra" : '',
                     ));
                 }
 
