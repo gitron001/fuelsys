@@ -3,39 +3,50 @@
 namespace App\Http\Controllers;
 
 use DB;
+use PDF;
+use Excel;
+use App\Models\Pump;
 use App\Models\Tank;
 use App\Models\Stock;
+use App\Models\Company;
+use App\Models\Products;
 use App\Models\Transaction;
-use App\Models\Pump;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
 {
     public function index(Request $request) {
+        $products = Products::where('status', 1)->get();
+
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
 
-        $stock      = new Stock;
+        $stock      = Stock::select('stocks.id','stocks.date','stocks.tank_id','stocks.amount','stocks.reference_number','stocks.created_at','stocks.updated_at','tanks.id','tanks.product_id')
+                            ->leftJoin('tanks', 'tanks.id', '=', 'stocks.tank_id');
+
+        if($request->get('product')){
+            $stock  = $stock->where('tanks.product_id',$request->get('product'));
+        }
 
         if($request->get('reference_number')){
-            $stock  = $stock->where('reference_number',$request->get('reference_number'));
+            $stock  = $stock->where('stocks.reference_number',$request->get('reference_number'));
         }
 
         if ($request->input('fromDate') && $request->input('toDate')) {
-            $stock = $stock->whereBetween('date',[$from_date, $to_date]);
+            $stock = $stock->whereBetween('stocks.date',[$from_date, $to_date]);
         }
 
         if($request->ajax() == false){
-            $stock  = $stock->orderBy('date','DESC')
+            $stock  = $stock->orderBy('stocks.date','DESC')
                         ->paginate(15);
-            return view('/admin/stock/home',compact('stock'));
+            return view('/admin/stock/home',compact('stock','products'));
         } else {
             $stock  = $stock->orderBy($sort_by,$sort_type)
                         ->paginate(15);
-            return view('/admin/stock/table_data',compact('stock'))->render();
+            return view('/admin/stock/table_data',compact('stock','products'))->render();
         }
     }
 
@@ -111,5 +122,86 @@ class StockController extends Controller
 
         return view('admin.stock.stock-info',compact('tanks','sales'));
 
+    }
+
+    public function exportPDF(Request $request) {
+        $company    = Company::where('status', 4)->first();
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
+
+        $stock = self::generate_data($request);
+
+        $pdf = PDF::loadView('admin.stock.pdf_export',compact('stock','company','from_date','to_date'));
+        $file_name  = 'Stock - '.date('Y-m-d', time()).'.pdf';
+        return $pdf->stream($file_name);
+    }
+
+    public function exportExcel(Request $request) {
+        $company    = Company::where('status', 4)->first();
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
+
+        $stock = self::generate_data($request);
+
+        $file_name  = 'Stock - '.date('Y-m-d h-i', strtotime("now"));
+        $myFile = Excel::create($file_name, function($excel) use( $stock ) {
+
+            $excel->sheet('Stock', function($sheet) use( $stock ) {
+
+                $sheet->cell('A1:D1', function ($cells) {
+                    $cells->setFontWeight('bold');
+                });
+
+                $sheet->appendRow(array(
+                    trans('adminlte::adminlte.date'),
+                    trans('adminlte::adminlte.stock_details.tank_product'),
+                    trans('adminlte::adminlte.amount'),
+                    trans('adminlte::adminlte.reference_number')
+                ));
+
+                foreach ($stock as $data) {
+                    $sheet->appendRow(array(
+                        date('m/d/Y H:i', $data->date),
+                        $data->tank->name .' | '. $data->tank->product->name,
+                        $data->amount,
+                        $data->reference_number ? $data->reference_number : '-',
+                    ));
+                }
+
+            });
+
+        });
+
+        $myFile = $myFile->string('xlsx');
+        $response =  array(
+           'name' => $file_name,
+           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
+        );
+
+        return response()->json($response);
+    }
+
+    public static function generate_data($request){
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
+
+        $stock      = Stock::select('stocks.id','stocks.date','stocks.tank_id','stocks.amount','stocks.reference_number','stocks.created_at','stocks.updated_at','tanks.id','tanks.product_id')
+                            ->leftJoin('tanks', 'tanks.id', '=', 'stocks.tank_id');
+
+        if($request->get('product')){
+            $stock  = $stock->where('tanks.product_id',$request->get('product'));
+        }
+
+        if($request->get('reference_number')){
+            $stock  = $stock->where('stocks.reference_number',$request->get('reference_number'));
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $stock = $stock->whereBetween('stocks.date',[$from_date, $to_date]);
+        }
+
+        $stock  = $stock->orderBy('stocks.date','DESC')->get();
+
+        return $stock;
     }
 }

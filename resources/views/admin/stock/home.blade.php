@@ -15,21 +15,44 @@
                 <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/stock') }}">
                     <div class="form-group">
                         <label for="Start Date:">{{ trans('adminlte::adminlte.start_date') }}:</label>
-                        <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate" value="{{ request()->get('fromDate')}}">
+                        <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate"
+                            value="{{ request()->get('fromDate')}}">
                     </div>
 
                     <div class="form-group">
                         <label for="End Date:">{{ trans('adminlte::adminlte.end_date') }}:</label>
-                        <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate" value="{{ request()->get('toDate')}}">
+                        <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate"
+                            value="{{ request()->get('toDate')}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="End Date:">{{ trans('adminlte::adminlte.products') }}:</label>
+                        <select class="form-control" id="product" name="product">
+                            <option value="">Select product</option>
+                            @foreach($products as $product)
+                            <option value="{{ $product->id }}" @if(request()->get("product") == $product->id) selected
+                                @endif>{{ $product->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="Reference Number:">{{ trans('adminlte::adminlte.reference_number') }}:</label>
-                        <input class="form-control" autocomplete="off" type="text" name="reference_number" value="{{ request()->get('reference_number')}}" placeholder="Reference number">
+                        <input class="form-control" id="reference_number" autocomplete="off" type="text" name="reference_number"
+                            value="{{ request()->get('reference_number')}}" placeholder="Reference number">
                     </div>
-                    <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i> Search</button>
-
-                    <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="{{ trans('adminlte::adminlte.stock_details.delete_all') }}"><i class="fa fa-trash"></i> {{ trans('adminlte::adminlte.delete') }}</a>
-                    <a href="{{ url('admin/stock/create') }}" data-toggle="tooltip" class="btn btn-success" title="{{ trans('adminlte::adminlte.stock_details.create_new') }}"><i class="fa fa-plus"></i> {{ trans('adminlte::adminlte.new') }}</a>
+                    <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i
+                            class="fa fa-search"></i> Search</button>
+                    <a href="{{ route('generate_stock_pdf', ['fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'product' => request()->get("product"),'reference_number' => request()->get("reference_number")] ) }}"
+                        target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i
+                            class="fas fa-file-pdf"></i></a>
+                    <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_stock_excel"
+                        title="Export Excel"><i class="fas fa-file-excel"></i></button>
+                    <a data-toggle="tooltip" class="btn btn-danger" id="delsel"
+                        title="{{ trans('adminlte::adminlte.stock_details.delete_all') }}"><i class="fa fa-trash"></i>
+                        {{ trans('adminlte::adminlte.delete') }}</a>
+                    <a href="{{ url('admin/stock/create') }}" data-toggle="tooltip" class="btn btn-success"
+                        title="{{ trans('adminlte::adminlte.stock_details.create_new') }}"><i class="fa fa-plus"></i>
+                        {{ trans('adminlte::adminlte.new') }}</a>
                 </form>
                 <br>
                 <table id="example2" class="table table-bordered table-hover text-center">
@@ -80,4 +103,50 @@
 <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@include('includes/footer')
+@section('js')
+<script>
+    $(function () {
+        var date = new Date();
+        date.setDate(date.getDate() -1);
+        $('#datetimepicker4').datetimepicker({
+            defaultDate:date
+        });
+
+        var dateNow = new Date();
+        $('#datetimepicker5').datetimepicker({
+            defaultDate:dateNow
+        });
+    });
+
+    $(document).ready(function () {
+        $('#export_stock_excel').click(function () {
+            var fromDate = $('#datetimepicker4').val();
+            var toDate = $('#datetimepicker5').val();
+            var product = $('#product').val();
+            var reference_number = $("#reference_number").val();
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    product: product,
+                    reference_number: reference_number
+                },
+                url: "{{ URL('/excel_export_stock')}}",
+                dataType: "JSON",
+                success: function (response, textStatus, request) {
+                    var a = document.createElement("a");
+                    a.href = response.file;
+                    a.download = response.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+
+        });
+    });
+
+</script>
+@endsection

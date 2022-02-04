@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use DB;
+use PDF;
 use Auth;
 use App\Models\Users;
+use App\Models\Company;
 use App\Models\Expenses;
 use Illuminate\Http\Request;
 
@@ -119,5 +121,30 @@ class ExpensesController extends Controller
             }
         }
 
+    }
+
+    public function exportPDF(Request $request) {
+        $company    = Company::where('status', 4)->first();
+        $from_date      = strtotime($request->input('fromDate'));
+        $to_date        = strtotime($request->input('toDate'));
+        $user           = $request->input('user');
+
+        $query          = Expenses::select(DB::RAW('users.name as user_name'), 'users.type as user_type', 'expenses.amount', 'expenses.date','expenses.created_at','expenses.updated_at','expenses.id', 'creator.name as p_creater')
+            ->leftJoin('users', 'users.id', '=', 'expenses.user_id')
+            ->leftJoin('users as creator', 'creator.id', '=', 'expenses.created_by');
+
+        if ($request->input('user')) {
+            $query = $query->whereIn('users.id',$user);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $query = $query->whereBetween('expenses.date',[$from_date, $to_date]);
+        }
+
+        $expenses = $query->orderBy('expenses.date', 'DESC')->get();
+
+        $pdf = PDF::loadView('admin.expenses.pdf_export',compact('expenses','company','from_date','to_date'));
+        $file_name  = 'Expenses - '.date('Y-m-d', time()).'.pdf';
+        return $pdf->stream($file_name);
     }
 }

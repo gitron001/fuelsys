@@ -39,15 +39,20 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('banks/{id}/delete', ['as' => 'banks.delete', 'uses' => 'BankController@destroy']);
     Route::get('/admin/banks-delete-all', 'BankController@delete_all');
 
-    // Banks
+    // Pos Payments
 	Route::resource('/admin/pos-payments', 'POSPaymentsController');
     Route::get('pos-payments/{id}/delete', ['as' => 'pos-payments.delete', 'uses' => 'POSPaymentsController@destroy']);
     Route::get('/admin/pos-payments-delete-all', 'POSPaymentsController@delete_all');
+    Route::get('/pos-payments-pdf','POSPaymentsController@exportPDF')->name('generate_pos_pdf');
+    Route::get('/excel_export_pos','POSPaymentsController@exportExcel');
+
 
     // Stock
     Route::resource('/admin/stock', 'StockController');
     Route::get('stock/{id}/delete', ['as' => 'stock.delete', 'uses' => 'StockController@destroy']);
     Route::get('/admin/stock-delete-all', 'StockController@delete_all');
+    Route::get('/stock-pdf','StockController@exportPDF')->name('generate_stock_pdf');
+    Route::get('/excel_export_stock','StockController@exportExcel');
     /*Route::get('/stock', 'StockController@index');
     Route::post('/stock-save', 'StockController@store');*/
 
@@ -105,6 +110,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::resource('/admin/expenses', 'ExpensesController');
     Route::get('expenses/{id}/delete', ['as' => 'expenses.delete', 'uses' => 'ExpensesController@destroy']);
     Route::get('/admin/expenses-delete-all', 'ExpensesController@delete_all');
+    Route::get('/expenses-pdf','ExpensesController@exportPDF')->name('generate_expenses_pdf');
 
 	// Settings
     Route::resource('/admin/settings', 'SettingsController');

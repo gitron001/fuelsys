@@ -35,10 +35,11 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i
-                        class="fa fa-search"></i> Search</button>
-                <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="{{ trans('adminlte::adminlte.expenses_details.delete_all') }}"><i
-                        class="fa fa-trash"></i> {{ trans('adminlte::adminlte.delete') }}</a>
+                <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i> Search</button>
+                <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="{{ trans('adminlte::adminlte.expenses_details.delete_all') }}"><i class="fa fa-trash"></i> {{ trans('adminlte::adminlte.delete') }}</a>
+                <a href="{{ route('generate_expenses_pdf', ['fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'user' => request()->get("user")] ) }}"
+                    target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i
+                        class="fas fa-file-pdf"></i></a>
                 <a href="{{ url('admin/expenses/create') }}" data-toggle="tooltip" class="btn btn-success" title="{{ trans('adminlte::adminlte.expenses_details.create_new') }}"><i class="fa fa-plus"></i> {{ trans('adminlte::adminlte.new') }}</a>
             </form>
 
