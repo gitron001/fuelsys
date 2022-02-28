@@ -202,8 +202,8 @@
 			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
 			<td align="right"> {{ number_format($totalTrans, 2) }} €</td>
 		</tr>
-	<?php 
-		
+	<?php
+
 	} }else{  ?>
 	<!-- END Total transactions row -->
 
@@ -235,16 +235,16 @@
 			<td align="center">{{ number_format($py->lit, 2) }} L | {{ $py->price }} | {{ number_format($fueling, 2) }} €</td>
 			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>
-		
-		<?php 
-			if(isset($inc_per_user) &&  $inc_per_user == 'Yes'){				
+
+		<?php
+			if(isset($inc_per_user) &&  $inc_per_user == 'Yes'){
 				if(isset($per_user_array[$py->username])){
 					$per_user_array[$py->username]['lit'] 	+=  $py->lit;
 					$per_user_array[$py->username]['fueling'] +=  $fueling;
 				}else{
-					if(trim($py->plates) != "" && $py->plates != 0) {  $per_user_array[$py->username]['name'] = $py->plates; } else { $per_user_array[$py->username]['name'] = $py->username; } 
+					if(trim($py->plates) != "" && $py->plates != 0) {  $per_user_array[$py->username]['name'] = $py->plates; } else { $per_user_array[$py->username]['name'] = $py->username; }
 					$per_user_array[$py->username]['lit'] 	=  $py->lit;
-					$per_user_array[$py->username]['fueling'] =  $fueling;					
+					$per_user_array[$py->username]['fueling'] =  $fueling;
 				}
 			}
 		?>
@@ -264,30 +264,44 @@
 	        <td align="right"><b> {{ number_format($total, 2) }} €</b></td>
 		</tr>
 	<!-- END Show only last row (TOTAL row) -->
+
+
+
 	</tfoot>
 	</table>
-	
-	<br>
-	<br>
-	<?php if(isset($per_user_array) && count($per_user_array) != 0 ){ ?>
-		<table width="100%" class="information" id="table_design">
-		<thead style="background-color: lightgray;">
-		  <tr>
-			<th align="center">{{ trans('adminlte::adminlte.transactions_pdf.user') }}</th>
-			<th align="center">{{ trans('adminlte::adminlte.transactions_pdf.price') }}</th>
-			<th align="center">{{ strtoupper(trans('adminlte::adminlte.transactions_pdf.total')) }}</th>
-		  </tr>
-		</thead>
-		@foreach($per_user_array as $user)
-			<tr>
-				<td>{{ $user['name'] }}</td>
-				<td>{{ $user['lit'] }}</td>
-				<td>{{ $user['fueling'] }}</td>
-			</tr>
-		
-		@endforeach
-		
-	<?php } ?>
 
+    <br>
+	<br>
+    <!-- Display users by plates in seperated tables -->
+	<?php
+    if(isset($bonus_user_by_plates) && $bonus_user_by_plates == 1 ){
+        $bonusUserGroup = collect($payments)->groupBy('plates');?>
+        @foreach($bonusUserGroup as $users)
+            <?php $totalMoney = 0; ?>
+            <table width="100%" class="information" id="table_design">
+                <thead style="background-color: lightgray;">
+                <tr>
+                    <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.date') }}</th>
+                    <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.user') }}</th>
+                    <th align="center">{{ trans('adminlte::adminlte.transactions_pdf.price') }}</th>
+                </tr>
+                </thead>
+                $
+                @foreach($users as $user)
+                    <tr>
+                        <td>{{ date('Y-m-d H:i', $user['date']) }}</td>
+                        <td>{{ $user['username'] .' | '. $user['plates'] }}</td>
+                        <td>{{ number_format($user['lit'], 2) }} L | {{ $user['price'] }} | {{ number_format($user['money'], 2) }} €</td>
+                    </tr>
+                    <?php $totalMoney += $user['money']; ?>
+                @endforeach
+                <tr>
+                    <td colspan="2"></td>
+                    <td align="center"><b>Total: € {{ number_format($totalMoney, 2) }} €</b></td>
+                </tr>
+            </table>
+            <br>
+        @endforeach
+    <?php } ?>
 </body>
 </html>

@@ -41,11 +41,13 @@ class SendMonthlyCompanyEmail extends Command
      */
     public function handle()
     {
-        $companies  = Company::select('id','email','daily_at')->where('send_email',1)->where('monthly_report',1)->get();
+        $companies  = Company::select('id','email','daily_at','display_users_by_plates')->where('send_email',1)->where('monthly_report',1)->get();
         $first_day  = Carbon::now()->startOfMonth()->subMonth();
         $last_day   = Carbon::now()->subMonth()->endOfMonth();
 
         foreach($companies as $company){
+
+            $bonus_user_by_plates = ($company->display_users_by_plates == 1) ? 1 : 0;
 
             $data = [
                 'company'  => $company->id,
@@ -53,12 +55,12 @@ class SendMonthlyCompanyEmail extends Command
                 'toDate'   => $last_day,
                 'inc_transactions' => 'Yes',
                 'inc_per_user' => 'Yes',
+                'bonus_user_by_plates' => $bonus_user_by_plates,
             ];
 
             $request = new Request($data);
             $controller = new TransactionController();
             $controller->generateDailyReport($request);
-
         }
     }
 }

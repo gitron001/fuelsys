@@ -40,6 +40,7 @@ return [
         'daily_at'          => 'Raport ditor',
         'discounts'         => 'Zbritje',
         'send_email'        => 'Dërgo email',
+        'display_users_by_plates' => 'Shfaq tabela të veçanta për përdoruesit në raportin mujor',
     ],
 
     'tank_details' => [

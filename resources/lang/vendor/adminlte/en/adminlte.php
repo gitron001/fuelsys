@@ -40,6 +40,7 @@ return [
         'daily_at'          => 'Daily at',
         'discounts'         => 'Discounts',
         'send_email'        => 'Send Email',
+        'display_users_by_plates' => 'Displays separate tables for users in the monthly report',
     ],
 
     'tank_details' => [

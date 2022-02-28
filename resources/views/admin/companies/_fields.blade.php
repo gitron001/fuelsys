@@ -138,6 +138,12 @@
 					{!! $errors->first('send_email','<span class="help-block">:message</span>') !!}
 				</div>
 
+                <div class="form-group {{ $errors->has('display_users_by_plates') ? 'has-error' :'' }}">
+					{!! Form::label('display_users_by_plates', trans('adminlte::adminlte.company_fields.display_users_by_plates')); !!}
+					{!! Form::select('display_users_by_plates',[0=>'NO',1=>'YES'],null,['class'=>'form-control']); !!}
+					{!! $errors->first('display_users_by_plates','<span class="help-block">:message</span>') !!}
+				</div>
+
 				<div class="form-group email_settings {{ $errors->has('daily_at') ? 'has-error' :'' }}">
 					{!! Form::label('daily_at', trans('adminlte::adminlte.company_fields.daily_at')); !!}
 					{!! Form::select('daily_at',[0=>'NO', 24=>'00:00',1=>'01:00',2=>'02:00',3=>'03:00',4=>'04:00',5=>'05:00',6=>'06:00',7=>'07:00',8=>'08:00',9=>'09:00',10=>'10:00',11=>'11:00',12=>'12:00',13=>'13:00'
