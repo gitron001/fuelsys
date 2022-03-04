@@ -22,6 +22,8 @@
 <?php $totalizer_sales = array(); ?>
 <?php global $tank_sales; ?>
 <?php $tank_sales = array(); ?>
+<?php global $pos_total; ?>
+<?php $pos_total = 0; ?>
 @if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/dispensers' || Request::path() == 'admin/staff/stock')
 
     @include('admin.staff.dispanser_data')
@@ -46,7 +48,7 @@
 @endif
 
 
-@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/companies')
+@if (Request::path() == 'admin/staff/companies')
     <!-- inlcude companies data -->
     @include('admin.staff.companies_data')
 @endif

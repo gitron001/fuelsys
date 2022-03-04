@@ -270,6 +270,14 @@
 	<br>
 	<br>
 	<?php if(isset($per_user_array) && count($per_user_array) != 0 ){ ?>
+	    <table width="100%" class="information" id="table_design">
+			<tr>
+				<td align="center" style="width: 50%;">
+					Raporti per kartele
+				</td>
+			</tr>
+		</table>
+		<br>
 		<table width="100%" class="information" id="table_design">
 		<thead style="background-color: lightgray;">
 		  <tr>

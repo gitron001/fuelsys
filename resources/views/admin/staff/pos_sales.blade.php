@@ -1,4 +1,5 @@
 @if(count($pos_sales) != 0)
+<?php global $pos_total; ?>
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-book" aria-hidden="true"></i>
@@ -28,6 +29,7 @@
                 <td><b>{{ number_format($total,2) }} Euro</b></td>
             </tr>
             </tbody>
+			@php $pos_total += $total; @endphp
         </table>
     </div>
 </div>

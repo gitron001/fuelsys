@@ -21,9 +21,9 @@
                 <td>{{ date('m/d/Y H:i', $expense->date) }}</td>
                 <td>{{ $expense->description ? $expense->description : '-' }}</td>
                 <td>{{ $expense->name }}</td>
-                <td>{{ number_format($expense->total,2) }} Euro</td>
+                <td>{{ $expense->total }} Euro</td>
             </tr>
-            @php ($total += number_format($expense->total,2)) @endphp
+            @php ($total += $expense->total) @endphp
             @endforeach
             <tr>
                 <td colspan="3" style="text-align:right"><b>TOTAL:</b></td>

@@ -35,7 +35,7 @@
 
 				<div class="form-group">
                     {!! Form::label('type', trans('adminlte::adminlte.type')); !!}
-					{!! Form::select('type',[''=>'Choose type','1'=>'Pagese','2'=>'Hyrje'],null,['class'=>'form-control']); !!}
+					{!! Form::select('type',[''=>'Choose type','1'=>'Pagese','2'=>'Hyrje','3'=>'Kontrolla Teknike','4'=>'Marketi'],null,['class'=>'form-control']); !!}
 					{!! $errors->first('type','<span class="help-block">:message</span>') !!}
                 </div>
 

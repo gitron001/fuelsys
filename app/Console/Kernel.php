@@ -86,13 +86,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:backup --clean')->weekly();
 
         // Check tanks state
-        $schedule->command('check:tanks')->hourly();
+        //$schedule->command('check:tanks')->hourly();
 
         // We use this command to send email if tank is in low levelk
         $schedule->command('check:tanksEvery6Hours')->cron('0 */6 * * *');
 
         // Insert Running Process
-        $schedule->command('running:processes')->everyFifteenMinutes();
+        //$schedule->command('running:processes')->everyMinute();
     }
 
     /**

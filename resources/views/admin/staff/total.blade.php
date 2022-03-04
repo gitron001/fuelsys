@@ -25,6 +25,7 @@
                     <th>{{ trans('adminlte::adminlte.transactions') }}</th>
                     <th>{{ trans('adminlte::adminlte.payments') }}</th>
                     <th>{{ trans('adminlte::adminlte.expenses') }}</th>
+                    <th>Pos Sales</th>
                     <th>{{ trans('adminlte::adminlte.total') }}</th>
                 </tr>
             </thead>
@@ -33,7 +34,8 @@
 					<td> {{ number_format($total_transactions,2) }} Euro</td>
                     <td> {{ number_format($total_payments,2) }} Euro</td>
                     <td> {{ number_format($total_expenses,2) }} Euro</td>
-                    <td><b> {{ number_format(($total_transactions + $total_payments  - $total_expenses),2) }} Euro</b></td>
+                    <td> {{ number_format($pos_total,2) }} Euro</td>
+                    <td><b> {{ number_format(($total_transactions + $total_payments  - $total_expenses - $pos_total),2) }} Euro</b></td>
 				</tr>
             </tbody>
         </table>
