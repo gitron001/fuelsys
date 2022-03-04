@@ -50,7 +50,7 @@ return [
             'port' => '3306',
             'database' => 'fuel_system',
             'username' => 'root',
-            'password' => '',
+            'password' => 'adminpanel_mysql_2020',
             'unix_socket' => '',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
