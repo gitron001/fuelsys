@@ -41,7 +41,8 @@ class Company extends Model
         'print_transaction',
         'transaction_location',
         'show_transaction',
-        'show_transaction_time'
+        'show_transaction_time',
+        'display_users_by_plates'
     ];
 
     public function getDateFormat(){

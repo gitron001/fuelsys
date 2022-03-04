@@ -22,8 +22,6 @@
 <?php $totalizer_sales = array(); ?>
 <?php global $tank_sales; ?>
 <?php $tank_sales = array(); ?>
-<?php global $pos_total; ?>
-<?php $pos_total = 0; ?>
 @if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/dispensers' || Request::path() == 'admin/staff/stock')
 
     @include('admin.staff.dispanser_data')
@@ -48,7 +46,7 @@
 @endif
 
 
-@if (Request::path() == 'admin/staff/companies')
+@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/companies')
     <!-- inlcude companies data -->
     @include('admin.staff.companies_data')
 @endif
@@ -122,10 +120,11 @@
                 var toDate = $('#datetimepicker5').val();
                 var shift = $('#shift').val();
                 var user = $("#user").val();
+                var search_type = $('input[name="search_type"]:checked').val();
 
                 $.ajax({
                     type: "GET",
-                    data: {fromDate: fromDate, toDate: toDate, user: user,shift:shift},
+                    data: {fromDate: fromDate, toDate: toDate, user: user,shift:shift,search_type:search_type},
                     url: "{{ URL('/excel_export_staff_view')}}",
                     dataType: "JSON",
                     success: function(response, textStatus, request){

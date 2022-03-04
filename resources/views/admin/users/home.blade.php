@@ -60,9 +60,11 @@
                     <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Search">
                       <i class="fa fa-search"></i>
                     </button>
+                    <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-warning"
+                        title="Clear All Filters"><i class="fa fa-trash"></i></a>
                     <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="{{ trans('adminlte::adminlte.users_details.delete_all') }}"><i class="fa fa-trash"></i> {{ trans('adminlte::adminlte.delete') }}</a>
                     <a href="{{ url('admin/bonus_members') }}" data-toggle="tooltip" class="btn btn-info" style="margin-left: 1em;" title="Bonus Card"><i class="fa fa-credit-card"></i></a>
-                    <a href="{{ url('admin/uploadExcel') }}" data-toggle="tooltip" class="btn btn-warning" title="Upload Excel"><i class="fa fa-upload"></i></a>
+                    <a href="{{ url('admin/uploadExcel') }}" data-toggle="tooltip" class="btn btn-info" title="Upload Excel"><i class="fa fa-upload"></i></a>
                     <a href="{{ url('admin/users/create') }}" data-toggle="tooltip" class="btn btn-success" style="margin-left: 0.5em;" title="{{ trans('adminlte::adminlte.users_details.create_new') }}"><i class="fa fa-plus"></i> {{ trans('adminlte::adminlte.new') }}</a>
                   </div>
                 </form>

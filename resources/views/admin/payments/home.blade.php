@@ -45,7 +45,8 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i> Search</button>
+        <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i></button>
+        <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-warning" title="Clear All Filters"><i class="fa fa-recycle"></i></a>
         <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="{{ trans('adminlte::adminlte.payments_details.delete_all') }}"><i class="fa fa-trash"></i> {{ trans('adminlte::adminlte.delete') }}</a>
         <a href="{{ url('admin/payments/create') }}" data-toggle="tooltip" class="btn btn-success" title="{{ trans('adminlte::adminlte.payments_details.create_new') }}"><i class="fa fa-plus"></i> {{ trans('adminlte::adminlte.new') }}</a>
         <a href="{{ url('admin/multiple-payments/create') }}" data-toggle="tooltip" class="btn btn-success" title="{{ trans('adminlte::adminlte.payments_details.create_multiple_txt') }}"><i class="fa fa-plus"></i> {{ trans('adminlte::adminlte.payments_details.create_multiple') }}</a>

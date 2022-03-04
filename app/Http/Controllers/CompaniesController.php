@@ -121,6 +121,7 @@ class CompaniesController extends Controller
             'send_email'        => $request->input('send_email'),
             'daily_at'       	=> $request->input('daily_at'),
             'monthly_report'    => $request->input('monthly_report'),
+            'display_users_by_plates' => $request->input('display_users_by_plates'),
             'created_at'        => now()->timestamp,
             'updated_at'        => now()->timestamp
         ]);
@@ -191,7 +192,6 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-
         $company = Company::findOrFail($id);
 			//dd($request->all());
         // Edit photo if exist to public/company folder

@@ -85,7 +85,7 @@
                     <button type="submit" class="btn btn-primary" data-toggle="tooltip" id="search" title="Search"><i
                             class="fa fa-search"></i></button>
                     <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-warning"
-                        title="Clear All Filters"><i class="fa fa-trash"></i></a>
+                        title="Clear All Filters"><i class="fa fa-recycle"></i></a>
                     <button type="button" data-toggle="tooltip" class="btn btn-success" id="exportEXCEL"
                         title="Export Excel"><i class="fas fa-file-excel" id="btn-logo"></i><i id="spiner"
                             class="fa fa-spinner fa-spin" style="font-size:12px; display:none;"></i></button>

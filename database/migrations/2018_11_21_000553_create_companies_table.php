@@ -41,6 +41,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('show_transaction_time')->default(0);
             $table->tinyInteger('has_receipt')->default(0);
             $table->tinyInteger('has_receipt_nr')->default(0);
+            $table->boolean('display_users_by_plates')->default(0);
             $table->integer('created_at');
             $table->integer('updated_at');
         });
