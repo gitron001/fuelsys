@@ -65,6 +65,9 @@
                         <th class="sorting" data-sorting_type="asc" data-column_name="created_by">{{ trans('adminlte::adminlte.expenses_details.created_by') }} <span
                                 id="created_at_icon" class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
+                        <th class="sorting" data-sorting_type="asc" data-column_name="expense_type">{{ trans('adminlte::adminlte.type') }} <span
+                                id="expense_type_icon" class="removePrevIcon sortIcon"><span
+                                    class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                         <th class="sorting" data-sorting_type="asc" data-column_name="created_at">{{ trans('adminlte::adminlte.created_at') }} <span
                                 id="created_at_icon" class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>

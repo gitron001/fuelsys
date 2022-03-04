@@ -26,7 +26,7 @@
 			</div>
 		</div>
 		<div class="col-12">
-            @if(!isset($expenses))
+                @if(!isset($expenses))
 					<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
 				@else
 					<div class="form-group" id="user">
@@ -36,11 +36,18 @@
 					{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 				</div>
 
+            <div class="form-group {{ $errors->has('expense_type') ? 'has-error' :'' }}">
+                {!! Form::label('expense_type', trans('adminlte::adminlte.type')); !!}
+                {!! Form::text('expense_type',null,['class'=>'form-control','rows' => 3]); !!}
+                {!! $errors->first('expense_type','<span class="help-block">:message</span>') !!}
+            </div>
+
             <div class="form-group {{ $errors->has('description') ? 'has-error' :'' }}">
                 {!! Form::label('description', trans('adminlte::adminlte.description')); !!}
                 {!! Form::textarea('description',null,['class'=>'form-control','rows' => 3]); !!}
                 {!! $errors->first('description','<span class="help-block">:message</span>') !!}
             </div>
+
         </div>
 	</div>
 

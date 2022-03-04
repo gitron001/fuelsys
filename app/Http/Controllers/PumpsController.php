@@ -16,6 +16,9 @@ class PumpsController extends Controller
 
     public function index(Request $request)
     {
+        $tanks = Tank::all();
+        $dispanesers = Dispaneser::all();
+
         $sort_by    = $request->get('sortby');
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
@@ -28,10 +31,18 @@ class PumpsController extends Controller
             });
         }
 
+        if($request->get('tank')){
+            $pumps  = $pumps->where('tank_id',$request->get('tank'));
+        }
+
+        if($request->get('dispaneser')){
+            $pumps  = $pumps->where('channel_id',$request->get('dispaneser'));
+        }
+
         if($request->ajax() == false){
             $pumps  = $pumps->orderBy('channel_id','ASC')->orderBy('name', 'ASC')
                         ->paginate(15);
-            return view('/admin/nozzle/home',compact('pumps'));
+            return view('/admin/nozzle/home',compact('pumps','tanks','dispanesers'));
         } else {
             if($request->get('sortby') == 'name'){
                 $pumps  = $pumps->orderBy('channel_id','ASC')->orderBy('name', 'ASC')
@@ -40,7 +51,7 @@ class PumpsController extends Controller
                 $pumps  = $pumps->orderBy($sort_by,$sort_type)
                         ->paginate(15);
             }
-            return view('/admin/nozzle/table_data',compact('pumps'))->render();
+            return view('/admin/nozzle/table_data',compact('pumps','tanks','dispanesers'))->render();
         }
     }
 

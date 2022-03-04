@@ -54,9 +54,8 @@
                         @endforeach
                     </select>
                 </div>&nbsp;
-                <a href="#" class="show_hide_transactions_filters"><i id="button-hide-show" class="fa fa-chevron-down"></i></a>
                 <br>
-                <div id="show_hide_filters" style="display: none;">
+                <div id="show_hide_filters">
                 <div class="form-group">
                     <input type="checkbox" name="last_payment" id="last_payment"
                         {{ request()->get("last_payment") == 'Yes' ? 'checked' : ''}}>
@@ -77,8 +76,14 @@
 
                 <div class="form-group">
                     <input type="checkbox" name="all_day" id="all_day"
-                        {{ request()->get("all_day") == 'Yes' ? 'checked' : ''}}>
+                        {{ request()->get("all_day") ? 'checked' : ''}}>
                     {{ trans('adminlte::adminlte.transactions_details.all_day') }}<br>
+                </div>&nbsp;
+
+                <div class="form-group">
+                    <input type="checkbox" name="bonusUserOrder" id="bonusUserOrder"
+                        {{ request()->get("bonusUserOrder") ? 'checked' : ''}}>
+                    {{ trans('adminlte::adminlte.company_fields.display_users_by_plates') }}<br>
                 </div>&nbsp;
                 </div>
                 <div class="form-group" style="padding-top: 5px;">
@@ -89,14 +94,14 @@
                     <button type="button" data-toggle="tooltip" class="btn btn-success" id="exportEXCEL"
                         title="Export Excel"><i class="fas fa-file-excel" id="btn-logo"></i><i id="spiner"
                             class="fa fa-spinner fa-spin" style="font-size:12px; display:none;"></i></button>
-                    <a href="{{ route('generate_pdf/pdf', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance"),'bonus_user' => request()->get("bonus_user"),'last_payment' => request()->get("last_payment")] ) }}"
+                    <a href="{{ route('generate_pdf/pdf', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance"),'bonus_user' => request()->get("bonus_user"),'last_payment' => request()->get("last_payment"),'bonusUserOrder' => request()->get("bonusUserOrder")] ) }}"
                         target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i
                             class="fas fa-file-pdf"></i></a>
                     <button type="button" data-toggle="tooltip" class="btn btn-info" id="dailyReport"
                         title="Daily Report"><i class="far fa-envelope"></i></button>
                     <button type="button" data-toggle="tooltip" class="btn bg-purple" id="sendReportToEmail"
                         title="Send raport to email"><i class="fas fa-paper-plane"></i></button>
-                    <a href="{{ route('generate_invoice/invoice', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance"),'bonus_user' => request()->get("bonus_user"),'last_payment' => request()->get("last_payment")] ) }}"
+                    <a href="{{ route('generate_invoice/invoice', ['company' => request()->get("company"),'user' => request()->get("user"),'fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'inc_transactions' => request()->get("inc_transactions"),'exc_balance' => request()->get("exc_balance"),'bonus_user' => request()->get("bonus_user"),'last_payment' => request()->get("last_payment"),'bonusUserOrder' => request()->get("bonusUserOrder")] ) }}"
                         target="_blank" data-toggle="tooltip" class="btn bg-maroon" title="Create Invoice"><i
                             class="fas fa-file-invoice"></i></a>
                 </div>

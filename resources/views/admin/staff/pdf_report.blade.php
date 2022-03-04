@@ -244,7 +244,7 @@
 
 						<?php if(isset($sales_by_product[$t['product_id']])){
 							$sales_by_product[$t['product_id']]['sale'] 			+= ($starting_stock->liters + $incoming_stock->total - $ending_stock->liters);
-							$sales_by_product[$t['product_id']]['incoming_stock'] 	+= $incoming_stock->total;					
+							$sales_by_product[$t['product_id']]['incoming_stock'] 	+= $incoming_stock->total;
 							$sales_by_product[$t['product_id']]['starting_stock'] 	+= $starting_stock->liters;
 							$sales_by_product[$t['product_id']]['ending_stock'] 	+= $ending_stock->liters;
 						  }else{
@@ -255,7 +255,7 @@
 							$sales_by_product[$t['product_id']]['starting_stock'] 	= $starting_stock->liters;
 							$sales_by_product[$t['product_id']]['ending_stock'] 	= $ending_stock->liters;
 						  }
-						 
+
 						?>
 					@endforeach
 				</tbody>
@@ -277,19 +277,19 @@
 							<th>{{ trans('adminlte::adminlte.change') }}</th>
 						</tr>
 					</thead>
-					<tbody>						
+					<tbody>
 						@foreach($sales_by_product as $sp)
 						<tr>
 							<td>{{ $sp['name'] }}</td>
-							<td>{{ $sp['starting_stock'] }} lit </td>					
-							<td>{{ $sp['incoming_stock'] }} lit </td>	
+							<td>{{ $sp['starting_stock'] }} lit </td>
+							<td>{{ $sp['incoming_stock'] }} lit </td>
 							@if(!isset( $totalizer_sales[$sp['product_id']]))
 								@php  $totalizer_sales[$sp['product_id']] = 0 @endphp
 							@endif
-							<td>{{ $totalizer_sales[$sp['product_id']] }} lit </td>							
-							<td>{{ $sp['starting_stock'] + $sp['incoming_stock'] -  $totalizer_sales[$sp['product_id']] }} lit </td>							
-							<td>{{ $sp['ending_stock'] }} lit </td>														
-							<td>{{ number_format($sp['ending_stock'] - ( $sp['starting_stock'] + $sp['incoming_stock'] -  $totalizer_sales[$sp['product_id']])  , 2, '.', '')}} lit </td>														
+							<td>{{ $totalizer_sales[$sp['product_id']] }} lit </td>
+							<td>{{ $sp['starting_stock'] + $sp['incoming_stock'] -  $totalizer_sales[$sp['product_id']] }} lit </td>
+							<td>{{ $sp['ending_stock'] }} lit </td>
+							<td>{{ number_format($sp['ending_stock'] - ( $sp['starting_stock'] + $sp['incoming_stock'] -  $totalizer_sales[$sp['product_id']])  , 2, '.', '')}} lit </td>
 						</tr>
 						@endforeach
 					</tbody>
@@ -344,7 +344,7 @@
     <!-- END TOTAL SECTION -->
 
 
-    @if (Request::input('url') == 'companies')
+    @if (Request::input('url') == 'staff' || Request::input('url') == 'companies')
 		<!-- COMPANIES SECTION -->
 		@if(count($companies) != 0)
 			@if (Request::input('url') == 'staff' || Request::input('url') == 'companies' || $request->url == 'staff')

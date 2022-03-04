@@ -26,7 +26,7 @@ class ExpensesController extends Controller
         $sort_by         = "expenses".".".$request->get('sortby');
         $sort_type       = $request->get('sorttype');
 
-        $query          = Expenses::select(DB::RAW('users.name as user_name'), 'users.type as user_type', 'expenses.amount', 'expenses.date','expenses.created_at','expenses.updated_at','expenses.id', 'creator.name as p_creater')
+        $query          = Expenses::select(DB::RAW('users.name as user_name'), 'users.type as user_type', 'expenses.amount', 'expenses.date','expenses.created_at','expenses.updated_at','expenses.id', 'creator.name as p_creater','expenses.expense_type')
             ->leftJoin('users', 'users.id', '=', 'expenses.user_id')
             ->leftJoin('users as creator', 'creator.id', '=', 'expenses.created_by');
 
@@ -65,6 +65,7 @@ class ExpensesController extends Controller
         $expenses->amount       = $request->input('amount');
         $expenses->description  = $request->input('description');
         $expenses->user_id      = $request->input('user_id');
+        $expenses->expense_type = $request->input('expense_type');
         $expenses->created_at   = now()->timestamp;
         $expenses->created_by   = Auth::user()->id;
         $expenses->updated_at   = now()->timestamp;
@@ -82,6 +83,7 @@ class ExpensesController extends Controller
         $expenses->date         = strtotime($request->input('date'));
         $expenses->description  = $request->input('description');
         $expenses->amount       = $request->input('amount');
+        $expenses->expense_type = $request->input('expense_type');
         $expenses->edited_by    = Auth::user()->id;
         $expenses->updated_at   = now()->timestamp;
         $expenses->update();
@@ -125,6 +127,9 @@ class ExpensesController extends Controller
     }
 
     public function exportPDF(Request $request) {
+        $from_date      = strtotime($request->input('fromDate'));
+        $to_date        = strtotime($request->input('toDate'));
+
         $company    = Company::where('status', 4)->first();
 
         $expenses = self::generate_data($request);

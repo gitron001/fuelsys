@@ -5,6 +5,7 @@
     <td>{{ $expense->user_name ? $expense->user_name : ' ' }}</td>
     <td>{{ $expense->amount }}</td>
     <td>{{ $expense->p_creater }}</td>
+    <td>{{ $expense->expense_type }}</td>
     <td>{{ $expense->created_at->diffForHumans() }}</td>
     <td>{{ $expense->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">

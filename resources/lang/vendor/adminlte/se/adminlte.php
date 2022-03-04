@@ -40,7 +40,7 @@ return [
         'daily_at'          => 'Dnevni izveštaj',
         'discounts'         => 'Popust',
         'send_email'        => 'Šalji imejl',
-        'display_users_by_plates' => 'Prikazuje zasebne tabele za korisnike u mesečnom izveštaju',
+        'display_users_by_plates' => 'Prikaži po trošku korisnika',
     ],
 
     'tank_details' => [
@@ -253,6 +253,7 @@ return [
     'edit'              => 'Urediti',
     'delete'            => 'Trljati',
     'discounts'         => 'Odbitci',
+    'description'       => 'Opis',
     'product'           => 'Proizvod',
     'products'          => 'Proizvod',
     'capacity'          => 'Kapacitet',

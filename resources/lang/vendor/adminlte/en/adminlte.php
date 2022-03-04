@@ -40,7 +40,7 @@ return [
         'daily_at'          => 'Daily at',
         'discounts'         => 'Discounts',
         'send_email'        => 'Send Email',
-        'display_users_by_plates' => 'Displays separate tables for users in the monthly report',
+        'display_users_by_plates' => 'Show Per user expense',
     ],
 
     'tank_details' => [
@@ -247,6 +247,7 @@ return [
     'country'           => 'Country',
     'limits'            => 'Limits',
     'photo'             => 'Photo',
+    'description'       => 'Description',
     'status'            => 'Status',
     'created_at'        => 'Created at',
     'updated_at'        => 'Updated at',

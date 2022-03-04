@@ -380,6 +380,24 @@
     }
   });
 
+  // Show checkbox value after page load
+  $(document).ready(function(){
+    if ($('input#bonusUserOrder').is(':checked')) {
+      $('input[name="bonusUserOrder"]').val('Yes');
+    } else {
+      $('input[name="bonusUserOrder"]').val('No');
+    }
+  });
+
+  // Change Checkbox value onclick
+  $('#bonusUserOrder').click(function(){
+    if($(this).is(':checked')){
+        $('input[name="bonusUserOrder"]').val('Yes');
+    } else {
+        $('input[name="bonusUserOrder"]').val('No');
+    }
+  });
+
 
   $(document).ready(function(){
     $('#dailyReport').click(function(){
@@ -410,6 +428,7 @@
         var inc_transactions = $("#inc_transactions").val();
         var exc_balance = $("#exc_balance").val();
         var company = $("#company").val();
+        var bonusUserOrder = $("#bonusUserOrder").val();
         var sendReportToEmail = "yes";
 
         swal({
@@ -423,7 +442,7 @@
             if (willDelete) {
             $.ajax({
                 type: "GET",
-                data: {fromDate:fromDate,toDate:toDate,user:user,bonus_user:bonus_user,last_payment:last_payment,inc_transactions:inc_transactions,exc_balance:exc_balance,company:company,sendReportToEmail:sendReportToEmail},
+                data: {fromDate:fromDate,toDate:toDate,user:user,bonus_user:bonus_user,last_payment:last_payment,inc_transactions:inc_transactions,exc_balance:exc_balance,company:company,sendReportToEmail:sendReportToEmail,bonusUserOrder:bonusUserOrder},
                 url: "/pdf",
                 dataType: "JSON",
             beforeSend:function(){

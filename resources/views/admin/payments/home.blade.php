@@ -48,6 +48,11 @@
         <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i></button>
         <a href="{{ request()->url() }}" data-toggle="tooltip" class="btn btn-warning" title="Clear All Filters"><i class="fa fa-recycle"></i></a>
         <a data-toggle="tooltip" class="btn btn-danger" id="delsel" title="{{ trans('adminlte::adminlte.payments_details.delete_all') }}"><i class="fa fa-trash"></i> {{ trans('adminlte::adminlte.delete') }}</a>
+        <a href="{{ route('generate_payments_pdf', ['fromDate' => request()->get("fromDate"),'toDate' => request()->get("toDate"),'user' => request()->get("user"),'company' => request()->get("company")] ) }}"
+            target="_blank" data-toggle="tooltip" class="btn btn-danger" title="Export PDF"><i
+                class="fas fa-file-pdf"></i></a>
+        <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_payments_excel"
+                title="Export Excel"><i class="fas fa-file-excel"></i></button>
         <a href="{{ url('admin/payments/create') }}" data-toggle="tooltip" class="btn btn-success" title="{{ trans('adminlte::adminlte.payments_details.create_new') }}"><i class="fa fa-plus"></i> {{ trans('adminlte::adminlte.new') }}</a>
         <a href="{{ url('admin/multiple-payments/create') }}" data-toggle="tooltip" class="btn btn-success" title="{{ trans('adminlte::adminlte.payments_details.create_multiple_txt') }}"><i class="fa fa-plus"></i> {{ trans('adminlte::adminlte.payments_details.create_multiple') }}</a>
       </form>
@@ -84,4 +89,54 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@include('includes/footer')
+@section('js')
+<script>
+    $(function () {
+        var date = new Date();
+        date.setDate(date.getDate() -1);
+        $('#datetimepicker4').datetimepicker({
+            defaultDate:date
+        });
+
+        var dateNow = new Date();
+        $('#datetimepicker5').datetimepicker({
+            defaultDate:dateNow
+        });
+    });
+
+    $(document).ready(function () {
+        $('.users-dropdown').select2({
+            placeholder: "  Select a user  "
+        });
+
+        $('#export_payments_excel').click(function () {
+            var fromDate = $('#datetimepicker4').val();
+            var toDate = $('#datetimepicker5').val();
+            var user = $('#user').val();
+            var company = $('#company').val();
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    user: user,
+                    company: company
+                },
+                url: "{{ URL('/excel_export_payments')}}",
+                dataType: "JSON",
+                success: function (response, textStatus, request) {
+                    var a = document.createElement("a");
+                    a.href = response.file;
+                    a.download = response.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+
+        });
+    });
+
+</script>
+@endsection

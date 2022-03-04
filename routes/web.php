@@ -99,6 +99,8 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/admin/payments-delete-all', 'PaymentsController@delete_all');
     Route::get('/admin/multiple-payments/create', 'PaymentsController@multiplePaymentsView');
     Route::post('/admin/payments/multiple', 'PaymentsController@multiplePaymentsStore');
+    Route::get('/payments-pdf','PaymentsController@exportPDF')->name('generate_payments_pdf');
+    Route::get('/excel_export_payments','PaymentsController@exportExcel');
 
 	// PFC
 	Route::resource('/admin/pfc', 'PFCController');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use DB;
+use PDF;
 use Auth;
+use Excel;
 use Config;
 use DateTime;
 use App\Models\PFC;
@@ -442,6 +444,120 @@ class PaymentsController extends Controller
 
         $right = str_pad(' '.$lit.'     '.$price.'   ' . $limit_left, $rightCols, ' ', STR_PAD_LEFT);
         return "$left$right\n";
+    }
+
+    public static function generate_data($request){
+        $from_date      = strtotime($request->input('fromDate'));
+        $to_date        = strtotime($request->input('toDate'));
+        $user           = $request->input('user');
+        $company        = $request->input('company');
+        $sort_by_company = $request->get('sortby');
+        if($sort_by_company == 'name'){
+            $sort_by = "payments.date";
+            $sort_type = "DESC";
+        }else{
+            $sort_by         = ($sort_by_company == 'company_id' ? "companies.name" : "payments".".".$request->get('sortby'));
+            $sort_type       = $request->get('sorttype');
+        }
+
+        //$query          = Payments::orderBy('date', 'DESC');
+        $query          = Payments::select(DB::RAW('users.name as user_name'), 'users.type as user_type', DB::RAW('companies.name as comp_name'),
+           'payments.amount', 'payments.date','payments.created_at','payments.updated_at','payments.id', 'creator.name as p_creater')
+            ->leftJoin('users', 'users.id', '=', 'payments.user_id')
+            ->leftJoin('companies', 'companies.id', '=', 'payments.company_id')
+            ->leftJoin('users as creator', 'creator.id', '=', 'payments.created_by');
+
+        if ($request->input('user')) {
+            $query = $query->whereIn('users.id',$user);
+        }
+
+        if ($request->input('company')) {
+            $query = $query->where('companies.id',$company);
+        }
+
+        if ($request->input('fromDate') && $request->input('toDate')) {
+            $query = $query->whereBetween('payments.date',[$from_date, $to_date]);
+        }
+
+        $payments = $query->orderBy('payments.date', 'DESC')->get();
+
+        return $payments;
+    }
+
+    public function exportPDF(Request $request) {
+        $from_date      = strtotime($request->input('fromDate'));
+        $to_date        = strtotime($request->input('toDate'));
+
+        $company    = Company::where('status', 4)->first();
+
+        $payments = self::generate_data($request);
+
+        $pdf = PDF::loadView('admin.payments.pdf_export',compact('payments','company','from_date','to_date'));
+        $file_name  = 'Expenses - '.date('Y-m-d', time()).'.pdf';
+        return $pdf->stream($file_name);
+    }
+
+    public function exportExcel(Request $request) {
+        $from_date  = strtotime($request->input('fromDate'));
+        $to_date    = strtotime($request->input('toDate'));
+
+        $payments = self::generate_data($request);
+
+        $file_name  = 'Payments - '.date('Y-m-d h-i', strtotime("now"));
+        $myFile = Excel::create($file_name, function($excel) use( $payments ) {
+
+            $excel->sheet('Payments', function($sheet) use( $payments ) {
+
+                $sheet->cell('A1:D1', function ($cells) {
+                    $cells->setFontWeight('bold');
+                });
+
+                $sheet->appendRow(array(
+                    trans('adminlte::adminlte.date'),
+                    trans('adminlte::adminlte.user'),
+                    trans('adminlte::adminlte.company'),
+                    trans('adminlte::adminlte.payments_details.created_by'),
+                    trans('adminlte::adminlte.amount')
+                ));
+
+                $total = 0;
+                foreach ($payments as $payment) {
+                    if($payment->user_type == 1){
+                        $type = 'Staff';
+                    }else{
+                        $type = $payment->comp_name ? $payment->comp_name : ' ';
+                    }
+
+                    $sheet->appendRow(array(
+                        date('m/d/Y H:i', $payment->date),
+                        $payment->user_name ? $payment->user_name : ' ',
+                        $type,
+                        $payment->p_creater,
+                        $payment->amount
+                    ));
+
+                    $total += $payment->amount;
+                }
+
+                $sheet->appendRow(array(
+                    '',
+                    '',
+                    '',
+                    '',
+                    'Totali: '.$total.' €',
+                ));
+
+            });
+
+        });
+
+        $myFile = $myFile->string('xlsx');
+        $response =  array(
+           'name' => $file_name,
+           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
+        );
+
+        return response()->json($response);
     }
 }
 
