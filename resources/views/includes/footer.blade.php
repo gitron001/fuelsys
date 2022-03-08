@@ -605,5 +605,35 @@
         }
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('#export_pos_excel').click(function () {
+            var fromDate = $('#datetimepicker4').val();
+            var toDate = $('#datetimepicker5').val();
+            var bank = $('#bank').val();
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    bank: bank
+                },
+                url: "{{ URL('/excel_export_pos')}}",
+                dataType: "JSON",
+                success: function (response, textStatus, request) {
+                    var a = document.createElement("a");
+                    a.href = response.file;
+                    a.download = response.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+
+        });
+    });
+</script>
 @endsection
 

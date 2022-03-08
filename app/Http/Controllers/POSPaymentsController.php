@@ -22,6 +22,7 @@ class POSPaymentsController extends Controller
         $search     = $request->get('search');
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
+        $sort_by_date = $request->get('sortby');
 
 
         $pos_payments = new POSPayments;

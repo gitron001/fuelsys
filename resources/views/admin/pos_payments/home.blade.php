@@ -57,16 +57,16 @@
                         <tr>
                             <th style="text-align:center;"><input type="checkbox" id="checkall"
                                     class="checkbox-select-all"></th>
-                            <th class="sorting" data-sorting_type="asc" data-column_name="name">
-                                {{ trans('adminlte::adminlte.date') }} <span id="name_icon"
+                            <th class="sorting" data-sorting_type="asc" data-column_name="date">
+                                {{ trans('adminlte::adminlte.date') }} <span id="date_icon"
                                     class="removePrevIcon sortIcon"><span
                                         class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                            <th class="sorting" data-sorting_type="asc" data-column_name="bank_number">
-                                {{ trans('adminlte::adminlte.banks') }} <span id="bank_number_icon"
+                            <th class="sorting" data-sorting_type="asc" data-column_name="bank_id">
+                                {{ trans('adminlte::adminlte.banks') }} <span id="bank_id_icon"
                                     class="removePrevIcon sortIcon"><span
                                         class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                            <th class="sorting" data-sorting_type="asc" data-column_name="status">
-                                {{ trans('adminlte::adminlte.amount') }} <span id="status_icon"
+                            <th class="sorting" data-sorting_type="asc" data-column_name="amount">
+                                {{ trans('adminlte::adminlte.amount') }} <span id="amount_icon"
                                     class="removePrevIcon sortIcon"><span
                                         class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                             <th class="sorting" data-sorting_type="asc" data-column_name="created_at">
@@ -97,48 +97,4 @@
 <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
 
-@section('js')
-<script>
-    $(function () {
-        var date = new Date();
-        date.setDate(date.getDate() -1);
-        $('#datetimepicker4').datetimepicker({
-            defaultDate:date
-        });
-
-        var dateNow = new Date();
-        $('#datetimepicker5').datetimepicker({
-            defaultDate:dateNow
-        });
-    });
-
-    $(document).ready(function () {
-        $('#export_pos_excel').click(function () {
-            var fromDate = $('#datetimepicker4').val();
-            var toDate = $('#datetimepicker5').val();
-            var bank = $('#bank').val();
-
-            $.ajax({
-                type: "GET",
-                data: {
-                    fromDate: fromDate,
-                    toDate: toDate,
-                    bank: bank
-                },
-                url: "{{ URL('/excel_export_pos')}}",
-                dataType: "JSON",
-                success: function (response, textStatus, request) {
-                    var a = document.createElement("a");
-                    a.href = response.file;
-                    a.download = response.name;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                }
-            });
-
-        });
-    });
-
-</script>
-@endsection
+@include('includes/footer')
