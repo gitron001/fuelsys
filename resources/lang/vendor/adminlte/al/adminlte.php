@@ -325,6 +325,7 @@ return [
     'api'               => 'API',
     'add_product'       => 'Shto produkt',
     'addedd_stock'      => 'Stoku i shtuar',
+    'category'          => 'Kategoria',
     'pos_sales'                     => 'POS shitjet',
     'total_before_shift_open'       => 'Stoqet Fillestare',
     'total_after_shift_close'       => 'Stoqet Perfundimtar',

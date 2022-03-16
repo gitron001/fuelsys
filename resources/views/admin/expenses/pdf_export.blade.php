@@ -87,6 +87,7 @@
                 <th>{{ trans('adminlte::adminlte.date') }}</th>
                 <th>{{ trans('adminlte::adminlte.user') }}</th>
                 <th>{{ trans('adminlte::adminlte.amount') }}</th>
+                <th>{{ trans('adminlte::adminlte.category') }}</th>
                 <th>{{ trans('adminlte::adminlte.expenses_details.created_by') }}</th>
             </tr>
         </thead>
@@ -96,6 +97,7 @@
                 <td>{{ date('m/d/Y H:i', $expense->date) }}</td>
                 <td>{{ $expense->user_name ? $expense->user_name : ' ' }}</td>
                 <td>{{ $expense->amount }}</td>
+                <td>{{ $expense->category_name }}</td>
                 <td>{{ $expense->p_creater }}</td>
             </tr>
             @endforeach

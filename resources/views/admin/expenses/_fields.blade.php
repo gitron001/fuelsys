@@ -25,7 +25,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12">
+        <div class="row">
+			<div class="col-md-6">
                 @if(!isset($expenses))
 					<div class="form-group {{ $errors->has('user_id') ? 'has-error' :'' }}">
 				@else
@@ -35,7 +36,22 @@
 					{!! Form::select('user_id',['' => 'Select a User'] + $users,null,['class'=>'selectpicker form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
 					{!! $errors->first('user_id','<span class="help-block">:message</span>') !!}
 				</div>
+			</div>
 
+			<div class="col-md-6">
+                @if(!isset($expenses))
+					<div class="form-group {{ $errors->has('category_id') ? 'has-error' :'' }}">
+				@else
+					<div class="form-group" id="user">
+				@endif
+					{!! Form::label('category_id', trans('adminlte::adminlte.category')); !!}
+					{!! Form::select('category_id',['' => 'Select Category'] + $categories,null,['class'=>'selectpicker form-control','id'=>'userDropdown','data-live-search'=>'true','data-style'=>'btn-dropdownSelectNew']); !!}
+					{!! $errors->first('category_id','<span class="help-block">:message</span>') !!}
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
             <div class="form-group {{ $errors->has('expense_type') ? 'has-error' :'' }}">
                 {!! Form::label('expense_type', trans('adminlte::adminlte.type')); !!}
                 {!! Form::text('expense_type',null,['class'=>'form-control','rows' => 3]); !!}

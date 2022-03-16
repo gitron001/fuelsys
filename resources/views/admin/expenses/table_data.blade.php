@@ -6,6 +6,7 @@
     <td>{{ $expense->amount }}</td>
     <td>{{ $expense->p_creater }}</td>
     <td>{{ $expense->expense_type }}</td>
+    <td>{{ $expense->category_name }}</td>
     <td>{{ $expense->created_at->diffForHumans() }}</td>
     <td>{{ $expense->updated_at->diffForHumans() }}</td>
     <td class="text-center" width="8%">

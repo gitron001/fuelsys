@@ -13,6 +13,12 @@
     @php $total_expenses += $expense->total @endphp
 @endforeach
 
+@php $total_pos = 0 @endphp
+@foreach ($pos_sales as $pos)
+    @php $total_pos += $pos->total @endphp
+@endforeach
+
+
 <div class="box box-primary">
     <div class="box-header">
         <i class="fa fa-calculator" aria-hidden="true"></i>
@@ -34,8 +40,8 @@
 					<td> {{ number_format($total_transactions,2) }} Euro</td>
                     <td> {{ number_format($total_payments,2) }} Euro</td>
                     <td> {{ number_format($total_expenses,2) }} Euro</td>
-                    <td> {{ number_format($pos_total,2) }} Euro</td>
-                    <td><b> {{ number_format(($total_transactions + $total_payments  - $total_expenses - $pos_total),2) }} Euro</b></td>
+                    <td> {{ number_format($total_pos,2) }} Euro</td>
+                    <td><b> {{ number_format(($total_transactions + $total_payments  - $total_expenses - $total_pos),2) }} Euro</b></td>
 				</tr>
             </tbody>
         </table>

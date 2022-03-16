@@ -13,6 +13,7 @@ use App\Models\Users;
 use App\Models\Branch;
 use App\Models\Company;
 use App\Models\Payments;
+use App\Models\Categories;
 use Mike42\Escpos\Printer;
 use App\Jobs\PrintPayment;
 use App\Models\Transaction;
@@ -103,6 +104,7 @@ class PaymentsController extends Controller
         }
 
         $companies  = Company::pluck('name','id')->all();
+        $categories = Categories::pluck('name','id')->all();
         $branches   = Branch::orderBy('name','ASC')->pluck('name','id')->all();
 		$users      = Users::where('status',1)->where(function ($users) {
 			$users->where('company_id', 0)
@@ -110,7 +112,7 @@ class PaymentsController extends Controller
 		})->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
 
 
-        return view('/admin/payments/create',compact('companies','users','branches'));
+        return view('/admin/payments/create',compact('companies','users','branches','categories'));
     }
 
     public function multiplePaymentsView()
@@ -274,11 +276,12 @@ class PaymentsController extends Controller
         $payment    = Payments::findOrFail($id);
         $companies  = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
         $branches   = Branch::orderBy('name','ASC')->pluck('name','id')->all();
+        $categories = Categories::pluck('name','id')->all();
         $users      = Users::where('status',1)->where(function ($users) {
                             $users->where('company_id', 0)
                             ->orWhereNull('company_id');
                         })->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
-        return view('/admin/payments/edit',compact('payment','companies','users', 'branches'));
+        return view('/admin/payments/edit',compact('payment','companies','users', 'branches','categories'));
     }
 
     /**

@@ -320,6 +320,7 @@ return [
     'api'               => 'API',
     'add_product'       => 'Add product',
     'addedd_stock'      => 'Addedd Stock',
+    'category'          => 'Category',
     'pos_sales'                     => 'POS sales',
     'total_before_shift_open'       => 'Total stock before opening shift',
     'retype_password'               => 'Retype password',

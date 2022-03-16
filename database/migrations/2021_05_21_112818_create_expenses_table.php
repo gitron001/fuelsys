@@ -20,6 +20,7 @@ class CreateExpensesTable extends Migration
             $table->text('description')->nullable();
             $table->string('expense_type')->nullable();
             $table->integer('user_id')->nullable()->index();
+            $table->integer('category_id')->nullable()->index();
             $table->integer('created_by')->index();
             $table->integer('edited_by')->nullable()->index();
             $table->integer('created_at');
