@@ -17,6 +17,9 @@
     h4 {
     	text-align: center;
 	}
+	h5 {
+    	text-align: center;
+	}
     .gray {
         background-color: f2f2f2
     }
@@ -35,7 +38,7 @@
 
     #table_design td, #table_design th {
         border: 1px solid black;
-        padding: 2px;
+        padding: 0px;
     }
 
     #table_design tr:nth-child(even){background-color: #fff;}
@@ -43,8 +46,8 @@
     #table_design tr:hover {background-color: #fff;}
 
     #table_design th {
-        padding-top: 2px;
-        padding-bottom: 2px;
+        padding-top: 0px;
+        padding-bottom: 0px;
         background-color: white;
         color: black;
     }
@@ -69,7 +72,7 @@
 	</tr>-->
 	<tr>
 		<td align="left">
-            <p style="line-height:1.2">
+            <p style="line-height:1.1">
                 <span style="font-size: 16px;"><b> {{ $company->name }} </b></span><br/>
                 <?php
                 if(isset($_GET['fromDate']) || isset($_GET['toDate'])) {
@@ -83,7 +86,7 @@
     </table>
  <!-- STAFF SECTION -->
     @if (Request::input('url') == 'staff' || $request->url == 'staff')
-    <h4>{{ trans('adminlte::adminlte.staff') }}</h4>
+    <h5>{{ trans('adminlte::adminlte.staff') }}</h5>
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
 		  <tr>
@@ -139,7 +142,7 @@
     @if (Request::input('url') == 'stock')
 
 		@if(count($stocks) > 0)
-			<h4>{{ trans('adminlte::adminlte.incoming_stock') }}</h4>
+			<h5>{{ trans('adminlte::adminlte.incoming_stock') }}</h5>
 				<table width="100%" id="table_design" >
 				<thead>
 					<tr>
@@ -167,7 +170,7 @@
 
     <!-- TOTAL SALES PER PRODUCT SECTION -->
     @if (Request::input('url') == 'stock' || Request::input('url') == 'dispensers' || Request::input('url') == 'staff' || $request->url == 'staff')
-    <h4 @if ( Request::input('url') == 'stock' || Request::input('url') == 'staff' || $request->url == 'staff') style="display: none;" @endif>Total</h4>
+    <h5 @if ( Request::input('url') == 'stock' || Request::input('url') == 'staff' || $request->url == 'staff') style="display: none;" @endif>Total</h5>
     <table width="100%" id="table_design" @if (Request::input('url') != 'dispensers') style="display: none;" @endif>
         <thead>
             <tr>
@@ -213,7 +216,7 @@
 	<!-- SHOW SALES DATA FOR EACH TANKS -->
 	 @if (Request::input('url') == 'stock')
 		@if(count($tanks) > 0)
-			 <h4>{{ trans('adminlte::adminlte.stock') }}</h4>
+			 <h5>{{ trans('adminlte::adminlte.stock') }}</h5>
 				<table  width="100%" id="table_design">
 				<thead style="background-color: lightgray;">
 					<tr>
@@ -264,7 +267,7 @@
 	@endif
 	<!-- Total Incoming Stock -->
 	@if (Request::input('url') == 'stock')
-				<h4>{{ trans('adminlte::adminlte.stock') }}</h3>
+				<h5>{{ trans('adminlte::adminlte.stock') }}</h5>
 				<table width="100%" id="table_design">
 					<thead style="background-color: lightgray;">
 						<tr>
@@ -298,7 +301,7 @@
 
     <!-- TOTAL SECTION -->
     @if (Request::input('url') == 'staff' || Request::input('url') == 'dispensers' || $request->url == 'staff')
-	<h4>{{ trans('adminlte::adminlte.products_sales') }}</h4>
+	<h5>{{ trans('adminlte::adminlte.products_sales') }}</h5>
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
             <tr>
@@ -348,7 +351,7 @@
 		<!-- COMPANIES SECTION -->
 		@if(count($companies) != 0)
 			@if (Request::input('url') == 'staff' || Request::input('url') == 'companies' || $request->url == 'staff')
-			<h4>{{ trans('adminlte::adminlte.company') }}</h4>
+			<h5>{{ trans('adminlte::adminlte.company') }}</h5>
 			<table width="100%" id="table_design">
 				<thead style="background-color: lightgray;">
 					<tr>
@@ -404,7 +407,7 @@
 
 	 <!-- START PRODUCTS SECTION -->
 	@if (Request::input('url') == 'products')
-		<h4>{{ trans('adminlte::adminlte.staff_details.products_by_price') }}</h4>
+		<h5>{{ trans('adminlte::adminlte.staff_details.products_by_price') }}</h5>
 		<table width="100%" id="table_design">
 			<thead style="background-color: lightgray;">
                 <tr>
@@ -441,7 +444,7 @@
 				</tr>
 			</tfoot>
         </table>
-        <h4>{{ trans('adminlte::adminlte.staff_details.average') }}</h4>
+        <h5>{{ trans('adminlte::adminlte.staff_details.average') }}</h5>
         <table width="100%" id="table_design">
             <thead>
                 <tr>
@@ -485,7 +488,7 @@
     <!-- START PAYMENTS SECTION -->
     @if (Request::input('url') == 'staff' || Request::input('url') == 'payments' || $request->url == 'staff')
         @if(count($payments) != 0)
-        <h4>{{ trans('adminlte::adminlte.payments') }}</h4>
+        <h5>{{ trans('adminlte::adminlte.payments') }}</h5>
         <table width="100%" id="table_design">
             <thead style="background-color: lightgray;">
                 <tr>
@@ -525,7 +528,7 @@
      <!-- START EXPENSES SECTION -->
     @if (Request::input('url') == 'staff' || Request::input('url') == 'expenses' || $request->url == 'staff')
         @if(count($expenses) != 0)
-        <h4>{{ trans('adminlte::adminlte.expenses') }}</h4>
+        <h5>{{ trans('adminlte::adminlte.expenses') }}</h5>
         <table width="100%" id="table_design">
             <thead style="background-color: lightgray;">
                 <tr>
@@ -559,7 +562,7 @@
     <!-- START POS SECTION -->
     @if (Request::input('url') == 'staff' || Request::input('url') == 'pos-sales' || $request->url == 'staff')
         @if(count($pos_sales) != 0)
-        <h4>{{ trans('adminlte::adminlte.expenses') }}</h4>
+        <h5>{{ trans('adminlte::adminlte.expenses') }}</h5>
         <table width="100%" id="table_design">
             <thead style="background-color: lightgray;">
                 <tr>
@@ -568,18 +571,18 @@
                     <th>{{ trans('adminlte::adminlte.amount') }}</th>
                 </tr>
             </thead>
-            @php ($total = 0) @endphp
+            @php ($pos_total = 0) @endphp
             @foreach($pos_sales as $pos_sale)
             <tr>
                 <td>{{ date('m/d/Y H:i', $pos_sale->date) }}</td>
                 <td>{{ $pos_sale->name }}</td>
                 <td>{{ number_format($pos_sale->total,2) }} Euro</td>
             </tr>
-            @php ($total += number_format($pos_sale->total,2)) @endphp
+            @php ($pos_total += number_format($pos_sale->total,2)) @endphp
             @endforeach
             <tr>
                 <td colspan="2" style="text-align:right"><b>TOTAL:</b></td>
-                <td><b>{{ number_format($total,2) }} Euro</b></td>
+                <td><b>{{ number_format($pos_total,2) }} Euro</b></td>
             </tr>
             </tbody>
 
@@ -590,13 +593,14 @@
 
 	<!-- SHOW TOTALS -->
 	@if (Request::input('url') == 'staff' || $request->url == 'staff')
-        <h4>{{ trans('adminlte::adminlte.total') }}</h4>
+        <h5>{{ trans('adminlte::adminlte.total') }}</h5>
 		<table width="100%" id="table_design">
             <thead style="background-color: lightgray;">
                 <tr>
                     <th>{{ trans('adminlte::adminlte.transactions') }}</th>
                     <th>{{ trans('adminlte::adminlte.payments') }}</th>
                     <th>{{ trans('adminlte::adminlte.expenses') }}</th>
+					<th>Pos Sales</th>
                     <th>{{ trans('adminlte::adminlte.total') }}</th>
                 </tr>
             </thead>
@@ -606,7 +610,8 @@
 					<td> {{ number_format($total_staff,2) }} Euro</td>
                     <td> {{ number_format($total_payments,2) }} Euro</td>
                     <td> {{ number_format($total_expenses,2) }} Euro</td>
-                    <td><b> {{ number_format(($total_staff + $total_payments  - $total_expenses),2) }} Euro</b></td>
+                    <td> {{ number_format($pos_total,2) }} Euro</td>
+                    <td><b> {{ number_format(($total_staff + $total_payments -$pos_total  - $total_expenses),2) }} Euro</b></td>
 				</tr>
             </tbody>
 

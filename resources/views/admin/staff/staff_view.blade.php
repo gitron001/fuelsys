@@ -46,7 +46,6 @@
     @include('admin.staff.products_data')
 @endif
 
-
 @if (Request::path() == 'admin/staff/companies')
     <!-- inlcude companies data -->
     @include('admin.staff.companies_data')
