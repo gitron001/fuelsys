@@ -29,6 +29,7 @@
 @endif
 <!-- inlcude Stock data -->
 <?php global $sales_by_product; ?>
+<?php global $pos_total; ?>
 <?php $sales_by_product = array(); ?>
 @if (Request::path() == 'admin/staff/stock')
 
@@ -46,7 +47,7 @@
 @endif
 
 
-@if (Request::path() == 'admin/staff' || Request::path() == 'admin/staff/companies')
+@if (Request::path() == 'admin/staff/companies')
     <!-- inlcude companies data -->
     @include('admin.staff.companies_data')
 @endif

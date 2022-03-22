@@ -344,7 +344,7 @@
     <!-- END TOTAL SECTION -->
 
 
-    @if (Request::input('url') == 'staff' || Request::input('url') == 'companies')
+    @if (Request::input('url') == 'companies')
 		<!-- COMPANIES SECTION -->
 		@if(count($companies) != 0)
 			@if (Request::input('url') == 'staff' || Request::input('url') == 'companies' || $request->url == 'staff')
