@@ -52,16 +52,17 @@ class ExportTransactions extends Command
                 ->leftJoin('users AS u1', 'u1.id', '=', 'transactions.user_id')
                 ->leftJoin('users AS u2', 'u2.id', '=', 'transactions.bonus_user_id')
                 ->where('transactions.printed',0)
+                ->limit(1)
                 ->get();
 
 
             if(!file_exists($tr_location."/export-transactions.txt")){
                 $fp = fopen($tr_location."/export-transactions.txt", "a");
-                fwrite($fp, 'ID_PERSHT;DATAORA;KODART;ARTIKULLI;SASIA;CMIMI;TOTAL;RFID;discount;originalprice' .PHP_EOL);
+                fwrite($fp, 'ID_PERSHT;DATAORA;KODART;ARTIKULLI;SASIA;CMIMI;REZERVUAR;RFID;NrKuponit' .PHP_EOL);
 
                 foreach($transactions as $transaction){
 
-                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';'.$transaction['money'].';'.$transaction['staff_rfid'].';'.(($transaction['product_price'] / 1000) - $transaction['price']).';'.($transaction['product_price'] / 1000).PHP_EOL);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';0;'.$transaction['staff_rfid'].';'.$transaction['id'].PHP_EOL);
 
                     Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
                 }
@@ -72,7 +73,7 @@ class ExportTransactions extends Command
 
                 foreach($transactions as $transaction){
 
-                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';'.$transaction['money'].';'.$transaction['staff_rfid'].';'.(($transaction['product_price'] / 1000) - $transaction['price']).';'.($transaction['product_price'] / 1000).PHP_EOL);
+                    fwrite($fp, $transaction['id'].';'.date("d.m.Y H:i:s",strtotime($transaction['created_at'])).';'.$transaction['product_id'].';'.$transaction['product'].';'.$transaction['lit'].';'.$transaction['price'].';0;'.$transaction['staff_rfid'].';'.$transaction['id'].PHP_EOL);
 
                     Transaction::where('id',$transaction['id'])->update(['printed' => 1]);
                 }
