@@ -452,6 +452,32 @@ class StaffController extends Controller
 
         return $products;
     }
+	
+	
+	public static function show_products_info_daily(Request $request, $type){
+		
+        $request                = self::setDates($request);
+        $users                  = self::additional_data($request)['users'];
+        $banks                  = self::additional_data($request)['banks'];
+
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
+		
+        $products 	= Transactions::select(DB::raw("DATE_FORMAT(FROM_UNIXTIME(transactions.created_at), '%e %b %Y') as date"), DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('max(transactions.price) as product_price'))
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->groupBy('date')
+            ->groupBy('products.pfc_pr_id');
+
+        $products = $products->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
+
+        $products = $products->orderBy('transactions.created_at');
+
+        $products = $products->get();
+		if($type == 'export'){
+			return $products;
+		}else{		
+			return view('admin.staff.staff_view',compact('shift', 'products', 'users', 'banks'));
+		}
+    }
 
     public static function show_products_average_info($request, $view_type = null){
         $products 	= Transactions::select(DB::RAW('products.name as p_name'), DB::RAW('AVG(transactions.price) as product_price'), DB::RAW('SUM(transactions.lit) as totalLit'), DB::RAW('products.pfc_pr_id as product_id'), DB::raw('count(transactions.id) as transNR'),DB::RAW('MAX(products.pfc_pr_id) as product_id'),DB::raw('avg(money) as totalMoney'))
@@ -828,6 +854,8 @@ class StaffController extends Controller
 		$shift					= null;
 		$stocks					= null;
 		$tanks   				= array();
+		$p_dialy   				= array();
+		
 		if($request->input('url') == 'staff'){
 			$staffData              = self::show_staff_info($request)['staffData'];
 			$product_name           = self::show_staff_info($request)['product_name'];
@@ -887,7 +915,12 @@ class StaffController extends Controller
 			$products               = self::show_products_info($request);
 		}
 
-        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','products_average','expenses','payments','tanks','stocks','pos_sales'));
+
+		if($request->input('url') == 'products-daily'){
+			$stocks					= self::show_products_info_daily($request, 'excel');
+		}
+		
+        $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','products_average','expenses','payments','tanks','stocks','pos_sales', 'p_dialy'));
         $file_name  = 'Staff-PDF - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
 

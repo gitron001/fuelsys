@@ -168,6 +168,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/admin/staff/payments','StaffController@payments');
     Route::get('/admin/staff/products','StaffController@products');
     Route::get('/admin/staff/stock','StaffController@stock');
+    Route::get('/admin/staff/products-daily','StaffController@show_products_info_daily');
     Route::get('/excel_export_staff_view','StaffController@export_excel');
 
     // Staff

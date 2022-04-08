@@ -352,4 +352,5 @@ return [
     'incoming_date' => 'Data e Arritjes',
     'incoming_stock' => 'Blerjet e Derivateve',
     'products_sales' => 'Shitjet e Produkteve',
+    'products_daily' => 'Shitjet e Ditore',
 ];

@@ -348,4 +348,5 @@ return [
     'incoming_date' => 'Incoming Date',
     'incoming_stock' => 'Incoming Stock',
     'products_sales' => 'Product Sales',
+    'products_daily' => 'Daily Sales',
 ];

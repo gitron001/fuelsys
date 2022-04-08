@@ -71,6 +71,11 @@
     @include('admin.staff.total')
 @endif
 
+@if (Request::path() == 'admin/staff/products-daily')
+    <!-- inlcude staff total data -->
+    @include('admin.staff.product_totals_daily')
+@endif
+
 
 <div class="modal fade" id="close_shift_additional_data">
     <div class="modal-dialog" style="width: 900px;">
