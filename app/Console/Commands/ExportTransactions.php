@@ -52,7 +52,6 @@ class ExportTransactions extends Command
                 ->leftJoin('users AS u1', 'u1.id', '=', 'transactions.user_id')
                 ->leftJoin('users AS u2', 'u2.id', '=', 'transactions.bonus_user_id')
                 ->where('transactions.printed',0)
-                ->limit(1)
                 ->get();
 
 
