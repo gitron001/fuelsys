@@ -224,6 +224,9 @@ class StaffController extends Controller
 
         });
 
+	
+		
+
         $myFile = $myFile->string('xlsx');
         $response =  array(
            'name' => $file_name,
@@ -454,7 +457,7 @@ class StaffController extends Controller
     }
 	
 	
-	public static function show_products_info_daily(Request $request, $type){
+	public static function show_products_info_daily(Request $request){
 		
         $request                = self::setDates($request);
         $users                  = self::additional_data($request)['users'];
@@ -462,9 +465,10 @@ class StaffController extends Controller
 
         $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
 		
-        $products 	= Transactions::select(DB::raw("DATE_FORMAT(FROM_UNIXTIME(transactions.created_at), '%e %b %Y') as date"), DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'), DB::RAW('max(transactions.price) as product_price'))
+        $products 	= Transactions::select(DB::raw("DATE_FORMAT(FROM_UNIXTIME(transactions.created_at), '%e %b %Y') as date"), DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'))
             ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
             ->groupBy('date')
+            ->groupBy('transactions.price')
             ->groupBy('products.pfc_pr_id');
 
         $products = $products->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
@@ -472,11 +476,76 @@ class StaffController extends Controller
         $products = $products->orderBy('transactions.created_at');
 
         $products = $products->get();
-		if($type == 'export'){
-			return $products;
-		}else{		
-			return view('admin.staff.staff_view',compact('shift', 'products', 'users', 'banks'));
-		}
+	
+		return view('admin.staff.staff_view',compact('shift', 'products', 'users', 'banks'));		
+    }
+	
+	public static function show_products_info_daily_excel(Request $request){
+		
+        $request                = self::setDates($request);
+        $users                  = self::additional_data($request)['users'];
+        $banks                  = self::additional_data($request)['banks'];
+
+        $shift                  = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
+		
+        $products 	= Transactions::select(DB::raw("DATE_FORMAT(FROM_UNIXTIME(transactions.created_at), '%e %b %Y') as date"), DB::raw('SUM(money) as totalMoney'),DB::raw('SUM(lit) as totalLit'),DB::raw('SUM(lit) as totalLit'), DB::RAW('MAX(products.name) as p_name'), DB::RAW('MAX(products.pfc_pr_id) as product_id'))
+            ->leftJoin('products', 'products.pfc_pr_id', '=', 'transactions.product_id')
+            ->groupBy('date')
+            ->groupBy('transactions.price')
+            ->groupBy('products.pfc_pr_id');
+
+        $products = $products->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
+
+        $products = $products->orderBy('transactions.created_at');
+
+        $products = $products->get();
+	
+		$file_name  = 'Product_Sales - '.date('Y-m-d h-i', strtotime("now"));
+
+        $myFile = Excel::create($file_name, function($excel) use( $products )
+        {
+            $excel->getDefaultStyle()
+                    ->getAlignment()
+                    ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            // Total SECTION
+            $excel->sheet('Total', function($sheet) use( $products)
+            {
+
+                $sheet->cell('A1:E1', function ($cells) {
+                    $cells->setFontWeight('bold');
+                });
+
+                $sheet->appendRow(array(
+                    trans('adminlte::adminlte.date'),
+                    trans('adminlte::adminlte.product'),
+                    trans('adminlte::adminlte.price'),
+                    trans('adminlte::adminlte.amount'),
+                    trans('adminlte::adminlte.total'),
+                ));
+
+                foreach ($products as $product) {
+                    $sheet->appendRow(array(
+                        $product['date'],
+                        $product['p_name'],
+                        number_format($product['totalMoney']/$product['totalLit'], 2, '.', '' ),
+                        $product['totalMoney'],
+                        $product['totalLit'],
+                    ));
+                }
+
+            });
+
+
+        });
+				
+        $myFile = $myFile->string('xlsx');
+        $response =  array(
+           'name' => $file_name,
+           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
+        );
+
+        return response()->json($response);
     }
 
     public static function show_products_average_info($request, $view_type = null){

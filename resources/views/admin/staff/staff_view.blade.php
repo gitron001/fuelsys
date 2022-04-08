@@ -120,7 +120,8 @@
     <script>
         $(document).ready(function(){
             // Export staff data to Excel
-            $('#export_excel_staff_view').click(function(){
+            $('#export_excel_staff_view').click(function(e){
+				
                 var fromDate = $('#datetimepicker4').val();
                 var toDate = $('#datetimepicker5').val();
                 var shift = $('#shift').val();
@@ -131,6 +132,32 @@
                     type: "GET",
                     data: {fromDate: fromDate, toDate: toDate, user: user,shift:shift,search_type:search_type},
                     url: "{{ URL('/excel_export_staff_view')}}",
+                    dataType: "JSON",
+                    success: function(response, textStatus, request){
+                    var a = document.createElement("a");
+                    a.href = response.file;
+                    a.download = response.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    }
+                });
+
+            });
+			
+			 $('#export_excel_products_view').click(function(e){
+				e.preventDefault();
+                var fromDate = $('#datetimepicker4').val();
+                var toDate = $('#datetimepicker5').val();
+                var shift = $('#shift').val();
+                var user = $("#user").val();
+                var search_type = $('input[name="search_type"]:checked').val();
+				var type = $(this).data('type');
+				
+                $.ajax({
+                    type: "GET",
+                    data: {fromDate: fromDate, toDate: toDate, user: user,shift:shift,search_type:search_type},
+                    url: "{{ URL('/generate_product_daily_pdf')}}",
                     dataType: "JSON",
                     success: function(response, textStatus, request){
                     var a = document.createElement("a");

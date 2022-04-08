@@ -49,8 +49,13 @@
                 <button type="button" data-toggle="tooltip" class="btn btn-success" id="export_excel_staff_view" title="Export Excel"><i class="fas fa-file-excel"></i> Excel</button>
                 <button type="button" data-toggle="tooltip" class="btn btn-info" id="send_shift_email" title="Send shift in email"><i class="fa fa-envelope"></i> Send Email</button>
 			@endif
-            <a href="{{ route('generate_staff_pdf/pdf', ['search_type' => request()->get("search_type"), 'fromDate' => date('m/d/Y H:i', request()->get("fromDate")),'toDate' => date('m/d/Y H:i',request()->get("toDate")),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
+			@if(Request::path() != 'admin/staff/products-daily')
+				<a  href="{{ route('generate_staff_pdf/pdf', ['search_type' => request()->get("search_type"), 'fromDate' => date('m/d/Y H:i', request()->get("fromDate")),'toDate' => date('m/d/Y H:i',request()->get("toDate")),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
                 ] ) }}" target="_blank" data-toggle="tooltip" class="btn btn-warning" title="Export PDF"><i class="fas fa-file-pdf"></i> PDF</a>
+			@else
+				<a class="btn btn-success" href="{{ route('generate_product_daily_pdf', ['search_type' => request()->get("search_type"), 'fromDate' => date('m/d/Y H:i', request()->get("fromDate")),'toDate' => date('m/d/Y H:i',request()->get("toDate")),'shift' => request()->get("shift"),'url'=> request()->segment(count(request()->segments()))
+                ] ) }}" target="_blank" id="export_excel_products_view" data-toggle="tooltip" class="btn btn-warning" title="Export PDF"><i class="fas fa-file-excel"></i> Excel</a>				
+			@endif
             <button type="button" data-toggle="tooltip" class="btn btn-danger" id="close_shift" title="Close Shift"><i class="fas fa-exclamation-triangle"></i> Close Shift</button>
             <div class="btn-group" role="group">
               <input type="radio" name="search_type" class="btn btn-secondary search_type_js" value="shifts" @if(request()->get("search_type") != 'date_range') checked @endif >{{ trans('adminlte::adminlte.shift') }}<br>
