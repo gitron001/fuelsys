@@ -16,6 +16,7 @@ use App\Models\Shifts;
 use App\Models\Company;
 use App\Models\Expenses;
 use App\Models\Payments;
+use App\Models\Categories;
 use App\Models\POSPayments;
 use App\Models\TankHistory;
 use App\Jobs\SendShiftEmail;
@@ -260,10 +261,11 @@ class StaffController extends Controller
         $payments               = self::show_payments_info($request);
 		$tanks					=  array(); //Tank::where('status', 1)->get();
 		$tank_details			= self::show_tank_info($request);
+		$categories		        = Categories::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 
-        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks','tank_details','stock_details','tanks','prev_stock_details','pos_sales'))->withModel($tanks);;
+        return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks','tank_details','stock_details','tanks','prev_stock_details','pos_sales','categories'))->withModel($tanks);;
     }
 
     public function expenses(Request $request){
@@ -710,9 +712,9 @@ class StaffController extends Controller
     public function close_shift_additional_data() {
         $users          = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
         $banks          = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
-		$companies		= Company::select('id', 'name')->where('status', 1)->orderBy('name', 'asc')->get();
+		$categories		= Categories::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 		
-        return view('/admin/staff/shift_additional_data',compact('users','banks'))->render();
+        return view('/admin/staff/shift_additional_data',compact('users','banks','categories'))->render();
     }
 
     public function save_additional_data(Request $request){
@@ -727,6 +729,7 @@ class StaffController extends Controller
 
                 $expenses->date         = $shift->end_date - 1;
                 $expenses->amount       = $request->input('expense_amount')[$i];
+				$expenses->expense_type = $request->input('expense_categories')[$i];
                 $expenses->description  = $request->input('expense_description')[$i];
                 $expenses->user_id      = $request->input('expense_user_id')[$i];
                 $expenses->created_at   = $shift->end_date - 1;
@@ -743,6 +746,7 @@ class StaffController extends Controller
 
                 $payments->date         = $shift->end_date - 1;
                 $payments->amount       = $request->input('payment_amount')[$i];
+				$payments->payment_type = $request->input('payment_categories')[$i];
                 $payments->description  = $request->input('description');
                 $payments->user_id      = $request->input('payment_user_id')[$i];
                 $payments->type         = 1;

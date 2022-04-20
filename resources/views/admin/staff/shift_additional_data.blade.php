@@ -7,10 +7,17 @@
                 </div>
                 @csrf
                 <div class="box-body">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             {!! Form::select('expense_user_id[]',['' => 'Select a User'] +
                             $users,null,['class'=> 'selectpicker form-control','data-live-search' => 'true','data-style'=>'btn-dropdownSelectNew']);
+                            !!}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {!! Form::select('expense_categories[]',['' => 'Select a Type'] +
+                            $categories,null,['class'=> 'selectpicker form-control','data-live-search' => 'true','data-style'=>'btn-dropdownSelectNew']);
                             !!}
                         </div>
                     </div>
@@ -40,10 +47,17 @@
                 </div>
                 @csrf
                 <div class="box-body">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             {!! Form::select('payment_user_id[]',['' => 'Select a User'] +
                             $users,null,['class'=> 'selectpicker form-control','data-live-search' => 'true','data-style'=>'btn-dropdownSelectNew']);
+                            !!}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {!! Form::select('payment_categories[]',['' => 'Select a Type'] +
+                            $categories,null,['class'=> 'selectpicker form-control','data-live-search' => 'true','data-style'=>'btn-dropdownSelectNew']);
                             !!}
                         </div>
                     </div>
