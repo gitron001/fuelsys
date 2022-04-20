@@ -718,20 +718,20 @@ class StaffController extends Controller
     public function save_additional_data(Request $request){
         $users = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
         $banks = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
-        //$shift = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
+        $shift = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->skip(1)->take(1)->first();
 
         // Save expenses
         if(array_values($request->input('expense_user_id'))[0] !== NULL && array_values($request->input('expense_amount'))[0] !== NULL){
             for($i = 0; $i < count($request->input('expense_user_id')); $i++) {
                 $expenses   = new Expenses();
 
-                $expenses->date         = now()->timestamp;
+                $expenses->date         = $shift->end_date - 1;
                 $expenses->amount       = $request->input('expense_amount')[$i];
                 $expenses->description  = $request->input('expense_description')[$i];
                 $expenses->user_id      = $request->input('expense_user_id')[$i];
-                $expenses->created_at   = now()->timestamp;
+                $expenses->created_at   = $shift->end_date - 1;
                 $expenses->created_by   = Auth::user()->id;
-                $expenses->updated_at   = now()->timestamp;
+                $expenses->updated_at   = $shift->end_date - 1;
                 $expenses->save();
             }
         }
@@ -741,14 +741,14 @@ class StaffController extends Controller
             for($i = 0; $i < count($request->input('payment_user_id')); $i++) {
                 $payments   = new Payments();
 
-                $payments->date         = now()->timestamp;
+                $payments->date         = $shift->end_date - 1;
                 $payments->amount       = $request->input('payment_amount')[$i];
                 $payments->description  = $request->input('description');
                 $payments->user_id      = $request->input('payment_user_id')[$i];
                 $payments->type         = 1;
-                $payments->created_at   = now()->timestamp;
+                $payments->created_at   = $shift->end_date - 1;
                 $payments->created_by   = Auth::user()->id;
-                $payments->updated_at   = now()->timestamp;
+                $payments->updated_at   = $shift->end_date - 1;
                 $payments->save();
             }
         }
@@ -759,12 +759,12 @@ class StaffController extends Controller
             for($i = 0; $i < count($request->input('bank_amount')); $i++) {
                 $payments   = new POSPayments();
 
-                $payments->date         = now()->timestamp;
+                $payments->date         = $shift->end_date - 1;
                 $payments->amount       = $request->input('bank_amount')[$i];
                 $payments->bank_id      = $request->input('bank_id')[$i];
                 $payments->created_by   = Auth::user()->id;
-                $payments->created_at   = now()->timestamp;
-                $payments->updated_at   = now()->timestamp;
+                $payments->created_at   = $shift->end_date - 1;
+                $payments->updated_at   = $shift->end_date - 1;
                 $payments->save();
             }
         }
