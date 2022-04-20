@@ -244,7 +244,6 @@
                                     $(".modal-title").html('FuelSystem');
                                     $(".modal-body").html(data);
                                     $('.selectpicker').selectpicker();
-
                                 });
                             }
                         }

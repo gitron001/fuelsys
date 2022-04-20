@@ -668,7 +668,7 @@ class StaffController extends Controller
             ->first()
             ->toArray();
         $request = new Request($request);
-
+	
         // Send closed shift in email
         if(!empty($request)){
             $email = new SendShiftEmail($request);
@@ -701,6 +701,7 @@ class StaffController extends Controller
         }
 
         $data['response'] = true;
+        $data['shift_id'] = $last_id;
 
         return json_encode($data);
 
@@ -709,14 +710,15 @@ class StaffController extends Controller
     public function close_shift_additional_data() {
         $users          = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
         $banks          = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
-
+		$companies		= Company::select('id', 'name')->where('status', 1)->orderBy('name', 'asc')->get();
+		
         return view('/admin/staff/shift_additional_data',compact('users','banks'))->render();
     }
 
     public function save_additional_data(Request $request){
         $users = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
         $banks = Banks::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
-        $shift = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
+        //$shift = Shifts::select('id', 'start_date','end_date')->orderBy('start_date', 'DESC')->get();
 
         // Save expenses
         if(array_values($request->input('expense_user_id'))[0] !== NULL && array_values($request->input('expense_amount'))[0] !== NULL){

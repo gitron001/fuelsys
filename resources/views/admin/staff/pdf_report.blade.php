@@ -560,6 +560,7 @@
     <!-- END EXPENSES SECTION -->
 
     <!-- START POS SECTION -->
+	@php ($pos_total = 0) @endphp
     @if (Request::input('url') == 'staff' || Request::input('url') == 'pos-sales' || $request->url == 'staff')
         @if(count($pos_sales) != 0)
         <h5>{{ trans('adminlte::adminlte.expenses') }}</h5>
@@ -571,7 +572,6 @@
                     <th>{{ trans('adminlte::adminlte.amount') }}</th>
                 </tr>
             </thead>
-            @php ($pos_total = 0) @endphp
             @foreach($pos_sales as $pos_sale)
             <tr>
                 <td>{{ date('m/d/Y H:i', $pos_sale->date) }}</td>
