@@ -15,17 +15,16 @@ use Illuminate\Http\Request;
 
 class StockController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request) {		
         $products = Products::where('status', 1)->get();
 
-        $sort_by    = $request->get('sortby');
+		$sort_by = ($request->get('sortby') == 'name' ? "stocks.date" : "stocks".".".$request->get('sortby'));
         $sort_type  = $request->get('sorttype');
         $search     = $request->get('search');
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
-
-        $stock      = Stock::select('stocks.id','stocks.date','stocks.tank_id','stocks.amount','stocks.reference_number','stocks.created_at','stocks.updated_at','tanks.id','tanks.product_id')
-                            ->leftJoin('tanks', 'tanks.id', '=', 'stocks.tank_id');
+	
+		$stock = new Stock;
 
         if($request->get('product')){
             $stock  = $stock->where('tanks.product_id',$request->get('product'));

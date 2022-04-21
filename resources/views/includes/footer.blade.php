@@ -635,5 +635,50 @@
         });
     });
 </script>
+
+<script>
+$(document).ready(function () {
+	$(function () {
+        var date = new Date();
+        date.setDate(date.getDate() -1);
+        $('#datetimepicker4').datetimepicker({
+            defaultDate:date
+        });
+
+        var dateNow = new Date();
+        $('#datetimepicker5').datetimepicker({
+            defaultDate:dateNow
+        });
+    });
+	
+        $('#export_stock_excel').click(function () {
+            var fromDate = $('#datetimepicker4').val();
+            var toDate = $('#datetimepicker5').val();
+            var product = $('#product').val();
+            var reference_number = $("#reference_number").val();
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    product: product,
+                    reference_number: reference_number
+                },
+                url: "{{ URL('/excel_export_stock')}}",
+                dataType: "JSON",
+                success: function (response, textStatus, request) {
+                    var a = document.createElement("a");
+                    a.href = response.file;
+                    a.download = response.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+
+        });
+    });
+</script>
 @endsection
 
