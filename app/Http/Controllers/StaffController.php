@@ -478,8 +478,9 @@ class StaffController extends Controller
         $products = $products->orderBy('transactions.created_at');
 
         $products = $products->get();
+		$categories		        = Categories::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 	
-		return view('admin.staff.staff_view',compact('shift', 'products', 'users', 'banks'));		
+		return view('admin.staff.staff_view',compact('shift', 'products', 'users', 'banks','categories'));		
     }
 	
 	public static function show_products_info_daily_excel(Request $request){
