@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+<?php if(!isset($categories)){ $categories = array(); } ?>
 <!-- include staff menu -->
 @include('admin.staff.staff_menu')
 <!-- END box box-primary -->

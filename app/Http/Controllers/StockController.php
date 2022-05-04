@@ -23,7 +23,7 @@ class StockController extends Controller
         $search     = $request->get('search');
         $from_date  = strtotime($request->input('fromDate'));
         $to_date    = strtotime($request->input('toDate'));
-	
+		$cateogires = array();
 		$stock = new Stock;
 
         if($request->get('product')){
@@ -41,11 +41,11 @@ class StockController extends Controller
         if($request->ajax() == false){
             $stock  = $stock->orderBy('stocks.date','DESC')
                         ->paginate(15);
-            return view('/admin/stock/home',compact('stock','products'));
+            return view('/admin/stock/home',compact('stock','products', 'cateogires'));
         } else {
             $stock  = $stock->orderBy($sort_by,$sort_type)
                         ->paginate(15);
-            return view('/admin/stock/table_data',compact('stock','products'))->render();
+            return view('/admin/stock/table_data',compact('stock','products', 'cateogires'))->render();
         }
     }
 

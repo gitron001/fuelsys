@@ -374,8 +374,9 @@ class StaffController extends Controller
 		$totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
 		$products               = self::show_products_info($request);
 		$stocks					= self::get_incoming_stock($request);
+		$categories				= self::get_incoming_stock($request);
 
-		return view('admin.staff.staff_view',compact('shift','tanks','totalizer_totals','products','stocks','staffData','product_name','users','banks'));
+		return view('admin.staff.staff_view',compact('shift','tanks','totalizer_totals','products','stocks','staffData','product_name','users','banks', 'categories'));
 
 	}
 
