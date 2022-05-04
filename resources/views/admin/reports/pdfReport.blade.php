@@ -160,7 +160,6 @@
 	if($inc_transactions == 'No' || !isset($inc_transactions)) {
 		$totalTrans = $balance;
 		$total_transaction = 0;
-
 		foreach($total_transactions as $date => $transaction){
 			$transaction_sum = 0;
             $payment_sum = 0;
@@ -174,6 +173,7 @@
 					$fueling = $tr->money;
 					$payment = 0;
 				}
+
 				$transaction_sum += $tr->money;
                 $payment_sum += $tr->amount;
                 $details = $tr->description;
@@ -199,7 +199,7 @@
             <td align="center">@if(trim($tr->plates) != "" && $tr->plates != 0) {{ $tr->plates }}  @else {{ $tr->username }} @endif</td>
             @if($bonus_user != NULL) <td align="center">{{ $tr->bonus_username }}</td> @endif
 			<td align="center">{{ number_format($transaction_sum, 2) }} €</td>
-			<td align="center"> {{ number_format($tr->amount, 2) }} € </td>
+			<td align="center"> {{ number_format($payment_sum, 2) }} € </td>
 			<td align="right"> {{ number_format($totalTrans, 2) }} €</td>
 		</tr>
 	<?php
