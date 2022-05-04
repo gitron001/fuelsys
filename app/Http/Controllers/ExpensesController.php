@@ -27,8 +27,9 @@ class ExpensesController extends Controller
         $sort_by         = "expenses".".".$request->get('sortby');
         $sort_type       = $request->get('sorttype');
 
-        $query          = Expenses::select(DB::RAW('users.name as user_name'), 'users.type as user_type', 'expenses.amount', 'expenses.date','expenses.created_at','expenses.updated_at','expenses.id', 'creator.name as p_creater','expenses.expense_type','categories.name as category_name')
+        $query          = Expenses::select(DB::RAW('users.name as user_name'),DB::RAW('companies.name as company_name'), 'users.type as user_type', 'expenses.amount', 'expenses.date','expenses.created_at','expenses.updated_at','expenses.id', 'creator.name as p_creater','expenses.expense_type','categories.name as category_name')
             ->leftJoin('users', 'users.id', '=', 'expenses.user_id')
+            ->leftJoin('companies', 'companies.id', '=', 'expenses.company_id')
             ->leftJoin('categories', 'categories.id', '=', 'expenses.category_id')
             ->leftJoin('users as creator', 'creator.id', '=', 'expenses.created_by');
 
@@ -56,9 +57,10 @@ class ExpensesController extends Controller
 			$users->where('company_id', 0)
             ->orWhereNull('company_id');
 		})->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
+        $companies  = Company::pluck('name','id')->all();
         $categories = Categories::where('status',1)->pluck('name','id')->all();
 
-        return view('/admin/expenses/create',compact('users','categories'));
+        return view('/admin/expenses/create',compact('users','categories','companies'));
     }
 
     public function store(Request $request) {
@@ -68,6 +70,7 @@ class ExpensesController extends Controller
         $expenses->amount       = $request->input('amount');
         $expenses->description  = $request->input('description');
         $expenses->user_id      = $request->input('user_id');
+        $expenses->company_id   = $request->input('company_id');
         $expenses->category_id  = $request->input('category_id');
         $expenses->expense_type = $request->input('expense_type');
         $expenses->created_at   = now()->timestamp;
@@ -84,6 +87,7 @@ class ExpensesController extends Controller
         $expenses = Expenses::findOrFail($id);
 
         $expenses->user_id      = $request->input('user_id');
+        $expenses->company_id   = $request->input('company_id');
         $expenses->category_id  = $request->input('category_id');
         $expenses->date         = strtotime($request->input('date'));
         $expenses->description  = $request->input('description');
@@ -105,9 +109,10 @@ class ExpensesController extends Controller
                             $users->where('company_id', 0)
                             ->orWhereNull('company_id');
                         })->where('type', 1)->where('branch_id',NULL)->pluck('name','id')->all();
+        $companies  = Company::pluck('name','id')->all();
         $categories = Categories::where('status',1)->pluck('name','id')->all();
 
-        return view('/admin/expenses/edit',compact('expenses','users','categories'));
+        return view('/admin/expenses/edit',compact('expenses','users','categories','companies'));
     }
 
     public function destroy($id) {

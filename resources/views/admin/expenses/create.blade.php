@@ -38,6 +38,27 @@
             defaultDate:date
         });
 	});
+
+    $(document).ready(function() {
+    	$('input[type=checkbox]').on('click', function() {
+		    if($(this).is(':checked'))
+		        $checkboxValue = $(this).val();
+
+		    	if($checkboxValue == 'user'){
+					$("#companyDropdown").val('0').trigger('change');
+		    		$("#company").hide();
+		    		$("#user").show();
+		    	}else{
+					$("#userDropdown").val('0').trigger('change');
+		    		$("#company").show();
+		    		$("#user").hide();
+		    	}
+		});
+	});
+
+    $(":checkbox").click(function(e) {
+        $(":checkbox[value!="+$(this).attr('value')+"]").attr('checked', null);
+    });
 </script>
 
 @endsection

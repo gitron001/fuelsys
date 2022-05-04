@@ -56,7 +56,7 @@
                         <th class="sorting" data-sorting_type="asc" data-column_name="date">{{ trans('adminlte::adminlte.date') }} <span id="date_icon"
                                 class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
-                        <th class="sorting" data-sorting_type="asc" data-column_name="user_id">{{ trans('adminlte::adminlte.user') }} <span
+                        <th class="sorting" data-sorting_type="asc" data-column_name="user_id">{{ trans('adminlte::adminlte.user') }} / {{ trans('adminlte::adminlte.company') }}<span
                                 id="user_id_icon" class="removePrevIcon sortIcon"><span
                                     class="glyphicon glyphicon glyphicon glyphicon-sort"></span></span></th>
                         <th class="sorting" data-sorting_type="asc" data-column_name="amount">{{ trans('adminlte::adminlte.amount') }} <span

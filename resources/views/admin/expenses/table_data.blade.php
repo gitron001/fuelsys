@@ -2,7 +2,7 @@
 <tr>
     <td><input type="checkbox" name="chkbox" class="checkitem checkbox-select-all" value="{{ $expense->id }}"></td>
     <td>{{ date('m/d/Y H:i', $expense->date) }}</td>
-    <td>{{ $expense->user_name ? $expense->user_name : ' ' }}</td>
+    <td>{{ $expense->user_name ? $expense->user_name : ' ' }} {{ $expense->company_name ? $expense->company_name : ' ' }}</td>
     <td>{{ $expense->amount }}</td>
     <td>{{ $expense->p_creater }}</td>
     <td>{{ $expense->expense_type }}</td>
