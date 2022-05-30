@@ -358,7 +358,7 @@ class DispanserService extends ServiceProvider
 			PFC::storeLogs($t->id, null, 19, unpack('c*', $binarydata));
 			
 			$response = PFC::send_message($socket, $binarydata);
-			
+			if(!isset($response[6])){  continue; }
 			$fuel_level = pack('c', $response[6]).pack('c', $response[5]);
 			$fuel_level = unpack('s', $fuel_level)[1];
 			$tank = Tank::find($t->id);

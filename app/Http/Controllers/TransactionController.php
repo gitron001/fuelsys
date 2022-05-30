@@ -233,17 +233,19 @@ class TransactionController extends Controller
     }
 
     public static function exportPDF(Request $request){
-        $payments   = self::generate_data($request);
-        $balance    = self::generate_balance($request);
-        $data       = self::getGeneralData($request);
-        $company    = Company::where('status', 4)->first();
-        $date 		= $request->fromDate;
-        $date_to    = $request->toDate;
-        $bonus_user = $request->bonus_user;
-        $inc_transactions = $request->input('inc_transactions');
-        $inc_per_user = $request->input('inc_per_user');
-        $company_checked  = $request->input('company');
-        $exc_balance  	  = $request->input('exc_balance');
+        $payments   				= self::generate_data($request);
+        $balance    				= self::generate_balance($request);
+        $data       				= self::getGeneralData($request);
+        $company    				= Company::where('status', 4)->first();
+        $date 						= $request->fromDate;
+        $date_to    				= $request->toDate;
+        $bonus_user 				= $request->bonus_user;
+        $inc_transactions 			= $request->input('inc_transactions');
+        $inc_per_user 				= $request->input('inc_per_user');
+        $company_checked  			= $request->input('company');
+        $exc_balance  	  			= $request->input('exc_balance');
+        $user_details  	  			= array();
+        $total_transactions  	  	= array();
 
         if(!isset($inc_transactions) || $inc_transactions == 'No'){
             $total_transactions = $payments->groupBy(function($val) {
@@ -812,7 +814,7 @@ class TransactionController extends Controller
 			return false;
 		}
 
-        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date', 'date_to', 'data','inc_transactions', 'company','user_details','company_details','company_checked', 'exc_balance','to_date','inc_per_user','bonus_user_by_plates'));
+        $pdf = PDF::loadView('admin.reports.pdfReport',compact('payments','balance','date', 'date_to', 'data','inc_transactions', 'company','company_details','company_checked', 'exc_balance','to_date','inc_per_user','bonus_user_by_plates'));
         $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
 
 

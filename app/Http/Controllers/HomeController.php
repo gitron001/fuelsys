@@ -36,7 +36,7 @@ class HomeController extends Controller
 							   })
 							  ->groupBy('pumps.tank_id')
 							  ->get();*/
-        return view('welcome',compact('dispanesers','transactions','company_low_limit','tanks','stock_data','sales'));
+        return view('welcome',compact('dispanesers','transactions','company_low_limit'));
     }
 
     public function update_dispensers_status(Request $request){

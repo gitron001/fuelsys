@@ -164,6 +164,8 @@ class TransactionService extends ServiceProvider
 						$the_dispanser 					  		= Dispaneser::where('channel_id', $channel_id)->first();
 						if(isset($the_dispanser->current_amount)){
 							
+							if(!isset($transaction_data['user_id']) || !isset($transaction_data['bonus_card'])){ continue; }
+							
 							if(((int)(($amount/$the_dispanser->money_division) * 100) == (int)$the_dispanser->current_amount) || is_null($transaction_data['user_id']) || (int)$transaction_data['user_id'] == 0){ continue; }
 							$the_dispanser->current_amount 	  		= (int)( ($amount/$the_dispanser->money_division) * 100);
 							$the_dispanser->current_user_id   		= (int)$transaction_data['user_id'];

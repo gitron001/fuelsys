@@ -68,14 +68,6 @@
 
         <div class="row">
 			<div class="col-md-6">
-                <div class="form-group {{ $errors->has('expense_type') ? 'has-error' :'' }}">
-                    {!! Form::label('expense_type', trans('adminlte::adminlte.type')); !!}
-                    {!! Form::text('expense_type',null,['class'=>'form-control','rows' => 3]); !!}
-                    {!! $errors->first('expense_type','<span class="help-block">:message</span>') !!}
-                </div>
-			</div>
-
-			<div class="col-md-6">
                 @if(!isset($expenses))
 					<div class="form-group {{ $errors->has('category_id') ? 'has-error' :'' }}">
 				@else

@@ -264,6 +264,8 @@ class StaffController extends Controller
 		$categories		        = Categories::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $totalizer_totals       = TransactionController::getGeneralDataTotalizers($request);
+		$stock_details			= array();
+		$prev_stock_details		= array();
 
         return view('admin.staff.staff_view',compact('shift','staffData','products','product_name','companies', 'totalizer_totals','companyData','product_name_company','expenses','payments','users','banks','tank_details','stock_details','tanks','prev_stock_details','pos_sales','categories'))->withModel($tanks);;
     }
@@ -837,7 +839,7 @@ class StaffController extends Controller
 		$pos_sales  			= array();
 
         if(!empty($company->email)){
-            $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','shift','companies','company','payments','expenses','tanks','pos_sales'));
+            $pdf = PDF::loadView('admin.staff.pdf_report',compact('request','totalizer_totals','products','staffData','product_name','companyData','product_name_company','companies','company','payments','expenses','tanks','pos_sales'));
 
 
             $file_name  = 'Raport - '.date('Y-m-d', time()).'.pdf';
