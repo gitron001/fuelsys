@@ -41,6 +41,9 @@ class SendDailyEmail extends Command
     public function handle()
     {
 		$hour 			= date('H');
+		if($hour == 00){
+            $hour = 24;
+        }
         $companies  	= Company::select('id','email','daily_at')->where('send_email',1)->where('daily_at',$hour)->get();
         $current_time   = date('H');
         $from_date      = date('Y-m-d H:00:00', strtotime('- 1 day', strtotime(date("Y-m-d $hour:00:00"))));

@@ -46,7 +46,13 @@ class SendCompanyEmail extends Command
         $to_date        = date('Y-m-d h:i:s A');
 
         foreach($companies as $company){
-           if($company['daily_at'] == $current_time){
+			if($company['daily_at'] == 24){
+                $daily_at = 00;
+            }else{
+                $daily_at = $company['daily_at'];
+            }
+
+            if($daily_at == $current_time){
 
             $data = [
                 'company'  => $company->id,

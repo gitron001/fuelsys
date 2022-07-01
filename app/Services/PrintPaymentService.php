@@ -85,12 +85,16 @@ class PrintPaymentService extends ServiceProvider
 		
 			//$transaction->product->name = substr($transaction->product->name, 0, 18);
             $limit_left = ($payment->user->name == 0) ? $payment->company->limit_left : $payment->user->limit_left;
-			$item = self::singleItem(date('d M Y', $payment->date), number_format($payment['amount'], 2), $limit_left);
+			$item = self::singleItem(date('d M Y', $payment->date), null, number_format($payment['amount'], 2));
 
             $printer->textRaw($item);
             $printer->text("------------------------------------------------\n");
 
             $printer -> feed(2);
+			if($payment->company->has_limit == 1)
+			{	
+				$printer->text('Borgji Mbetur: '.$limit_left. "\n");	
+			}			
 
 			if($payment->company->name == ""){
 				$printer->text('Pagoj: '.$payment->user->name. "\n");				
