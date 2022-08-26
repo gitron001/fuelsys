@@ -183,7 +183,7 @@ class Transaction extends Model
 		if(isset($dispaneser->id)){
 			$dispaneser->current_amount 	  	= (int)($transaction->money*100);
 			$dispaneser->current_user_id   		= (int)$transaction->user_id;
-			$dispaneser->current_bonus_user_id  = (int)$transaction->bonus_user_id;
+			$dispaneser->current_bonus_user_id  = NULL; //(int)$transaction->bonus_user_id;
 			$dispaneser->current_driver_id  	= NULL;
 			$dispaneser->status			   		= 1;
 			$dispaneser->data_updated_at   		= time();
