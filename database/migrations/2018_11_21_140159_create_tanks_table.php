@@ -22,6 +22,7 @@ class CreateTanksTable extends Migration
             $table->integer('capacity');
 			$table->integer('fuel_level');
 			$table->integer('water_level');
+			$table->integer('water_offset');
             $table->integer('alarm_email_water_level')->deafult('0');
             $table->integer('low_limit')->deafult('0');
             $table->integer('status');
