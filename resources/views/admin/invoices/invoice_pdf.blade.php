@@ -168,18 +168,21 @@
                 </td>
             </tr>
         </table>
-
-    </div>
-    <div>
+      <div>
         <div style="float:left">
             <p>{{ trans('adminlte::adminlte.delivered') }}:</p>
             <p>_________________________</p>
         </div>
         <div style="float: right" class="pull-right">
-            <p>{{ trans('adminlte::adminlte.recieved') }}:</p>
+            <p>{{ trans('adminlte::adminlte.received') }}:</p>
             <p>_________________________</p>
         </div>
+      </div>
+
     </div>
+
+
+
 
     @if(count($all_transactions) == 1)
     <!-- PART 2 -->
@@ -299,17 +302,20 @@
                 </td>
             </tr>
         </table>
+
+        <div>
+            <div style="float:left">
+                <p>{{ trans('adminlte::adminlte.delivered') }}:</p>
+                <p>_________________________</p>
+            </div>
+            <div style="float: right" class="pull-right">
+                <p>{{ trans('adminlte::adminlte.received') }}:</p>
+                <p>_________________________</p>
+            </div>
+          </div>
     </div>
-    <div>
-        <div style="float:left">
-            <p>{{ trans('adminlte::adminlte.delivered') }}:</p>
-            <p>_________________________</p>
-        </div>
-        <div style="float: right" class="pull-right">
-            <p>{{ trans('adminlte::adminlte.recieved') }}:</p>
-            <p>_________________________</p>
-        </div>
-    </div>
+
+
     @endif
 
 
