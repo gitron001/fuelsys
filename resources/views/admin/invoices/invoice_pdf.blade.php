@@ -168,7 +168,7 @@
                 </td>
             </tr>
         </table>
-      <div>
+      <div style="margin-top:2rem">
         <div style="float:left">
             <p>{{ trans('adminlte::adminlte.delivered') }}:</p>
             <p>_________________________</p>
@@ -303,7 +303,7 @@
             </tr>
         </table>
 
-        <div>
+        <div style="margin-top:2rem">
             <div style="float:left">
                 <p>{{ trans('adminlte::adminlte.delivered') }}:</p>
                 <p>_________________________</p>
