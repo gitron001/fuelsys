@@ -330,11 +330,13 @@ class TransactionController extends Controller
             'updated_at'    => now()->timestamp
         ]);
 
+        $invoice = Invoice::findOrFail($invoice_id);
+
         foreach ($all_transactions as $transaction) {
             Transactions::where('id', $transaction->tr_id)->update(['invoice_id' => $invoice_id, 'updated_at' => now()->timestamp]);
         }
 
-        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','invoice_id','all_transactions','banks'));
+        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','invoice_id','invoice','all_transactions','banks'));
         $file_name  = 'Transaction - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
     }

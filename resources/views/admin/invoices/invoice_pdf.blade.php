@@ -150,7 +150,7 @@
                      </p>
                 </td>
             </tr>
-            @else
+            @elseif($invoice->paid == 1)
             <thead>
                 <tr>
                     <th align="center;"  style="line-height: 1.2;color: black;font-size: 1.5rem">{{ strtoupper(trans('adminlte::adminlte.paid')) }}</th>
