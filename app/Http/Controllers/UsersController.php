@@ -144,6 +144,7 @@ class UsersController extends Controller
             'limit_left'        => $limit_left,
             'company_id'        => $request->input('company_id') ? : 0,
             'one_time_limit'    => $request->input('one_time_limit') ? : 0,
+            'daily_limit'       => $request->input('daily_limit') ? : 0,
             'plates'            => $request->input('plates') ? : 0,
             'vehicle'           => $request->input('vehicle') ? : 0,
             'type'              => $request->input('type'),
@@ -192,6 +193,7 @@ class UsersController extends Controller
 								'email'             => $request->input('email'),
 								'company_id'        => $request->input('company_id') ? : 0,
 								'one_time_limit'    => $request->input('one_time_limit') ? : 0,
+								'daily_limit'       => $request->input('daily_limit') ? : 0,
 								'plates'            => $request->input('plates') ? : 0,
 								'vehicle'           => $request->input('vehicle') ? : 0,
                                 'type'              => $request->input('type'),
@@ -297,6 +299,7 @@ class UsersController extends Controller
         $user->has_limit        = $request->input('has_limit');
         $user->limit_left       = $limit_left;
         $user->one_time_limit   = $request->input('one_time_limit');
+        $user->daily_limit      = $request->input('daily_limit');
         $user->password         = bcrypt($password);
         $user->updated_at       = now()->timestamp;
         $user->update();

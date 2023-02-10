@@ -21,6 +21,7 @@
         var e = document.getElementById("showHide");
         var value = e.options[e.selectedIndex].value;
 
+
         if(value == 2 || value == 4 || value == 9){
             $("#company").show();
             $("#one_time_limit").show();
@@ -37,12 +38,14 @@
 
     });
 
+
+
     var dateNow = new Date();
       $('#datetimepicker').datepicker({
           defaultDate:dateNow
       });
     // Check has_limit field
-    $(document).on('click','#showHideLimits',function(){
+    $(document).on('change','#showHideLimits',function(){
         var e = document.getElementById("showHideLimits");
         var value = e.options[e.selectedIndex].value;
 
@@ -51,9 +54,11 @@
         if(value == 1){
             $("#starting_balance").show();
             $("#has_limits").show();
+            $('#daily_limit').show();
         }else {
             $("#starting_balance").hide();
             $("#has_limits").hide();
+            $('#daily_limit').hide();
         }
     });
 

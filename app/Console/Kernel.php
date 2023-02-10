@@ -93,6 +93,9 @@ class Kernel extends ConsoleKernel
 
         // Insert Running Process
         //$schedule->command('running:processes')->everyMinute();
+
+        // Reset daily limit for users
+        $schedule->command('reset:daily_limit')->dailyAt('00:00');
     }
 
     /**

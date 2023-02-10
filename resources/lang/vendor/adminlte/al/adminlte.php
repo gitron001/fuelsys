@@ -144,6 +144,7 @@ return [
         'rfid'              => 'RFID(Numri i kartelës)',
         'has_limit'         => 'A ka limit?',
         'one_time_limit'    => 'Limit një përdorimësh',
+        'daily_limit'       => 'Limiti Ditor',
         'contact_number'    => 'Numri kontaktues',
         'application_date'  => 'Data e aplikimit',
         'residence'         => 'Vendbanimi',

@@ -144,6 +144,7 @@ return [
         'rfid'              => 'RFID(Card number)',
         'has_limit'         => 'Has limit',
         'one_time_limit'    => 'One time limit',
+        'daily_limit'       => 'Daily Limit',
         'contact_number'    => 'Contact number',
         'application_date'  => 'Application date',
         'residence'         => 'Residence',
