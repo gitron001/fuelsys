@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -38,8 +39,13 @@ class ResetDailyLimit extends Command
      */
     public function handle()
     {
-        DB::table('users')->update(['daily_limit' => 0]);
+        $users = User::where('has_limit',1)->where('daily_limit','>',0)->get();
 
-        $this->info('daily_limit column reset successfully');
+        foreach($users as $user){
+            $user->limits = $user->daily_limit;
+            $user->save();
+        }
+
+        $this->info('Limit is set successfully');
     }
 }
