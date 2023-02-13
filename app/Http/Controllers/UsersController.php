@@ -130,6 +130,7 @@ class UsersController extends Controller
               }
         }else{
             $limit_left = 0;
+            $limit =0 ;
         }
 
         $password = $request->input('password');
@@ -286,6 +287,7 @@ class UsersController extends Controller
             }
         }else{
             $limit_left = 0;
+            $limit = 0;
         }
 
         $user->rfid             = $request->input('rfid');
