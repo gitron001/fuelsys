@@ -123,14 +123,12 @@ class UsersController extends Controller
         //$firstValueOfArrayBranch  = array_values($request->input('branch'))[0];
         //$firstValueOfArrayLimit   = array_values($request->input('limit'))[0];
         $limit = 0;
+
         if($request->input('has_limit') == 1){
             $limit_left = $request->input('limits') - $request->input('starting_balance');
-            if($request->input('daily_limit') > 0){
-                $limit = $request->input('daily_limit');
-              }
+            $limit = $request->input('daily_limit');
         }else{
             $limit_left = 0;
-            $limit =0 ;
         }
 
         $password = $request->input('password');
@@ -204,7 +202,7 @@ class UsersController extends Controller
                                 'type'              => $request->input('type'),
                                 'send_email'        => $request->input('send_email'),
                                 'on_transaction'    => $request->input('on_transaction'),
-								'password'          => Hash::make($password),
+								'password'          => bcrypt($password),
 								'status'            => 1,
 								'remember_token'    => '',
 								'created_at'        => now()->timestamp,
@@ -275,19 +273,22 @@ class UsersController extends Controller
 
         $user = Users::findOrFail($id);
 
-        $password = $request->input('password');
+        if($request->input('password') != ''){
+            $password = Hash::make($request->input('password'));
+        }else{
+            $password = $user->password;
+        }
 
         $limit=0;
-        if($user->has_limit == 1){
+
+        if($request->input('has_limit') == 1){
             $new_limit   = $request->input('limits') - $request->input('starting_balance');
             $old_limit   = $user->limits - $user->starting_balance;
             $limit_left  = $user->limit_left + ($new_limit - $old_limit);
-            if($request->input('daily_limit') > 0){
-              $limit = $request->input('daily_limit');
-            }
+            $limit = $request->input('daily_limit');
+
         }else{
             $limit_left = 0;
-            $limit = 0;
         }
 
         $user->rfid             = $request->input('rfid');
@@ -310,7 +311,7 @@ class UsersController extends Controller
         $user->limit_left       = $limit_left;
         $user->one_time_limit   = $request->input('one_time_limit');
         $user->daily_limit      = $request->input('daily_limit');
-        $user->password         = bcrypt($password);
+        $user->password         = $password;
         $user->updated_at       = now()->timestamp;
         $user->update();
 
