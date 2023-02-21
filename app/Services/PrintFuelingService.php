@@ -13,6 +13,7 @@ use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 use DateTime;
+use Carbon\Carbon;
 
 class PrintFuelingService extends ServiceProvider
 {
@@ -50,7 +51,7 @@ class PrintFuelingService extends ServiceProvider
 				}
 			}
 			
-            $date           = date("F j, Y, H:i", time());
+			$date           = date("F j, Y, H:i", $transaction['created_at']->timestamp);
           
 
             /* Name & Info of Company */

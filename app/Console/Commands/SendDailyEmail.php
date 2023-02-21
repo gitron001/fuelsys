@@ -47,6 +47,11 @@ class SendDailyEmail extends Command
         $companies  	= Company::select('id','email','daily_at')->where('send_email',1)->where('daily_at',$hour)->get();
         $current_time   = date('H');
         $from_date      = date('Y-m-d H:00:00', strtotime('- 1 day', strtotime(date("Y-m-d $hour:00:00"))));
+		if($hour == 24){
+            $to_date        = date("Y-m-d 23:59:59");
+        }else{
+            $to_date        = date("Y-m-d $hour:00:00");
+        }
         $to_date        = date("Y-m-d $hour:00:00");
         $fp             = fopen(storage_path() . "/logs/daily.txt", "a");
 
