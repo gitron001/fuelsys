@@ -16,6 +16,7 @@ use App\Services\TransactionService;
 use App\Models\InvoiceModel as Invoice;
 use App\Models\InvoiceDetailsModel as InvoiceDetails;
 use App\Models\TransactionChangeHistory;
+use App\Models\Pump;
 use Excel;
 use Auth;
 use DB;
@@ -25,6 +26,8 @@ use PDF;
 use Carbon\Carbon;
 use Mail;
 use App\Jobs\PrintFuelRecept;
+use App\Services\PrintFuelingService;
+use App\Models\RunninProcessModel as RunningProcesses;
 
 class TransactionController extends Controller
 {
@@ -838,18 +841,46 @@ class TransactionController extends Controller
 	}
 
     public static function printFunction(Request $request) {
-		$recepit = new PrintFuelRecept($request->input('id'));
-        dispatch($recepit);
+		//$recepit = new PrintFuelRecept($request->input('id'));
+        //dispatch($recepit);
+		$variable = PrintFuelingService::printFunction($request->input('id'));
+
 		return json_encode(array('response'=>true));
     }
 
     public static function totalizers(Request $request) {
+		
+		$rp                 = new RunningProcesses;
+        $rp->pfc_id         = '1';
+        $rp->start_time     = '1';
+        $rp->refresh_time   = '1';
+        $rp->faild_attempt  = '0';
+        $rp->class_name     = '1';
+        $rp->type_id        = '8';
+        $rp->created_at     = '1';
+        $rp->updated_at     = '1';
+
+        $rp->save();
+		
+		while(true){
+			$runningProcesses = RunningProcesses::where('type_id', 8)->get();
+			$runningProcessesCount = $runningProcesses->count();	
+			if($runningProcessesCount == 0){
+				break;
+			}			
+		}
+		/*
         $totalizers = DB::table('transactions')
                         ->select('id','sl_no','channel_id','dis_tot as dis_tot_last')
                         ->whereRaw('id IN (SELECT MAX(id) FROM transactions GROUP BY sl_no,channel_id)')
                         ->orderBy('channel_id','ASC')
                         ->orderBy('sl_no','ASC')
                         ->get();
+		*/
+		$totalizers = Pump::where('starting_totalizer', '!=', 0)
+                        ->orderBy('channel_id','ASC')
+                        ->orderBy('nozzle_id','ASC')
+						->get();
 
         return view('/admin/totalizers/home',compact('totalizers'));
     }

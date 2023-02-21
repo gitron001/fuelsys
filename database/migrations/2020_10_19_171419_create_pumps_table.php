@@ -20,6 +20,8 @@ class CreatePumpsTable extends Migration
 			$table->integer('nozzle_id')->nullable();
 			$table->integer('channel_id')->nullable();
 			$table->integer('starting_totalizer')->nullable();
+			$table->integer('current_tot')->nullable();
+			$table->integer('current_tot_eur')->nullable();
 			$table->integer('pfc_id')->nullable();
             $table->integer('status');
             $table->integer('created_at');

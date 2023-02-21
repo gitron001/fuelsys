@@ -16,6 +16,8 @@ class Pump extends Model
         'channel_id',
         'pfc_id',
         'starting_totalizer',
+        'current_tot',
+        'current_tot_eur',
         'status',
         'tank_id',
         'created_at',
