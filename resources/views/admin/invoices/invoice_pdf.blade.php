@@ -135,6 +135,7 @@
         </table>
 
         <table width="50%;border: 1px black solid;margin-top:-4%;">
+            @if($invoice->paid == 0)
             <thead>
                 <tr>
                     <th align="left;" style="color: black;">{{ strtoupper(trans('adminlte::adminlte.comment')) }}</th>
@@ -143,12 +144,19 @@
             <tr>
                 <td>
                     <p style="line-height:1.2">
-                        <p style="line-height:1.2; font-size: 12px;"">
-                        <span>1.{{ trans('adminlte::adminlte.payment_due_in_30_days') }}</span><br/>
-                        <span>2.{{ trans('adminlte::adminlte.invoice_number_payment_method') }}</span><br/>
-                    </p>
+                     <p style="line-height:1.2; font-size: 12px;"">
+                     <span>1.{{ trans('adminlte::adminlte.payment_due_in_30_days') }}</span><br/>
+                     <span>2.{{ trans('adminlte::adminlte.invoice_number_payment_method') }}</span><br/>
+                     </p>
                 </td>
             </tr>
+            @elseif($invoice->paid == 1)
+            <thead>
+                <tr>
+                    <th align="center;"  style="line-height: 1.2;color: black;font-size: 1.5rem">{{ strtoupper(trans('adminlte::adminlte.paid')) }}</th>
+                </tr>
+            </thead>
+            @endif
             <tr>
                 <td align="left">
                     <p style="line-height:1.2">
@@ -160,7 +168,21 @@
                 </td>
             </tr>
         </table>
+      <div style="margin-top:2rem">
+        <div style="float:left">
+            <p>{{ trans('adminlte::adminlte.delivered') }}:</p>
+            <p>_________________________</p>
+        </div>
+        <div style="float: right" class="pull-right">
+            <p>{{ trans('adminlte::adminlte.received') }}:</p>
+            <p>_________________________</p>
+        </div>
+      </div>
+
     </div>
+
+
+
 
     @if(count($all_transactions) == 1)
     <!-- PART 2 -->
@@ -247,6 +269,7 @@
         </table>
 
         <table width="50%;border: 1px black solid;margin-top:-4%;">
+            @if($invoice->paid == 0)
             <thead>
                 <tr>
                     <th align="left;" style="color: black;">{{ strtoupper(trans('adminlte::adminlte.comment')) }}</th>
@@ -255,12 +278,19 @@
             <tr>
                 <td>
                     <p style="line-height:1.2">
-                        <p style="line-height:1.2; font-size: 12px;"">
-                        <span>1.{{ trans('adminlte::adminlte.payment_due_in_30_days') }}</span><br/>
-                        <span>2.{{ trans('adminlte::adminlte.invoice_number_payment_method') }}</span><br/>
-                    </p>
+                     <p style="line-height:1.2; font-size: 12px;"">
+                     <span>1.{{ trans('adminlte::adminlte.payment_due_in_30_days') }}</span><br/>
+                     <span>2.{{ trans('adminlte::adminlte.invoice_number_payment_method') }}</span><br/>
+                     </p>
                 </td>
             </tr>
+            @else
+            <thead>
+                <tr>
+                    <th align="center;"  style="line-height: 1.2;color: black;font-size: 1.5rem">{{ strtoupper(trans('adminlte::adminlte.paid')) }}</th>
+                </tr>
+            </thead>
+            @endif
             <tr>
                 <td align="left">
                     <p style="line-height:1.2">
@@ -272,7 +302,20 @@
                 </td>
             </tr>
         </table>
+
+        <div style="margin-top:2rem">
+            <div style="float:left">
+                <p>{{ trans('adminlte::adminlte.delivered') }}:</p>
+                <p>_________________________</p>
+            </div>
+            <div style="float: right" class="pull-right">
+                <p>{{ trans('adminlte::adminlte.received') }}:</p>
+                <p>_________________________</p>
+            </div>
+          </div>
     </div>
+
+
     @endif
 
 

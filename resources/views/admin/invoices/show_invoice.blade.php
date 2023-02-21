@@ -124,6 +124,17 @@
     <!-- this row will not appear when printing -->
     <div class="row no-print">
         <div class="col-xs-12">
+            <form  method="POST" class="pull-right" style="display:flex;flex-direction: row; min-width: 100px;align-content: center;gap: 5px;margin-top: 4px;margin-left:10px">
+                @csrf
+                <input  style="height:15px;width:15px"  name="pay_checkbox" id="pay_checkbox" type="checkbox" value="{{ $invoice->paid }}" @if($invoice->paid == 1) checked @endif onchange="$(this).attr('value', this.checked ? 1 : 0)">
+                <label for="pay_checkbox" id="pay_checkbox_label">
+                    @if($invoice->paid == 0)
+                    {{ trans('adminlte::adminlte.pay_the_invoice') }}
+                    @else
+                    {{ trans('adminlte::adminlte.paid') }}
+                    @endif
+                </label>
+            </form>
             <a href="{{ route('invoice.pdf', [$invoice->id]) }}" type="button" class="btn btn-default pull-right" style="margin-right: 5px;" target="_blank">
                 <i class="fa fa-download"></i> {{ trans('adminlte::adminlte.print_invoice') }}
             </a>
@@ -138,5 +149,35 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 @endsection
+
+@section('js')
+<script>
+$(document).ready(function() {
+  $('#pay_checkbox').on('change',function(e) {
+    e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '/admin/pay-invoice',
+        data: {
+          '_token': '{{ csrf_token() }}',
+          'id': {{ $invoice->id }},
+          'paid': $('#pay_checkbox').val(),
+        },
+        success: function(data) {
+         if(data.paid == 0) {
+            $('#pay_checkbox_label').html('{{ trans('adminlte::adminlte.pay_the_invoice') }}');
+         }else{
+            $('#pay_checkbox_label').html('{{ trans('adminlte::adminlte.paid') }}');
+         }
+         console.log(data.paid);
+
+        }
+      });
+
+  });
+});
+</script>
+@endsection
+
 
 @include('includes/footer')

@@ -24,6 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+
+
         $schedule->command('card:reader 1')->appendOutputTo(storage_path() . "/logs/cron.log")
                  ->everyMinute();
 
@@ -93,6 +95,11 @@ class Kernel extends ConsoleKernel
 
         // Insert Running Process
         //$schedule->command('running:processes')->everyMinute();
+
+        // Reset daily limit for users
+        $schedule->command('reset:daily_limit')->dailyAt('12:00');
+
+
     }
 
     /**

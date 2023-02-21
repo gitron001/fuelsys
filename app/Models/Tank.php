@@ -148,7 +148,7 @@ class Tank extends Model
 
 	public function totalWaterSensor(){
 		//Get Water Liters from tank level
-		$value = self::calculateLevel($this->water_level);		
+		$value = self::calculateLevel($this->water_level, $this->water_offset);		
 		
         $company = Company::select('email')->where('status',4)->first();
 
@@ -163,8 +163,8 @@ class Tank extends Model
 		return $value;
     }
 	
-	private function calculateLevel($tank_level){
-		$fuel_level 	= intval(($tank_level/100));
+	private function calculateLevel($tank_level , $offset = 0){
+		$fuel_level 	= intval((($tank_level - $offset)/100));
 		$decimal 		= ($tank_level/100) - $fuel_level;
 		$upper_value 	= DB::table('tank_details')->select('value')->where('tank_id', $this->id)->where('cm', '>', $fuel_level)->orderBy('cm', 'ASC')->first();
 		$lower_value 	= DB::table('tank_details')->select('value')->where('tank_id', $this->id)->where('cm', $fuel_level)->first();
