@@ -11,19 +11,19 @@
         <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
             <form class="form-inline text-center" method="GET" action="{{ URL::to('/admin/expenses') }}">
                 <div class="form-group">
-                    <label for="Start Date:">{{ trans('adminlte::adminlte.start_date') }}:</label>
+                    <label for="Start Date:"  style="display:block;text-align:left">{{ trans('adminlte::adminlte.start_date') }}:</label>
                     <input class="form-control" autocomplete="off" id="datetimepicker4" type="text" name="fromDate"
                         value="{{ request()->get('fromDate')}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="End Date:">{{ trans('adminlte::adminlte.end_date') }}:</label>
+                    <label for="End Date:"  style="display:block;text-align:left">{{ trans('adminlte::adminlte.end_date') }}:</label>
                     <input class="form-control" autocomplete="off" id="datetimepicker5" type="text" name="toDate"
                         value="{{ request()->get('toDate')}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="User:">{{ trans('adminlte::adminlte.user') }}:</label>
+                    <label for="User:"  style="display:block;text-align:left">{{ trans('adminlte::adminlte.user') }}:</label>
                     <select class="users-dropdown form-control" name="user[]" multiple="multiple" id="user">
                         @foreach($users as $id => $name)
                         <option value="{{ $id }}" @if(!empty( request()->get("user")))
@@ -33,6 +33,31 @@
                             @endif > {{ $name }} </option>
                         @endforeach
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Category:" style="display:block;text-align:left">{{ trans('adminlte::adminlte.category') }}:</label>
+                    <select  class="users-dropdown form-control" name="category[]" multiple="multiple" id="category">
+                        @foreach($categories as $id => $name)
+                        <option value="{{ $id }}" @if(!empty( request()->get("category")))
+                            @foreach( request()->get("category") as $cat)
+                            {{ $cat == $id ? 'selected' : '' }}
+                            @endforeach
+                            @endif > {{ $name }} </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group" >
+                    <label for="From Amount:"  style="display:block;text-align:left">From €</label>
+                    <input placeholder="From Amount" class="form-control" autocomplete="off"  type="number" name="fromAmount"
+                        value="{{ request()->get('fromAmount')}}" style="width:70px">
+                </div>
+
+                <div class="form-group" style="margin-right:10px">
+                    <label for="To Amount:"  style="display:block;text-align:left">To €</label>
+                    <input placeholder="To Amount" class="form-control" autocomplete="off" type="number" name="toAmount"
+                        value="{{ request()->get('toAmount')}}" style="width:70px">
                 </div>
 
                 <button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Search"><i class="fa fa-search"></i> Search</button>
@@ -112,6 +137,9 @@
     $(document).ready(function () {
         $('.users-dropdown').select2({
             placeholder: "  Select a user  "
+        });
+        $('#category').select2({
+            placeholder: "  Select a category  "
         });
 
         $('#export_expenses_excel').click(function () {
