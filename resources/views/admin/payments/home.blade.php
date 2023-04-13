@@ -34,7 +34,17 @@
               @endforeach
           </select>
         </div>
-
+        <div class="form-group">
+        <label for="User:">{{ trans('adminlte::adminlte.type') }}:</label>
+          <select class="users-dropdown form-control" name="type" id="type">
+            @foreach($categories as $id => $name)
+                <option value="{{ $id }}"
+                @if(!empty( request()->get("type")))
+                    {{ request()->get("type") == $id ? 'selected' : '' }}
+                @endif > {{ $name }} </option>
+              @endforeach
+          </select>
+        </div>
         <div class="form-group">
           <label for="User:">{{ trans('adminlte::adminlte.company') }}:</label>
           <select class="selectpicker form-control" id="company" name="company" data-live-search="true" data-style="btn-dropdownSelectNew">

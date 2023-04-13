@@ -292,13 +292,14 @@ class DispanserService extends ServiceProvider
 			//print_r($responseTot);
 			if($responseTot == '-2'){ return false; }
 			$length = count($responseTot) - 3;
-			//print_r($responseTot);
 			//Pump::where('pfc_id', $pfc_id)->where('channel_id', $dispanser->channel_id)->delete();
 			for($i = 5; $i <= $length; $i++ ){
 				$totalizer = pack('c', $responseTot[$i+3]).pack('c', $responseTot[$i+2]).pack('c', $responseTot[$i+1]).pack('c', $responseTot[$i]);
+				$totalizer_euro = pack('c', $responseTot[$i+7]).pack('c', $responseTot[$i+6]).pack('c', $responseTot[$i+5]).pack('c', $responseTot[$i+4]);
 
 				$totalizer = (int)unpack('i', $totalizer)[1];
-
+				$totalizer_euro = (int)unpack('i', $totalizer_euro)[1];
+				//echo 'euro tot:' . $totalizer_euro;
 				//if($totalizer != 0){
 					
 					$nozzle_nr 		   				= (int)$j;
@@ -308,6 +309,8 @@ class DispanserService extends ServiceProvider
 					$data['status'] 				= 1;
 					$data['pfc_id'] 				= $pfc_id;
 					$data['starting_totalizer'] 	= $totalizer;
+					$data['current_tot'] 			= $totalizer;
+					$data['current_tot_eur'] 		= $totalizer_euro;
 					$data['created_at'] 			= time();
 					$data['updated_at'] 			= time();
 					if($dispanser->channel_id != NUll && $nozzle_nr != null){
@@ -316,7 +319,7 @@ class DispanserService extends ServiceProvider
 							$data
 						);
 					}					
-					//print_r($data);
+					print_r($data);
 					//Pump::insert($data);
 				/*}else{
 					echo ' - Totalizer start -';

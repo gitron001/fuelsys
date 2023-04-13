@@ -20,15 +20,17 @@
                 <tr>
                     <th>Channel Id</th>
                     <th>Sl No</th>
-                    <th>Dis totalizer last</th>
+                    <th>Totalizer</th>
+                    <th>Totalizer Euro</th>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach($totalizers as $totalizer)
                     <tr>
                         <td>{{ $totalizer->channel_id }}</td>
-                        <td>{{ $totalizer->sl_no }}</td>
-                        <td>{{ $totalizer->dis_tot_last }}</td>
+                        <td>{{ $totalizer->nozzle_id }}</td>
+                        <td>{{ $totalizer->starting_totalizer }}</td>
+                        <td>{{ $totalizer->current_tot_eur }}</td>
                     </tr>
                     @endforeach
                 </tbody>

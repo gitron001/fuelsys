@@ -44,12 +44,15 @@ class PaymentsController extends Controller
 
         $users          = Users::where('status',1)->whereIn('type',[1,2,3,4,5])->orderBy('name','asc')->pluck('name','id')->all();
         $companies      = Company::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $categories = Categories::pluck('name','id')->all();
 
         $from_date      = strtotime($request->input('fromDate'));
         $to_date        = strtotime($request->input('toDate'));
         $user           = $request->input('user');
         $company        = $request->input('company');
+        $type        	= $request->input('type');
         $sort_by_company = $request->get('sortby');
+
         if($sort_by_company == 'name'){
             $sort_by = "payments.date";
             $sort_type = "DESC";
@@ -76,15 +79,19 @@ class PaymentsController extends Controller
         if ($request->input('fromDate') && $request->input('toDate')) {
             $query = $query->whereBetween('payments.date',[$from_date, $to_date]);
         }
+		
+		if ($request->input('type') && $request->input('type')) {
+            $query = $query->where('payments.type',[$type]);
+        }
 
         if($request->ajax() == false){
             $query->orderBy('payments.date', 'DESC');
             $payments = $query->paginate(15);
-            return view('/admin/payments/home',compact('payments','users','companies'));
+            return view('/admin/payments/home',compact('payments','users','companies', 'categories'));
         } else {
             $query->orderBy($sort_by,$sort_type);
             $payments = $query->paginate(15);
-            return view('/admin/payments/table_data',compact('payments','users','companies'))->render();
+            return view('/admin/payments/table_data',compact('payments','users','companies', 'categories'))->render();
         }
 
         //$payments = $query->paginate(15);

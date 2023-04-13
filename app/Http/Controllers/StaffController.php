@@ -619,6 +619,7 @@ class StaffController extends Controller
             ->groupBy('products.id');
 
         $companies  = $companies->whereBetween('transactions.created_at',[$request->input('fromDate'), $request->input('toDate')]);
+        $companies  = $companies->orderBy('companies.name', 'ASC');
         $companies  = $companies->get();
 
         $product_name_company = array();
@@ -934,6 +935,8 @@ class StaffController extends Controller
 		$stocks					= null;
 		$tanks   				= array();
 		$p_dialy   				= array();
+		$products_average   	= array();
+		$pos_sales   			= array();
 		
 		if($request->input('url') == 'staff'){
 			$staffData              = self::show_staff_info($request)['staffData'];
