@@ -28,10 +28,10 @@
 			</div>
 
             <div class="col-md-6">
-                <div class="form-group {{ $errors->has('status') ? 'has-error' :'' }}">
-					{!! Form::label('banks', trans('adminlte::adminlte.banks')); !!}
-					{!! Form::select('banks',$banks,null,['class'=>'form-control']); !!}
-					{!! $errors->first('banks','<span class="help-block">:message</span>') !!}
+                <div class="form-group {{ $errors->has('bank_id') ? 'has-error' :'' }}">
+					{!! Form::label('bank_id', trans('adminlte::adminlte.banks')); !!}
+					{!! Form::select('bank_id',['' => 'Choose Bank'] + $banks,null,['class'=>'form-control']); !!}
+					{!! $errors->first('bank_id','<span class="help-block">:message</span>') !!}
 				</div>
             </div>
 		</div>

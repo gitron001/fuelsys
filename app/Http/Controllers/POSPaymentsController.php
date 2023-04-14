@@ -57,7 +57,7 @@ class POSPaymentsController extends Controller
 
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
-        $payments->bank_id      = $request->input('banks');
+        $payments->bank_id      = $request->input('bank_id');
         $payments->created_by   = Auth::user()->id;
         $payments->created_at   = now()->timestamp;
         $payments->updated_at   = now()->timestamp;
@@ -80,7 +80,7 @@ class POSPaymentsController extends Controller
 
         $payments->date         = strtotime($request->input('date'));
         $payments->amount       = $request->input('amount');
-        $payments->bank_id      = $request->input('banks');
+        $payments->bank_id      = $request->input('bank_id');
         $payments->created_by   = Auth::user()->id;
         $payments->edited_by    = Auth::user()->id;
         $payments->updated_at   = now()->timestamp;
