@@ -164,6 +164,7 @@ class RfidController extends Controller
 
         $new            = array();
         $old            = array();
+		$company 		= Company::where('status', 4)->first();
         //$last_inserted  = Users::where('exported',1)->orderBy('created_at','DESC')->first();
         $last_inserted  = Users::where('exported',1)
                             ->where('created_at', Users::max('created_at'))
@@ -171,12 +172,15 @@ class RfidController extends Controller
                             ->first();
 
         try {
+			
+			$access_token   = config('token.access_token');
             $client = new \GuzzleHttp\Client(['cookies' => true,
                 'headers' =>  [
+                    'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
-
-            $url = '';
+            
+            $url = $company->base_ip.'/api/rfids/import_server';
 
             $response = $client->request('POST', $url, [
                 'json' => $last_inserted
@@ -189,7 +193,7 @@ class RfidController extends Controller
                 $rfid = Users::firstOrCreate([
                     'rfid' => $user->rfid],
                     [
-                    'branch_user_id'    => $user->client_id,
+                    'branch_user_id'    => $user->branch_user_id,
                     'branch_id'         => 0,
                     'name'              => !empty($user->name) ? $user->name : NULL,
                     'surname'           => !empty($user->surname) ? $user->surname : NULL,
@@ -221,7 +225,7 @@ class RfidController extends Controller
 
                     RFID_Discounts::where('rfid_id',$rfid->id)->delete();
 
-                    foreach($user->discounts as $discount){
+                    foreach($user->discount as $discount){
                         RFID_Discounts::insert([
                             'rfid_id'       => $rfid->id,
                             'product_id'    => $discount->product_id,
