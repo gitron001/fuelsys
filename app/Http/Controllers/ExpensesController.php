@@ -20,12 +20,16 @@ class ExpensesController extends Controller
 
     public function index(Request $request) {
         $users          = Users::where('status',1)->where('type',1)->orderBy('name','asc')->pluck('name','id')->all();
+        $categories     = Categories::where('status',1)->orderBy('name','asc')->pluck('name','id')->all();
 
         $from_date      = strtotime($request->input('fromDate'));
         $to_date        = strtotime($request->input('toDate'));
         $user           = $request->input('user');
-        $sort_by         = "expenses".".".$request->get('sortby');
-        $sort_type       = $request->get('sorttype');
+        $category       = $request->input('category');
+        $from_amount    = $request->input('fromAmount');
+        $to_amount      = $request->input('toAmount');
+        $sort_by        = "expenses".".".$request->get('sortby');
+        $sort_type      = $request->get('sorttype');
 
         $query          = Expenses::select(DB::RAW('users.name as user_name'),DB::RAW('companies.name as company_name'), 'users.type as user_type', 'expenses.amount', 'expenses.date','expenses.created_at','expenses.updated_at','expenses.id', 'creator.name as p_creater','expenses.expense_type','categories.name as category_name')
             ->leftJoin('users', 'users.id', '=', 'expenses.user_id')
@@ -37,6 +41,18 @@ class ExpensesController extends Controller
             $query = $query->whereIn('users.id',$user);
         }
 
+        if ($request->input('category')) {
+            $query = $query->whereIn('categories.id',$category);
+        }
+
+        if ($request->input('fromAmount')) {
+            $query = $query->where('expenses.amount','>=',$from_amount);
+        }
+
+        if ($request->input('toAmount')) {
+            $query = $query->where('expenses.amount','<=',$to_amount);
+        }
+
         if ($request->input('fromDate') && $request->input('toDate')) {
             $query = $query->whereBetween('expenses.date',[$from_date, $to_date]);
         }
@@ -44,7 +60,7 @@ class ExpensesController extends Controller
         if($request->ajax() == false){
             $query->orderBy('expenses.date', 'DESC');
             $expenses = $query->paginate(15);
-            return view('/admin/expenses/home',compact('expenses','users'));
+            return view('/admin/expenses/home',compact('expenses','users','categories'));
         } else {
             $query->orderBy($sort_by,$sort_type);
             $expenses = $query->paginate(15);

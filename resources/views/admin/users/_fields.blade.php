@@ -48,6 +48,12 @@
                     {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
 
+                <div class="form-group {{ $errors->has('daily_limit') ? 'has-error' :'' }}" id="daily_limit" style="display: none">
+                    {!! Form::label('daily_limit', trans('adminlte::adminlte.users_fields.daily_limit')); !!}
+                    {!! Form::number('daily_limit',null,['class'=>'form-control', 'id'=> 'daily_limit']); !!}
+                    {!! $errors->first('daily_limit','<span class="help-block">:message</span>') !!}
+                </div>
+
                 <div class="form-group {{ $errors->has('one_time_limit') ? 'has-error' :'' }}" id="one_time_limit">
                     {!! Form::label('one_time_limit', trans('adminlte::adminlte.users_fields.one_time_limit')); !!}
                     {!! Form::number('one_time_limit',null,['class'=>'form-control', 'id'=> 'one_time_limit']); !!}
@@ -112,7 +118,7 @@
                 </div>
 
                 <div class="form-group {{ $errors->has('vehicle') ? 'has-error' :'' }}" id="vehicle" style="display: none">
-                    {!! Form::label('vehicle', trans('adminlte::adminlte.users_fields.vehicle')); !!}
+                    {!! Form::label('vehicle', trans('adminlte::adminlte.users_details.vehicle')); !!}
                     {!! Form::text('vehicle',null,['class'=>'form-control']); !!}
                     {!! $errors->first('vehicle','<span class="help-block">:message</span>') !!}
                 </div>

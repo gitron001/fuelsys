@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <label for="End Date:">{{ trans('adminlte::adminlte.banks') }}:</label>
                         <select class="form-control" id="bank" name="bank">
-                            <option value="">Select product</option>
+                            <option value="">Select Bank</option>
                             @foreach($banks as $bank)
                             <option value="{{ $bank->id }}" @if(request()->get("bank") == $bank->id) selected
                                 @endif>{{ $bank->name }}</option>

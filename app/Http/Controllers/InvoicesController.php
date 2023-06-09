@@ -78,7 +78,7 @@ class InvoicesController extends Controller {
         $invoice_id         = $id;
         $date               = $invoice->date;
 
-        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','date','invoice_id','all_transactions','banks'));
+        $pdf = PDF::loadView('admin.invoices.invoice_pdf',compact('company','to_company','total_transactions','companies','date','invoice_id','invoice','all_transactions','banks'));
         $file_name  = 'Invoice#'.$id.' - '.date('Y-m-d', time()).'.pdf';
         return $pdf->stream($file_name);
     }
@@ -105,5 +105,14 @@ class InvoicesController extends Controller {
             ->groupBy('tr_id')
             ->get();
         return $transactions;
+    }
+
+    public function pay_invoice(Request $request)
+    {
+        $invoice = Invoice::findOrFail($request->id);
+        $invoice->paid = $request->paid;
+        $invoice->save();
+
+        return response()->json(['paid' => $invoice->paid]);
     }
 }
