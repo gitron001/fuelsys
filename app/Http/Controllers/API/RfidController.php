@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use App\Models\RFID_Discounts;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 
 class RfidController extends Controller
 {
@@ -45,7 +46,7 @@ class RfidController extends Controller
     {
 		ini_set("memory_limit", "-1");
 		set_time_limit(0);
-
+		$company 		= Company::where('status', 4)->first();
         $users          = Users::where(function ($query) {
                             $query->where('exported', NULL)
                                 ->orWhere('exported', 0);
@@ -53,7 +54,7 @@ class RfidController extends Controller
 
         $response       = array();
         $access_token   = config('token.access_token');
-
+	
         foreach($users as $u){
             $rfid['discount']   = RFID_Discounts::where('rfid_id',$u['id'])->get()->toArray();
             $response[]         = array_merge($u,$rfid);
@@ -65,7 +66,7 @@ class RfidController extends Controller
                     'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
-            $url = '';
+            $url = $company->base_ip.'/api/rfids/create';
 
             $response = $client->request('POST', $url, [
                 'json' => $response
