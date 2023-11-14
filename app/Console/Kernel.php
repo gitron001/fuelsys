@@ -100,6 +100,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('reset:daily_limit')->dailyAt('12:00');
 
 
+        // Delete failed jobs and tracking older than 30 days
+        $schedule->command('prune-records failed_jobs --days=30')->weekly();
+        $schedule->command('prune-records tracking --days=30')->weekly();
+
+
     }
 
     /**
