@@ -41,6 +41,7 @@ return [
         'discounts'         => 'Zbritje',
         'send_email'        => 'Dërgo email',
         'display_users_by_plates' => 'Shfaq shpenzimet për përdorues',
+        'vehicle_data'       => 'Kërkoni të dhëna për automjetin',
     ],
 
     'tank_details' => [

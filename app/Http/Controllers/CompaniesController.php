@@ -119,6 +119,7 @@ class CompaniesController extends Controller
             'limit_left'        => $limit_left,
             'on_transaction'    => $request->input('on_transaction'),
             'send_email'        => $request->input('send_email'),
+            'vehicle_data'        => $request->input('vehicle_data'),
             'daily_at'       	=> $request->input('daily_at'),
             'monthly_report'    => $request->input('monthly_report'),
             'display_users_by_plates' => $request->input('display_users_by_plates'),
@@ -207,6 +208,8 @@ class CompaniesController extends Controller
         if($request->hasFile('image')){
             $company->images = $fileNameToStore;
         }
+
+        $company->vehicle_data = $request->input('vehicle_data');
 
         if($company->has_limit == 1){
             $new_limit   = $request->input('limits') - $request->input('starting_balance');

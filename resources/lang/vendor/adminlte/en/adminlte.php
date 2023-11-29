@@ -41,6 +41,7 @@ return [
         'discounts'         => 'Discounts',
         'send_email'        => 'Send Email',
         'display_users_by_plates' => 'Show Per user expense',
+        'vehicle_data'      => 'Ask for Vehicle Data',
     ],
 
     'tank_details' => [
