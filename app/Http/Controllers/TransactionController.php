@@ -147,6 +147,8 @@ class TransactionController extends Controller
                     strtoupper(trans('adminlte::adminlte.type')),
                     strtoupper(trans('adminlte::adminlte.user')),
                     strtoupper(trans('adminlte::adminlte.bonus_user')),
+                    strtoupper(trans('adminlte::adminlte.price')),
+                    strtoupper(trans('adminlte::adminlte.product')),
                     strtoupper(trans('adminlte::adminlte.fill')),
                     strtoupper(trans('adminlte::adminlte.payments')),
                     strtoupper(trans('adminlte::adminlte.state')),
@@ -162,11 +164,11 @@ class TransactionController extends Controller
                         $cell->setValue(strtoupper(trans('adminlte::adminlte.state')));
                 });
 
-                $sheet->cell('F2', function($cell) use( $totalAmount ){
+                $sheet->cell('I2', function($cell) use( $totalAmount ){
                         $cell->setValue($totalAmount);
                 });
 
-                $sheet->cell('I2', function($cell) use( $from_to_date ){
+                $sheet->cell('L2', function($cell) use( $from_to_date ){
                     $cell->setValue($from_to_date);
                 });
 
@@ -196,6 +198,8 @@ class TransactionController extends Controller
                         $row->description == NULL  ? $row->type : $row->description,
                         $user,
                         $bonus_user,
+                        $row->price,
+                        $row->p_name,
                         $fueling,
                         $payment,
                         $total,
@@ -445,13 +449,14 @@ class TransactionController extends Controller
 			$from_date = self::last_payment_date($request);
         }
 
-        $transactions = Transaction::select("transactions.id","transactions.product_id",DB::RAW(" 'T' as type"),
+        $transactions = Transaction::select("transactions.id","transactions.product_id", "products.name as p_name", DB::RAW(" 'T' as type"),
                 DB::RAW(" 0 as amount"),DB::RAW("transactions.created_at as date")
                 ,"transactions.money", "transactions.lit", "transactions.price", DB::RAW(" 0 as company")
                 ,"user1.name as username","user2.name as bonus_username", "user1.plates","transactions.created_at","companies.name as company_name",DB::RAW(" '' as description"))
             ->leftJoin('users as user1', 'transactions.user_id', '=', 'user1.id')
             ->leftJoin('users as user2', 'transactions.bonus_user_id', '=', 'user2.id')
-            ->leftJoin('companies', 'companies.id', '=', 'user1.company_id');
+            ->leftJoin('companies', 'companies.id', '=', 'user1.company_id')
+			->leftJoin('products', 'products.pfc_pr_id', 'transactions.product_id');
 
         if ($request->input('user') && empty($request->input('company'))) {
             $transactions->whereIn('user_id',$user);
@@ -487,7 +492,7 @@ class TransactionController extends Controller
 			return $transactions->get();
         }
 
-        $payments = Payments::select("payments.id","payments.user_id",DB::RAW(" 'P' as type")
+        $payments = Payments::select("payments.id","payments.user_id", DB::RAW(" '' as p_name"), DB::RAW(" 'P' as type")
                 ,"payments.amount","payments.date as date",
                 DB::RAW(" 0 as money"), DB::RAW(" 0 as lit"), DB::RAW(" 0 as price"), "payments.company_id"
                 ,"users.name as username", DB::RAW(" '' as bonus_username"),DB::RAW(" '' as plates"), "payments.created_at","companies.name as company_name","payments.description")

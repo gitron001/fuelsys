@@ -234,7 +234,7 @@
 			<td align="center" @if($py->type == "P") @endif > {{ $py->description == NULL  ? $py->type : $py->description }} </td>
             <td align="center">@if(trim($py->plates) != "" && $py->plates != 0) {{ $py->plates }} @else {{ $py->username }} @endif</td>
             @if($bonus_user != NULL) <td align="center">{{ $py->bonus_username }}</td> @endif
-			<td align="center">{{ number_format($py->lit, 2) }} L | {{ $py->price }} | {{ number_format($fueling, 2) }} €</td>
+			<td align="center">{{ $py->p_name }}|{{ number_format($py->lit, 2) }}L|{{ $py->price }}|{{ number_format($fueling, 2) }} €</td>
 			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>
 
