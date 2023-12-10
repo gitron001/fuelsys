@@ -319,7 +319,7 @@ class DispanserService extends ServiceProvider
 							$data
 						);
 					}					
-					print_r($data);
+					//print_r($data);
 					//Pump::insert($data);
 				/*}else{
 					echo ' - Totalizer start -';
