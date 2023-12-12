@@ -152,6 +152,7 @@ class UsersController extends Controller
             'vehicle'           => $request->input('vehicle') ? : 0,
             'type'              => $request->input('type'),
             'send_email'        => $request->input('send_email'),
+            'vehicle_data'      => $request->input('vehicle_data'),
             'on_transaction'    => $request->input('on_transaction'),
             'password'          => Hash::make($password),
             'status'            => 1,
@@ -303,6 +304,7 @@ class UsersController extends Controller
         $user->plates           = $request->input('plates');
         $user->status           = $request->input('status');
         $user->send_email       = $request->input('send_email');
+        $user->vehicle_data     = $request->input('vehicle_data');
         $user->on_transaction   = $request->input('on_transaction');
         $user->vehicle          = $request->input('vehicle');
         $user->type             = $request->input('type');
