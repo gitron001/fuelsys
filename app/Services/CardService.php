@@ -186,7 +186,7 @@ class CardService extends ServiceProvider
 		//unblock
 		//
 		//self::activate_card($socket, $channel, 4);	
-		$text = ' '.trim($user->name).''.trim($user->plates);
+		$text = ' '.trim($user->name).''.trim($user->plates).' ';
 		self::screenMessage($socket, $channel, $text);
         echo 'ACTIVATE';		
 		

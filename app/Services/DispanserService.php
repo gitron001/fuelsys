@@ -415,7 +415,7 @@ class DispanserService extends ServiceProvider
 			return true;
 		}
 		echo 'kilometers '. $kilometers;	
-		if(isset($user_data->kilometers) && $user_data->kilometers != 0 && $user_data->kilometers <= $kilometers){
+		if(isset($user_data->kilometers) && $user_data->kilometers >= $kilometers){
 			CardService::screenMessage($socket, $channel, 'Shenoni Perseri Kilometrat');
 			return false;
 		}
