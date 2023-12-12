@@ -79,7 +79,7 @@ class CardService extends ServiceProvider
      *
      *
      */
-    public static function check_card($socket, $channel = 1, $pfc_id) {
+    public static function check_card($socket, $channel = 1, $pfc_id, $kilometers = false) {
 
         //Get all transaction by channel
         $channel_id = pack("c*", $channel);
@@ -139,13 +139,25 @@ class CardService extends ServiceProvider
 		}
 		
 		if($user->type == 4){
-			
-			$driver = Users::where('id', $the_dispanser->current_driver_id)->first();
+				$driver = Users::where('id', $the_dispanser->current_driver_id)->first();
 			if(is_null($user->company->id) || is_null($driver->company->id) ||  $driver->company->id != $user->company->id){
 				return false;				
 			}
 			
 		}
+		
+		if(!$kilometers && isset($user->company->vehicle_data) && $user->company->vehicle_data == 1){
+			if(DB::table('running_processes')->where('type_id', 10)->where('class_name', $channel)->count() == 0){
+				DB::table('running_processes')->insert(
+					['pfc_id' => '1', 'type_id' => 10, 'class_name' => $channel, 'faild_attempt' => $user->id]
+				);
+				$text = ' Sheno Kilometrat aktuale';
+				self::screenMessage($socket, $channel, $text);
+				echo 'kilomentrat';
+				return true;
+			}
+			return true;
+		}	
 		
         //Call Function to check limit
         $limit = false;
@@ -174,11 +186,9 @@ class CardService extends ServiceProvider
 		//unblock
 		//
 		//self::activate_card($socket, $channel, 4);	
-		$text = ' '.trim($user->name).' '.trim($user->plates);
+		$text = ' '.trim($user->name).''.trim($user->plates);
 		self::screenMessage($socket, $channel, $text);
-        echo 'ACTIVATE';
-		
-		
+        echo 'ACTIVATE';		
 		
 		//Checking is a transaction is running or not saved
 		if((int)$the_dispanser->status == 3){

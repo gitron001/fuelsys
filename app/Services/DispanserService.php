@@ -4,8 +4,10 @@ namespace App\Services;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\PFCServices as PFC;
+use App\Services\CardService;
 use App\Models\Products;
 use App\Models\Dispaneser;
+use App\Models\Transaction;
 use App\Models\Tank;
 use App\Models\Pump;
 use App\Models\RunninProcessModel as Process;
@@ -247,6 +249,11 @@ class DispanserService extends ServiceProvider
 			self::ImportNozzles($socket, $pfc_id);
             Process::where('type_id', 8)->where('pfc_id', $pfc_id)->delete();
 		}
+		$stopCommand = Process::where('type_id', 10)->where('pfc_id', $pfc_id)->count();
+        if($stopCommand != 0){
+			$stopCommand = Process::where('type_id', 10)->where('pfc_id', $pfc_id)->first();
+			self::ReadNozzlesData($socket, $stopCommand->class_name, $stopCommand->faild_attempt);
+		}
 		return true;
     }
     /**
@@ -377,5 +384,51 @@ class DispanserService extends ServiceProvider
 		}
 
 	}
+
+	/**
+     * Message 4 - Read Dispanser data
+     *
+     * Read Totalizers from channel
+     */
+	public static function ReadNozzlesData($socket, $channel, $user_id){
+		
+		//Generate CRC for the Transaction Message
+		$message = "\x1\x5\x0D" .pack("C*",$channel);
+		$the_crc = PFC::crc16($message);
+
+		//Clear Transactions Message
+		$binarydata = pack("c*", 0x01)
+			.pack("c*", 0x05)
+			.pack("c*", 0x0D)
+			.pack("C*", $channel)
+			.strrev(pack("s", $the_crc))
+			.pack("c*", 02);
+			
+			
+		$response = PFC::send_message($socket, $binarydata);	
+
+		$kilometers = pack('c', $response[9]).pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]);
+		$kilometers = unpack('i',$kilometers)[1];
+		$user_data = Transaction::where('user_id', $user_id)->first();
+		
+		if($kilometers == 0){
+			return true;
+		}
+		echo 'kilometers '. $kilometers;	
+		if(isset($user_data->kilometers) && $user_data->kilometers != 0 && $user_data->kilometers <= $kilometers){
+			CardService::screenMessage($socket, $channel, 'Shenoni Perseri Kilometrat');
+			return false;
+		}
+			
+		$the_channel = Dispaneser::where('channel_id', $channel)->first();
+		$the_channel->current_kilometers = $kilometers;
+		$the_channel->save();	
+		
+		CardService::check_card($socket, $channel, 1, true);
+        Process::where('type_id', 10)->delete();
+		
+		return true;
+	}
+
 
 }

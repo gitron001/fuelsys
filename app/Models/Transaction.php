@@ -138,7 +138,8 @@ class Transaction extends Model
 			$transaction->user_id = null;
 		}
 
-		$transaction->driver_id = $dispaneser->current_driver_id;
+		$transaction->driver_id 	= $dispaneser->current_driver_id;
+		$transaction->kilometers 	= $dispaneser->current_kilometers;
 
         $transaction->channel_id = $channel_id;
 
@@ -185,6 +186,7 @@ class Transaction extends Model
 			$dispaneser->current_user_id   		= (int)$transaction->user_id;
 			$dispaneser->current_bonus_user_id  = NULL; //(int)$transaction->bonus_user_id;
 			$dispaneser->current_driver_id  	= NULL;
+			$dispaneser->current_kilometers  	= 0;
 			$dispaneser->status			   		= 1;
 			$dispaneser->data_updated_at   		= time();
 			$dispaneser->save();

@@ -23,6 +23,7 @@ class CreateDispanesersTable extends Migration
             $table->string('money_division')->default('100');
             $table->integer('current_user_id')->nullable();
             $table->integer('current_driver_id')->nullable();
+            $table->integer('current_kilometers')->nullable()->default('0');
             $table->integer('current_bonus_user_id')->nullable();
             $table->integer('data_updated_at')->nullable();
             $table->integer('current_amount')->nullable();
