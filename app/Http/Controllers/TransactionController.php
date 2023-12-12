@@ -253,6 +253,7 @@ class TransactionController extends Controller
         $exc_balance  	  			= $request->input('exc_balance');
         $user_details  	  			= array();
         $total_transactions  	  	= array();
+        $company_details  	  		= array();
 
         if(!isset($inc_transactions) || $inc_transactions == 'No'){
             $total_transactions = $payments->groupBy(function($val) {
