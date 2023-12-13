@@ -404,17 +404,19 @@ class DispanserService extends ServiceProvider
 			.strrev(pack("s", $the_crc))
 			.pack("c*", 02);
 			
-			
 		$response = PFC::send_message($socket, $binarydata);	
-
+		
+		if($response[5] == 0){
+			return false; 
+		}
+		
 		$kilometers = pack('c', $response[9]).pack('c', $response[8]).pack('c', $response[7]).pack('c', $response[6]);
 		$kilometers = unpack('i',$kilometers)[1];
-		$user_data = Transaction::where('user_id', $user_id)->first();
+		$user_data = Transaction::where('user_id', $user_id)->latest()->first();
 		
 		if($kilometers == 0){
 			return true;
 		}
-		echo 'kilometers '. $kilometers;	
 		if(isset($user_data->kilometers) && $user_data->kilometers >= $kilometers){
 			CardService::screenMessage($socket, $channel, 'Shenoni Perseri Kilometrat');
 			return false;

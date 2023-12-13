@@ -146,7 +146,7 @@ class CardService extends ServiceProvider
 			
 		}
 		
-		if(!$kilometers && isset($user->company->vehicle_data) && $user->company->vehicle_data == 1){
+		if(!$kilometers && isset($user->vehicle_data) && $user->vehicle_data == 1){
 			if(DB::table('running_processes')->where('type_id', 10)->where('class_name', $channel)->count() == 0){
 				DB::table('running_processes')->insert(
 					['pfc_id' => '1', 'type_id' => 10, 'class_name' => $channel, 'faild_attempt' => $user->id]
