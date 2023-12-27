@@ -86,7 +86,8 @@
     </table>
  <!-- STAFF SECTION -->
     @if (Request::input('url') == 'staff' || $request->url == 'staff')
-    <h5>{{ trans('adminlte::adminlte.staff') }}</h5>
+	   @include('admin.staff.staff_data')
+	<!--
 	<table width="100%" id="table_design">
 		<thead style="background-color: lightgray;">
 		  <tr>
@@ -99,6 +100,8 @@
         </thead>
 
 		<tbody>
+			
+			<
             <?php $total_staff = 0; ?>
             <?php $product_totals = array(); ?>
             @foreach($staffData as $transaction)
@@ -134,7 +137,7 @@
             </tr>
         </tbody>
 
-    </table>
+    </table>-->
     @endif
     <!-- STAFF SECTION END-->
 

@@ -1,13 +1,22 @@
 
 <!-- START staff table -->
 <div class="box box-primary">
-    <div class="box-header">
-        <i class="fa fa-user" aria-hidden="true"></i>
-        <h3 class="box-title">{{ trans('adminlte::adminlte.staff') }}</h3>
-    </div>
+	@if (Request::path() == 'admin/staff')
+		<div class="box-header">
+			<i class="fa fa-user" aria-hidden="true"></i>
+			<h3 class="box-title">{{ trans('adminlte::adminlte.staff') }}</h3>
+		</div>
+	@else
+		<h5>{{ trans('adminlte::adminlte.staff') }}</h5>
+	@endif
     <div class="box-body">
-        <table class="table table-bordered table-hover table-responsive text-center">
-            <thead>
+		@if (Request::path() == 'admin/staff')
+			<table class="table table-bordered table-hover table-responsive text-center">
+				<thead>
+		@else				
+			<table width="100%" id="table_design">
+				<thead style="background-color: lightgray;">			
+		@endif
                 <tr>
                     <th>{{ trans('adminlte::adminlte.user') }}</th>
                     @foreach($product_name as $value)
