@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\API;
 
 
-use Session;
 use App\Models\Users;
 use GuzzleHttp\Client;
+use App\Models\Company;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\ProductBranches;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use GuzzleHttp\Exception\GuzzleException;
 
 
@@ -74,6 +75,8 @@ class TransactionsController extends Controller
         $transactions = Transaction::where('exported',0)->limit(1000)->get();
 
         $access_token = config('token.access_token');
+        $company 		= Company::where('status', 4)->first();
+        $url = $company->base_ip.'/api/transactions/create';
 
         try {
             $client = new \GuzzleHttp\Client(['cookies' => true,
@@ -81,7 +84,7 @@ class TransactionsController extends Controller
                     'Authorization'          => $access_token,
                     'Accept'                 => "application/json"
                 ]]);
-            $url = '';
+
 
             $response = $client->request('POST', $url, [
                 'json' => $transactions

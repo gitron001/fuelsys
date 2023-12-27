@@ -117,6 +117,12 @@
                     {!! $errors->first('status','<span class="help-block">:message</span>') !!}
                 </div>
 
+                <div class="form-group {{ $errors->has('vehicle_data') ? 'has-error' :'' }}">
+					{!! Form::label('vehicle_data', trans('adminlte::adminlte.company_fields.vehicle_data')); !!}
+					{!! Form::select('vehicle_data',[0=>'NO',1=>'YES'],null,['class'=>'form-control','id' => 'vehicle_data']); !!}
+					{!! $errors->first('vehicle_data','<span class="help-block">:message</span>') !!}
+				</div>
+
                 <div class="form-group {{ $errors->has('vehicle') ? 'has-error' :'' }}" id="vehicle" style="display: none">
                     {!! Form::label('vehicle', trans('adminlte::adminlte.users_details.vehicle')); !!}
                     {!! Form::text('vehicle',null,['class'=>'form-control']); !!}

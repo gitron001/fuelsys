@@ -19,8 +19,8 @@ class CreateTransactionsTable extends Migration
             $table->integer('error_flag')->default(0);
             $table->char('locker');
             $table->integer('tr_no');
-			$table->integer('channel_id')->nullable()->index();
-            $table->integer('receipt_no')->nullable()->index();
+			$table->integer('channel_id')->nullable();
+            $table->integer('receipt_no')->nullable();
             $table->integer('sl_no');
             $table->integer('pfc_id');
             $table->integer('product_id')->index();
@@ -37,8 +37,9 @@ class CreateTransactionsTable extends Migration
             $table->longText('pfc_tot_last')->nullable();
             $table->char('tr_status')->nullable();
             $table->bigInteger('user_id')->nullable()->index();
-            $table->bigInteger('driver_id')->nullable()->index();
-            $table->bigInteger('bonus_user_id')->nullable()->index();
+            $table->bigInteger('driver_id')->nullable();
+            $table->bigInteger('bonus_user_id')->nullable();
+            $table->integer('kilometers')->nullable()->default(0);
             $table->integer('invoice_id')->default(0);
             $table->char('ctype')->nullable();
             $table->char('method')->nullable();

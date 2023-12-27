@@ -27,6 +27,7 @@ class StockController extends Controller
 		$stock = new Stock;
 
         if($request->get('product')){
+			$stock	= $stock->join('tanks', 'tanks.id', 'stocks.tank_id');
             $stock  = $stock->where('tanks.product_id',$request->get('product'));
         }
 

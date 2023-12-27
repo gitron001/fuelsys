@@ -30,7 +30,7 @@
                         <select class="form-control" id="product" name="product">
                             <option value="">Select product</option>
                             @foreach($products as $product)
-                            <option value="{{ $product->id }}" @if(request()->get("product") == $product->id) selected
+                            <option value="{{ $product->pfc_pr_id }}" @if(request()->get("product") == $product->pfc_pr_id) selected
                                 @endif>{{ $product->name }}</option>
                             @endforeach
                         </select>

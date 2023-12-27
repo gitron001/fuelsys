@@ -68,6 +68,7 @@
 		<td valign="top"><img src="{{ public_path().'/images/gas-pump.png' }}" alt="" width="60"/></td>
 	</tr>-->
 	<tr>
+		@if(isset($company) && isset($company->name))
 		<td align="left">
             <p style="line-height:1.2">
                 <span style="font-size: 16px;"><b> {{ $company->name }} </b></span><br/>
@@ -79,9 +80,10 @@
                 <span><b>{{ trans('adminlte::adminlte.transactions_pdf.nr_fis') }} :</b> {{ $company->fis_number }}</span><br/>
             </p>
         </td>
+		@endif
 
 		<td align="right">
-		@if(isset($company_details))
+		@if(isset($company_details) && isset($company_details->name))
 		<h3>{{ $company_details->name }}</h3>
 	    	<p style="line-height:1.5">
 				<span>{{ $company_details->city }}, {{ $company_details->country }}</span><br/>
@@ -232,7 +234,7 @@
 			<td align="center" @if($py->type == "P") @endif > {{ $py->description == NULL  ? $py->type : $py->description }} </td>
             <td align="center">@if(trim($py->plates) != "" && $py->plates != 0) {{ $py->plates }} @else {{ $py->username }} @endif</td>
             @if($bonus_user != NULL) <td align="center">{{ $py->bonus_username }}</td> @endif
-			<td align="center">{{ number_format($py->lit, 2) }} L | {{ $py->price }} | {{ number_format($fueling, 2) }} €</td>
+			<td align="center">{{ $py->p_name }}|{{ number_format($py->lit, 2) }}L|{{ $py->price }}|{{ number_format($fueling, 2) }} €</td>
 			<td align="center">{{ $payment }}</td>
 			<td align="right">{{ number_format($total, 2) }}</td>
 
