@@ -46,10 +46,10 @@ return [
                'use_single_transaction',
                'timeout' => 60 * 5,
             ],
-            'host' => '127.0.0.1',
+            'host' => 'sql688.your-server.de',
             'port' => '3306',
             'database' => 'fuel_system',
-            'username' => 'euron',
+            'username' => 'fuelsystem',
             'password' => 'Sys@dm12**',
             'unix_socket' => '',
             'charset' => 'utf8',
@@ -61,7 +61,7 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'sql688.your-server.de'),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
@@ -74,7 +74,7 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_HOST', 'sql688.your-server.de'),
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
