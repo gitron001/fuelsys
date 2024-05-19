@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Throwable;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+//use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Mail;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+//use Illuminate\Support\Facades\App;
+//use Illuminate\Support\Facades\Mail;
+//use Symfony\Component\HttpKernel\Exception\HttpException;
+//use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class Handler extends ExceptionHandler
@@ -36,14 +36,14 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Throwable  $exception
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         parent::report($exception);
 
-        $this->sendEmail($exception);
+       // $this->sendEmail($exception);
     }
 
     /**
@@ -53,12 +53,12 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
     }
 
-    private function sendEmail($e)
+   /* private function sendEmail($e)
     {
         if(strpos($e->getTraceAsString(),'#0 /var/www/html/adminpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php(619)')===false
             && strpos($e->getMessage(),'#0 /var/www/html/adminpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php(619)')===false
@@ -80,10 +80,10 @@ class Handler extends ExceptionHandler
                     $m->from('ideal.bakija@bakija.com', 'Fuel System');
 
                     $m->to($emails)->subject("Fatal error - Nesim Bakija");
-                });*/
+                });
             } catch (\Exception $e) {
 
             }
         }
-    }
+    }*/
 }

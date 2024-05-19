@@ -7,6 +7,7 @@ use App\Models\RFID_Discounts;
 use Illuminate\Console\Command;
 use App\Services\CardService;
 use App\Services\TransactionService;
+use App\Services\NozzleService;
 use App\Services\PFCServices as PFC;
 use App\Services\DispanserService as Dispanser;
 use App\Models\RunninProcessModel as Process;
@@ -82,6 +83,7 @@ class CheckCardReadersCommand extends Command
             $dispanser_status = Dispanser::checkForUpdates($socket, $pfc_id);
 			if(!$dispanser_status){ continue; }
             CardService::check_readers($socket, $pfc_id);
+            NozzleService::check_active_tag($socket, $pfc_id);
             usleep(150000);
             TransactionService::readLiveData($socket, $pfc_id);
             TransactionService::read($socket, $pfc_id);
